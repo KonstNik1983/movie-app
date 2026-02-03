@@ -10,7 +10,13 @@
       "vite/client"
     ], // Типы для Vite
     "incremental": true, // Включает ускоренную компиляцию TS
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "baseUrl": ".", // Для работы алиасов
+    "paths": {
+      "@/*": [
+        "src/*"
+      ] // Алиас @ → src
+    }
   },
   "include": [
     "src/**/*.ts",
