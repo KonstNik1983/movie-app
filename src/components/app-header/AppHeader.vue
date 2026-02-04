@@ -5,24 +5,30 @@
             <img src="@/assets/logo.svg" alt="Logo" class="logo" />
          </router-link>
 
-         <nav>
-            <ul>
-               <li><router-link to="/movies">Фильмы</router-link></li>
-               <li><router-link to="/series">Сериалы</router-link></li>
-               <li><router-link to="/collections">Подборки</router-link></li>
+         <nav class="header-nav">
+            <ul class="header-nav-list">
+               <li class="header-nav-item">
+                  <router-link to="/movies" class="header-nav-link">Фильмы</router-link>
+               </li>
+               <li class="header-nav-item">
+                  <router-link to="/series" class="header-nav-link">Сериалы</router-link>
+               </li>
+               <li class="header-nav-item">
+                  <router-link to="/collections" class="header-nav-link">Подборки</router-link>
+               </li>
             </ul>
          </nav>
       </div>
 
-      <div class="header-right"> <!-- Иконки и поиск -->
-         <button class="search-btn">
+      <div class="header-right">
+         <button class="header-btn">
             <img src="@/assets/icons/search.svg" alt="Поиск" class="" />
-            <span>Поиск</span>
+            <span class="header-btn-text">Поиск</span>
          </button>
-         <button class="notifications-btn">
+         <button class="header-btn">
             <img src="@/assets/icons/notification.svg" alt="Уведомления" class="" />
          </button>
-         <button class="account-btn">
+         <button class="header-btn">
             <img src="@/assets/icons/account.svg" alt="Логин" class="" />
          </button>
       </div>
@@ -31,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-// Пока логики нет, просто верстка
+
 </script>
 
 <style scoped>
@@ -59,7 +65,7 @@
    gap: 35px;
 }
 
-.header-right button {
+.header-btn {
    display: flex;
    align-items: center;
    justify-content: center;
@@ -68,24 +74,28 @@
    cursor: pointer;
 }
 
-.header-right button span {
+.header-btn-text {
    margin-left: 5px;
    color: gray;
 }
 
-nav ul {
+.header-nav-list {
    display: flex;
    align-items: center;
    gap: 25px;
    list-style: none;
 }
 
-nav a {
+.header-nav-link {
    color: gray;
    text-decoration: none;
 }
 
-nav a:hover {
+.header-nav-link:hover {
    color: #fff;
+}
+
+.header-nav-link.router-link-active {
+   color: white;
 }
 </style>
