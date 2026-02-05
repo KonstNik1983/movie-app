@@ -28,6 +28,5 @@ import AppHeader from '@/components/app-header/AppHeader.vue'
 
 .main {
    flex: 1;
-   margin: 0 auto;
 }
 </style>

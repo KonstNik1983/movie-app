@@ -59,7 +59,8 @@ const authStore = useAuthStore();
    justify-content: space-between;
    align-items: center;
    background-color: transparent;
-   padding: 30px 0;
+   padding: 20px 0;
+   border-bottom: 1px solid var(--color-text-secondary, #555);
 
 }
 
