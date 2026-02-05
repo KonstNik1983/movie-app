@@ -9,8 +9,8 @@ body,
 #app {
   height: 100%;
   font-family: 'Prisma Nova', sans-serif;
-  background-color: black;
-  color: white;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 
 h1,

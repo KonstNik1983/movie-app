@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-// Пока логики нет
+
 </script>
 
 <style scoped>
