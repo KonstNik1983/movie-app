@@ -18,26 +18,39 @@
                </li>
             </ul>
          </nav>
+
+         <button class="header-btn" v-if="authStore.isAuth" aria-label="Поиск">
+            <img src="@/assets/icons/search.svg" alt="" />
+         </button>
       </div>
 
       <div class="header-right">
-         <button class="header-btn">
-            <img src="@/assets/icons/search.svg" alt="Поиск" class="" />
-            <span class="header-btn-text">Поиск</span>
-         </button>
-         <button class="header-btn">
-            <img src="@/assets/icons/notification.svg" alt="Уведомления" class="" />
-         </button>
-         <button class="header-btn">
-            <img src="@/assets/icons/account.svg" alt="Логин" class="" />
-         </button>
+         <template v-if="!authStore.isAuth">
+            <button class="header-btn">
+               <img src="@/assets/icons/search.svg" alt="" />
+               <span class="header-btn-text">Поиск</span>
+            </button>
+            <button class="header-btn" aria-label="Уведомления">
+               <img src="@/assets/icons/notification.svg" alt="" />
+            </button>
+            <button class="header-btn" aria-label="Логин">
+               <img src="@/assets/icons/account.svg" alt="" />
+            </button>
+         </template>
+         <template v-else>
+            <button class="header-btn header-avatar" aria-label="Профиль пользователя">
+               <img src="https://i.pravatar.cc/150" alt="Аватар пользователя">
+            </button>
+         </template>
       </div>
 
    </header>
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/store/auth';
 
+const authStore = useAuthStore();
 </script>
 
 <style scoped>
@@ -76,7 +89,11 @@
 
 .header-btn-text {
    margin-left: 5px;
-   color: gray;
+   color: var(--color-text-secondary);
+}
+
+.header-nav {
+   margin-right: 25px;
 }
 
 .header-nav-list {
@@ -87,15 +104,15 @@
 }
 
 .header-nav-link {
-   color: gray;
+   color: var(--color-text-secondary);
    text-decoration: none;
 }
 
 .header-nav-link:hover {
-   color: #fff;
+   color: var(--color-text-primary);
 }
 
 .header-nav-link.router-link-active {
-   color: white;
+   color: var(--color-text-primary);
 }
 </style>
