@@ -20,7 +20,7 @@
    </section>
 
    <section class="advantages">
-      <h2 class="advantages__title">Преимущества Кинодома</h2>
+      <h2 class="advantages__title">Преимущества КиноДома</h2>
 
       <ul class="advantages__list">
          <li class="advantages__item">
@@ -96,21 +96,6 @@ import BaseButton from '@/components/buttons/BaseButton.vue';
 .hero__text {
    margin-bottom: 30px;
    color: var(--color-text-secondary);
-}
-
-.hero__btn {
-   padding: 12px 24px;
-   font-size: 1rem;
-   background-color: var(--color-btn-primary);
-   color: #fff;
-   border: none;
-   border-radius: 8px;
-   cursor: pointer;
-   transition: background 0.3s;
-}
-
-.hero__btn:hover {
-   background-color: var(--color-btn-primary-hover);
 }
 
 .hero__right {

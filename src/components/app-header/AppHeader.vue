@@ -1,8 +1,8 @@
 <template>
-   <header class="header">
-      <div class="header-left">
+   <header class="app-header">
+      <div class="app-header-left">
          <router-link to="/">
-            <img src="@/assets/logo.svg" alt="Logo" class="logo" />
+            <img src="@/assets/logo.svg" alt="Кинодом Logo" class="logo" />
          </router-link>
 
          <nav class="header-nav">
@@ -24,7 +24,7 @@
          </button>
       </div>
 
-      <div class="header-right">
+      <div class="app-header-right">
          <template v-if="!authStore.isAuth">
             <button class="header-btn">
                <img src="@/assets/icons/search.svg" alt="" />
@@ -54,7 +54,7 @@ const authStore = useAuthStore();
 </script>
 
 <style scoped>
-.header {
+.app-header {
    display: flex;
    justify-content: space-between;
    align-items: center;
@@ -64,7 +64,7 @@ const authStore = useAuthStore();
 
 }
 
-.header-left {
+.app-header-left {
    display: flex;
    align-items: center;
 }
@@ -73,7 +73,7 @@ const authStore = useAuthStore();
    margin-right: 60px;
 }
 
-.header-right {
+.app-header-right {
    display: flex;
    align-items: center;
    gap: 35px;
