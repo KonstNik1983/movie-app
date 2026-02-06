@@ -1,5 +1,5 @@
 <template>
-   <header class="app-header">
+   <header class="header">
       <div class="header-left">
          <router-link to="/">
             <img src="@/assets/logo.svg" alt="Logo" class="logo" />
@@ -54,7 +54,7 @@ const authStore = useAuthStore();
 </script>
 
 <style scoped>
-.app-header {
+.header {
    display: flex;
    justify-content: space-between;
    align-items: center;
