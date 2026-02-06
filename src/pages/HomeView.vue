@@ -11,7 +11,8 @@
             с лучшими фильмами и сериалами - в дубляже <br>
             и оригенале. Целый месяц бесплатно!
          </p>
-         <button class="hero__btn">Смотреть бесплатно</button>
+         <BaseButton variant="primary">Смотреть сейчас</BaseButton>
+
       </div>
       <div class="hero__right">
          <img src="@/assets/placeholder-movie.jpg" alt="Пример фильма" class="hero__img">
@@ -21,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-
+import BaseButton from '@/components/buttons/BaseButton.vue';
 </script>
 
 <style scoped>
@@ -62,7 +63,7 @@
 }
 
 .hero__btn:hover {
-   background-color: #ac1e3d;
+   background-color: var(--color-btn-primary-hover);
 }
 
 .hero__right {

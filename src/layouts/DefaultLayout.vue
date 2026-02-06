@@ -24,6 +24,9 @@ import AppHeader from '@/components/app-header/AppHeader.vue'
    max-width: 1400px;
    margin: 0 auto;
    padding: 0 clamp(20px, 5%, 100px);
+   background-image: url('@/assets/blur-ellipses.png');
+   background-repeat: no-repeat;
+   background-size: cover;
 }
 
 .main {

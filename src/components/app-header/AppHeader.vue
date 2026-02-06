@@ -39,7 +39,7 @@
          </template>
          <template v-else>
             <button class="header-btn header-avatar" aria-label="Профиль пользователя">
-               <img src="https://i.pravatar.cc/150" alt="Аватар пользователя">
+               <img src="https://i.pravatar.cc/150" alt="Аватар пользователя" class="user-avatar">
             </button>
          </template>
       </div>
@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/auth-store/auth';
 
 const authStore = useAuthStore();
 </script>
@@ -77,6 +77,12 @@ const authStore = useAuthStore();
    display: flex;
    align-items: center;
    gap: 35px;
+}
+
+.user-avatar {
+   width: 60px;
+   height: 60px;
+   border-radius: 50%;
 }
 
 .header-btn {
