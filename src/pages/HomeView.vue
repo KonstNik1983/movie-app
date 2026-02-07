@@ -52,7 +52,7 @@
             </div>
             <h3 class="advantages__item-title">Лучшее мировое кино</h3>
             <p class="advantages__item-text">
-               Кино, сереалы со всего мира, включая Европу и Азию. А так же достойное российское кино
+               Кино, сериалы со всего мира, включая Европу и Азию. А так же достойное российское кино
             </p>
          </li>
 
@@ -62,11 +62,108 @@
             </div>
             <h3 class="advantages__item-title">Месяц бесплатно</h3>
             <p class="advantages__item-text">
-               Весь коталог КиноДома, и все новинки кино и сериалов бесплатно целый месяц после регистрации
+               Весь каталог КиноДома, и все новинки кино и сериалов бесплатно целый месяц после регистрации
             </p>
          </li>
       </ul>
    </section>
+   <section class="plans">
+      <h2 class="plans__title">Тарифные планы</h2>
+
+      <div class="plans__list">
+         <!-- ЛАЙТ -->
+         <div class="plans__item">
+            <h3 class="plans__item-title">ЛАЙТ</h3>
+            <ul class="plans__item-features">
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Кино и сериалы на каждый день</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/lock.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text">Суперхиты</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/lock.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text">Всё для детей</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/lock.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text">Образовательные передачи</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/lock.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text">Amediateka и Start</span>
+               </li>
+            </ul>
+            <div class="plans__item-footer">
+               <BaseButton variant="primary">Оформить подписку</BaseButton>
+               <span class="plans__item-price">250₽</span>
+            </div>
+         </div>
+
+         <div class="plans__item">
+            <h3 class="plans__item-title">ОПТИМУМ</h3>
+            <ul class="plans__item-features">
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Кино и сериалы на каждый день</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Суперхиты</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Всё для детей</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/lock.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text">Образовательные передачи</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/lock.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text">Amediateka и Start</span>
+               </li>
+            </ul>
+            <div class="plans__item-footer">
+               <BaseButton variant="primary">Оформить подписку</BaseButton>
+               <span class="plans__item-price">300₽</span>
+            </div>
+         </div>
+
+         <div class="plans__item">
+            <h3 class="plans__item-title">ПРЕМИУМ</h3>
+            <ul class="plans__item-features">
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Кино и сериалы на каждый день</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Суперхиты</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Всё для детей</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Образовательные передачи</span>
+               </li>
+               <li class="plans__item-feature">
+                  <img src="@/assets/icons/check.svg" alt="" aria-hidden="true" class="plans__item-feature-icon" />
+                  <span class="plans__item-feature-text active">Amediateka и Start</span>
+               </li>
+            </ul>
+            <div class="plans__item-footer">
+               <BaseButton variant="primary">Оформить подписку</BaseButton>
+               <span class="plans__item-price">400₽</span>
+            </div>
+         </div>
+      </div>
+   </section>
+
    <section class="discounts">
       <h2 class="discounts__title">
          Скидки на кино
@@ -239,5 +336,65 @@ import BaseButton from '@/components/buttons/BaseButton.vue';
 .discounts__icon--img {
    width: 35px;
    height: 35px;
+}
+
+.plans {
+   padding: 60px 0;
+}
+
+.plans__title {
+   margin-bottom: 60px;
+}
+
+.plans__list {
+   display: flex;
+   justify-content: space-between;
+   flex-wrap: wrap;
+}
+
+.plans__item {
+   width: 335px;
+   background-color: rgba(54, 4, 112, 0.4);
+   backdrop-filter: blur(10px);
+   padding: 40px 30px;
+   display: flex;
+   flex-direction: column;
+   border-radius: 12px;
+}
+
+.plans__item-title {
+   margin-bottom: 40px;
+}
+
+.plans__item-features {
+   list-style: none;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   margin-bottom: 40px;
+}
+
+.plans__item-feature-text {
+   color: var(--color-text-secondary);
+}
+
+.plans__item-feature-text.active {
+   color: var(--color-text-primary);
+}
+
+.plans__item-feature-icon {
+   width: 20px;
+   height: 20px;
+   flex-shrink: 0;
+   display: inline-block;
+   margin-right: 10px;
+}
+
+.plans__item-footer {
+   display: flex;
+   gap: 20px;
+   align-items: center;
+   padding: 30px 0 0 0;
+   border-top: 1px solid white;
 }
 </style>
