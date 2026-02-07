@@ -12,7 +12,7 @@ defineProps<{
 
 <style scoped>
 .base-btn {
-   padding: 12px 24px;
+   padding: 12px 20px;
    font-size: 1rem;
    font-weight: 600;
    border: none;

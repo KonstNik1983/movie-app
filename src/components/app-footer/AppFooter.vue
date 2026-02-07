@@ -10,22 +10,29 @@
          <div class="site-footer__columns">
 
             <div class="site-footer__column">
+
                <h3 class="site-footer__column-title">Меню</h3>
                <ul class="site-footer__column-list">
-                  <li class="site-footer__column-item"><router-link class="site-footer__column-link"
+                  <li class="site-footer__column-item"><router-link
+class="site-footer__column-link"
                         to="/movies">Фильмы</router-link></li>
-                  <li class="site-footer__column-item"><router-link class="site-footer__column-link"
+                  <li class="site-footer__column-item"><router-link
+class="site-footer__column-link"
                         to="/series">Сериалы</router-link></li>
-                  <li class="site-footer__column-item"><router-link class="site-footer__column-link"
+                  <li class="site-footer__column-item"><router-link
+class="site-footer__column-link"
                         to="/collections">Подборки</router-link></li>
                </ul>
                <h3 class="site-footer__column-title">Подписка</h3>
                <ul class="site-footer__column-list">
-                  <li class="site-footer__column-item"><router-link class="site-footer__column-link"
+                  <li class="site-footer__column-item"><router-link
+class="site-footer__column-link"
                         to="/movies">Тарифный план</router-link></li>
-                  <li class="site-footer__column-item"><router-link class="site-footer__column-link"
+                  <li class="site-footer__column-item"><router-link
+class="site-footer__column-link"
                         to="/series">Акции</router-link></li>
-                  <li class="site-footer__column-item"><router-link class="site-footer__column-link"
+                  <li class="site-footer__column-item"><router-link
+class="site-footer__column-link"
                         to="/collections">Подписка за баллы</router-link></li>
                </ul>
             </div>
@@ -57,32 +64,46 @@
             <div class="site-footer__column">
                <h3 class="site-footer__column-title">Техподдержка</h3>
                <ul class="site-footer__column-list">
-                  <li class="site-footer__column-item"><a href="#">8 800 800 80 80</a></li>
-                  <li class="site-footer__column-item"><a href="#">support@mail.ru</a></li>
+                  <li class="site-footer__column-item">
+                     <a href="#" class="site-footer__contact">
+                        <img
+src="@/assets/icons/phone.svg" alt="" aria-hidden="true"
+                           class="site-footer__contact-icon" />
+                        <span>8 800 800 80 80</span>
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a href="#" class="site-footer__contact">
+                        <img
+src="@/assets/icons/mail.svg" alt="" aria-hidden="true"
+                           class="site-footer__contact-icon" />
+                        <span>support@mail.ru</span>
+                     </a>
+                  </li>
                </ul>
                <h3 class="site-footer__column-title">Подписывайтесть на нас</h3>
                <div class="site-footer__social">
                   <a href="#" aria-label="Facebook" class="site-footer__social-link">
-                     <img src="@/assets/icons/Vector (7).svg" alt="Facebook" />
+                     <img src="@/assets/icons/facebook.svg" alt="Facebook" />
                   </a>
                   <a href="#" aria-label="VK" class="site-footer__social-link">
-                     <img src="@/assets/icons/Vector (5).svg" alt="VK" />
+                     <img src="@/assets/icons/VK.svg" alt="VK" />
                   </a>
                   <a href="#" aria-label="Instagram" class="site-footer__social-link">
-                     <img src="@/assets/icons/Vector (8).svg" alt="Instagram" />
+                     <img src="@/assets/icons/instagram.svg" alt="Instagram" />
                   </a>
                </div>
             </div>
          </div>
       </div>
       <div class="site-footer__bottom">
-         <p>© КиноДом 2026</p>
+         <p>© КиноДом {{ currentYear }}</p>
       </div>
    </footer>
 </template>
 
 <script setup lang="ts">
-
+const currentYear = new Date().getFullYear();
 </script>
 
 <style scoped>
@@ -94,8 +115,6 @@
 
 .site-footer__top {
    display: flex;
-   justify-content: space-between;
-   align-items: flex-start;
    flex-wrap: wrap;
    gap: 60px;
    margin-bottom: 60px;
@@ -107,8 +126,8 @@
 }
 
 .site-footer__columns {
-   display: grid;
-   grid-template-columns: repeat(4, 1fr);
+   display: flex;
+   justify-content: space-between;
    flex: 1;
    gap: 40px;
 }
@@ -116,7 +135,6 @@
 .site-footer__column {
    display: flex;
    flex-direction: column;
-
 }
 
 .site-footer__column-title {
@@ -125,7 +143,6 @@
 }
 
 .site-footer__column-list {
-
    list-style: none;
    padding: 0;
    margin: 0;
@@ -162,5 +179,23 @@
 .site-footer__social-link:hover img {
    transform: scale(1.1);
    filter: brightness(1.2);
+}
+
+.site-footer__contact {
+   display: inline-flex;
+   align-items: center;
+   gap: 10px;
+   color: var(--color-text-secondary);
+   text-decoration: none;
+}
+
+.site-footer__contact:hover {
+   color: var(--color-text-primary);
+}
+
+.site-footer__contact-icon {
+   width: 16px;
+   height: 16px;
+   flex-shrink: 0;
 }
 </style>

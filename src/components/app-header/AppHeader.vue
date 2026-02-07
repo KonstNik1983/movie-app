@@ -19,7 +19,7 @@
             </ul>
          </nav>
 
-         <button class="header-btn" v-if="authStore.isAuth" aria-label="Поиск">
+         <button v-if="authStore.isAuth" class="header-btn" aria-label="Поиск">
             <img src="@/assets/icons/search.svg" alt="" />
          </button>
       </div>
