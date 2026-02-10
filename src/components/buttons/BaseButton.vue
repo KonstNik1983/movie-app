@@ -1,13 +1,19 @@
 <template>
-   <button class="base-btn" :class="variant ? `base-btn--${variant}` : ''">
+   <button class="base-btn" :class="buttonClass">
       <slot />
    </button>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue';
+
+const props = defineProps<{
    variant?: 'primary' | 'secondary' | 'ghost'
 }>()
+
+const buttonClass = computed(() => {
+   return props.variant ? `base-btn--${props.variant}` : ''
+})
 </script>
 
 <style scoped>

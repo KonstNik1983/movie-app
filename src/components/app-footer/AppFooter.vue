@@ -11,58 +11,125 @@
 
             <div class="site-footer__column">
 
-               <h3 class="site-footer__column-title">Меню</h3>
+               <h3 class="site-footer__column-title">
+                  Меню
+               </h3>
                <ul class="site-footer__column-list">
-                  <li class="site-footer__column-item"><router-link
-class="site-footer__column-link"
-                        to="/movies">Фильмы</router-link></li>
-                  <li class="site-footer__column-item"><router-link
-class="site-footer__column-link"
-                        to="/series">Сериалы</router-link></li>
-                  <li class="site-footer__column-item"><router-link
-class="site-footer__column-link"
-                        to="/collections">Подборки</router-link></li>
+                  <li class="site-footer__column-item">
+                     <router-link class="site-footer__column-link" to="/movies">
+                        Фильмы
+                     </router-link>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <router-link class="site-footer__column-link" to="/series">
+                        Сериалы
+                     </router-link>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <router-link class="site-footer__column-link" to="/collections">
+                        Подборки
+                     </router-link>
+                  </li>
                </ul>
-               <h3 class="site-footer__column-title">Подписка</h3>
+               <h3 class="site-footer__column-title">
+                  Подписка
+               </h3>
                <ul class="site-footer__column-list">
-                  <li class="site-footer__column-item"><router-link
-class="site-footer__column-link"
-                        to="/movies">Тарифный план</router-link></li>
-                  <li class="site-footer__column-item"><router-link
-class="site-footer__column-link"
-                        to="/series">Акции</router-link></li>
-                  <li class="site-footer__column-item"><router-link
-class="site-footer__column-link"
-                        to="/collections">Подписка за баллы</router-link></li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Тарифный план
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Акции
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Подписка за баллы
+                     </a>
+                  </li>
                </ul>
             </div>
 
             <div class="site-footer__column">
                <h3 class="site-footer__column-title">Кино и сериалы</h3>
                <ul class="site-footer__column-list">
-                  <li class="site-footer__column-item"><a href="#">Весь каталог</a></li>
-                  <li class="site-footer__column-item"><a href="#">Комедии</a></li>
-                  <li class="site-footer__column-item"><a href="#">Драмы</a></li>
-                  <li class="site-footer__column-item"><a href="#">Фэнтези</a></li>
-                  <li class="site-footer__column-item"><a href="#">Триллеры</a></li>
-                  <li class="site-footer__column-item"><a href="#">Детективы</a></li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Весь каталог
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Комедии
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Драмы
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Фэнтези
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Триллеры
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Детективы
+                     </a>
+                  </li>
                </ul>
             </div>
 
             <div class="site-footer__column">
-               <h3 class="site-footer__column-title">Сотрудничество</h3>
+               <h3 class="site-footer__column-title">
+                  Сотрудничество
+               </h3>
                <ul class="site-footer__column-list">
-                  <li class="site-footer__column-item"><a href="#">Размещение рекламы</a></li>
-                  <li class="site-footer__column-item"><a href="#">Партнёрам</a></li>
-                  <li class="site-footer__column-item"><a href="#">Партнерская программа</a></li>
-                  <li class="site-footer__column-item"><a href="#">Пользовательское соглашение</a></li>
-                  <li class="site-footer__column-item"><a href="#">Политика конфедициальности</a></li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Размещение рекламы
+
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Партнёрам
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Партнерская программа
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Пользовательское соглашение
+                     </a>
+                  </li>
+                  <li class="site-footer__column-item">
+                     <a class="site-footer__column-link" href="#">
+                        Политика конфедициальности
+                     </a>
+                  </li>
                </ul>
-               <h3 class="site-footer__column-title">Вопросы и ответы</h3>
+               <h3 class="site-footer__column-title">
+                  Вопросы и ответы
+               </h3>
             </div>
 
             <div class="site-footer__column">
-               <h3 class="site-footer__column-title">Техподдержка</h3>
+               <h3 class="site-footer__column-title">
+                  Техподдержка
+               </h3>
                <ul class="site-footer__column-list">
                   <li class="site-footer__column-item">
                      <a href="#" class="site-footer__contact">
@@ -81,16 +148,18 @@ src="@/assets/icons/mail.svg" alt="" aria-hidden="true"
                      </a>
                   </li>
                </ul>
-               <h3 class="site-footer__column-title">Подписывайтесть на нас</h3>
+               <h3 class="site-footer__column-title">
+                  Подписывайтесть на нас
+               </h3>
                <div class="site-footer__social">
                   <a href="#" aria-label="Facebook" class="site-footer__social-link">
-                     <img src="@/assets/icons/facebook.svg" alt="Facebook" />
+                     <img class="site-footer__social-icon" src="@/assets/icons/facebook.svg" alt="Facebook" />
                   </a>
                   <a href="#" aria-label="VK" class="site-footer__social-link">
-                     <img src="@/assets/icons/VK.svg" alt="VK" />
+                     <img class="site-footer__social-icon" src="@/assets/icons/VK.svg" alt="VK" />
                   </a>
                   <a href="#" aria-label="Instagram" class="site-footer__social-link">
-                     <img src="@/assets/icons/instagram.svg" alt="Instagram" />
+                     <img class="site-footer__social-icon" src="@/assets/icons/instagram.svg" alt="Instagram" />
                   </a>
                </div>
             </div>
@@ -152,15 +221,13 @@ const currentYear = new Date().getFullYear();
    margin-bottom: 30px;
 }
 
-.site-footer__column-link,
-.site-footer__column-list a {
+.site-footer__column-link {
    color: var(--color-text-secondary);
    text-decoration: none;
    transition: color 0.2s;
 }
 
-.site-footer__column-link:hover,
-.site-footer__column-list a:hover {
+.site-footer__column-link:hover {
    color: var(--color-text-primary);
 }
 
@@ -170,13 +237,13 @@ const currentYear = new Date().getFullYear();
    margin-top: 8px;
 }
 
-.site-footer__social-link img {
+.site-footer__social-icon {
    width: 32px;
    height: 32px;
    transition: transform 0.2s, filter 0.2s;
 }
 
-.site-footer__social-link:hover img {
+.site-footer__social-icon:hover {
    transform: scale(1.1);
    filter: brightness(1.2);
 }
