@@ -18,11 +18,7 @@
       <BaseButton variant="primary">Смотреть сейчас</BaseButton>
     </div>
     <div class="hero__right">
-      <img
-        src="@/assets/placeholder-movie.jpg"
-        alt="Пример фильма"
-        class="hero__img"
-      />
+      <HeroSlider />
     </div>
   </section>
 
@@ -105,7 +101,7 @@
         <div v-for="movie in genre.movies" :key="movie.id" class="movie-card">
           <img
             class="movie-card-img"
-            :src="getMoviePoster(movie.poster_path)"
+            :src="getMovieImage(movie)"
             :alt="movie.title"
           />
           <p class="movie-card-text">
@@ -368,6 +364,8 @@
 
 <script setup lang="ts">
   import BaseButton from '@/components/buttons/BaseButton.vue';
+  import HeroSlider from '@/components/slider/HeroSlider.vue';
+
   import { ref, onMounted } from 'vue';
   import placeholder from '@/assets/placeholder-movie.jpg';
 
@@ -378,6 +376,7 @@
     id: number;
     title: string;
     poster_path: string | null;
+    backdrop_path?: string | null;
     vote_average: number;
     type: 'Фильм' | 'Сериал';
     genre_ids?: number[];
@@ -407,6 +406,7 @@
     title?: string;
     name?: string;
     poster_path: string | null;
+    backdrop_path?: string | null;
     vote_average: number;
     genre_ids?: number[];
   }
@@ -500,6 +500,7 @@
         id: item.id,
         title: item.title || item.name,
         poster_path: item.poster_path,
+        backdrop_path: item.backdrop_path,
         vote_average: item.vote_average,
         type: type === 'movie' ? 'Фильм' : 'Сериал',
         genre_ids: item.genre_ids || [],
@@ -525,7 +526,11 @@
       }
 
       if (data.results?.length) {
-        collection.posterUrl = `https://image.tmdb.org/t/p/w500${data.results[0].poster_path}`;
+        const movie = data.results[0] as TMDBMovie;
+        const path = movie.backdrop_path ?? movie.poster_path;
+        collection.posterUrl = path
+          ? `https://image.tmdb.org/t/p/w500${path}`
+          : placeholder;
       } else {
         collection.posterUrl = placeholder;
       }
@@ -535,12 +540,10 @@
     }
   }
 
-  function getMoviePoster(posterPath: string | null): string {
-    if (!posterPath) {
-      return placeholder;
-    }
-
-    return `https://image.tmdb.org/t/p/w300${posterPath}`;
+  function getMovieImage(movie: Movie): string {
+    const path = movie.backdrop_path ?? movie.poster_path;
+    if (!path) return placeholder;
+    return `https://image.tmdb.org/t/p/w500${path}`;
   }
 
   function getMovieGenres(genreIds: number[]): string {
