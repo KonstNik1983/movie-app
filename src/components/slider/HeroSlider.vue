@@ -30,108 +30,22 @@
 <script setup lang="ts">
   import useEmblaCarousel from 'embla-carousel-vue';
   import { ref, onMounted } from 'vue';
-  import placeholder from '@/assets/placeholder-movie.jpg';
-
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-  const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
-  const IMAGE_BASE = 'https://image.tmdb.org/t/p/w780';
-
-  interface Movie {
-    id: number;
-    title: string;
-    type: 'Фильм' | 'Сериал';
-    image: string;
-    release_date: string;
-  }
-
-  interface TMDBMovie {
-    id: number;
-    title?: string;
-    name?: string;
-    backdrop_path?: string | null;
-    poster_path?: string | null;
-    release_date?: string;
-    first_air_date?: string;
-  }
+  import { fetchMedia } from '@/api/slider.api';
+  import { shuffleArray } from '@/utils/movie.utils';
+  import type { Movie } from '@/types/movie.types';
+  import { isInCinema, getReleaseLabel } from '@/utils/movie.utils';
 
   const mediaState = ref<Movie[]>([]);
-
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 
   function scrollPrev() {
     if (emblaApi.value) emblaApi.value.scrollPrev();
   }
-
   function scrollNext() {
     if (emblaApi.value) emblaApi.value.scrollNext();
   }
 
-  async function fetchMedia(type: 'movie' | 'tv'): Promise<Movie[]> {
-    const url = `${BASE_URL}/${type}/popular?api_key=${API_KEY}&language=ru-RU&page=1`;
-
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (!Array.isArray(data.results)) {
-        console.error('Некорректный ответ API премьер', data);
-
-        return [];
-      }
-
-      return data.results.map((item: TMDBMovie) => {
-        const path = item.backdrop_path ?? item.poster_path;
-
-        return {
-          id: item.id,
-          title: item.title || item.name,
-          type: type === 'movie' ? 'Фильм' : 'Сериал',
-          image: buildImage(path),
-          release_date: item.release_date ?? item.first_air_date ?? '',
-        };
-      });
-    } catch (error) {
-      console.error('Ошибка при получении премьер:', error);
-
-      return [];
-    }
-  }
-
-  function getReleaseLabel(movie: Movie): string {
-    if (!movie.release_date) return '';
-
-    const today = new Date();
-    const release = new Date(movie.release_date);
-
-    return release <= today
-      ? 'В прокате'
-      : release.toLocaleDateString('ru-RU', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric',
-        });
-  }
-
-  function isInCinema(movie: Movie): boolean {
-    if (!movie.release_date) return false;
-    const today = new Date();
-    const release = new Date(movie.release_date);
-    return release <= today;
-  }
-
-  function buildImage(path: string | null | undefined): string {
-    if (path) {
-      return `${IMAGE_BASE}${path}`;
-    }
-
-    return placeholder;
-  }
-
-  function shuffleArray<T>(arr: T[]): T[] {
-    return arr.sort(() => Math.random() - 0.5);
-  }
-
-  onMounted(async (): Promise<void> => {
+  onMounted(async () => {
     const movies = await fetchMedia('movie');
     const tvs = await fetchMedia('tv');
     mediaState.value = shuffleArray([...movies, ...tvs]).slice(0, 7);

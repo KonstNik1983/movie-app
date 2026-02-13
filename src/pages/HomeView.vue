@@ -26,68 +26,17 @@
     <h2 class="advantages__title">Преимущества КиноДома</h2>
 
     <ul class="advantages__list">
-      <li class="advantages__item">
+      <li v-for="item in advantages" :key="item.id" class="advantages__item">
         <div class="advantages__icon">
           <img
-            class="advantages__icon-img"
-            src="@/assets/icons/avatar.png"
+            :src="item.icon"
             alt=""
             aria-hidden="true"
-          />
-        </div>
-        <h3 class="advantages__item-title">Большой выбор</h3>
-        <p class="advantages__item-text">
-          10 000 фильмов и сериалов уже в библиотеке. Ежедневное пополнение
-          новинками кино
-        </p>
-      </li>
-
-      <li class="advantages__item">
-        <div class="advantages__icon">
-          <img
             class="advantages__icon-img"
-            src="@/assets/icons/avatar-ironman.png"
-            alt=""
-            aria-hidden="true"
           />
         </div>
-        <h3 class="advantages__item-title">Рекомендации</h3>
-        <p class="advantages__item-text">
-          Персонализированный список рекомендаций, подобранных на основе ваших
-          интересов
-        </p>
-      </li>
-
-      <li class="advantages__item">
-        <div class="advantages__icon">
-          <img
-            class="advantages__icon-img"
-            src="@/assets/icons/avatar-yoda.png"
-            alt=""
-            aria-hidden="true"
-          />
-        </div>
-        <h3 class="advantages__item-title">Лучшее мировое кино</h3>
-        <p class="advantages__item-text">
-          Кино, сериалы со всего мира, включая Европу и Азию. А так же достойное
-          российское кино
-        </p>
-      </li>
-
-      <li class="advantages__item">
-        <div class="advantages__icon">
-          <img
-            class="advantages__icon-img"
-            src="@/assets/icons/avatar-64.png"
-            alt=""
-            aria-hidden="true"
-          />
-        </div>
-        <h3 class="advantages__item-title">Месяц бесплатно</h3>
-        <p class="advantages__item-text">
-          Весь каталог КиноДома, и все новинки кино и сериалов бесплатно целый
-          месяц после регистрации
-        </p>
+        <h3 class="advantages__item-title">{{ item.title }}</h3>
+        <p class="advantages__item-text">{{ item.text }}</p>
       </li>
     </ul>
   </section>
@@ -131,186 +80,42 @@
       </div>
     </div>
   </section>
+
   <section class="plans section-padding">
     <h2 class="plans__title">Тарифные планы</h2>
 
     <div class="plans__list">
-      <div class="plans__item">
-        <h3 class="plans__item-title">ЛАЙТ</h3>
-        <ul class="plans__item-features">
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/check.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text active">
-              Кино и сериалы на каждый день
-            </span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/lock.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text">Суперхиты</span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/lock.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text">Всё для детей</span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/lock.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text">
-              Образовательные передачи
-            </span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/lock.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text">Amediateka и Start</span>
-          </li>
-        </ul>
-        <div class="plans__item-footer">
-          <BaseButton variant="primary">Оформить подписку</BaseButton>
-          <span class="plans__item-price">250₽</span>
-        </div>
-      </div>
+      <div v-for="plan in plans" :key="plan.id" class="plans__item">
+        <h3 class="plans__item-title">
+          {{ plan.name }}
+        </h3>
 
-      <div class="plans__item">
-        <h3 class="plans__item-title">ОПТИМУМ</h3>
         <ul class="plans__item-features">
-          <li class="plans__item-feature">
+          <li
+            v-for="feature in plan.features"
+            :key="feature.id"
+            class="plans__item-feature"
+          >
             <img
-              src="@/assets/icons/check.svg"
+              :src="feature.isActive ? checkIcon : lockIcon"
               alt=""
               aria-hidden="true"
               class="plans__item-feature-icon"
             />
-            <span class="plans__item-feature-text active">
-              Кино и сериалы на каждый день
-            </span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/check.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text active">Суперхиты</span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/check.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text active">Всё для детей</span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/lock.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text">
-              Образовательные передачи
-            </span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/lock.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text">Amediateka и Start</span>
-          </li>
-        </ul>
-        <div class="plans__item-footer">
-          <BaseButton variant="primary">Оформить подписку</BaseButton>
-          <span class="plans__item-price">300₽</span>
-        </div>
-      </div>
 
-      <div class="plans__item">
-        <h3 class="plans__item-title">ПРЕМИУМ</h3>
-        <ul class="plans__item-features">
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/check.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text active">
-              Кино и сериалы на каждый день
-            </span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/check.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text active">Суперхиты</span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/check.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text active">Всё для детей</span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/check.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text active">
-              Образовательные передачи
-            </span>
-          </li>
-          <li class="plans__item-feature">
-            <img
-              src="@/assets/icons/check.svg"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-            <span class="plans__item-feature-text active">
-              Amediateka и Start
+            <span
+              class="plans__item-feature-text"
+              :class="{ active: feature.isActive }"
+            >
+              {{ feature.text }}
             </span>
           </li>
         </ul>
+
         <div class="plans__item-footer">
           <BaseButton variant="primary">Оформить подписку</BaseButton>
-          <span class="plans__item-price">400₽</span>
+
+          <span class="plans__item-price">{{ plan.price }}₽</span>
         </div>
       </div>
     </div>
@@ -320,109 +125,65 @@
     <h2 class="discounts__title">Скидки на кино</h2>
 
     <ul class="discounts__list">
-      <li class="discounts__item">
+      <li v-for="item in discounts" :key="item.id" class="discounts__item">
         <div class="discounts__icon">
           <img
-            class="discounts__icon-img"
-            src="@/assets/icons/ric-sanches.png"
+            :src="item.icon"
             alt=""
             aria-hidden="true"
+            class="discounts__icon-img"
           />
         </div>
+
         <h3 class="discounts__item-title">
-          Скидка 50% на активность в сервисе
+          {{ item.title }}
         </h3>
+
         <p class="discounts__item-text">
-          Смотри кино, принимай участие в развитии сервиса: пиши рецензии,
-          собирай подборки из фильмов и сериалов, проходи квизы. Копи баллы, и
-          получай скидку 50% на любой тариф при следующей оплате подписки на
-          КиноДом
+          {{ item.text }}
         </p>
-        <BaseButton variant="ghost">Подробнее</BaseButton>
-      </li>
-      <li class="discounts__item">
-        <div class="discounts__icon">
-          <img
-            class="discounts__icon-img"
-            src="@/assets/icons/gin.png"
-            alt=""
-            aria-hidden="true"
-          />
-        </div>
-        <h3 class="discounts__item-title">Скидка для студентов 50%</h3>
-        <p class="discounts__item-text">
-          Просто приложи фото действующего студенческого билета при оформлении
-          подписки и наслаждайся кино! Важно! Скидка действует до конца текущего
-          года.Студенческая скидка не суммируеться с другими скидками и акциями
-          сервиса
-        </p>
-        <BaseButton variant="primary">Я студент, хочу скидку</BaseButton>
+
+        <BaseButton :variant="item.buttonVariant">
+          {{ item.buttonText }}
+        </BaseButton>
       </li>
     </ul>
   </section>
 </template>
 
 <script setup lang="ts">
+  import { ref, onMounted } from 'vue';
+
   import BaseButton from '@/components/buttons/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
 
-  import { ref, onMounted } from 'vue';
+  import { ADVANTAGES } from '@/data/advantages.data';
+  import { DISCOUNTS } from '@/data/discounts.data';
+  import { PLANS } from '@/data/plans.data';
+
+  import {
+    fetchGenres,
+    fetchMediaByGenre,
+    fetchFirstPoster,
+  } from '@/api/base.api';
+
+  import {
+    shuffleArray,
+    getMovieImage,
+    getMovieGenres,
+  } from '@/utils/movie.utils';
+
+  import type { Movie, Genre, Collection } from '@/types/movie.types';
+
   import placeholder from '@/assets/placeholder-movie.jpg';
+  import checkIcon from '@/assets/icons/check.svg';
+  import lockIcon from '@/assets/icons/lock.svg';
 
-  const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-  const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
-
-  interface Movie {
-    id: number;
-    title: string;
-    poster_path: string | null;
-    backdrop_path?: string | null;
-    vote_average: number;
-    type: 'Фильм' | 'Сериал';
-    genre_ids?: number[];
-  }
-
-  interface Genre {
-    id: number;
-    label: string;
-    movies: Movie[];
-  }
-
-  interface Collection {
-    id: number;
-    title: string;
-    genreId: number;
-    type: 'movie' | 'tv';
-    posterUrl: string;
-  }
-
-  interface TMDBGenre {
-    id: number;
-    name: string;
-  }
-
-  interface TMDBMovie {
-    id: number;
-    title?: string;
-    name?: string;
-    poster_path: string | null;
-    backdrop_path?: string | null;
-    vote_average: number;
-    genre_ids?: number[];
-  }
-
-  const genreTitles: Record<number, string> = {
-    35: 'Комедии',
-    18: 'Драмы',
-    14: 'Фэнтези',
-    53: 'Триллеры',
-    9648: 'Детективы',
-  };
-
-  const allowedGenreIds = [35, 18, 14, 53, 9648];
+  const advantages = ADVANTAGES;
+  const discounts = DISCOUNTS;
+  const plans = PLANS;
 
   const genresState = ref<Genre[]>([]);
-
   const collections = ref<Collection[]>([
     {
       id: 1,
@@ -454,116 +215,13 @@
     },
   ]);
 
-  async function fetchGenres(): Promise<Genre[]> {
-    const url = `${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=ru-RU`;
-
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (!Array.isArray(data.genres)) {
-        console.error('Некорректный ответ  API жанров', data);
-
-        return [];
-      }
-
-      return data.genres
-        .filter((genre: TMDBGenre) => allowedGenreIds.includes(genre.id))
-        .map((genre: TMDBGenre) => ({
-          id: genre.id,
-          label: genreTitles[genre.id],
-          movies: [],
-        }));
-    } catch (error) {
-      console.error('Ошибка при получении жанров:', error);
-
-      return [];
-    }
-  }
-
-  async function fetchMediaByGenre(
-    genreId: number,
-    type: 'movie' | 'tv'
-  ): Promise<Movie[]> {
-    const url = `${BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc&language=ru-RU&page=1`;
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (!Array.isArray(data.results)) {
-        console.error('Некорректный ответ API фильмов', data);
-
-        return [];
-      }
-
-      return data.results.map((item: TMDBMovie) => ({
-        id: item.id,
-        title: item.title || item.name,
-        poster_path: item.poster_path,
-        backdrop_path: item.backdrop_path,
-        vote_average: item.vote_average,
-        type: type === 'movie' ? 'Фильм' : 'Сериал',
-        genre_ids: item.genre_ids || [],
-      }));
-    } catch (error) {
-      console.error('Ошибка при получении фильмов по жанру:', error);
-
-      return [];
-    }
-  }
-
-  async function fetchFirstPoster(collection: Collection): Promise<void> {
-    const url = `${BASE_URL}/discover/${collection.type}?api_key=${API_KEY}&with_genres=${collection.genreId}&page=1`;
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (!Array.isArray(data.results)) {
-        console.error('Некорректный ответ API коллекции:', data);
-        collection.posterUrl = placeholder;
-
-        return;
-      }
-
-      if (data.results?.length) {
-        const movie = data.results[0] as TMDBMovie;
-        const path = movie.backdrop_path ?? movie.poster_path;
-        collection.posterUrl = path
-          ? `https://image.tmdb.org/t/p/w500${path}`
-          : placeholder;
-      } else {
-        collection.posterUrl = placeholder;
-      }
-    } catch (error) {
-      console.error('Ошибка при получении постера:', error);
-      collection.posterUrl = placeholder;
-    }
-  }
-
-  function getMovieImage(movie: Movie): string {
-    const path = movie.backdrop_path ?? movie.poster_path;
-    if (!path) return placeholder;
-    return `https://image.tmdb.org/t/p/w500${path}`;
-  }
-
-  function getMovieGenres(genreIds: number[]): string {
-    return genreIds
-      .map((id) => genreTitles[id])
-      .filter(Boolean)
-      .join(', ');
-  }
-
-  function shuffleArray<T>(arr: T[]): T[] {
-    return arr.sort(() => Math.random() - 0.5);
-  }
-
   onMounted(async (): Promise<void> => {
-    const allGenres = await fetchGenres();
-    genresState.value = allGenres;
+    genresState.value = await fetchGenres();
 
     for (const genre of genresState.value) {
-      const movies = await fetchMediaByGenre(genre.id, 'movie');
-      const tvs = await fetchMediaByGenre(genre.id, 'tv');
+      const movies: Movie[] = await fetchMediaByGenre(genre.id, 'movie');
+      const tvs: Movie[] = await fetchMediaByGenre(genre.id, 'tv');
+
       genre.movies = shuffleArray([...movies, ...tvs]).slice(0, 4);
     }
 
@@ -705,7 +363,7 @@
   }
 
   .plans__item {
-    width: 335px;
+    max-width: 350px;
     background-color: rgba(54, 4, 112, 0.4);
     backdrop-filter: blur(10px);
     padding: 40px 30px;
@@ -728,6 +386,7 @@
 
   .plans__item-feature-text {
     color: var(--color-text-secondary);
+    font-size: 16px;
   }
 
   .plans__item-feature-text.active {
