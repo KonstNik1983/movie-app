@@ -1,21 +1,21 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
-    "strict": true, // Включает строгую типизацию
-    "noUnusedLocals": true, // Ошибка, если есть неиспользуемые переменные
-    "noUnusedParameters": true, // Ошибка, если есть неиспользуемые параметры функций
-    "noFallthroughCasesInSwitch": true, // Ошибка, если case "проваливается"
-    "noUncheckedIndexedAccess": true, // Проверка доступа по индексам
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
     "types": [
       "vite/client"
-    ], // Типы для Vite
-    "incremental": true, // Включает ускоренную компиляцию TS
+    ],
+    "incremental": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "baseUrl": ".", // Для работы алиасов
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "src/*"
-      ] // Алиас @ → src
+      ]
     }
   },
   "include": [

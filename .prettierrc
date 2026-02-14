@@ -2,7 +2,9 @@
   "semi": true,
   "singleQuote": true,
   "trailingComma": "es5",
-  "printWidth": 100,
+  "printWidth": 80,
   "vueIndentScriptAndStyle": true,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "bracketSameLine": false,
+  "htmlWhitespaceSensitivity": "ignore"
 }
