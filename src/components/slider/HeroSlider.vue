@@ -2,7 +2,11 @@
   <div class="slider">
     <div class="slider__viewport" ref="emblaRef">
       <div class="slider__container">
-        <div class="slider__slide" v-for="movie in mediaState" :key="movie.id">
+        <div
+          class="slider__slide"
+          v-for="movie in sliderStore.slides"
+          :key="movie.id"
+        >
           <img class="slider__image" :src="movie.image" :alt="movie.title" />
 
           <div class="slider__info">
@@ -29,13 +33,11 @@
 
 <script setup lang="ts">
   import useEmblaCarousel from 'embla-carousel-vue';
-  import { ref, onMounted } from 'vue';
-  import { fetchMedia } from '@/api/slider.api';
-  import { shuffleArray } from '@/utils/movie.utils';
-  import type { Movie } from '@/types/movie.types';
+  import { useSliderStore } from '@/store/slider-store/slider.store';
   import { isInCinema, getReleaseLabel } from '@/utils/movie.utils';
 
-  const mediaState = ref<Movie[]>([]);
+  const sliderStore = useSliderStore();
+
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 
   function scrollPrev() {
@@ -44,12 +46,6 @@
   function scrollNext() {
     if (emblaApi.value) emblaApi.value.scrollNext();
   }
-
-  onMounted(async () => {
-    const movies = await fetchMedia('movie');
-    const tvs = await fetchMedia('tv');
-    mediaState.value = shuffleArray([...movies, ...tvs]).slice(0, 7);
-  });
 </script>
 
 <style scoped>

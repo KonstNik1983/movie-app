@@ -45,7 +45,11 @@ export function getMovieImage(
   return `${IMAGE_BASE_URL}${IMAGE_SIZES[size]}${path}`;
 }
 
-export function getMovieGenres(genreIds: number[]): string {
+export function getMovieGenres(genreIds?: number[] | null): string {
+  if (!Array.isArray(genreIds) || genreIds.length === 0) {
+    return '';
+  }
+
   return genreIds
     .map((id) => GENRE_TITLES[id])
     .filter(Boolean)

@@ -44,7 +44,11 @@
   <section class="movies section-padding">
     <h2 class="movies__title">Каталог фильмов и сериалов</h2>
 
-    <div v-for="genre in genresState" :key="genre.id" class="movies__genre">
+    <div
+      v-for="genre in movieStore.genres"
+      :key="genre.id"
+      class="movies__genre"
+    >
       <h3 class="movie__title">{{ genre.label }}</h3>
       <div class="movies__cards">
         <div v-for="movie in genre.movies" :key="movie.id" class="movie-card">
@@ -68,7 +72,11 @@
     <h2 class="collections__title">Тематические подборки</h2>
 
     <div class="collections__grid">
-      <div v-for="item in collections" :key="item.id" class="collection-card">
+      <div
+        v-for="item in movieStore.collections"
+        :key="item.id"
+        class="collection-card"
+      >
         <img
           class="collection-card__img"
           :src="item.posterUrl || placeholder"
@@ -152,7 +160,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from 'vue';
+  import { useMovieStore } from '@/store/app-store/app.store';
 
   import BaseButton from '@/components/buttons/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
@@ -161,74 +169,17 @@
   import { DISCOUNTS } from '@/data/discounts.data';
   import { PLANS } from '@/data/plans.data';
 
-  import {
-    fetchGenres,
-    fetchMediaByGenre,
-    fetchFirstPoster,
-  } from '@/api/base.api';
-
-  import {
-    shuffleArray,
-    getMovieImage,
-    getMovieGenres,
-  } from '@/utils/movie.utils';
-
-  import type { Movie, Genre, Collection } from '@/types/movie.types';
-
   import placeholder from '@/assets/placeholder-movie.jpg';
   import checkIcon from '@/assets/icons/check.svg';
   import lockIcon from '@/assets/icons/lock.svg';
+
+  import { getMovieImage, getMovieGenres } from '@/utils/movie.utils';
 
   const advantages = ADVANTAGES;
   const discounts = DISCOUNTS;
   const plans = PLANS;
 
-  const genresState = ref<Genre[]>([]);
-  const collections = ref<Collection[]>([
-    {
-      id: 1,
-      title: 'Любителям \n комиксов',
-      genreId: 878,
-      type: 'movie',
-      posterUrl: '',
-    },
-    {
-      id: 2,
-      title: 'Классика \n фентези',
-      genreId: 14,
-      type: 'movie',
-      posterUrl: '',
-    },
-    {
-      id: 3,
-      title: 'Японские \n мультфильмы',
-      genreId: 16,
-      type: 'movie',
-      posterUrl: '',
-    },
-    {
-      id: 4,
-      title: 'Сатирические \n мультсериалы',
-      genreId: 16,
-      type: 'tv',
-      posterUrl: '',
-    },
-  ]);
-
-  onMounted(async (): Promise<void> => {
-    genresState.value = await fetchGenres();
-
-    for (const genre of genresState.value) {
-      const movies: Movie[] = await fetchMediaByGenre(genre.id, 'movie');
-      const tvs: Movie[] = await fetchMediaByGenre(genre.id, 'tv');
-
-      genre.movies = shuffleArray([...movies, ...tvs]).slice(0, 4);
-    }
-
-    for (const collection of collections.value) {
-      await fetchFirstPoster(collection);
-    }
-  });
+  const movieStore = useMovieStore();
 </script>
 
 <style scoped>
