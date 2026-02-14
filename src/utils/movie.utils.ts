@@ -11,13 +11,15 @@ export function buildImage(
   size: keyof typeof IMAGE_SIZES = 'medium'
 ): string {
   if (path) return `${IMAGE_BASE_URL}${IMAGE_SIZES[size]}${path}`;
+
   return PLACEHOLDER_IMAGE;
 }
 
-export function getReleaseLabel(movie: Movie): string {
+export function getReleaseLabel(movie: { release_date?: string }): string {
   if (!movie.release_date) return '';
   const today = new Date();
   const release = new Date(movie.release_date);
+
   return release <= today
     ? 'В прокате'
     : release.toLocaleDateString('ru-RU', {
@@ -27,10 +29,11 @@ export function getReleaseLabel(movie: Movie): string {
       });
 }
 
-export function isInCinema(movie: Movie): boolean {
+export function isInCinema(movie: { release_date?: string }): boolean {
   if (!movie.release_date) return false;
   const today = new Date();
   const release = new Date(movie.release_date);
+
   return release <= today;
 }
 

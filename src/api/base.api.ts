@@ -22,6 +22,7 @@ export async function fetchGenres(): Promise<Genre[]> {
 
     if (!Array.isArray(data.genres)) {
       console.error('Некорректный ответ API жанров', data);
+
       return [];
     }
 
@@ -34,6 +35,7 @@ export async function fetchGenres(): Promise<Genre[]> {
       }));
   } catch (error) {
     console.error('Ошибка при получении жанров:', error);
+
     return [];
   }
 }
@@ -50,6 +52,7 @@ export async function fetchMediaByGenre(
 
     if (!Array.isArray(data.results)) {
       console.error('Некорректный ответ API фильмов', data);
+
       return [];
     }
 
@@ -67,6 +70,7 @@ export async function fetchMediaByGenre(
     }));
   } catch (error) {
     console.error('Ошибка при получении фильмов по жанру:', error);
+
     return [];
   }
 }
@@ -80,6 +84,7 @@ export async function fetchFirstPoster(collection: Collection): Promise<void> {
 
     if (!Array.isArray(data.results) || !data.results.length) {
       collection.posterUrl = placeholder;
+
       return;
     }
 
