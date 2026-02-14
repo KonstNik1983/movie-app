@@ -8,8 +8,7 @@
     "preview": "vite preview",
     "lint": "eslint src --ext .ts,.vue",
     "lint:fix": "eslint src --ext .ts,.vue --fix",
-    "generate:api": "swagger-typescript-api generate -p https://developer.themoviedb.org/openapi/tmdb-api.json -o ./src/api -n generated.api.ts",
-    "generate:orval": "npx orval"
+    "generate:api": "orval"
   },
   "dependencies": {
     "embla-carousel-vue": "^8.6.0",
@@ -27,8 +26,8 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-vue": "^9.33.0",
+    "orval": "^8.3.0",
     "prettier": "^3.8.1",
-    "swagger-typescript-api": "^13.2.18",
     "typescript": "~5.9.3",
     "vite": "^7.2.4",
     "vue-tsc": "^3.1.4"
