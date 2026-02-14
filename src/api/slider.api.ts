@@ -1,6 +1,5 @@
 import type { Movie, TMDBMovie } from '@/types/movie.types';
 import { buildImage } from '@/utils/movie.utils';
-import { IMAGE_SIZES } from '@/config/constants';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = import.meta.env.VITE_TMDB_BASE_URL;
