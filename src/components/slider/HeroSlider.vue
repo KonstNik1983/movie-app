@@ -1,11 +1,11 @@
 <template>
   <div class="slider">
-    <div class="slider__viewport" ref="emblaRef">
+    <div ref="emblaRef" class="slider__viewport">
       <div class="slider__container">
         <div
-          class="slider__slide"
-          v-for="movie in sliderStore.slides"
+          v-for="movie in sliderStore.formattedSlides"
           :key="movie.id"
+          class="slider__slide"
         >
           <img class="slider__image" :src="movie.image" :alt="movie.title" />
 
@@ -33,8 +33,9 @@
 
 <script setup lang="ts">
   import useEmblaCarousel from 'embla-carousel-vue';
-  import { useSliderStore } from '@/store/slider-store/slider.store';
+  import { useSliderStore } from '@/store/slider/slider.ts';
   import { isInCinema, getReleaseLabel } from '@/utils/movie.utils';
+  import { onMounted } from 'vue'
 
   const sliderStore = useSliderStore();
 
@@ -43,9 +44,14 @@
   function scrollPrev() {
     if (emblaApi.value) emblaApi.value.scrollPrev();
   }
+
   function scrollNext() {
     if (emblaApi.value) emblaApi.value.scrollNext();
   }
+
+  onMounted(() => {
+    console.log(sliderStore.formattedSlides)
+  })
 </script>
 
 <style scoped>

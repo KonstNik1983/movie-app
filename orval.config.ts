@@ -2,8 +2,10 @@ import { defineConfig } from 'orval';
 
 export default defineConfig({
   tmdb: {
+    input: {
+      target: 'https://developer.themoviedb.org/openapi/tmdb-api.json',
+    },
     output: {
-      tsconfig: './tsconfig.app.json',
       mode: 'single',
       target: './src/api/tmdb.ts',
       schemas: './src/api/types',
@@ -15,9 +17,7 @@ export default defineConfig({
           name: 'appFetch',
         },
       },
-    },
-    input: {
-      target: 'https://developer.themoviedb.org/openapi/tmdb-api.json',
+      tsconfig: './tsconfig.app.json',
     },
     hooks: {
       afterAllFilesWrite: 'eslint src/api --ext .ts --fix',
