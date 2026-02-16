@@ -2,9 +2,10 @@ import {
   IMAGE_BASE_URL,
   IMAGE_SIZES,
   PLACEHOLDER_IMAGE,
+  HOME_GENRES,
 } from '@/config/constants';
 import type { Movie } from '@/types/movie.types';
-import { GENRE_TITLES } from '@/config/constants';
+import { useGenreStore } from '@/store/genre/genre.ts';
 
 export function buildImage(
   path: string | null | undefined,
@@ -54,8 +55,23 @@ export function getMovieGenres(genreIds?: number[] | null): string {
   }
 
   return genreIds
-    .map((id) => GENRE_TITLES[id])
+    .map((id) => HOME_GENRES.find((g) => g.id === id)?.title)
     .filter(Boolean)
+    .join(', ');
+}
+
+export function buildMovieGenres(
+  genreIds?: number[] | null,
+  limit = 2
+): string {
+  if (!Array.isArray(genreIds) || genreIds.length === 0) return '';
+
+  const genreStore = useGenreStore();
+
+  return genreIds
+    .map((id) => genreStore.getGenreById(id)?.name?.toLowerCase())
+    .filter(Boolean)
+    .slice(0, limit)
     .join(', ');
 }
 

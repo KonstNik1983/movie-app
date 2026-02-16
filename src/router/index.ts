@@ -4,6 +4,7 @@ import HomeView from '@/pages/HomeView.vue';
 import MoviesView from '@/pages/MoviesView.vue';
 import SeriesView from '@/pages/SeriesView.vue';
 import CollectionsView from '@/pages/CollectionsView.vue';
+import CollectionPage from '@/pages/CollectionPage.vue';
 
 const routes = [
   {
@@ -29,6 +30,11 @@ const routes = [
         path: 'collections',
         name: 'CollectionsView',
         component: CollectionsView,
+      },
+      {
+        path: 'collections/:slug',
+        name: 'CollectionPage',
+        component: CollectionPage,
       },
     ],
   },

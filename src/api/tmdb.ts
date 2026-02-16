@@ -272,7 +272,7 @@ import type {
   WatchProvidersAvailableRegions200,
   WatchProvidersAvailableRegionsParams,
   WatchProvidersMovieList200,
-  WatchProvidersMovieListParams
+  WatchProvidersMovieListParams,
 } from './types';
 
 import { appFetch } from './app-fetch';
@@ -281,5971 +281,6277 @@ import { appFetch } from './app-fetch';
  * @summary Validate Key
  */
 export type authenticationValidateKeyResponse200 = {
-  data: AuthenticationValidateKey200
-  status: 200
-}
+  data: AuthenticationValidateKey200;
+  status: 200;
+};
 
 export type authenticationValidateKeyResponse401 = {
-  data: AuthenticationValidateKey401
-  status: 401
-}
-    
-export type authenticationValidateKeyResponseSuccess = (authenticationValidateKeyResponse200) & {
-  headers: Headers;
-};
-export type authenticationValidateKeyResponseError = (authenticationValidateKeyResponse401) & {
-  headers: Headers;
+  data: AuthenticationValidateKey401;
+  status: 401;
 };
 
-export type authenticationValidateKeyResponse = (authenticationValidateKeyResponseSuccess | authenticationValidateKeyResponseError)
+export type authenticationValidateKeyResponseSuccess =
+  authenticationValidateKeyResponse200 & {
+    headers: Headers;
+  };
+export type authenticationValidateKeyResponseError =
+  authenticationValidateKeyResponse401 & {
+    headers: Headers;
+  };
+
+export type authenticationValidateKeyResponse =
+  | authenticationValidateKeyResponseSuccess
+  | authenticationValidateKeyResponseError;
 
 export const getAuthenticationValidateKeyUrl = () => {
+  return `https://api.themoviedb.org/3/authentication`;
+};
 
-  return `https://api.themoviedb.org/3/authentication`
-}
-
-export const authenticationValidateKey = async ( options?: RequestInit): Promise<authenticationValidateKeyResponse> => {
-  
-  return appFetch<authenticationValidateKeyResponse>(getAuthenticationValidateKeyUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const authenticationValidateKey = async (
+  options?: RequestInit
+): Promise<authenticationValidateKeyResponse> => {
+  return appFetch<authenticationValidateKeyResponse>(
+    getAuthenticationValidateKeyUrl(),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the public details of an account on TMDB.
  * @summary Details
  */
 export type accountDetailsResponse200 = {
-  data: AccountDetails200
-  status: 200
-}
-    
-export type accountDetailsResponseSuccess = (accountDetailsResponse200) & {
+  data: AccountDetails200;
+  status: 200;
+};
+
+export type accountDetailsResponseSuccess = accountDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type accountDetailsResponse = accountDetailsResponseSuccess;
 
-export type accountDetailsResponse = (accountDetailsResponseSuccess)
-
-export const getAccountDetailsUrl = (accountId: number,
-    params?: AccountDetailsParams,) => {
+export const getAccountDetailsUrl = (
+  accountId: number,
+  params?: AccountDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}`;
+};
 
-export const accountDetails = async (accountId: number,
-    params?: AccountDetailsParams, options?: RequestInit): Promise<accountDetailsResponse> => {
-  
-  return appFetch<accountDetailsResponse>(getAccountDetailsUrl(accountId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const accountDetails = async (
+  accountId: number,
+  params?: AccountDetailsParams,
+  options?: RequestInit
+): Promise<accountDetailsResponse> => {
+  return appFetch<accountDetailsResponse>(
+    getAccountDetailsUrl(accountId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Mark a movie or TV show as a favourite.
  * @summary Add Favorite
  */
 export type accountAddFavoriteResponse200 = {
-  data: AccountAddFavorite200
-  status: 200
-}
-    
-export type accountAddFavoriteResponseSuccess = (accountAddFavoriteResponse200) & {
-  headers: Headers;
+  data: AccountAddFavorite200;
+  status: 200;
 };
-;
 
-export type accountAddFavoriteResponse = (accountAddFavoriteResponseSuccess)
+export type accountAddFavoriteResponseSuccess =
+  accountAddFavoriteResponse200 & {
+    headers: Headers;
+  };
+export type accountAddFavoriteResponse = accountAddFavoriteResponseSuccess;
 
-export const getAccountAddFavoriteUrl = (accountId: number,
-    params?: AccountAddFavoriteParams,) => {
+export const getAccountAddFavoriteUrl = (
+  accountId: number,
+  params?: AccountAddFavoriteParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/favorite?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/favorite`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/favorite?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/favorite`;
+};
 
-export const accountAddFavorite = async (accountId: number,
-    accountAddFavoriteBody: AccountAddFavoriteBody,
-    params?: AccountAddFavoriteParams, options?: RequestInit): Promise<accountAddFavoriteResponse> => {
-  
-  return appFetch<accountAddFavoriteResponse>(getAccountAddFavoriteUrl(accountId,params),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      accountAddFavoriteBody,)
-  }
-);}
+export const accountAddFavorite = async (
+  accountId: number,
+  accountAddFavoriteBody: AccountAddFavoriteBody,
+  params?: AccountAddFavoriteParams,
+  options?: RequestInit
+): Promise<accountAddFavoriteResponse> => {
+  return appFetch<accountAddFavoriteResponse>(
+    getAccountAddFavoriteUrl(accountId, params),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(accountAddFavoriteBody),
+    }
+  );
+};
 
 /**
  * Add a movie or TV show to your watchlist.
  * @summary Add To Watchlist
  */
 export type accountAddToWatchlistResponse200 = {
-  data: AccountAddToWatchlist200
-  status: 200
-}
-    
-export type accountAddToWatchlistResponseSuccess = (accountAddToWatchlistResponse200) & {
-  headers: Headers;
+  data: AccountAddToWatchlist200;
+  status: 200;
 };
-;
 
-export type accountAddToWatchlistResponse = (accountAddToWatchlistResponseSuccess)
+export type accountAddToWatchlistResponseSuccess =
+  accountAddToWatchlistResponse200 & {
+    headers: Headers;
+  };
+export type accountAddToWatchlistResponse =
+  accountAddToWatchlistResponseSuccess;
 
-export const getAccountAddToWatchlistUrl = (accountId: number,
-    params?: AccountAddToWatchlistParams,) => {
+export const getAccountAddToWatchlistUrl = (
+  accountId: number,
+  params?: AccountAddToWatchlistParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/watchlist?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/watchlist`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/watchlist?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/watchlist`;
+};
 
-export const accountAddToWatchlist = async (accountId: number,
-    accountAddToWatchlistBody: AccountAddToWatchlistBody,
-    params?: AccountAddToWatchlistParams, options?: RequestInit): Promise<accountAddToWatchlistResponse> => {
-  
-  return appFetch<accountAddToWatchlistResponse>(getAccountAddToWatchlistUrl(accountId,params),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      accountAddToWatchlistBody,)
-  }
-);}
+export const accountAddToWatchlist = async (
+  accountId: number,
+  accountAddToWatchlistBody: AccountAddToWatchlistBody,
+  params?: AccountAddToWatchlistParams,
+  options?: RequestInit
+): Promise<accountAddToWatchlistResponse> => {
+  return appFetch<accountAddToWatchlistResponse>(
+    getAccountAddToWatchlistUrl(accountId, params),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(accountAddToWatchlistBody),
+    }
+  );
+};
 
 /**
  * Get a users list of favourite movies.
  * @summary Favorite Movies
  */
 export type accountGetFavoritesResponse200 = {
-  data: AccountGetFavorites200
-  status: 200
-}
-    
-export type accountGetFavoritesResponseSuccess = (accountGetFavoritesResponse200) & {
-  headers: Headers;
+  data: AccountGetFavorites200;
+  status: 200;
 };
-;
 
-export type accountGetFavoritesResponse = (accountGetFavoritesResponseSuccess)
+export type accountGetFavoritesResponseSuccess =
+  accountGetFavoritesResponse200 & {
+    headers: Headers;
+  };
+export type accountGetFavoritesResponse = accountGetFavoritesResponseSuccess;
 
-export const getAccountGetFavoritesUrl = (accountId: number,
-    params?: AccountGetFavoritesParams,) => {
+export const getAccountGetFavoritesUrl = (
+  accountId: number,
+  params?: AccountGetFavoritesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/favorite/movies?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/favorite/movies`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/favorite/movies?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/favorite/movies`;
+};
 
-export const accountGetFavorites = async (accountId: number,
-    params?: AccountGetFavoritesParams, options?: RequestInit): Promise<accountGetFavoritesResponse> => {
-  
-  return appFetch<accountGetFavoritesResponse>(getAccountGetFavoritesUrl(accountId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const accountGetFavorites = async (
+  accountId: number,
+  params?: AccountGetFavoritesParams,
+  options?: RequestInit
+): Promise<accountGetFavoritesResponse> => {
+  return appFetch<accountGetFavoritesResponse>(
+    getAccountGetFavoritesUrl(accountId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a users list of favourite TV shows.
  * @summary Favorite TV
  */
 export type accountFavoriteTvResponse200 = {
-  data: AccountFavoriteTv200
-  status: 200
-}
-    
-export type accountFavoriteTvResponseSuccess = (accountFavoriteTvResponse200) & {
+  data: AccountFavoriteTv200;
+  status: 200;
+};
+
+export type accountFavoriteTvResponseSuccess = accountFavoriteTvResponse200 & {
   headers: Headers;
 };
-;
+export type accountFavoriteTvResponse = accountFavoriteTvResponseSuccess;
 
-export type accountFavoriteTvResponse = (accountFavoriteTvResponseSuccess)
-
-export const getAccountFavoriteTvUrl = (accountId: number,
-    params?: AccountFavoriteTvParams,) => {
+export const getAccountFavoriteTvUrl = (
+  accountId: number,
+  params?: AccountFavoriteTvParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/favorite/tv?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/favorite/tv`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/favorite/tv?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/favorite/tv`;
+};
 
-export const accountFavoriteTv = async (accountId: number,
-    params?: AccountFavoriteTvParams, options?: RequestInit): Promise<accountFavoriteTvResponse> => {
-  
-  return appFetch<accountFavoriteTvResponse>(getAccountFavoriteTvUrl(accountId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const accountFavoriteTv = async (
+  accountId: number,
+  params?: AccountFavoriteTvParams,
+  options?: RequestInit
+): Promise<accountFavoriteTvResponse> => {
+  return appFetch<accountFavoriteTvResponse>(
+    getAccountFavoriteTvUrl(accountId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a users list of custom lists.
  * @summary Lists
  */
 export type accountListsResponse200 = {
-  data: AccountLists200
-  status: 200
-}
-    
-export type accountListsResponseSuccess = (accountListsResponse200) & {
+  data: AccountLists200;
+  status: 200;
+};
+
+export type accountListsResponseSuccess = accountListsResponse200 & {
   headers: Headers;
 };
-;
+export type accountListsResponse = accountListsResponseSuccess;
 
-export type accountListsResponse = (accountListsResponseSuccess)
-
-export const getAccountListsUrl = (accountId: number,
-    params?: AccountListsParams,) => {
+export const getAccountListsUrl = (
+  accountId: number,
+  params?: AccountListsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/lists?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/lists`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/lists?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/lists`;
+};
 
-export const accountLists = async (accountId: number,
-    params?: AccountListsParams, options?: RequestInit): Promise<accountListsResponse> => {
-  
-  return appFetch<accountListsResponse>(getAccountListsUrl(accountId,params),
-  {      
+export const accountLists = async (
+  accountId: number,
+  params?: AccountListsParams,
+  options?: RequestInit
+): Promise<accountListsResponse> => {
+  return appFetch<accountListsResponse>(getAccountListsUrl(accountId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get a users list of rated movies.
  * @summary Rated Movies
  */
 export type accountRatedMoviesResponse200 = {
-  data: AccountRatedMovies200
-  status: 200
-}
-    
-export type accountRatedMoviesResponseSuccess = (accountRatedMoviesResponse200) & {
-  headers: Headers;
+  data: AccountRatedMovies200;
+  status: 200;
 };
-;
 
-export type accountRatedMoviesResponse = (accountRatedMoviesResponseSuccess)
+export type accountRatedMoviesResponseSuccess =
+  accountRatedMoviesResponse200 & {
+    headers: Headers;
+  };
+export type accountRatedMoviesResponse = accountRatedMoviesResponseSuccess;
 
-export const getAccountRatedMoviesUrl = (accountId: number,
-    params?: AccountRatedMoviesParams,) => {
+export const getAccountRatedMoviesUrl = (
+  accountId: number,
+  params?: AccountRatedMoviesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/rated/movies?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/rated/movies`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/rated/movies?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/rated/movies`;
+};
 
-export const accountRatedMovies = async (accountId: number,
-    params?: AccountRatedMoviesParams, options?: RequestInit): Promise<accountRatedMoviesResponse> => {
-  
-  return appFetch<accountRatedMoviesResponse>(getAccountRatedMoviesUrl(accountId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const accountRatedMovies = async (
+  accountId: number,
+  params?: AccountRatedMoviesParams,
+  options?: RequestInit
+): Promise<accountRatedMoviesResponse> => {
+  return appFetch<accountRatedMoviesResponse>(
+    getAccountRatedMoviesUrl(accountId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a users list of rated TV shows.
  * @summary Rated TV
  */
 export type accountRatedTvResponse200 = {
-  data: AccountRatedTv200
-  status: 200
-}
-    
-export type accountRatedTvResponseSuccess = (accountRatedTvResponse200) & {
+  data: AccountRatedTv200;
+  status: 200;
+};
+
+export type accountRatedTvResponseSuccess = accountRatedTvResponse200 & {
   headers: Headers;
 };
-;
+export type accountRatedTvResponse = accountRatedTvResponseSuccess;
 
-export type accountRatedTvResponse = (accountRatedTvResponseSuccess)
-
-export const getAccountRatedTvUrl = (accountId: number,
-    params?: AccountRatedTvParams,) => {
+export const getAccountRatedTvUrl = (
+  accountId: number,
+  params?: AccountRatedTvParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/rated/tv?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/rated/tv`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/rated/tv?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/rated/tv`;
+};
 
-export const accountRatedTv = async (accountId: number,
-    params?: AccountRatedTvParams, options?: RequestInit): Promise<accountRatedTvResponse> => {
-  
-  return appFetch<accountRatedTvResponse>(getAccountRatedTvUrl(accountId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const accountRatedTv = async (
+  accountId: number,
+  params?: AccountRatedTvParams,
+  options?: RequestInit
+): Promise<accountRatedTvResponse> => {
+  return appFetch<accountRatedTvResponse>(
+    getAccountRatedTvUrl(accountId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a users list of rated TV episodes.
  * @summary Rated TV Episodes
  */
 export type accountRatedTvEpisodesResponse200 = {
-  data: AccountRatedTvEpisodes200
-  status: 200
-}
-    
-export type accountRatedTvEpisodesResponseSuccess = (accountRatedTvEpisodesResponse200) & {
-  headers: Headers;
+  data: AccountRatedTvEpisodes200;
+  status: 200;
 };
-;
 
-export type accountRatedTvEpisodesResponse = (accountRatedTvEpisodesResponseSuccess)
+export type accountRatedTvEpisodesResponseSuccess =
+  accountRatedTvEpisodesResponse200 & {
+    headers: Headers;
+  };
+export type accountRatedTvEpisodesResponse =
+  accountRatedTvEpisodesResponseSuccess;
 
-export const getAccountRatedTvEpisodesUrl = (accountId: number,
-    params?: AccountRatedTvEpisodesParams,) => {
+export const getAccountRatedTvEpisodesUrl = (
+  accountId: number,
+  params?: AccountRatedTvEpisodesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/rated/tv/episodes?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/rated/tv/episodes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/rated/tv/episodes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/rated/tv/episodes`;
+};
 
-export const accountRatedTvEpisodes = async (accountId: number,
-    params?: AccountRatedTvEpisodesParams, options?: RequestInit): Promise<accountRatedTvEpisodesResponse> => {
-  
-  return appFetch<accountRatedTvEpisodesResponse>(getAccountRatedTvEpisodesUrl(accountId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const accountRatedTvEpisodes = async (
+  accountId: number,
+  params?: AccountRatedTvEpisodesParams,
+  options?: RequestInit
+): Promise<accountRatedTvEpisodesResponse> => {
+  return appFetch<accountRatedTvEpisodesResponse>(
+    getAccountRatedTvEpisodesUrl(accountId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of movies added to a users watchlist.
  * @summary Watchlist Movies
  */
 export type accountWatchlistMoviesResponse200 = {
-  data: AccountWatchlistMovies200
-  status: 200
-}
-    
-export type accountWatchlistMoviesResponseSuccess = (accountWatchlistMoviesResponse200) & {
-  headers: Headers;
+  data: AccountWatchlistMovies200;
+  status: 200;
 };
-;
 
-export type accountWatchlistMoviesResponse = (accountWatchlistMoviesResponseSuccess)
+export type accountWatchlistMoviesResponseSuccess =
+  accountWatchlistMoviesResponse200 & {
+    headers: Headers;
+  };
+export type accountWatchlistMoviesResponse =
+  accountWatchlistMoviesResponseSuccess;
 
-export const getAccountWatchlistMoviesUrl = (accountId: number,
-    params?: AccountWatchlistMoviesParams,) => {
+export const getAccountWatchlistMoviesUrl = (
+  accountId: number,
+  params?: AccountWatchlistMoviesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/watchlist/movies`;
+};
 
-export const accountWatchlistMovies = async (accountId: number,
-    params?: AccountWatchlistMoviesParams, options?: RequestInit): Promise<accountWatchlistMoviesResponse> => {
-  
-  return appFetch<accountWatchlistMoviesResponse>(getAccountWatchlistMoviesUrl(accountId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const accountWatchlistMovies = async (
+  accountId: number,
+  params?: AccountWatchlistMoviesParams,
+  options?: RequestInit
+): Promise<accountWatchlistMoviesResponse> => {
+  return appFetch<accountWatchlistMoviesResponse>(
+    getAccountWatchlistMoviesUrl(accountId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of TV shows added to a users watchlist.
  * @summary Watchlist TV
  */
 export type accountWatchlistTvResponse200 = {
-  data: AccountWatchlistTv200
-  status: 200
-}
-    
-export type accountWatchlistTvResponseSuccess = (accountWatchlistTvResponse200) & {
-  headers: Headers;
+  data: AccountWatchlistTv200;
+  status: 200;
 };
-;
 
-export type accountWatchlistTvResponse = (accountWatchlistTvResponseSuccess)
+export type accountWatchlistTvResponseSuccess =
+  accountWatchlistTvResponse200 & {
+    headers: Headers;
+  };
+export type accountWatchlistTvResponse = accountWatchlistTvResponseSuccess;
 
-export const getAccountWatchlistTvUrl = (accountId: number,
-    params?: AccountWatchlistTvParams,) => {
+export const getAccountWatchlistTvUrl = (
+  accountId: number,
+  params?: AccountWatchlistTvParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/account/${accountId}/watchlist/tv?${stringifiedParams}` : `https://api.themoviedb.org/3/account/${accountId}/watchlist/tv`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/account/${accountId}/watchlist/tv?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/account/${accountId}/watchlist/tv`;
+};
 
-export const accountWatchlistTv = async (accountId: number,
-    params?: AccountWatchlistTvParams, options?: RequestInit): Promise<accountWatchlistTvResponse> => {
-  
-  return appFetch<accountWatchlistTvResponse>(getAccountWatchlistTvUrl(accountId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const accountWatchlistTv = async (
+  accountId: number,
+  params?: AccountWatchlistTvParams,
+  options?: RequestInit
+): Promise<accountWatchlistTvResponse> => {
+  return appFetch<accountWatchlistTvResponse>(
+    getAccountWatchlistTvUrl(accountId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * @summary Create Guest Session
  */
 export type authenticationCreateGuestSessionResponse200 = {
-  data: AuthenticationCreateGuestSession200
-  status: 200
-}
-    
-export type authenticationCreateGuestSessionResponseSuccess = (authenticationCreateGuestSessionResponse200) & {
-  headers: Headers;
+  data: AuthenticationCreateGuestSession200;
+  status: 200;
 };
-;
 
-export type authenticationCreateGuestSessionResponse = (authenticationCreateGuestSessionResponseSuccess)
+export type authenticationCreateGuestSessionResponseSuccess =
+  authenticationCreateGuestSessionResponse200 & {
+    headers: Headers;
+  };
+export type authenticationCreateGuestSessionResponse =
+  authenticationCreateGuestSessionResponseSuccess;
 
 export const getAuthenticationCreateGuestSessionUrl = () => {
+  return `https://api.themoviedb.org/3/authentication/guest_session/new`;
+};
 
-  return `https://api.themoviedb.org/3/authentication/guest_session/new`
-}
-
-export const authenticationCreateGuestSession = async ( options?: RequestInit): Promise<authenticationCreateGuestSessionResponse> => {
-  
-  return appFetch<authenticationCreateGuestSessionResponse>(getAuthenticationCreateGuestSessionUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const authenticationCreateGuestSession = async (
+  options?: RequestInit
+): Promise<authenticationCreateGuestSessionResponse> => {
+  return appFetch<authenticationCreateGuestSessionResponse>(
+    getAuthenticationCreateGuestSessionUrl(),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * @summary Create Request Token
  */
 export type authenticationCreateRequestTokenResponse200 = {
-  data: AuthenticationCreateRequestToken200
-  status: 200
-}
-    
-export type authenticationCreateRequestTokenResponseSuccess = (authenticationCreateRequestTokenResponse200) & {
-  headers: Headers;
+  data: AuthenticationCreateRequestToken200;
+  status: 200;
 };
-;
 
-export type authenticationCreateRequestTokenResponse = (authenticationCreateRequestTokenResponseSuccess)
+export type authenticationCreateRequestTokenResponseSuccess =
+  authenticationCreateRequestTokenResponse200 & {
+    headers: Headers;
+  };
+export type authenticationCreateRequestTokenResponse =
+  authenticationCreateRequestTokenResponseSuccess;
 
 export const getAuthenticationCreateRequestTokenUrl = () => {
+  return `https://api.themoviedb.org/3/authentication/token/new`;
+};
 
-  return `https://api.themoviedb.org/3/authentication/token/new`
-}
-
-export const authenticationCreateRequestToken = async ( options?: RequestInit): Promise<authenticationCreateRequestTokenResponse> => {
-  
-  return appFetch<authenticationCreateRequestTokenResponse>(getAuthenticationCreateRequestTokenUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const authenticationCreateRequestToken = async (
+  options?: RequestInit
+): Promise<authenticationCreateRequestTokenResponse> => {
+  return appFetch<authenticationCreateRequestTokenResponse>(
+    getAuthenticationCreateRequestTokenUrl(),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * @summary Create Session
  */
 export type authenticationCreateSessionResponse200 = {
-  data: AuthenticationCreateSession200
-  status: 200
-}
-    
-export type authenticationCreateSessionResponseSuccess = (authenticationCreateSessionResponse200) & {
-  headers: Headers;
+  data: AuthenticationCreateSession200;
+  status: 200;
 };
-;
 
-export type authenticationCreateSessionResponse = (authenticationCreateSessionResponseSuccess)
+export type authenticationCreateSessionResponseSuccess =
+  authenticationCreateSessionResponse200 & {
+    headers: Headers;
+  };
+export type authenticationCreateSessionResponse =
+  authenticationCreateSessionResponseSuccess;
 
 export const getAuthenticationCreateSessionUrl = () => {
+  return `https://api.themoviedb.org/3/authentication/session/new`;
+};
 
-  return `https://api.themoviedb.org/3/authentication/session/new`
-}
-
-export const authenticationCreateSession = async (authenticationCreateSessionBody: AuthenticationCreateSessionBody, options?: RequestInit): Promise<authenticationCreateSessionResponse> => {
-  
-  return appFetch<authenticationCreateSessionResponse>(getAuthenticationCreateSessionUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      authenticationCreateSessionBody,)
-  }
-);}
+export const authenticationCreateSession = async (
+  authenticationCreateSessionBody: AuthenticationCreateSessionBody,
+  options?: RequestInit
+): Promise<authenticationCreateSessionResponse> => {
+  return appFetch<authenticationCreateSessionResponse>(
+    getAuthenticationCreateSessionUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(authenticationCreateSessionBody),
+    }
+  );
+};
 
 /**
  * @summary Create Session (from v4 token)
  */
 export type authenticationCreateSessionFromV4TokenResponse200 = {
-  data: AuthenticationCreateSessionFromV4Token200
-  status: 200
-}
-    
-export type authenticationCreateSessionFromV4TokenResponseSuccess = (authenticationCreateSessionFromV4TokenResponse200) & {
-  headers: Headers;
+  data: AuthenticationCreateSessionFromV4Token200;
+  status: 200;
 };
-;
 
-export type authenticationCreateSessionFromV4TokenResponse = (authenticationCreateSessionFromV4TokenResponseSuccess)
+export type authenticationCreateSessionFromV4TokenResponseSuccess =
+  authenticationCreateSessionFromV4TokenResponse200 & {
+    headers: Headers;
+  };
+export type authenticationCreateSessionFromV4TokenResponse =
+  authenticationCreateSessionFromV4TokenResponseSuccess;
 
 export const getAuthenticationCreateSessionFromV4TokenUrl = () => {
+  return `https://api.themoviedb.org/3/authentication/session/convert/4`;
+};
 
-  return `https://api.themoviedb.org/3/authentication/session/convert/4`
-}
-
-export const authenticationCreateSessionFromV4Token = async (authenticationCreateSessionFromV4TokenBody: AuthenticationCreateSessionFromV4TokenBody, options?: RequestInit): Promise<authenticationCreateSessionFromV4TokenResponse> => {
-  
-  return appFetch<authenticationCreateSessionFromV4TokenResponse>(getAuthenticationCreateSessionFromV4TokenUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      authenticationCreateSessionFromV4TokenBody,)
-  }
-);}
+export const authenticationCreateSessionFromV4Token = async (
+  authenticationCreateSessionFromV4TokenBody: AuthenticationCreateSessionFromV4TokenBody,
+  options?: RequestInit
+): Promise<authenticationCreateSessionFromV4TokenResponse> => {
+  return appFetch<authenticationCreateSessionFromV4TokenResponse>(
+    getAuthenticationCreateSessionFromV4TokenUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(authenticationCreateSessionFromV4TokenBody),
+    }
+  );
+};
 
 /**
  * This method allows an application to validate a request token by entering a username and password.
  * @summary Create Session (with login)
  */
 export type authenticationCreateSessionFromLoginResponse200 = {
-  data: AuthenticationCreateSessionFromLogin200
-  status: 200
-}
-    
-export type authenticationCreateSessionFromLoginResponseSuccess = (authenticationCreateSessionFromLoginResponse200) & {
-  headers: Headers;
+  data: AuthenticationCreateSessionFromLogin200;
+  status: 200;
 };
-;
 
-export type authenticationCreateSessionFromLoginResponse = (authenticationCreateSessionFromLoginResponseSuccess)
+export type authenticationCreateSessionFromLoginResponseSuccess =
+  authenticationCreateSessionFromLoginResponse200 & {
+    headers: Headers;
+  };
+export type authenticationCreateSessionFromLoginResponse =
+  authenticationCreateSessionFromLoginResponseSuccess;
 
 export const getAuthenticationCreateSessionFromLoginUrl = () => {
+  return `https://api.themoviedb.org/3/authentication/token/validate_with_login`;
+};
 
-  return `https://api.themoviedb.org/3/authentication/token/validate_with_login`
-}
-
-export const authenticationCreateSessionFromLogin = async (authenticationCreateSessionFromLoginBody: AuthenticationCreateSessionFromLoginBody, options?: RequestInit): Promise<authenticationCreateSessionFromLoginResponse> => {
-  
-  return appFetch<authenticationCreateSessionFromLoginResponse>(getAuthenticationCreateSessionFromLoginUrl(),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      authenticationCreateSessionFromLoginBody,)
-  }
-);}
+export const authenticationCreateSessionFromLogin = async (
+  authenticationCreateSessionFromLoginBody: AuthenticationCreateSessionFromLoginBody,
+  options?: RequestInit
+): Promise<authenticationCreateSessionFromLoginResponse> => {
+  return appFetch<authenticationCreateSessionFromLoginResponse>(
+    getAuthenticationCreateSessionFromLoginUrl(),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(authenticationCreateSessionFromLoginBody),
+    }
+  );
+};
 
 /**
  * @summary Delete Session
  */
 export type authenticationDeleteSessionResponse200 = {
-  data: AuthenticationDeleteSession200
-  status: 200
-}
-    
-export type authenticationDeleteSessionResponseSuccess = (authenticationDeleteSessionResponse200) & {
-  headers: Headers;
+  data: AuthenticationDeleteSession200;
+  status: 200;
 };
-;
 
-export type authenticationDeleteSessionResponse = (authenticationDeleteSessionResponseSuccess)
+export type authenticationDeleteSessionResponseSuccess =
+  authenticationDeleteSessionResponse200 & {
+    headers: Headers;
+  };
+export type authenticationDeleteSessionResponse =
+  authenticationDeleteSessionResponseSuccess;
 
 export const getAuthenticationDeleteSessionUrl = () => {
+  return `https://api.themoviedb.org/3/authentication/session`;
+};
 
-  return `https://api.themoviedb.org/3/authentication/session`
-}
-
-export const authenticationDeleteSession = async (authenticationDeleteSessionBody: AuthenticationDeleteSessionBody, options?: RequestInit): Promise<authenticationDeleteSessionResponse> => {
-  
-  return appFetch<authenticationDeleteSessionResponse>(getAuthenticationDeleteSessionUrl(),
-  {      
-    ...options,
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      authenticationDeleteSessionBody,)
-  }
-);}
+export const authenticationDeleteSession = async (
+  authenticationDeleteSessionBody: AuthenticationDeleteSessionBody,
+  options?: RequestInit
+): Promise<authenticationDeleteSessionResponse> => {
+  return appFetch<authenticationDeleteSessionResponse>(
+    getAuthenticationDeleteSessionUrl(),
+    {
+      ...options,
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(authenticationDeleteSessionBody),
+    }
+  );
+};
 
 /**
  * Get an up to date list of the officially supported movie certifications on TMDB.
  * @summary Movie Certifications
  */
 export type certificationMovieListResponse200 = {
-  data: CertificationMovieList200
-  status: 200
-}
-    
-export type certificationMovieListResponseSuccess = (certificationMovieListResponse200) & {
-  headers: Headers;
+  data: CertificationMovieList200;
+  status: 200;
 };
-;
 
-export type certificationMovieListResponse = (certificationMovieListResponseSuccess)
+export type certificationMovieListResponseSuccess =
+  certificationMovieListResponse200 & {
+    headers: Headers;
+  };
+export type certificationMovieListResponse =
+  certificationMovieListResponseSuccess;
 
 export const getCertificationMovieListUrl = () => {
+  return `https://api.themoviedb.org/3/certification/movie/list`;
+};
 
-  return `https://api.themoviedb.org/3/certification/movie/list`
-}
-
-export const certificationMovieList = async ( options?: RequestInit): Promise<certificationMovieListResponse> => {
-  
-  return appFetch<certificationMovieListResponse>(getCertificationMovieListUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const certificationMovieList = async (
+  options?: RequestInit
+): Promise<certificationMovieListResponse> => {
+  return appFetch<certificationMovieListResponse>(
+    getCertificationMovieListUrl(),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * @summary TV Certifications
  */
 export type certificationsTvListResponse200 = {
-  data: CertificationsTvList200
-  status: 200
-}
-    
-export type certificationsTvListResponseSuccess = (certificationsTvListResponse200) & {
-  headers: Headers;
+  data: CertificationsTvList200;
+  status: 200;
 };
-;
 
-export type certificationsTvListResponse = (certificationsTvListResponseSuccess)
+export type certificationsTvListResponseSuccess =
+  certificationsTvListResponse200 & {
+    headers: Headers;
+  };
+export type certificationsTvListResponse = certificationsTvListResponseSuccess;
 
 export const getCertificationsTvListUrl = () => {
+  return `https://api.themoviedb.org/3/certification/tv/list`;
+};
 
-  return `https://api.themoviedb.org/3/certification/tv/list`
-}
-
-export const certificationsTvList = async ( options?: RequestInit): Promise<certificationsTvListResponse> => {
-  
-  return appFetch<certificationsTvListResponse>(getCertificationsTvListUrl(),
-  {      
+export const certificationsTvList = async (
+  options?: RequestInit
+): Promise<certificationsTvListResponse> => {
+  return appFetch<certificationsTvListResponse>(getCertificationsTvListUrl(), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get a list of all of the movie ids that have been changed in the past 24 hours.
  * @summary Movie List
  */
 export type changesMovieListResponse200 = {
-  data: ChangesMovieList200
-  status: 200
-}
-    
-export type changesMovieListResponseSuccess = (changesMovieListResponse200) & {
+  data: ChangesMovieList200;
+  status: 200;
+};
+
+export type changesMovieListResponseSuccess = changesMovieListResponse200 & {
   headers: Headers;
 };
-;
+export type changesMovieListResponse = changesMovieListResponseSuccess;
 
-export type changesMovieListResponse = (changesMovieListResponseSuccess)
-
-export const getChangesMovieListUrl = (params?: ChangesMovieListParams,) => {
+export const getChangesMovieListUrl = (params?: ChangesMovieListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/changes?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/changes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/changes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/changes`;
+};
 
-export const changesMovieList = async (params?: ChangesMovieListParams, options?: RequestInit): Promise<changesMovieListResponse> => {
-  
-  return appFetch<changesMovieListResponse>(getChangesMovieListUrl(params),
-  {      
+export const changesMovieList = async (
+  params?: ChangesMovieListParams,
+  options?: RequestInit
+): Promise<changesMovieListResponse> => {
+  return appFetch<changesMovieListResponse>(getChangesMovieListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary People List
  */
 export type changesPeopleListResponse200 = {
-  data: ChangesPeopleList200
-  status: 200
-}
-    
-export type changesPeopleListResponseSuccess = (changesPeopleListResponse200) & {
+  data: ChangesPeopleList200;
+  status: 200;
+};
+
+export type changesPeopleListResponseSuccess = changesPeopleListResponse200 & {
   headers: Headers;
 };
-;
+export type changesPeopleListResponse = changesPeopleListResponseSuccess;
 
-export type changesPeopleListResponse = (changesPeopleListResponseSuccess)
-
-export const getChangesPeopleListUrl = (params?: ChangesPeopleListParams,) => {
+export const getChangesPeopleListUrl = (params?: ChangesPeopleListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/person/changes?${stringifiedParams}` : `https://api.themoviedb.org/3/person/changes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/person/changes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/person/changes`;
+};
 
-export const changesPeopleList = async (params?: ChangesPeopleListParams, options?: RequestInit): Promise<changesPeopleListResponse> => {
-  
-  return appFetch<changesPeopleListResponse>(getChangesPeopleListUrl(params),
-  {      
+export const changesPeopleList = async (
+  params?: ChangesPeopleListParams,
+  options?: RequestInit
+): Promise<changesPeopleListResponse> => {
+  return appFetch<changesPeopleListResponse>(getChangesPeopleListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary TV List
  */
 export type changesTvListResponse200 = {
-  data: ChangesTvList200
-  status: 200
-}
-    
-export type changesTvListResponseSuccess = (changesTvListResponse200) & {
+  data: ChangesTvList200;
+  status: 200;
+};
+
+export type changesTvListResponseSuccess = changesTvListResponse200 & {
   headers: Headers;
 };
-;
+export type changesTvListResponse = changesTvListResponseSuccess;
 
-export type changesTvListResponse = (changesTvListResponseSuccess)
-
-export const getChangesTvListUrl = (params?: ChangesTvListParams,) => {
+export const getChangesTvListUrl = (params?: ChangesTvListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/changes?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/changes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/changes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/changes`;
+};
 
-export const changesTvList = async (params?: ChangesTvListParams, options?: RequestInit): Promise<changesTvListResponse> => {
-  
-  return appFetch<changesTvListResponse>(getChangesTvListUrl(params),
-  {      
+export const changesTvList = async (
+  params?: ChangesTvListParams,
+  options?: RequestInit
+): Promise<changesTvListResponse> => {
+  return appFetch<changesTvListResponse>(getChangesTvListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get collection details by ID.
  * @summary Details
  */
 export type collectionDetailsResponse200 = {
-  data: CollectionDetails200
-  status: 200
-}
-    
-export type collectionDetailsResponseSuccess = (collectionDetailsResponse200) & {
+  data: CollectionDetails200;
+  status: 200;
+};
+
+export type collectionDetailsResponseSuccess = collectionDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type collectionDetailsResponse = collectionDetailsResponseSuccess;
 
-export type collectionDetailsResponse = (collectionDetailsResponseSuccess)
-
-export const getCollectionDetailsUrl = (collectionId: number,
-    params?: CollectionDetailsParams,) => {
+export const getCollectionDetailsUrl = (
+  collectionId: number,
+  params?: CollectionDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/collection/${collectionId}?${stringifiedParams}` : `https://api.themoviedb.org/3/collection/${collectionId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/collection/${collectionId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/collection/${collectionId}`;
+};
 
-export const collectionDetails = async (collectionId: number,
-    params?: CollectionDetailsParams, options?: RequestInit): Promise<collectionDetailsResponse> => {
-  
-  return appFetch<collectionDetailsResponse>(getCollectionDetailsUrl(collectionId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const collectionDetails = async (
+  collectionId: number,
+  params?: CollectionDetailsParams,
+  options?: RequestInit
+): Promise<collectionDetailsResponse> => {
+  return appFetch<collectionDetailsResponse>(
+    getCollectionDetailsUrl(collectionId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the images that belong to a collection.
  * @summary Images
  */
 export type collectionImagesResponse200 = {
-  data: CollectionImages200
-  status: 200
-}
-    
-export type collectionImagesResponseSuccess = (collectionImagesResponse200) & {
+  data: CollectionImages200;
+  status: 200;
+};
+
+export type collectionImagesResponseSuccess = collectionImagesResponse200 & {
   headers: Headers;
 };
-;
+export type collectionImagesResponse = collectionImagesResponseSuccess;
 
-export type collectionImagesResponse = (collectionImagesResponseSuccess)
-
-export const getCollectionImagesUrl = (collectionId: number,
-    params?: CollectionImagesParams,) => {
+export const getCollectionImagesUrl = (
+  collectionId: number,
+  params?: CollectionImagesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/collection/${collectionId}/images?${stringifiedParams}` : `https://api.themoviedb.org/3/collection/${collectionId}/images`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/collection/${collectionId}/images?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/collection/${collectionId}/images`;
+};
 
-export const collectionImages = async (collectionId: number,
-    params?: CollectionImagesParams, options?: RequestInit): Promise<collectionImagesResponse> => {
-  
-  return appFetch<collectionImagesResponse>(getCollectionImagesUrl(collectionId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const collectionImages = async (
+  collectionId: number,
+  params?: CollectionImagesParams,
+  options?: RequestInit
+): Promise<collectionImagesResponse> => {
+  return appFetch<collectionImagesResponse>(
+    getCollectionImagesUrl(collectionId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * @summary Translations
  */
 export type collectionTranslationsResponse200 = {
-  data: CollectionTranslations200
-  status: 200
-}
-    
-export type collectionTranslationsResponseSuccess = (collectionTranslationsResponse200) & {
-  headers: Headers;
+  data: CollectionTranslations200;
+  status: 200;
 };
-;
 
-export type collectionTranslationsResponse = (collectionTranslationsResponseSuccess)
+export type collectionTranslationsResponseSuccess =
+  collectionTranslationsResponse200 & {
+    headers: Headers;
+  };
+export type collectionTranslationsResponse =
+  collectionTranslationsResponseSuccess;
 
-export const getCollectionTranslationsUrl = (collectionId: number,) => {
+export const getCollectionTranslationsUrl = (collectionId: number) => {
+  return `https://api.themoviedb.org/3/collection/${collectionId}/translations`;
+};
 
-  return `https://api.themoviedb.org/3/collection/${collectionId}/translations`
-}
-
-export const collectionTranslations = async (collectionId: number, options?: RequestInit): Promise<collectionTranslationsResponse> => {
-  
-  return appFetch<collectionTranslationsResponse>(getCollectionTranslationsUrl(collectionId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const collectionTranslations = async (
+  collectionId: number,
+  options?: RequestInit
+): Promise<collectionTranslationsResponse> => {
+  return appFetch<collectionTranslationsResponse>(
+    getCollectionTranslationsUrl(collectionId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the company details by ID.
  * @summary Details
  */
 export type companyDetailsResponse200 = {
-  data: CompanyDetails200
-  status: 200
-}
-    
-export type companyDetailsResponseSuccess = (companyDetailsResponse200) & {
+  data: CompanyDetails200;
+  status: 200;
+};
+
+export type companyDetailsResponseSuccess = companyDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type companyDetailsResponse = companyDetailsResponseSuccess;
 
-export type companyDetailsResponse = (companyDetailsResponseSuccess)
+export const getCompanyDetailsUrl = (companyId: number) => {
+  return `https://api.themoviedb.org/3/company/${companyId}`;
+};
 
-export const getCompanyDetailsUrl = (companyId: number,) => {
-
-  return `https://api.themoviedb.org/3/company/${companyId}`
-}
-
-export const companyDetails = async (companyId: number, options?: RequestInit): Promise<companyDetailsResponse> => {
-  
-  return appFetch<companyDetailsResponse>(getCompanyDetailsUrl(companyId),
-  {      
+export const companyDetails = async (
+  companyId: number,
+  options?: RequestInit
+): Promise<companyDetailsResponse> => {
+  return appFetch<companyDetailsResponse>(getCompanyDetailsUrl(companyId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the company details by ID.
  * @summary Alternative Names
  */
 export type companyAlternativeNamesResponse200 = {
-  data: CompanyAlternativeNames200
-  status: 200
-}
-    
-export type companyAlternativeNamesResponseSuccess = (companyAlternativeNamesResponse200) & {
-  headers: Headers;
+  data: CompanyAlternativeNames200;
+  status: 200;
 };
-;
 
-export type companyAlternativeNamesResponse = (companyAlternativeNamesResponseSuccess)
+export type companyAlternativeNamesResponseSuccess =
+  companyAlternativeNamesResponse200 & {
+    headers: Headers;
+  };
+export type companyAlternativeNamesResponse =
+  companyAlternativeNamesResponseSuccess;
 
-export const getCompanyAlternativeNamesUrl = (companyId: number,) => {
+export const getCompanyAlternativeNamesUrl = (companyId: number) => {
+  return `https://api.themoviedb.org/3/company/${companyId}/alternative_names`;
+};
 
-  return `https://api.themoviedb.org/3/company/${companyId}/alternative_names`
-}
-
-export const companyAlternativeNames = async (companyId: number, options?: RequestInit): Promise<companyAlternativeNamesResponse> => {
-  
-  return appFetch<companyAlternativeNamesResponse>(getCompanyAlternativeNamesUrl(companyId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const companyAlternativeNames = async (
+  companyId: number,
+  options?: RequestInit
+): Promise<companyAlternativeNamesResponse> => {
+  return appFetch<companyAlternativeNamesResponse>(
+    getCompanyAlternativeNamesUrl(companyId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the company logos by id.
  * @summary Images
  */
 export type companyImagesResponse200 = {
-  data: CompanyImages200
-  status: 200
-}
-    
-export type companyImagesResponseSuccess = (companyImagesResponse200) & {
+  data: CompanyImages200;
+  status: 200;
+};
+
+export type companyImagesResponseSuccess = companyImagesResponse200 & {
   headers: Headers;
 };
-;
+export type companyImagesResponse = companyImagesResponseSuccess;
 
-export type companyImagesResponse = (companyImagesResponseSuccess)
+export const getCompanyImagesUrl = (companyId: number) => {
+  return `https://api.themoviedb.org/3/company/${companyId}/images`;
+};
 
-export const getCompanyImagesUrl = (companyId: number,) => {
-
-  return `https://api.themoviedb.org/3/company/${companyId}/images`
-}
-
-export const companyImages = async (companyId: number, options?: RequestInit): Promise<companyImagesResponse> => {
-  
-  return appFetch<companyImagesResponse>(getCompanyImagesUrl(companyId),
-  {      
+export const companyImages = async (
+  companyId: number,
+  options?: RequestInit
+): Promise<companyImagesResponse> => {
+  return appFetch<companyImagesResponse>(getCompanyImagesUrl(companyId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Query the API configuration details.
  * @summary Details
  */
 export type configurationDetailsResponse200 = {
-  data: ConfigurationDetails200
-  status: 200
-}
-    
-export type configurationDetailsResponseSuccess = (configurationDetailsResponse200) & {
-  headers: Headers;
+  data: ConfigurationDetails200;
+  status: 200;
 };
-;
 
-export type configurationDetailsResponse = (configurationDetailsResponseSuccess)
+export type configurationDetailsResponseSuccess =
+  configurationDetailsResponse200 & {
+    headers: Headers;
+  };
+export type configurationDetailsResponse = configurationDetailsResponseSuccess;
 
 export const getConfigurationDetailsUrl = () => {
+  return `https://api.themoviedb.org/3/configuration`;
+};
 
-  return `https://api.themoviedb.org/3/configuration`
-}
-
-export const configurationDetails = async ( options?: RequestInit): Promise<configurationDetailsResponse> => {
-  
-  return appFetch<configurationDetailsResponse>(getConfigurationDetailsUrl(),
-  {      
+export const configurationDetails = async (
+  options?: RequestInit
+): Promise<configurationDetailsResponse> => {
+  return appFetch<configurationDetailsResponse>(getConfigurationDetailsUrl(), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the list of countries (ISO 3166-1 tags) used throughout TMDB.
  * @summary Countries
  */
 export type configurationCountriesResponse200 = {
-  data: ConfigurationCountries200Item[]
-  status: 200
-}
-    
-export type configurationCountriesResponseSuccess = (configurationCountriesResponse200) & {
-  headers: Headers;
+  data: ConfigurationCountries200Item[];
+  status: 200;
 };
-;
 
-export type configurationCountriesResponse = (configurationCountriesResponseSuccess)
+export type configurationCountriesResponseSuccess =
+  configurationCountriesResponse200 & {
+    headers: Headers;
+  };
+export type configurationCountriesResponse =
+  configurationCountriesResponseSuccess;
 
-export const getConfigurationCountriesUrl = (params?: ConfigurationCountriesParams,) => {
+export const getConfigurationCountriesUrl = (
+  params?: ConfigurationCountriesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/configuration/countries?${stringifiedParams}` : `https://api.themoviedb.org/3/configuration/countries`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/configuration/countries?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/configuration/countries`;
+};
 
-export const configurationCountries = async (params?: ConfigurationCountriesParams, options?: RequestInit): Promise<configurationCountriesResponse> => {
-  
-  return appFetch<configurationCountriesResponse>(getConfigurationCountriesUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const configurationCountries = async (
+  params?: ConfigurationCountriesParams,
+  options?: RequestInit
+): Promise<configurationCountriesResponse> => {
+  return appFetch<configurationCountriesResponse>(
+    getConfigurationCountriesUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the list of the jobs and departments we use on TMDB.
  * @summary Jobs
  */
 export type configurationJobsResponse200 = {
-  data: ConfigurationJobs200Item[]
-  status: 200
-}
-    
-export type configurationJobsResponseSuccess = (configurationJobsResponse200) & {
+  data: ConfigurationJobs200Item[];
+  status: 200;
+};
+
+export type configurationJobsResponseSuccess = configurationJobsResponse200 & {
   headers: Headers;
 };
-;
-
-export type configurationJobsResponse = (configurationJobsResponseSuccess)
+export type configurationJobsResponse = configurationJobsResponseSuccess;
 
 export const getConfigurationJobsUrl = () => {
+  return `https://api.themoviedb.org/3/configuration/jobs`;
+};
 
-  return `https://api.themoviedb.org/3/configuration/jobs`
-}
-
-export const configurationJobs = async ( options?: RequestInit): Promise<configurationJobsResponse> => {
-  
-  return appFetch<configurationJobsResponse>(getConfigurationJobsUrl(),
-  {      
+export const configurationJobs = async (
+  options?: RequestInit
+): Promise<configurationJobsResponse> => {
+  return appFetch<configurationJobsResponse>(getConfigurationJobsUrl(), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the list of languages (ISO 639-1 tags) used throughout TMDB.
  * @summary Languages
  */
 export type configurationLanguagesResponse200 = {
-  data: ConfigurationLanguages200Item[]
-  status: 200
-}
-    
-export type configurationLanguagesResponseSuccess = (configurationLanguagesResponse200) & {
-  headers: Headers;
+  data: ConfigurationLanguages200Item[];
+  status: 200;
 };
-;
 
-export type configurationLanguagesResponse = (configurationLanguagesResponseSuccess)
+export type configurationLanguagesResponseSuccess =
+  configurationLanguagesResponse200 & {
+    headers: Headers;
+  };
+export type configurationLanguagesResponse =
+  configurationLanguagesResponseSuccess;
 
 export const getConfigurationLanguagesUrl = () => {
+  return `https://api.themoviedb.org/3/configuration/languages`;
+};
 
-  return `https://api.themoviedb.org/3/configuration/languages`
-}
-
-export const configurationLanguages = async ( options?: RequestInit): Promise<configurationLanguagesResponse> => {
-  
-  return appFetch<configurationLanguagesResponse>(getConfigurationLanguagesUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const configurationLanguages = async (
+  options?: RequestInit
+): Promise<configurationLanguagesResponse> => {
+  return appFetch<configurationLanguagesResponse>(
+    getConfigurationLanguagesUrl(),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of the officially supported translations on TMDB.
  * @summary Primary Translations
  */
 export type configurationPrimaryTranslationsResponse200 = {
-  data: string[]
-  status: 200
-}
-    
-export type configurationPrimaryTranslationsResponseSuccess = (configurationPrimaryTranslationsResponse200) & {
-  headers: Headers;
+  data: string[];
+  status: 200;
 };
-;
 
-export type configurationPrimaryTranslationsResponse = (configurationPrimaryTranslationsResponseSuccess)
+export type configurationPrimaryTranslationsResponseSuccess =
+  configurationPrimaryTranslationsResponse200 & {
+    headers: Headers;
+  };
+export type configurationPrimaryTranslationsResponse =
+  configurationPrimaryTranslationsResponseSuccess;
 
 export const getConfigurationPrimaryTranslationsUrl = () => {
+  return `https://api.themoviedb.org/3/configuration/primary_translations`;
+};
 
-  return `https://api.themoviedb.org/3/configuration/primary_translations`
-}
-
-export const configurationPrimaryTranslations = async ( options?: RequestInit): Promise<configurationPrimaryTranslationsResponse> => {
-  
-  return appFetch<configurationPrimaryTranslationsResponse>(getConfigurationPrimaryTranslationsUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const configurationPrimaryTranslations = async (
+  options?: RequestInit
+): Promise<configurationPrimaryTranslationsResponse> => {
+  return appFetch<configurationPrimaryTranslationsResponse>(
+    getConfigurationPrimaryTranslationsUrl(),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the list of timezones used throughout TMDB.
  * @summary Timezones
  */
 export type configurationTimezonesResponse200 = {
-  data: ConfigurationTimezones200Item[]
-  status: 200
-}
-    
-export type configurationTimezonesResponseSuccess = (configurationTimezonesResponse200) & {
-  headers: Headers;
+  data: ConfigurationTimezones200Item[];
+  status: 200;
 };
-;
 
-export type configurationTimezonesResponse = (configurationTimezonesResponseSuccess)
+export type configurationTimezonesResponseSuccess =
+  configurationTimezonesResponse200 & {
+    headers: Headers;
+  };
+export type configurationTimezonesResponse =
+  configurationTimezonesResponseSuccess;
 
 export const getConfigurationTimezonesUrl = () => {
+  return `https://api.themoviedb.org/3/configuration/timezones`;
+};
 
-  return `https://api.themoviedb.org/3/configuration/timezones`
-}
-
-export const configurationTimezones = async ( options?: RequestInit): Promise<configurationTimezonesResponse> => {
-  
-  return appFetch<configurationTimezonesResponse>(getConfigurationTimezonesUrl(),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const configurationTimezones = async (
+  options?: RequestInit
+): Promise<configurationTimezonesResponse> => {
+  return appFetch<configurationTimezonesResponse>(
+    getConfigurationTimezonesUrl(),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a movie or TV credit details by ID.
  * @summary Details
  */
 export type creditDetailsResponse200 = {
-  data: CreditDetails200
-  status: 200
-}
-    
-export type creditDetailsResponseSuccess = (creditDetailsResponse200) & {
+  data: CreditDetails200;
+  status: 200;
+};
+
+export type creditDetailsResponseSuccess = creditDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type creditDetailsResponse = creditDetailsResponseSuccess;
 
-export type creditDetailsResponse = (creditDetailsResponseSuccess)
-
-export const getCreditDetailsUrl = (creditId: string,
-    params?: CreditDetailsParams,) => {
+export const getCreditDetailsUrl = (
+  creditId: string,
+  params?: CreditDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/credit/${creditId}?${stringifiedParams}` : `https://api.themoviedb.org/3/credit/${creditId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/credit/${creditId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/credit/${creditId}`;
+};
 
-export const creditDetails = async (creditId: string,
-    params?: CreditDetailsParams, options?: RequestInit): Promise<creditDetailsResponse> => {
-  
-  return appFetch<creditDetailsResponse>(getCreditDetailsUrl(creditId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const creditDetails = async (
+  creditId: string,
+  params?: CreditDetailsParams,
+  options?: RequestInit
+): Promise<creditDetailsResponse> => {
+  return appFetch<creditDetailsResponse>(
+    getCreditDetailsUrl(creditId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Find movies using over 30 filters and sort options.
  * @summary Movie
  */
 export type discoverMovieResponse200 = {
-  data: DiscoverMovie200
-  status: 200
-}
-    
-export type discoverMovieResponseSuccess = (discoverMovieResponse200) & {
+  data: DiscoverMovie200;
+  status: 200;
+};
+
+export type discoverMovieResponseSuccess = discoverMovieResponse200 & {
   headers: Headers;
 };
-;
+export type discoverMovieResponse = discoverMovieResponseSuccess;
 
-export type discoverMovieResponse = (discoverMovieResponseSuccess)
-
-export const getDiscoverMovieUrl = (params?: DiscoverMovieParams,) => {
+export const getDiscoverMovieUrl = (params?: DiscoverMovieParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/discover/movie?${stringifiedParams}` : `https://api.themoviedb.org/3/discover/movie`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/discover/movie?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/discover/movie`;
+};
 
-export const discoverMovie = async (params?: DiscoverMovieParams, options?: RequestInit): Promise<discoverMovieResponse> => {
-  
-  return appFetch<discoverMovieResponse>(getDiscoverMovieUrl(params),
-  {      
+export const discoverMovie = async (
+  params?: DiscoverMovieParams,
+  options?: RequestInit
+): Promise<discoverMovieResponse> => {
+  return appFetch<discoverMovieResponse>(getDiscoverMovieUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Find TV shows using over 30 filters and sort options.
  * @summary TV
  */
 export type discoverTvResponse200 = {
-  data: DiscoverTv200
-  status: 200
-}
-    
-export type discoverTvResponseSuccess = (discoverTvResponse200) & {
+  data: DiscoverTv200;
+  status: 200;
+};
+
+export type discoverTvResponseSuccess = discoverTvResponse200 & {
   headers: Headers;
 };
-;
+export type discoverTvResponse = discoverTvResponseSuccess;
 
-export type discoverTvResponse = (discoverTvResponseSuccess)
-
-export const getDiscoverTvUrl = (params?: DiscoverTvParams,) => {
+export const getDiscoverTvUrl = (params?: DiscoverTvParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/discover/tv?${stringifiedParams}` : `https://api.themoviedb.org/3/discover/tv`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/discover/tv?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/discover/tv`;
+};
 
-export const discoverTv = async (params?: DiscoverTvParams, options?: RequestInit): Promise<discoverTvResponse> => {
-  
-  return appFetch<discoverTvResponse>(getDiscoverTvUrl(params),
-  {      
+export const discoverTv = async (
+  params?: DiscoverTvParams,
+  options?: RequestInit
+): Promise<discoverTvResponse> => {
+  return appFetch<discoverTvResponse>(getDiscoverTvUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Find data by external ID's.
  * @summary Find By ID
  */
 export type findByIdResponse200 = {
-  data: FindById200
-  status: 200
-}
-    
-export type findByIdResponseSuccess = (findByIdResponse200) & {
+  data: FindById200;
+  status: 200;
+};
+
+export type findByIdResponseSuccess = findByIdResponse200 & {
   headers: Headers;
 };
-;
+export type findByIdResponse = findByIdResponseSuccess;
 
-export type findByIdResponse = (findByIdResponseSuccess)
-
-export const getFindByIdUrl = (externalId: string,
-    params: FindByIdParams,) => {
+export const getFindByIdUrl = (externalId: string, params: FindByIdParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/find/${externalId}?${stringifiedParams}` : `https://api.themoviedb.org/3/find/${externalId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/find/${externalId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/find/${externalId}`;
+};
 
-export const findById = async (externalId: string,
-    params: FindByIdParams, options?: RequestInit): Promise<findByIdResponse> => {
-  
-  return appFetch<findByIdResponse>(getFindByIdUrl(externalId,params),
-  {      
+export const findById = async (
+  externalId: string,
+  params: FindByIdParams,
+  options?: RequestInit
+): Promise<findByIdResponse> => {
+  return appFetch<findByIdResponse>(getFindByIdUrl(externalId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the list of official genres for movies.
  * @summary Movie List
  */
 export type genreMovieListResponse200 = {
-  data: GenreMovieList200
-  status: 200
-}
-    
-export type genreMovieListResponseSuccess = (genreMovieListResponse200) & {
+  data: GenreMovieList200;
+  status: 200;
+};
+
+export type genreMovieListResponseSuccess = genreMovieListResponse200 & {
   headers: Headers;
 };
-;
+export type genreMovieListResponse = genreMovieListResponseSuccess;
 
-export type genreMovieListResponse = (genreMovieListResponseSuccess)
-
-export const getGenreMovieListUrl = (params?: GenreMovieListParams,) => {
+export const getGenreMovieListUrl = (params?: GenreMovieListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/genre/movie/list?${stringifiedParams}` : `https://api.themoviedb.org/3/genre/movie/list`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/genre/movie/list?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/genre/movie/list`;
+};
 
-export const genreMovieList = async (params?: GenreMovieListParams, options?: RequestInit): Promise<genreMovieListResponse> => {
-  
-  return appFetch<genreMovieListResponse>(getGenreMovieListUrl(params),
-  {      
+export const genreMovieList = async (
+  params?: GenreMovieListParams,
+  options?: RequestInit
+): Promise<genreMovieListResponse> => {
+  return appFetch<genreMovieListResponse>(getGenreMovieListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the list of official genres for TV shows.
  * @summary TV List
  */
 export type genreTvListResponse200 = {
-  data: GenreTvList200
-  status: 200
-}
-    
-export type genreTvListResponseSuccess = (genreTvListResponse200) & {
+  data: GenreTvList200;
+  status: 200;
+};
+
+export type genreTvListResponseSuccess = genreTvListResponse200 & {
   headers: Headers;
 };
-;
+export type genreTvListResponse = genreTvListResponseSuccess;
 
-export type genreTvListResponse = (genreTvListResponseSuccess)
-
-export const getGenreTvListUrl = (params?: GenreTvListParams,) => {
+export const getGenreTvListUrl = (params?: GenreTvListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/genre/tv/list?${stringifiedParams}` : `https://api.themoviedb.org/3/genre/tv/list`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/genre/tv/list?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/genre/tv/list`;
+};
 
-export const genreTvList = async (params?: GenreTvListParams, options?: RequestInit): Promise<genreTvListResponse> => {
-  
-  return appFetch<genreTvListResponse>(getGenreTvListUrl(params),
-  {      
+export const genreTvList = async (
+  params?: GenreTvListParams,
+  options?: RequestInit
+): Promise<genreTvListResponse> => {
+  return appFetch<genreTvListResponse>(getGenreTvListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the rated movies for a guest session.
  * @summary Rated Movies
  */
 export type guestSessionRatedMoviesResponse200 = {
-  data: GuestSessionRatedMovies200
-  status: 200
-}
-    
-export type guestSessionRatedMoviesResponseSuccess = (guestSessionRatedMoviesResponse200) & {
-  headers: Headers;
+  data: GuestSessionRatedMovies200;
+  status: 200;
 };
-;
 
-export type guestSessionRatedMoviesResponse = (guestSessionRatedMoviesResponseSuccess)
+export type guestSessionRatedMoviesResponseSuccess =
+  guestSessionRatedMoviesResponse200 & {
+    headers: Headers;
+  };
+export type guestSessionRatedMoviesResponse =
+  guestSessionRatedMoviesResponseSuccess;
 
-export const getGuestSessionRatedMoviesUrl = (guestSessionId: string,
-    params?: GuestSessionRatedMoviesParams,) => {
+export const getGuestSessionRatedMoviesUrl = (
+  guestSessionId: string,
+  params?: GuestSessionRatedMoviesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?${stringifiedParams}` : `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies`;
+};
 
-export const guestSessionRatedMovies = async (guestSessionId: string,
-    params?: GuestSessionRatedMoviesParams, options?: RequestInit): Promise<guestSessionRatedMoviesResponse> => {
-  
-  return appFetch<guestSessionRatedMoviesResponse>(getGuestSessionRatedMoviesUrl(guestSessionId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const guestSessionRatedMovies = async (
+  guestSessionId: string,
+  params?: GuestSessionRatedMoviesParams,
+  options?: RequestInit
+): Promise<guestSessionRatedMoviesResponse> => {
+  return appFetch<guestSessionRatedMoviesResponse>(
+    getGuestSessionRatedMoviesUrl(guestSessionId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the rated TV shows for a guest session.
  * @summary Rated TV
  */
 export type guestSessionRatedTvResponse200 = {
-  data: GuestSessionRatedTv200
-  status: 200
-}
-    
-export type guestSessionRatedTvResponseSuccess = (guestSessionRatedTvResponse200) & {
-  headers: Headers;
+  data: GuestSessionRatedTv200;
+  status: 200;
 };
-;
 
-export type guestSessionRatedTvResponse = (guestSessionRatedTvResponseSuccess)
+export type guestSessionRatedTvResponseSuccess =
+  guestSessionRatedTvResponse200 & {
+    headers: Headers;
+  };
+export type guestSessionRatedTvResponse = guestSessionRatedTvResponseSuccess;
 
-export const getGuestSessionRatedTvUrl = (guestSessionId: string,
-    params?: GuestSessionRatedTvParams,) => {
+export const getGuestSessionRatedTvUrl = (
+  guestSessionId: string,
+  params?: GuestSessionRatedTvParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv?${stringifiedParams}` : `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv`;
+};
 
-export const guestSessionRatedTv = async (guestSessionId: string,
-    params?: GuestSessionRatedTvParams, options?: RequestInit): Promise<guestSessionRatedTvResponse> => {
-  
-  return appFetch<guestSessionRatedTvResponse>(getGuestSessionRatedTvUrl(guestSessionId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const guestSessionRatedTv = async (
+  guestSessionId: string,
+  params?: GuestSessionRatedTvParams,
+  options?: RequestInit
+): Promise<guestSessionRatedTvResponse> => {
+  return appFetch<guestSessionRatedTvResponse>(
+    getGuestSessionRatedTvUrl(guestSessionId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the rated TV episodes for a guest session.
  * @summary Rated TV Episodes
  */
 export type guestSessionRatedTvEpisodesResponse200 = {
-  data: GuestSessionRatedTvEpisodes200
-  status: 200
-}
-    
-export type guestSessionRatedTvEpisodesResponseSuccess = (guestSessionRatedTvEpisodesResponse200) & {
-  headers: Headers;
+  data: GuestSessionRatedTvEpisodes200;
+  status: 200;
 };
-;
 
-export type guestSessionRatedTvEpisodesResponse = (guestSessionRatedTvEpisodesResponseSuccess)
+export type guestSessionRatedTvEpisodesResponseSuccess =
+  guestSessionRatedTvEpisodesResponse200 & {
+    headers: Headers;
+  };
+export type guestSessionRatedTvEpisodesResponse =
+  guestSessionRatedTvEpisodesResponseSuccess;
 
-export const getGuestSessionRatedTvEpisodesUrl = (guestSessionId: string,
-    params?: GuestSessionRatedTvEpisodesParams,) => {
+export const getGuestSessionRatedTvEpisodesUrl = (
+  guestSessionId: string,
+  params?: GuestSessionRatedTvEpisodesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv/episodes?${stringifiedParams}` : `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv/episodes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv/episodes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/tv/episodes`;
+};
 
-export const guestSessionRatedTvEpisodes = async (guestSessionId: string,
-    params?: GuestSessionRatedTvEpisodesParams, options?: RequestInit): Promise<guestSessionRatedTvEpisodesResponse> => {
-  
-  return appFetch<guestSessionRatedTvEpisodesResponse>(getGuestSessionRatedTvEpisodesUrl(guestSessionId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const guestSessionRatedTvEpisodes = async (
+  guestSessionId: string,
+  params?: GuestSessionRatedTvEpisodesParams,
+  options?: RequestInit
+): Promise<guestSessionRatedTvEpisodesResponse> => {
+  return appFetch<guestSessionRatedTvEpisodesResponse>(
+    getGuestSessionRatedTvEpisodesUrl(guestSessionId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * @summary Details
  */
 export type keywordDetailsResponse200 = {
-  data: KeywordDetails200
-  status: 200
-}
-    
-export type keywordDetailsResponseSuccess = (keywordDetailsResponse200) & {
+  data: KeywordDetails200;
+  status: 200;
+};
+
+export type keywordDetailsResponseSuccess = keywordDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type keywordDetailsResponse = keywordDetailsResponseSuccess;
 
-export type keywordDetailsResponse = (keywordDetailsResponseSuccess)
+export const getKeywordDetailsUrl = (keywordId: number) => {
+  return `https://api.themoviedb.org/3/keyword/${keywordId}`;
+};
 
-export const getKeywordDetailsUrl = (keywordId: number,) => {
-
-  return `https://api.themoviedb.org/3/keyword/${keywordId}`
-}
-
-export const keywordDetails = async (keywordId: number, options?: RequestInit): Promise<keywordDetailsResponse> => {
-  
-  return appFetch<keywordDetailsResponse>(getKeywordDetailsUrl(keywordId),
-  {      
+export const keywordDetails = async (
+  keywordId: number,
+  options?: RequestInit
+): Promise<keywordDetailsResponse> => {
+  return appFetch<keywordDetailsResponse>(getKeywordDetailsUrl(keywordId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary Movies
  */
 export type keywordMoviesResponse200 = {
-  data: KeywordMovies200
-  status: 200
-}
-    
-export type keywordMoviesResponseSuccess = (keywordMoviesResponse200) & {
+  data: KeywordMovies200;
+  status: 200;
+};
+
+export type keywordMoviesResponseSuccess = keywordMoviesResponse200 & {
   headers: Headers;
 };
-;
+export type keywordMoviesResponse = keywordMoviesResponseSuccess;
 
-export type keywordMoviesResponse = (keywordMoviesResponseSuccess)
-
-export const getKeywordMoviesUrl = (keywordId: string,
-    params?: KeywordMoviesParams,) => {
+export const getKeywordMoviesUrl = (
+  keywordId: string,
+  params?: KeywordMoviesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/keyword/${keywordId}/movies?${stringifiedParams}` : `https://api.themoviedb.org/3/keyword/${keywordId}/movies`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/keyword/${keywordId}/movies?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/keyword/${keywordId}/movies`;
+};
 
-export const keywordMovies = async (keywordId: string,
-    params?: KeywordMoviesParams, options?: RequestInit): Promise<keywordMoviesResponse> => {
-  
-  return appFetch<keywordMoviesResponse>(getKeywordMoviesUrl(keywordId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const keywordMovies = async (
+  keywordId: string,
+  params?: KeywordMoviesParams,
+  options?: RequestInit
+): Promise<keywordMoviesResponse> => {
+  return appFetch<keywordMoviesResponse>(
+    getKeywordMoviesUrl(keywordId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Add a movie to a list.
  * @summary Add Movie
  */
 export type listAddMovieResponse200 = {
-  data: ListAddMovie200
-  status: 200
-}
-    
-export type listAddMovieResponseSuccess = (listAddMovieResponse200) & {
+  data: ListAddMovie200;
+  status: 200;
+};
+
+export type listAddMovieResponseSuccess = listAddMovieResponse200 & {
   headers: Headers;
 };
-;
+export type listAddMovieResponse = listAddMovieResponseSuccess;
 
-export type listAddMovieResponse = (listAddMovieResponseSuccess)
-
-export const getListAddMovieUrl = (listId: number,
-    params: ListAddMovieParams,) => {
+export const getListAddMovieUrl = (
+  listId: number,
+  params: ListAddMovieParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/list/${listId}/add_item?${stringifiedParams}` : `https://api.themoviedb.org/3/list/${listId}/add_item`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/list/${listId}/add_item?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/list/${listId}/add_item`;
+};
 
-export const listAddMovie = async (listId: number,
-    listAddMovieBody: ListAddMovieBody,
-    params: ListAddMovieParams, options?: RequestInit): Promise<listAddMovieResponse> => {
-  
-  return appFetch<listAddMovieResponse>(getListAddMovieUrl(listId,params),
-  {      
+export const listAddMovie = async (
+  listId: number,
+  listAddMovieBody: ListAddMovieBody,
+  params: ListAddMovieParams,
+  options?: RequestInit
+): Promise<listAddMovieResponse> => {
+  return appFetch<listAddMovieResponse>(getListAddMovieUrl(listId, params), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      listAddMovieBody,)
-  }
-);}
+    body: JSON.stringify(listAddMovieBody),
+  });
+};
 
 /**
  * Use this method to check if an item has already been added to the list.
  * @summary Check Item Status
  */
 export type listCheckItemStatusResponse200 = {
-  data: ListCheckItemStatus200
-  status: 200
-}
-    
-export type listCheckItemStatusResponseSuccess = (listCheckItemStatusResponse200) & {
-  headers: Headers;
+  data: ListCheckItemStatus200;
+  status: 200;
 };
-;
 
-export type listCheckItemStatusResponse = (listCheckItemStatusResponseSuccess)
+export type listCheckItemStatusResponseSuccess =
+  listCheckItemStatusResponse200 & {
+    headers: Headers;
+  };
+export type listCheckItemStatusResponse = listCheckItemStatusResponseSuccess;
 
-export const getListCheckItemStatusUrl = (listId: number,
-    params?: ListCheckItemStatusParams,) => {
+export const getListCheckItemStatusUrl = (
+  listId: number,
+  params?: ListCheckItemStatusParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/list/${listId}/item_status?${stringifiedParams}` : `https://api.themoviedb.org/3/list/${listId}/item_status`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/list/${listId}/item_status?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/list/${listId}/item_status`;
+};
 
-export const listCheckItemStatus = async (listId: number,
-    params?: ListCheckItemStatusParams, options?: RequestInit): Promise<listCheckItemStatusResponse> => {
-  
-  return appFetch<listCheckItemStatusResponse>(getListCheckItemStatusUrl(listId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const listCheckItemStatus = async (
+  listId: number,
+  params?: ListCheckItemStatusParams,
+  options?: RequestInit
+): Promise<listCheckItemStatusResponse> => {
+  return appFetch<listCheckItemStatusResponse>(
+    getListCheckItemStatusUrl(listId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Clear all items from a list.
  * @summary Clear
  */
 export type listClearResponse200 = {
-  data: ListClear200
-  status: 200
-}
-    
-export type listClearResponseSuccess = (listClearResponse200) & {
+  data: ListClear200;
+  status: 200;
+};
+
+export type listClearResponseSuccess = listClearResponse200 & {
   headers: Headers;
 };
-;
+export type listClearResponse = listClearResponseSuccess;
 
-export type listClearResponse = (listClearResponseSuccess)
-
-export const getListClearUrl = (listId: number,
-    params: ListClearParams,) => {
+export const getListClearUrl = (listId: number, params: ListClearParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/list/${listId}/clear?${stringifiedParams}` : `https://api.themoviedb.org/3/list/${listId}/clear`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/list/${listId}/clear?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/list/${listId}/clear`;
+};
 
-export const listClear = async (listId: number,
-    params: ListClearParams, options?: RequestInit): Promise<listClearResponse> => {
-  
-  return appFetch<listClearResponse>(getListClearUrl(listId,params),
-  {      
+export const listClear = async (
+  listId: number,
+  params: ListClearParams,
+  options?: RequestInit
+): Promise<listClearResponse> => {
+  return appFetch<listClearResponse>(getListClearUrl(listId, params), {
     ...options,
-    method: 'POST'
-    
-  }
-);}
+    method: 'POST',
+  });
+};
 
 /**
  * @summary Create
  */
 export type listCreateResponse200 = {
-  data: ListCreate200
-  status: 200
-}
-    
-export type listCreateResponseSuccess = (listCreateResponse200) & {
+  data: ListCreate200;
+  status: 200;
+};
+
+export type listCreateResponseSuccess = listCreateResponse200 & {
   headers: Headers;
 };
-;
+export type listCreateResponse = listCreateResponseSuccess;
 
-export type listCreateResponse = (listCreateResponseSuccess)
-
-export const getListCreateUrl = (params: ListCreateParams,) => {
+export const getListCreateUrl = (params: ListCreateParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/list?${stringifiedParams}` : `https://api.themoviedb.org/3/list`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/list?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/list`;
+};
 
-export const listCreate = async (listCreateBody: ListCreateBody,
-    params: ListCreateParams, options?: RequestInit): Promise<listCreateResponse> => {
-  
-  return appFetch<listCreateResponse>(getListCreateUrl(params),
-  {      
+export const listCreate = async (
+  listCreateBody: ListCreateBody,
+  params: ListCreateParams,
+  options?: RequestInit
+): Promise<listCreateResponse> => {
+  return appFetch<listCreateResponse>(getListCreateUrl(params), {
     ...options,
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      listCreateBody,)
-  }
-);}
+    body: JSON.stringify(listCreateBody),
+  });
+};
 
 /**
  * Delete a list.
  * @summary Delete
  */
 export type listDeleteResponse200 = {
-  data: ListDelete200
-  status: 200
-}
-    
-export type listDeleteResponseSuccess = (listDeleteResponse200) & {
+  data: ListDelete200;
+  status: 200;
+};
+
+export type listDeleteResponseSuccess = listDeleteResponse200 & {
   headers: Headers;
 };
-;
+export type listDeleteResponse = listDeleteResponseSuccess;
 
-export type listDeleteResponse = (listDeleteResponseSuccess)
-
-export const getListDeleteUrl = (listId: number,
-    params: ListDeleteParams,) => {
+export const getListDeleteUrl = (listId: number, params: ListDeleteParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/list/${listId}?${stringifiedParams}` : `https://api.themoviedb.org/3/list/${listId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/list/${listId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/list/${listId}`;
+};
 
-export const listDelete = async (listId: number,
-    params: ListDeleteParams, options?: RequestInit): Promise<listDeleteResponse> => {
-  
-  return appFetch<listDeleteResponse>(getListDeleteUrl(listId,params),
-  {      
+export const listDelete = async (
+  listId: number,
+  params: ListDeleteParams,
+  options?: RequestInit
+): Promise<listDeleteResponse> => {
+  return appFetch<listDeleteResponse>(getListDeleteUrl(listId, params), {
     ...options,
-    method: 'DELETE'
-    
-  }
-);}
+    method: 'DELETE',
+  });
+};
 
 /**
  * @summary Details
  */
 export type listDetailsResponse200 = {
-  data: ListDetails200
-  status: 200
-}
-    
-export type listDetailsResponseSuccess = (listDetailsResponse200) & {
+  data: ListDetails200;
+  status: 200;
+};
+
+export type listDetailsResponseSuccess = listDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type listDetailsResponse = listDetailsResponseSuccess;
 
-export type listDetailsResponse = (listDetailsResponseSuccess)
-
-export const getListDetailsUrl = (listId: number,
-    params?: ListDetailsParams,) => {
+export const getListDetailsUrl = (
+  listId: number,
+  params?: ListDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/list/${listId}?${stringifiedParams}` : `https://api.themoviedb.org/3/list/${listId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/list/${listId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/list/${listId}`;
+};
 
-export const listDetails = async (listId: number,
-    params?: ListDetailsParams, options?: RequestInit): Promise<listDetailsResponse> => {
-  
-  return appFetch<listDetailsResponse>(getListDetailsUrl(listId,params),
-  {      
+export const listDetails = async (
+  listId: number,
+  params?: ListDetailsParams,
+  options?: RequestInit
+): Promise<listDetailsResponse> => {
+  return appFetch<listDetailsResponse>(getListDetailsUrl(listId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Remove a movie from a list.
  * @summary Remove Movie
  */
 export type listRemoveMovieResponse200 = {
-  data: ListRemoveMovie200
-  status: 200
-}
-    
-export type listRemoveMovieResponseSuccess = (listRemoveMovieResponse200) & {
+  data: ListRemoveMovie200;
+  status: 200;
+};
+
+export type listRemoveMovieResponseSuccess = listRemoveMovieResponse200 & {
   headers: Headers;
 };
-;
+export type listRemoveMovieResponse = listRemoveMovieResponseSuccess;
 
-export type listRemoveMovieResponse = (listRemoveMovieResponseSuccess)
-
-export const getListRemoveMovieUrl = (listId: number,
-    params: ListRemoveMovieParams,) => {
+export const getListRemoveMovieUrl = (
+  listId: number,
+  params: ListRemoveMovieParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/list/${listId}/remove_item?${stringifiedParams}` : `https://api.themoviedb.org/3/list/${listId}/remove_item`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/list/${listId}/remove_item?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/list/${listId}/remove_item`;
+};
 
-export const listRemoveMovie = async (listId: number,
-    listRemoveMovieBody: ListRemoveMovieBody,
-    params: ListRemoveMovieParams, options?: RequestInit): Promise<listRemoveMovieResponse> => {
-  
-  return appFetch<listRemoveMovieResponse>(getListRemoveMovieUrl(listId,params),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      listRemoveMovieBody,)
-  }
-);}
+export const listRemoveMovie = async (
+  listId: number,
+  listRemoveMovieBody: ListRemoveMovieBody,
+  params: ListRemoveMovieParams,
+  options?: RequestInit
+): Promise<listRemoveMovieResponse> => {
+  return appFetch<listRemoveMovieResponse>(
+    getListRemoveMovieUrl(listId, params),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(listRemoveMovieBody),
+    }
+  );
+};
 
 /**
  * Get a list of movies that are currently in theatres.
  * @summary Now Playing
  */
 export type movieNowPlayingListResponse200 = {
-  data: MovieNowPlayingList200
-  status: 200
-}
-    
-export type movieNowPlayingListResponseSuccess = (movieNowPlayingListResponse200) & {
-  headers: Headers;
+  data: MovieNowPlayingList200;
+  status: 200;
 };
-;
 
-export type movieNowPlayingListResponse = (movieNowPlayingListResponseSuccess)
+export type movieNowPlayingListResponseSuccess =
+  movieNowPlayingListResponse200 & {
+    headers: Headers;
+  };
+export type movieNowPlayingListResponse = movieNowPlayingListResponseSuccess;
 
-export const getMovieNowPlayingListUrl = (params?: MovieNowPlayingListParams,) => {
+export const getMovieNowPlayingListUrl = (
+  params?: MovieNowPlayingListParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/now_playing?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/now_playing`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/now_playing?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/now_playing`;
+};
 
-export const movieNowPlayingList = async (params?: MovieNowPlayingListParams, options?: RequestInit): Promise<movieNowPlayingListResponse> => {
-  
-  return appFetch<movieNowPlayingListResponse>(getMovieNowPlayingListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const movieNowPlayingList = async (
+  params?: MovieNowPlayingListParams,
+  options?: RequestInit
+): Promise<movieNowPlayingListResponse> => {
+  return appFetch<movieNowPlayingListResponse>(
+    getMovieNowPlayingListUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of movies ordered by popularity.
  * @summary Popular
  */
 export type moviePopularListResponse200 = {
-  data: MoviePopularList200
-  status: 200
-}
-    
-export type moviePopularListResponseSuccess = (moviePopularListResponse200) & {
+  data: MoviePopularList200;
+  status: 200;
+};
+
+export type moviePopularListResponseSuccess = moviePopularListResponse200 & {
   headers: Headers;
 };
-;
+export type moviePopularListResponse = moviePopularListResponseSuccess;
 
-export type moviePopularListResponse = (moviePopularListResponseSuccess)
-
-export const getMoviePopularListUrl = (params?: MoviePopularListParams,) => {
+export const getMoviePopularListUrl = (params?: MoviePopularListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/popular?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/popular`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/popular?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/popular`;
+};
 
-export const moviePopularList = async (params?: MoviePopularListParams, options?: RequestInit): Promise<moviePopularListResponse> => {
-  
-  return appFetch<moviePopularListResponse>(getMoviePopularListUrl(params),
-  {      
+export const moviePopularList = async (
+  params?: MoviePopularListParams,
+  options?: RequestInit
+): Promise<moviePopularListResponse> => {
+  return appFetch<moviePopularListResponse>(getMoviePopularListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get a list of movies ordered by rating.
  * @summary Top Rated
  */
 export type movieTopRatedListResponse200 = {
-  data: MovieTopRatedList200
-  status: 200
-}
-    
-export type movieTopRatedListResponseSuccess = (movieTopRatedListResponse200) & {
+  data: MovieTopRatedList200;
+  status: 200;
+};
+
+export type movieTopRatedListResponseSuccess = movieTopRatedListResponse200 & {
   headers: Headers;
 };
-;
+export type movieTopRatedListResponse = movieTopRatedListResponseSuccess;
 
-export type movieTopRatedListResponse = (movieTopRatedListResponseSuccess)
-
-export const getMovieTopRatedListUrl = (params?: MovieTopRatedListParams,) => {
+export const getMovieTopRatedListUrl = (params?: MovieTopRatedListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/top_rated?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/top_rated`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/top_rated?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/top_rated`;
+};
 
-export const movieTopRatedList = async (params?: MovieTopRatedListParams, options?: RequestInit): Promise<movieTopRatedListResponse> => {
-  
-  return appFetch<movieTopRatedListResponse>(getMovieTopRatedListUrl(params),
-  {      
+export const movieTopRatedList = async (
+  params?: MovieTopRatedListParams,
+  options?: RequestInit
+): Promise<movieTopRatedListResponse> => {
+  return appFetch<movieTopRatedListResponse>(getMovieTopRatedListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get a list of movies that are being released soon.
  * @summary Upcoming
  */
 export type movieUpcomingListResponse200 = {
-  data: MovieUpcomingList200
-  status: 200
-}
-    
-export type movieUpcomingListResponseSuccess = (movieUpcomingListResponse200) & {
+  data: MovieUpcomingList200;
+  status: 200;
+};
+
+export type movieUpcomingListResponseSuccess = movieUpcomingListResponse200 & {
   headers: Headers;
 };
-;
+export type movieUpcomingListResponse = movieUpcomingListResponseSuccess;
 
-export type movieUpcomingListResponse = (movieUpcomingListResponseSuccess)
-
-export const getMovieUpcomingListUrl = (params?: MovieUpcomingListParams,) => {
+export const getMovieUpcomingListUrl = (params?: MovieUpcomingListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/upcoming?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/upcoming`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/upcoming?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/upcoming`;
+};
 
-export const movieUpcomingList = async (params?: MovieUpcomingListParams, options?: RequestInit): Promise<movieUpcomingListResponse> => {
-  
-  return appFetch<movieUpcomingListResponse>(getMovieUpcomingListUrl(params),
-  {      
+export const movieUpcomingList = async (
+  params?: MovieUpcomingListParams,
+  options?: RequestInit
+): Promise<movieUpcomingListResponse> => {
+  return appFetch<movieUpcomingListResponse>(getMovieUpcomingListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the top level details of a movie by ID.
  * @summary Details
  */
 export type movieDetailsResponse200 = {
-  data: MovieDetails200
-  status: 200
-}
-    
-export type movieDetailsResponseSuccess = (movieDetailsResponse200) & {
+  data: MovieDetails200;
+  status: 200;
+};
+
+export type movieDetailsResponseSuccess = movieDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type movieDetailsResponse = movieDetailsResponseSuccess;
 
-export type movieDetailsResponse = (movieDetailsResponseSuccess)
-
-export const getMovieDetailsUrl = (movieId: number,
-    params?: MovieDetailsParams,) => {
+export const getMovieDetailsUrl = (
+  movieId: number,
+  params?: MovieDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}`;
+};
 
-export const movieDetails = async (movieId: number,
-    params?: MovieDetailsParams, options?: RequestInit): Promise<movieDetailsResponse> => {
-  
-  return appFetch<movieDetailsResponse>(getMovieDetailsUrl(movieId,params),
-  {      
+export const movieDetails = async (
+  movieId: number,
+  params?: MovieDetailsParams,
+  options?: RequestInit
+): Promise<movieDetailsResponse> => {
+  return appFetch<movieDetailsResponse>(getMovieDetailsUrl(movieId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the rating, watchlist and favourite status of an account.
  * @summary Account States
  */
 export type movieAccountStatesResponse200 = {
-  data: MovieAccountStates200
-  status: 200
-}
-    
-export type movieAccountStatesResponseSuccess = (movieAccountStatesResponse200) & {
-  headers: Headers;
+  data: MovieAccountStates200;
+  status: 200;
 };
-;
 
-export type movieAccountStatesResponse = (movieAccountStatesResponseSuccess)
+export type movieAccountStatesResponseSuccess =
+  movieAccountStatesResponse200 & {
+    headers: Headers;
+  };
+export type movieAccountStatesResponse = movieAccountStatesResponseSuccess;
 
-export const getMovieAccountStatesUrl = (movieId: number,
-    params?: MovieAccountStatesParams,) => {
+export const getMovieAccountStatesUrl = (
+  movieId: number,
+  params?: MovieAccountStatesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/account_states?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/account_states`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/account_states?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/account_states`;
+};
 
-export const movieAccountStates = async (movieId: number,
-    params?: MovieAccountStatesParams, options?: RequestInit): Promise<movieAccountStatesResponse> => {
-  
-  return appFetch<movieAccountStatesResponse>(getMovieAccountStatesUrl(movieId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const movieAccountStates = async (
+  movieId: number,
+  params?: MovieAccountStatesParams,
+  options?: RequestInit
+): Promise<movieAccountStatesResponse> => {
+  return appFetch<movieAccountStatesResponse>(
+    getMovieAccountStatesUrl(movieId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the alternative titles for a movie.
  * @summary Alternative Titles
  */
 export type movieAlternativeTitlesResponse200 = {
-  data: MovieAlternativeTitles200
-  status: 200
-}
-    
-export type movieAlternativeTitlesResponseSuccess = (movieAlternativeTitlesResponse200) & {
-  headers: Headers;
+  data: MovieAlternativeTitles200;
+  status: 200;
 };
-;
 
-export type movieAlternativeTitlesResponse = (movieAlternativeTitlesResponseSuccess)
+export type movieAlternativeTitlesResponseSuccess =
+  movieAlternativeTitlesResponse200 & {
+    headers: Headers;
+  };
+export type movieAlternativeTitlesResponse =
+  movieAlternativeTitlesResponseSuccess;
 
-export const getMovieAlternativeTitlesUrl = (movieId: number,
-    params?: MovieAlternativeTitlesParams,) => {
+export const getMovieAlternativeTitlesUrl = (
+  movieId: number,
+  params?: MovieAlternativeTitlesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/alternative_titles?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/alternative_titles`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/alternative_titles?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/alternative_titles`;
+};
 
-export const movieAlternativeTitles = async (movieId: number,
-    params?: MovieAlternativeTitlesParams, options?: RequestInit): Promise<movieAlternativeTitlesResponse> => {
-  
-  return appFetch<movieAlternativeTitlesResponse>(getMovieAlternativeTitlesUrl(movieId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const movieAlternativeTitles = async (
+  movieId: number,
+  params?: MovieAlternativeTitlesParams,
+  options?: RequestInit
+): Promise<movieAlternativeTitlesResponse> => {
+  return appFetch<movieAlternativeTitlesResponse>(
+    getMovieAlternativeTitlesUrl(movieId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the recent changes for a movie.
  * @summary Changes
  */
 export type movieChangesResponse200 = {
-  data: MovieChanges200
-  status: 200
-}
-    
-export type movieChangesResponseSuccess = (movieChangesResponse200) & {
+  data: MovieChanges200;
+  status: 200;
+};
+
+export type movieChangesResponseSuccess = movieChangesResponse200 & {
   headers: Headers;
 };
-;
+export type movieChangesResponse = movieChangesResponseSuccess;
 
-export type movieChangesResponse = (movieChangesResponseSuccess)
-
-export const getMovieChangesUrl = (movieId: number,
-    params?: MovieChangesParams,) => {
+export const getMovieChangesUrl = (
+  movieId: number,
+  params?: MovieChangesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/changes?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/changes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/changes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/changes`;
+};
 
-export const movieChanges = async (movieId: number,
-    params?: MovieChangesParams, options?: RequestInit): Promise<movieChangesResponse> => {
-  
-  return appFetch<movieChangesResponse>(getMovieChangesUrl(movieId,params),
-  {      
+export const movieChanges = async (
+  movieId: number,
+  params?: MovieChangesParams,
+  options?: RequestInit
+): Promise<movieChangesResponse> => {
+  return appFetch<movieChangesResponse>(getMovieChangesUrl(movieId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary Credits
  */
 export type movieCreditsResponse200 = {
-  data: MovieCredits200
-  status: 200
-}
-    
-export type movieCreditsResponseSuccess = (movieCreditsResponse200) & {
+  data: MovieCredits200;
+  status: 200;
+};
+
+export type movieCreditsResponseSuccess = movieCreditsResponse200 & {
   headers: Headers;
 };
-;
+export type movieCreditsResponse = movieCreditsResponseSuccess;
 
-export type movieCreditsResponse = (movieCreditsResponseSuccess)
-
-export const getMovieCreditsUrl = (movieId: number,
-    params?: MovieCreditsParams,) => {
+export const getMovieCreditsUrl = (
+  movieId: number,
+  params?: MovieCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/credits?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/credits`;
+};
 
-export const movieCredits = async (movieId: number,
-    params?: MovieCreditsParams, options?: RequestInit): Promise<movieCreditsResponse> => {
-  
-  return appFetch<movieCreditsResponse>(getMovieCreditsUrl(movieId,params),
-  {      
+export const movieCredits = async (
+  movieId: number,
+  params?: MovieCreditsParams,
+  options?: RequestInit
+): Promise<movieCreditsResponse> => {
+  return appFetch<movieCreditsResponse>(getMovieCreditsUrl(movieId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary External IDs
  */
 export type movieExternalIdsResponse200 = {
-  data: MovieExternalIds200
-  status: 200
-}
-    
-export type movieExternalIdsResponseSuccess = (movieExternalIdsResponse200) & {
+  data: MovieExternalIds200;
+  status: 200;
+};
+
+export type movieExternalIdsResponseSuccess = movieExternalIdsResponse200 & {
   headers: Headers;
 };
-;
+export type movieExternalIdsResponse = movieExternalIdsResponseSuccess;
 
-export type movieExternalIdsResponse = (movieExternalIdsResponseSuccess)
+export const getMovieExternalIdsUrl = (movieId: number) => {
+  return `https://api.themoviedb.org/3/movie/${movieId}/external_ids`;
+};
 
-export const getMovieExternalIdsUrl = (movieId: number,) => {
-
-  return `https://api.themoviedb.org/3/movie/${movieId}/external_ids`
-}
-
-export const movieExternalIds = async (movieId: number, options?: RequestInit): Promise<movieExternalIdsResponse> => {
-  
-  return appFetch<movieExternalIdsResponse>(getMovieExternalIdsUrl(movieId),
-  {      
+export const movieExternalIds = async (
+  movieId: number,
+  options?: RequestInit
+): Promise<movieExternalIdsResponse> => {
+  return appFetch<movieExternalIdsResponse>(getMovieExternalIdsUrl(movieId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the images that belong to a movie.
  * @summary Images
  */
 export type movieImagesResponse200 = {
-  data: MovieImages200
-  status: 200
-}
-    
-export type movieImagesResponseSuccess = (movieImagesResponse200) & {
+  data: MovieImages200;
+  status: 200;
+};
+
+export type movieImagesResponseSuccess = movieImagesResponse200 & {
   headers: Headers;
 };
-;
+export type movieImagesResponse = movieImagesResponseSuccess;
 
-export type movieImagesResponse = (movieImagesResponseSuccess)
-
-export const getMovieImagesUrl = (movieId: number,
-    params?: MovieImagesParams,) => {
+export const getMovieImagesUrl = (
+  movieId: number,
+  params?: MovieImagesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/images?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/images`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/images?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/images`;
+};
 
-export const movieImages = async (movieId: number,
-    params?: MovieImagesParams, options?: RequestInit): Promise<movieImagesResponse> => {
-  
-  return appFetch<movieImagesResponse>(getMovieImagesUrl(movieId,params),
-  {      
+export const movieImages = async (
+  movieId: number,
+  params?: MovieImagesParams,
+  options?: RequestInit
+): Promise<movieImagesResponse> => {
+  return appFetch<movieImagesResponse>(getMovieImagesUrl(movieId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary Keywords
  */
 export type movieKeywordsResponse200 = {
-  data: MovieKeywords200
-  status: 200
-}
-    
-export type movieKeywordsResponseSuccess = (movieKeywordsResponse200) & {
+  data: MovieKeywords200;
+  status: 200;
+};
+
+export type movieKeywordsResponseSuccess = movieKeywordsResponse200 & {
   headers: Headers;
 };
-;
+export type movieKeywordsResponse = movieKeywordsResponseSuccess;
 
-export type movieKeywordsResponse = (movieKeywordsResponseSuccess)
+export const getMovieKeywordsUrl = (movieId: string) => {
+  return `https://api.themoviedb.org/3/movie/${movieId}/keywords`;
+};
 
-export const getMovieKeywordsUrl = (movieId: string,) => {
-
-  return `https://api.themoviedb.org/3/movie/${movieId}/keywords`
-}
-
-export const movieKeywords = async (movieId: string, options?: RequestInit): Promise<movieKeywordsResponse> => {
-  
-  return appFetch<movieKeywordsResponse>(getMovieKeywordsUrl(movieId),
-  {      
+export const movieKeywords = async (
+  movieId: string,
+  options?: RequestInit
+): Promise<movieKeywordsResponse> => {
+  return appFetch<movieKeywordsResponse>(getMovieKeywordsUrl(movieId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the newest movie ID.
  * @summary Latest
  */
 export type movieLatestIdResponse200 = {
-  data: MovieLatestId200
-  status: 200
-}
-    
-export type movieLatestIdResponseSuccess = (movieLatestIdResponse200) & {
+  data: MovieLatestId200;
+  status: 200;
+};
+
+export type movieLatestIdResponseSuccess = movieLatestIdResponse200 & {
   headers: Headers;
 };
-;
-
-export type movieLatestIdResponse = (movieLatestIdResponseSuccess)
+export type movieLatestIdResponse = movieLatestIdResponseSuccess;
 
 export const getMovieLatestIdUrl = () => {
+  return `https://api.themoviedb.org/3/movie/latest`;
+};
 
-  return `https://api.themoviedb.org/3/movie/latest`
-}
-
-export const movieLatestId = async ( options?: RequestInit): Promise<movieLatestIdResponse> => {
-  
-  return appFetch<movieLatestIdResponse>(getMovieLatestIdUrl(),
-  {      
+export const movieLatestId = async (
+  options?: RequestInit
+): Promise<movieLatestIdResponse> => {
+  return appFetch<movieLatestIdResponse>(getMovieLatestIdUrl(), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the lists that a movie has been added to.
  * @summary Lists
  */
 export type movieListsResponse200 = {
-  data: MovieLists200
-  status: 200
-}
-    
-export type movieListsResponseSuccess = (movieListsResponse200) & {
+  data: MovieLists200;
+  status: 200;
+};
+
+export type movieListsResponseSuccess = movieListsResponse200 & {
   headers: Headers;
 };
-;
+export type movieListsResponse = movieListsResponseSuccess;
 
-export type movieListsResponse = (movieListsResponseSuccess)
-
-export const getMovieListsUrl = (movieId: number,
-    params?: MovieListsParams,) => {
+export const getMovieListsUrl = (
+  movieId: number,
+  params?: MovieListsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/lists?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/lists`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/lists?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/lists`;
+};
 
-export const movieLists = async (movieId: number,
-    params?: MovieListsParams, options?: RequestInit): Promise<movieListsResponse> => {
-  
-  return appFetch<movieListsResponse>(getMovieListsUrl(movieId,params),
-  {      
+export const movieLists = async (
+  movieId: number,
+  params?: MovieListsParams,
+  options?: RequestInit
+): Promise<movieListsResponse> => {
+  return appFetch<movieListsResponse>(getMovieListsUrl(movieId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary Recommendations
  */
 export type movieRecommendationsResponse200 = {
-  data: MovieRecommendations200
-  status: 200
-}
-    
-export type movieRecommendationsResponseSuccess = (movieRecommendationsResponse200) & {
-  headers: Headers;
+  data: MovieRecommendations200;
+  status: 200;
 };
-;
 
-export type movieRecommendationsResponse = (movieRecommendationsResponseSuccess)
+export type movieRecommendationsResponseSuccess =
+  movieRecommendationsResponse200 & {
+    headers: Headers;
+  };
+export type movieRecommendationsResponse = movieRecommendationsResponseSuccess;
 
-export const getMovieRecommendationsUrl = (movieId: number,
-    params?: MovieRecommendationsParams,) => {
+export const getMovieRecommendationsUrl = (
+  movieId: number,
+  params?: MovieRecommendationsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/recommendations?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/recommendations`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/recommendations?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/recommendations`;
+};
 
-export const movieRecommendations = async (movieId: number,
-    params?: MovieRecommendationsParams, options?: RequestInit): Promise<movieRecommendationsResponse> => {
-  
-  return appFetch<movieRecommendationsResponse>(getMovieRecommendationsUrl(movieId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const movieRecommendations = async (
+  movieId: number,
+  params?: MovieRecommendationsParams,
+  options?: RequestInit
+): Promise<movieRecommendationsResponse> => {
+  return appFetch<movieRecommendationsResponse>(
+    getMovieRecommendationsUrl(movieId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the release dates and certifications for a movie.
  * @summary Release Dates
  */
 export type movieReleaseDatesResponse200 = {
-  data: MovieReleaseDates200
-  status: 200
-}
-    
-export type movieReleaseDatesResponseSuccess = (movieReleaseDatesResponse200) & {
+  data: MovieReleaseDates200;
+  status: 200;
+};
+
+export type movieReleaseDatesResponseSuccess = movieReleaseDatesResponse200 & {
   headers: Headers;
 };
-;
+export type movieReleaseDatesResponse = movieReleaseDatesResponseSuccess;
 
-export type movieReleaseDatesResponse = (movieReleaseDatesResponseSuccess)
+export const getMovieReleaseDatesUrl = (movieId: number) => {
+  return `https://api.themoviedb.org/3/movie/${movieId}/release_dates`;
+};
 
-export const getMovieReleaseDatesUrl = (movieId: number,) => {
-
-  return `https://api.themoviedb.org/3/movie/${movieId}/release_dates`
-}
-
-export const movieReleaseDates = async (movieId: number, options?: RequestInit): Promise<movieReleaseDatesResponse> => {
-  
-  return appFetch<movieReleaseDatesResponse>(getMovieReleaseDatesUrl(movieId),
-  {      
+export const movieReleaseDates = async (
+  movieId: number,
+  options?: RequestInit
+): Promise<movieReleaseDatesResponse> => {
+  return appFetch<movieReleaseDatesResponse>(getMovieReleaseDatesUrl(movieId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the user reviews for a movie.
  * @summary Reviews
  */
 export type movieReviewsResponse200 = {
-  data: MovieReviews200
-  status: 200
-}
-    
-export type movieReviewsResponseSuccess = (movieReviewsResponse200) & {
+  data: MovieReviews200;
+  status: 200;
+};
+
+export type movieReviewsResponseSuccess = movieReviewsResponse200 & {
   headers: Headers;
 };
-;
+export type movieReviewsResponse = movieReviewsResponseSuccess;
 
-export type movieReviewsResponse = (movieReviewsResponseSuccess)
-
-export const getMovieReviewsUrl = (movieId: number,
-    params?: MovieReviewsParams,) => {
+export const getMovieReviewsUrl = (
+  movieId: number,
+  params?: MovieReviewsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/reviews?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/reviews`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/reviews?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/reviews`;
+};
 
-export const movieReviews = async (movieId: number,
-    params?: MovieReviewsParams, options?: RequestInit): Promise<movieReviewsResponse> => {
-  
-  return appFetch<movieReviewsResponse>(getMovieReviewsUrl(movieId,params),
-  {      
+export const movieReviews = async (
+  movieId: number,
+  params?: MovieReviewsParams,
+  options?: RequestInit
+): Promise<movieReviewsResponse> => {
+  return appFetch<movieReviewsResponse>(getMovieReviewsUrl(movieId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the similar movies based on genres and keywords.
  * @summary Similar
  */
 export type movieSimilarResponse200 = {
-  data: MovieSimilar200
-  status: 200
-}
-    
-export type movieSimilarResponseSuccess = (movieSimilarResponse200) & {
+  data: MovieSimilar200;
+  status: 200;
+};
+
+export type movieSimilarResponseSuccess = movieSimilarResponse200 & {
   headers: Headers;
 };
-;
+export type movieSimilarResponse = movieSimilarResponseSuccess;
 
-export type movieSimilarResponse = (movieSimilarResponseSuccess)
-
-export const getMovieSimilarUrl = (movieId: number,
-    params?: MovieSimilarParams,) => {
+export const getMovieSimilarUrl = (
+  movieId: number,
+  params?: MovieSimilarParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/similar?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/similar`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/similar?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/similar`;
+};
 
-export const movieSimilar = async (movieId: number,
-    params?: MovieSimilarParams, options?: RequestInit): Promise<movieSimilarResponse> => {
-  
-  return appFetch<movieSimilarResponse>(getMovieSimilarUrl(movieId,params),
-  {      
+export const movieSimilar = async (
+  movieId: number,
+  params?: MovieSimilarParams,
+  options?: RequestInit
+): Promise<movieSimilarResponse> => {
+  return appFetch<movieSimilarResponse>(getMovieSimilarUrl(movieId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the translations for a movie.
  * @summary Translations
  */
 export type movieTranslationsResponse200 = {
-  data: MovieTranslations200
-  status: 200
-}
-    
-export type movieTranslationsResponseSuccess = (movieTranslationsResponse200) & {
+  data: MovieTranslations200;
+  status: 200;
+};
+
+export type movieTranslationsResponseSuccess = movieTranslationsResponse200 & {
   headers: Headers;
 };
-;
+export type movieTranslationsResponse = movieTranslationsResponseSuccess;
 
-export type movieTranslationsResponse = (movieTranslationsResponseSuccess)
+export const getMovieTranslationsUrl = (movieId: number) => {
+  return `https://api.themoviedb.org/3/movie/${movieId}/translations`;
+};
 
-export const getMovieTranslationsUrl = (movieId: number,) => {
-
-  return `https://api.themoviedb.org/3/movie/${movieId}/translations`
-}
-
-export const movieTranslations = async (movieId: number, options?: RequestInit): Promise<movieTranslationsResponse> => {
-  
-  return appFetch<movieTranslationsResponse>(getMovieTranslationsUrl(movieId),
-  {      
+export const movieTranslations = async (
+  movieId: number,
+  options?: RequestInit
+): Promise<movieTranslationsResponse> => {
+  return appFetch<movieTranslationsResponse>(getMovieTranslationsUrl(movieId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary Videos
  */
 export type movieVideosResponse200 = {
-  data: MovieVideos200
-  status: 200
-}
-    
-export type movieVideosResponseSuccess = (movieVideosResponse200) & {
+  data: MovieVideos200;
+  status: 200;
+};
+
+export type movieVideosResponseSuccess = movieVideosResponse200 & {
   headers: Headers;
 };
-;
+export type movieVideosResponse = movieVideosResponseSuccess;
 
-export type movieVideosResponse = (movieVideosResponseSuccess)
-
-export const getMovieVideosUrl = (movieId: number,
-    params?: MovieVideosParams,) => {
+export const getMovieVideosUrl = (
+  movieId: number,
+  params?: MovieVideosParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/videos?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/videos`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/videos?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/videos`;
+};
 
-export const movieVideos = async (movieId: number,
-    params?: MovieVideosParams, options?: RequestInit): Promise<movieVideosResponse> => {
-  
-  return appFetch<movieVideosResponse>(getMovieVideosUrl(movieId,params),
-  {      
+export const movieVideos = async (
+  movieId: number,
+  params?: MovieVideosParams,
+  options?: RequestInit
+): Promise<movieVideosResponse> => {
+  return appFetch<movieVideosResponse>(getMovieVideosUrl(movieId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the list of streaming providers we have for a movie.
  * @summary Watch Providers
  */
 export type movieWatchProvidersResponse200 = {
-  data: MovieWatchProviders200
-  status: 200
-}
-    
-export type movieWatchProvidersResponseSuccess = (movieWatchProvidersResponse200) & {
-  headers: Headers;
+  data: MovieWatchProviders200;
+  status: 200;
 };
-;
 
-export type movieWatchProvidersResponse = (movieWatchProvidersResponseSuccess)
+export type movieWatchProvidersResponseSuccess =
+  movieWatchProvidersResponse200 & {
+    headers: Headers;
+  };
+export type movieWatchProvidersResponse = movieWatchProvidersResponseSuccess;
 
-export const getMovieWatchProvidersUrl = (movieId: number,) => {
+export const getMovieWatchProvidersUrl = (movieId: number) => {
+  return `https://api.themoviedb.org/3/movie/${movieId}/watch/providers`;
+};
 
-  return `https://api.themoviedb.org/3/movie/${movieId}/watch/providers`
-}
-
-export const movieWatchProviders = async (movieId: number, options?: RequestInit): Promise<movieWatchProvidersResponse> => {
-  
-  return appFetch<movieWatchProvidersResponse>(getMovieWatchProvidersUrl(movieId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const movieWatchProviders = async (
+  movieId: number,
+  options?: RequestInit
+): Promise<movieWatchProvidersResponse> => {
+  return appFetch<movieWatchProvidersResponse>(
+    getMovieWatchProvidersUrl(movieId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Rate a movie and save it to your rated list.
  * @summary Add Rating
  */
 export type movieAddRatingResponse200 = {
-  data: MovieAddRating200
-  status: 200
-}
-    
-export type movieAddRatingResponseSuccess = (movieAddRatingResponse200) & {
+  data: MovieAddRating200;
+  status: 200;
+};
+
+export type movieAddRatingResponseSuccess = movieAddRatingResponse200 & {
   headers: Headers;
 };
-;
+export type movieAddRatingResponse = movieAddRatingResponseSuccess;
 
-export type movieAddRatingResponse = (movieAddRatingResponseSuccess)
-
-export const getMovieAddRatingUrl = (movieId: number,
-    params?: MovieAddRatingParams,) => {
+export const getMovieAddRatingUrl = (
+  movieId: number,
+  params?: MovieAddRatingParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/rating?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/rating`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/rating?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/rating`;
+};
 
-export const movieAddRating = async (movieId: number,
-    movieAddRatingBody: MovieAddRatingBody,
-    params?: MovieAddRatingParams, options?: RequestInit): Promise<movieAddRatingResponse> => {
-  
-  return appFetch<movieAddRatingResponse>(getMovieAddRatingUrl(movieId,params),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      movieAddRatingBody,)
-  }
-);}
+export const movieAddRating = async (
+  movieId: number,
+  movieAddRatingBody: MovieAddRatingBody,
+  params?: MovieAddRatingParams,
+  options?: RequestInit
+): Promise<movieAddRatingResponse> => {
+  return appFetch<movieAddRatingResponse>(
+    getMovieAddRatingUrl(movieId, params),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(movieAddRatingBody),
+    }
+  );
+};
 
 /**
  * Delete a user rating.
  * @summary Delete Rating
  */
 export type movieDeleteRatingResponse200 = {
-  data: MovieDeleteRating200
-  status: 200
-}
-    
-export type movieDeleteRatingResponseSuccess = (movieDeleteRatingResponse200) & {
+  data: MovieDeleteRating200;
+  status: 200;
+};
+
+export type movieDeleteRatingResponseSuccess = movieDeleteRatingResponse200 & {
   headers: Headers;
 };
-;
+export type movieDeleteRatingResponse = movieDeleteRatingResponseSuccess;
 
-export type movieDeleteRatingResponse = (movieDeleteRatingResponseSuccess)
-
-export const getMovieDeleteRatingUrl = (movieId: number,
-    params?: MovieDeleteRatingParams,) => {
+export const getMovieDeleteRatingUrl = (
+  movieId: number,
+  params?: MovieDeleteRatingParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/movie/${movieId}/rating?${stringifiedParams}` : `https://api.themoviedb.org/3/movie/${movieId}/rating`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/movie/${movieId}/rating?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/movie/${movieId}/rating`;
+};
 
-export const movieDeleteRating = async (movieId: number,
-    params?: MovieDeleteRatingParams, options?: RequestInit): Promise<movieDeleteRatingResponse> => {
-  
-  return appFetch<movieDeleteRatingResponse>(getMovieDeleteRatingUrl(movieId,params),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-  }
-);}
+export const movieDeleteRating = async (
+  movieId: number,
+  params?: MovieDeleteRatingParams,
+  options?: RequestInit
+): Promise<movieDeleteRatingResponse> => {
+  return appFetch<movieDeleteRatingResponse>(
+    getMovieDeleteRatingUrl(movieId, params),
+    {
+      ...options,
+      method: 'DELETE',
+    }
+  );
+};
 
 /**
  * @summary Details
  */
 export type networkDetailsResponse200 = {
-  data: NetworkDetails200
-  status: 200
-}
-    
-export type networkDetailsResponseSuccess = (networkDetailsResponse200) & {
+  data: NetworkDetails200;
+  status: 200;
+};
+
+export type networkDetailsResponseSuccess = networkDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type networkDetailsResponse = networkDetailsResponseSuccess;
 
-export type networkDetailsResponse = (networkDetailsResponseSuccess)
+export const getNetworkDetailsUrl = (networkId: number) => {
+  return `https://api.themoviedb.org/3/network/${networkId}`;
+};
 
-export const getNetworkDetailsUrl = (networkId: number,) => {
-
-  return `https://api.themoviedb.org/3/network/${networkId}`
-}
-
-export const networkDetails = async (networkId: number, options?: RequestInit): Promise<networkDetailsResponse> => {
-  
-  return appFetch<networkDetailsResponse>(getNetworkDetailsUrl(networkId),
-  {      
+export const networkDetails = async (
+  networkId: number,
+  options?: RequestInit
+): Promise<networkDetailsResponse> => {
+  return appFetch<networkDetailsResponse>(getNetworkDetailsUrl(networkId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the alternative names of a network.
  * @summary Alternative Names
  */
 export type detailsCopyResponse200 = {
-  data: DetailsCopy200
-  status: 200
-}
-    
-export type detailsCopyResponseSuccess = (detailsCopyResponse200) & {
+  data: DetailsCopy200;
+  status: 200;
+};
+
+export type detailsCopyResponseSuccess = detailsCopyResponse200 & {
   headers: Headers;
 };
-;
+export type detailsCopyResponse = detailsCopyResponseSuccess;
 
-export type detailsCopyResponse = (detailsCopyResponseSuccess)
+export const getDetailsCopyUrl = (networkId: number) => {
+  return `https://api.themoviedb.org/3/network/${networkId}/alternative_names`;
+};
 
-export const getDetailsCopyUrl = (networkId: number,) => {
-
-  return `https://api.themoviedb.org/3/network/${networkId}/alternative_names`
-}
-
-export const detailsCopy = async (networkId: number, options?: RequestInit): Promise<detailsCopyResponse> => {
-  
-  return appFetch<detailsCopyResponse>(getDetailsCopyUrl(networkId),
-  {      
+export const detailsCopy = async (
+  networkId: number,
+  options?: RequestInit
+): Promise<detailsCopyResponse> => {
+  return appFetch<detailsCopyResponse>(getDetailsCopyUrl(networkId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the TV network logos by id.
  * @summary Images
  */
 export type alternativeNamesCopyResponse200 = {
-  data: AlternativeNamesCopy200
-  status: 200
-}
-    
-export type alternativeNamesCopyResponseSuccess = (alternativeNamesCopyResponse200) & {
-  headers: Headers;
+  data: AlternativeNamesCopy200;
+  status: 200;
 };
-;
 
-export type alternativeNamesCopyResponse = (alternativeNamesCopyResponseSuccess)
+export type alternativeNamesCopyResponseSuccess =
+  alternativeNamesCopyResponse200 & {
+    headers: Headers;
+  };
+export type alternativeNamesCopyResponse = alternativeNamesCopyResponseSuccess;
 
-export const getAlternativeNamesCopyUrl = (networkId: number,) => {
+export const getAlternativeNamesCopyUrl = (networkId: number) => {
+  return `https://api.themoviedb.org/3/network/${networkId}/images`;
+};
 
-  return `https://api.themoviedb.org/3/network/${networkId}/images`
-}
-
-export const alternativeNamesCopy = async (networkId: number, options?: RequestInit): Promise<alternativeNamesCopyResponse> => {
-  
-  return appFetch<alternativeNamesCopyResponse>(getAlternativeNamesCopyUrl(networkId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const alternativeNamesCopy = async (
+  networkId: number,
+  options?: RequestInit
+): Promise<alternativeNamesCopyResponse> => {
+  return appFetch<alternativeNamesCopyResponse>(
+    getAlternativeNamesCopyUrl(networkId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of people ordered by popularity.
  * @summary Popular
  */
 export type personPopularListResponse200 = {
-  data: PersonPopularList200
-  status: 200
-}
-    
-export type personPopularListResponseSuccess = (personPopularListResponse200) & {
+  data: PersonPopularList200;
+  status: 200;
+};
+
+export type personPopularListResponseSuccess = personPopularListResponse200 & {
   headers: Headers;
 };
-;
+export type personPopularListResponse = personPopularListResponseSuccess;
 
-export type personPopularListResponse = (personPopularListResponseSuccess)
-
-export const getPersonPopularListUrl = (params?: PersonPopularListParams,) => {
+export const getPersonPopularListUrl = (params?: PersonPopularListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/person/popular?${stringifiedParams}` : `https://api.themoviedb.org/3/person/popular`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/person/popular?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/person/popular`;
+};
 
-export const personPopularList = async (params?: PersonPopularListParams, options?: RequestInit): Promise<personPopularListResponse> => {
-  
-  return appFetch<personPopularListResponse>(getPersonPopularListUrl(params),
-  {      
+export const personPopularList = async (
+  params?: PersonPopularListParams,
+  options?: RequestInit
+): Promise<personPopularListResponse> => {
+  return appFetch<personPopularListResponse>(getPersonPopularListUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Query the top level details of a person.
  * @summary Details
  */
 export type personDetailsResponse200 = {
-  data: PersonDetails200
-  status: 200
-}
-    
-export type personDetailsResponseSuccess = (personDetailsResponse200) & {
+  data: PersonDetails200;
+  status: 200;
+};
+
+export type personDetailsResponseSuccess = personDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type personDetailsResponse = personDetailsResponseSuccess;
 
-export type personDetailsResponse = (personDetailsResponseSuccess)
-
-export const getPersonDetailsUrl = (personId: number,
-    params?: PersonDetailsParams,) => {
+export const getPersonDetailsUrl = (
+  personId: number,
+  params?: PersonDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/person/${personId}?${stringifiedParams}` : `https://api.themoviedb.org/3/person/${personId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/person/${personId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/person/${personId}`;
+};
 
-export const personDetails = async (personId: number,
-    params?: PersonDetailsParams, options?: RequestInit): Promise<personDetailsResponse> => {
-  
-  return appFetch<personDetailsResponse>(getPersonDetailsUrl(personId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const personDetails = async (
+  personId: number,
+  params?: PersonDetailsParams,
+  options?: RequestInit
+): Promise<personDetailsResponse> => {
+  return appFetch<personDetailsResponse>(
+    getPersonDetailsUrl(personId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the recent changes for a person.
  * @summary Changes
  */
 export type personChangesResponse200 = {
-  data: PersonChanges200
-  status: 200
-}
-    
-export type personChangesResponseSuccess = (personChangesResponse200) & {
+  data: PersonChanges200;
+  status: 200;
+};
+
+export type personChangesResponseSuccess = personChangesResponse200 & {
   headers: Headers;
 };
-;
+export type personChangesResponse = personChangesResponseSuccess;
 
-export type personChangesResponse = (personChangesResponseSuccess)
-
-export const getPersonChangesUrl = (personId: number,
-    params?: PersonChangesParams,) => {
+export const getPersonChangesUrl = (
+  personId: number,
+  params?: PersonChangesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/person/${personId}/changes?${stringifiedParams}` : `https://api.themoviedb.org/3/person/${personId}/changes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/person/${personId}/changes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/person/${personId}/changes`;
+};
 
-export const personChanges = async (personId: number,
-    params?: PersonChangesParams, options?: RequestInit): Promise<personChangesResponse> => {
-  
-  return appFetch<personChangesResponse>(getPersonChangesUrl(personId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const personChanges = async (
+  personId: number,
+  params?: PersonChangesParams,
+  options?: RequestInit
+): Promise<personChangesResponse> => {
+  return appFetch<personChangesResponse>(
+    getPersonChangesUrl(personId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the combined movie and TV credits that belong to a person.
  * @summary Combined Credits
  */
 export type personCombinedCreditsResponse200 = {
-  data: PersonCombinedCredits200
-  status: 200
-}
-    
-export type personCombinedCreditsResponseSuccess = (personCombinedCreditsResponse200) & {
-  headers: Headers;
+  data: PersonCombinedCredits200;
+  status: 200;
 };
-;
 
-export type personCombinedCreditsResponse = (personCombinedCreditsResponseSuccess)
+export type personCombinedCreditsResponseSuccess =
+  personCombinedCreditsResponse200 & {
+    headers: Headers;
+  };
+export type personCombinedCreditsResponse =
+  personCombinedCreditsResponseSuccess;
 
-export const getPersonCombinedCreditsUrl = (personId: string,
-    params?: PersonCombinedCreditsParams,) => {
+export const getPersonCombinedCreditsUrl = (
+  personId: string,
+  params?: PersonCombinedCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/person/${personId}/combined_credits?${stringifiedParams}` : `https://api.themoviedb.org/3/person/${personId}/combined_credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/person/${personId}/combined_credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/person/${personId}/combined_credits`;
+};
 
-export const personCombinedCredits = async (personId: string,
-    params?: PersonCombinedCreditsParams, options?: RequestInit): Promise<personCombinedCreditsResponse> => {
-  
-  return appFetch<personCombinedCreditsResponse>(getPersonCombinedCreditsUrl(personId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const personCombinedCredits = async (
+  personId: string,
+  params?: PersonCombinedCreditsParams,
+  options?: RequestInit
+): Promise<personCombinedCreditsResponse> => {
+  return appFetch<personCombinedCreditsResponse>(
+    getPersonCombinedCreditsUrl(personId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the external ID's that belong to a person.
  * @summary External IDs
  */
 export type personExternalIdsResponse200 = {
-  data: PersonExternalIds200
-  status: 200
-}
-    
-export type personExternalIdsResponseSuccess = (personExternalIdsResponse200) & {
+  data: PersonExternalIds200;
+  status: 200;
+};
+
+export type personExternalIdsResponseSuccess = personExternalIdsResponse200 & {
   headers: Headers;
 };
-;
+export type personExternalIdsResponse = personExternalIdsResponseSuccess;
 
-export type personExternalIdsResponse = (personExternalIdsResponseSuccess)
+export const getPersonExternalIdsUrl = (personId: number) => {
+  return `https://api.themoviedb.org/3/person/${personId}/external_ids`;
+};
 
-export const getPersonExternalIdsUrl = (personId: number,) => {
-
-  return `https://api.themoviedb.org/3/person/${personId}/external_ids`
-}
-
-export const personExternalIds = async (personId: number, options?: RequestInit): Promise<personExternalIdsResponse> => {
-  
-  return appFetch<personExternalIdsResponse>(getPersonExternalIdsUrl(personId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const personExternalIds = async (
+  personId: number,
+  options?: RequestInit
+): Promise<personExternalIdsResponse> => {
+  return appFetch<personExternalIdsResponse>(
+    getPersonExternalIdsUrl(personId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the profile images that belong to a person.
  * @summary Images
  */
 export type personImagesResponse200 = {
-  data: PersonImages200
-  status: 200
-}
-    
-export type personImagesResponseSuccess = (personImagesResponse200) & {
+  data: PersonImages200;
+  status: 200;
+};
+
+export type personImagesResponseSuccess = personImagesResponse200 & {
   headers: Headers;
 };
-;
+export type personImagesResponse = personImagesResponseSuccess;
 
-export type personImagesResponse = (personImagesResponseSuccess)
+export const getPersonImagesUrl = (personId: number) => {
+  return `https://api.themoviedb.org/3/person/${personId}/images`;
+};
 
-export const getPersonImagesUrl = (personId: number,) => {
-
-  return `https://api.themoviedb.org/3/person/${personId}/images`
-}
-
-export const personImages = async (personId: number, options?: RequestInit): Promise<personImagesResponse> => {
-  
-  return appFetch<personImagesResponse>(getPersonImagesUrl(personId),
-  {      
+export const personImages = async (
+  personId: number,
+  options?: RequestInit
+): Promise<personImagesResponse> => {
+  return appFetch<personImagesResponse>(getPersonImagesUrl(personId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the newest created person. This is a live response and will continuously change.
  * @summary Latest
  */
 export type personLatestIdResponse200 = {
-  data: PersonLatestId200
-  status: 200
-}
-    
-export type personLatestIdResponseSuccess = (personLatestIdResponse200) & {
+  data: PersonLatestId200;
+  status: 200;
+};
+
+export type personLatestIdResponseSuccess = personLatestIdResponse200 & {
   headers: Headers;
 };
-;
-
-export type personLatestIdResponse = (personLatestIdResponseSuccess)
+export type personLatestIdResponse = personLatestIdResponseSuccess;
 
 export const getPersonLatestIdUrl = () => {
+  return `https://api.themoviedb.org/3/person/latest`;
+};
 
-  return `https://api.themoviedb.org/3/person/latest`
-}
-
-export const personLatestId = async ( options?: RequestInit): Promise<personLatestIdResponse> => {
-  
-  return appFetch<personLatestIdResponse>(getPersonLatestIdUrl(),
-  {      
+export const personLatestId = async (
+  options?: RequestInit
+): Promise<personLatestIdResponse> => {
+  return appFetch<personLatestIdResponse>(getPersonLatestIdUrl(), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the movie credits for a person.
  * @summary Movie Credits
  */
 export type personMovieCreditsResponse200 = {
-  data: PersonMovieCredits200
-  status: 200
-}
-    
-export type personMovieCreditsResponseSuccess = (personMovieCreditsResponse200) & {
-  headers: Headers;
+  data: PersonMovieCredits200;
+  status: 200;
 };
-;
 
-export type personMovieCreditsResponse = (personMovieCreditsResponseSuccess)
+export type personMovieCreditsResponseSuccess =
+  personMovieCreditsResponse200 & {
+    headers: Headers;
+  };
+export type personMovieCreditsResponse = personMovieCreditsResponseSuccess;
 
-export const getPersonMovieCreditsUrl = (personId: number,
-    params?: PersonMovieCreditsParams,) => {
+export const getPersonMovieCreditsUrl = (
+  personId: number,
+  params?: PersonMovieCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/person/${personId}/movie_credits?${stringifiedParams}` : `https://api.themoviedb.org/3/person/${personId}/movie_credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/person/${personId}/movie_credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/person/${personId}/movie_credits`;
+};
 
-export const personMovieCredits = async (personId: number,
-    params?: PersonMovieCreditsParams, options?: RequestInit): Promise<personMovieCreditsResponse> => {
-  
-  return appFetch<personMovieCreditsResponse>(getPersonMovieCreditsUrl(personId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const personMovieCredits = async (
+  personId: number,
+  params?: PersonMovieCreditsParams,
+  options?: RequestInit
+): Promise<personMovieCreditsResponse> => {
+  return appFetch<personMovieCreditsResponse>(
+    getPersonMovieCreditsUrl(personId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the TV credits that belong to a person.
  * @summary TV Credits
  */
 export type personTvCreditsResponse200 = {
-  data: PersonTvCredits200
-  status: 200
-}
-    
-export type personTvCreditsResponseSuccess = (personTvCreditsResponse200) & {
+  data: PersonTvCredits200;
+  status: 200;
+};
+
+export type personTvCreditsResponseSuccess = personTvCreditsResponse200 & {
   headers: Headers;
 };
-;
+export type personTvCreditsResponse = personTvCreditsResponseSuccess;
 
-export type personTvCreditsResponse = (personTvCreditsResponseSuccess)
-
-export const getPersonTvCreditsUrl = (personId: number,
-    params?: PersonTvCreditsParams,) => {
+export const getPersonTvCreditsUrl = (
+  personId: number,
+  params?: PersonTvCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/person/${personId}/tv_credits?${stringifiedParams}` : `https://api.themoviedb.org/3/person/${personId}/tv_credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/person/${personId}/tv_credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/person/${personId}/tv_credits`;
+};
 
-export const personTvCredits = async (personId: number,
-    params?: PersonTvCreditsParams, options?: RequestInit): Promise<personTvCreditsResponse> => {
-  
-  return appFetch<personTvCreditsResponse>(getPersonTvCreditsUrl(personId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const personTvCredits = async (
+  personId: number,
+  params?: PersonTvCreditsParams,
+  options?: RequestInit
+): Promise<personTvCreditsResponse> => {
+  return appFetch<personTvCreditsResponse>(
+    getPersonTvCreditsUrl(personId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the tagged images for a person.
  * @summary Tagged Images
  */
 export type personTaggedImagesResponse200 = {
-  data: PersonTaggedImages200
-  status: 200
-}
-    
-export type personTaggedImagesResponseSuccess = (personTaggedImagesResponse200) & {
-  headers: Headers;
+  data: PersonTaggedImages200;
+  status: 200;
 };
-;
 
-export type personTaggedImagesResponse = (personTaggedImagesResponseSuccess)
+export type personTaggedImagesResponseSuccess =
+  personTaggedImagesResponse200 & {
+    headers: Headers;
+  };
+export type personTaggedImagesResponse = personTaggedImagesResponseSuccess;
 
-export const getPersonTaggedImagesUrl = (personId: number,
-    params?: PersonTaggedImagesParams,) => {
+export const getPersonTaggedImagesUrl = (
+  personId: number,
+  params?: PersonTaggedImagesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/person/${personId}/tagged_images?${stringifiedParams}` : `https://api.themoviedb.org/3/person/${personId}/tagged_images`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/person/${personId}/tagged_images?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/person/${personId}/tagged_images`;
+};
 
-export const personTaggedImages = async (personId: number,
-    params?: PersonTaggedImagesParams, options?: RequestInit): Promise<personTaggedImagesResponse> => {
-  
-  return appFetch<personTaggedImagesResponse>(getPersonTaggedImagesUrl(personId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const personTaggedImages = async (
+  personId: number,
+  params?: PersonTaggedImagesParams,
+  options?: RequestInit
+): Promise<personTaggedImagesResponse> => {
+  return appFetch<personTaggedImagesResponse>(
+    getPersonTaggedImagesUrl(personId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the translations that belong to a person.
  * @summary Translations
  */
 export type translationsResponse200 = {
-  data: Translations200
-  status: 200
-}
-    
-export type translationsResponseSuccess = (translationsResponse200) & {
+  data: Translations200;
+  status: 200;
+};
+
+export type translationsResponseSuccess = translationsResponse200 & {
   headers: Headers;
 };
-;
+export type translationsResponse = translationsResponseSuccess;
 
-export type translationsResponse = (translationsResponseSuccess)
+export const getTranslationsUrl = (personId: number) => {
+  return `https://api.themoviedb.org/3/person/${personId}/translations`;
+};
 
-export const getTranslationsUrl = (personId: number,) => {
-
-  return `https://api.themoviedb.org/3/person/${personId}/translations`
-}
-
-export const translations = async (personId: number, options?: RequestInit): Promise<translationsResponse> => {
-  
-  return appFetch<translationsResponse>(getTranslationsUrl(personId),
-  {      
+export const translations = async (
+  personId: number,
+  options?: RequestInit
+): Promise<translationsResponse> => {
+  return appFetch<translationsResponse>(getTranslationsUrl(personId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Retrieve the details of a movie or TV show review.
  * @summary Details
  */
 export type reviewDetailsResponse200 = {
-  data: ReviewDetails200
-  status: 200
-}
-    
-export type reviewDetailsResponseSuccess = (reviewDetailsResponse200) & {
+  data: ReviewDetails200;
+  status: 200;
+};
+
+export type reviewDetailsResponseSuccess = reviewDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type reviewDetailsResponse = reviewDetailsResponseSuccess;
 
-export type reviewDetailsResponse = (reviewDetailsResponseSuccess)
+export const getReviewDetailsUrl = (reviewId: string) => {
+  return `https://api.themoviedb.org/3/review/${reviewId}`;
+};
 
-export const getReviewDetailsUrl = (reviewId: string,) => {
-
-  return `https://api.themoviedb.org/3/review/${reviewId}`
-}
-
-export const reviewDetails = async (reviewId: string, options?: RequestInit): Promise<reviewDetailsResponse> => {
-  
-  return appFetch<reviewDetailsResponse>(getReviewDetailsUrl(reviewId),
-  {      
+export const reviewDetails = async (
+  reviewId: string,
+  options?: RequestInit
+): Promise<reviewDetailsResponse> => {
+  return appFetch<reviewDetailsResponse>(getReviewDetailsUrl(reviewId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Search for collections by their original, translated and alternative names.
  * @summary Collection
  */
 export type searchCollectionResponse200 = {
-  data: SearchCollection200
-  status: 200
-}
-    
-export type searchCollectionResponseSuccess = (searchCollectionResponse200) & {
+  data: SearchCollection200;
+  status: 200;
+};
+
+export type searchCollectionResponseSuccess = searchCollectionResponse200 & {
   headers: Headers;
 };
-;
+export type searchCollectionResponse = searchCollectionResponseSuccess;
 
-export type searchCollectionResponse = (searchCollectionResponseSuccess)
-
-export const getSearchCollectionUrl = (params: SearchCollectionParams,) => {
+export const getSearchCollectionUrl = (params: SearchCollectionParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/search/collection?${stringifiedParams}` : `https://api.themoviedb.org/3/search/collection`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/search/collection?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/search/collection`;
+};
 
-export const searchCollection = async (params: SearchCollectionParams, options?: RequestInit): Promise<searchCollectionResponse> => {
-  
-  return appFetch<searchCollectionResponse>(getSearchCollectionUrl(params),
-  {      
+export const searchCollection = async (
+  params: SearchCollectionParams,
+  options?: RequestInit
+): Promise<searchCollectionResponse> => {
+  return appFetch<searchCollectionResponse>(getSearchCollectionUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Search for companies by their original and alternative names.
  * @summary Company
  */
 export type searchCompanyResponse200 = {
-  data: SearchCompany200
-  status: 200
-}
-    
-export type searchCompanyResponseSuccess = (searchCompanyResponse200) & {
+  data: SearchCompany200;
+  status: 200;
+};
+
+export type searchCompanyResponseSuccess = searchCompanyResponse200 & {
   headers: Headers;
 };
-;
+export type searchCompanyResponse = searchCompanyResponseSuccess;
 
-export type searchCompanyResponse = (searchCompanyResponseSuccess)
-
-export const getSearchCompanyUrl = (params: SearchCompanyParams,) => {
+export const getSearchCompanyUrl = (params: SearchCompanyParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/search/company?${stringifiedParams}` : `https://api.themoviedb.org/3/search/company`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/search/company?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/search/company`;
+};
 
-export const searchCompany = async (params: SearchCompanyParams, options?: RequestInit): Promise<searchCompanyResponse> => {
-  
-  return appFetch<searchCompanyResponse>(getSearchCompanyUrl(params),
-  {      
+export const searchCompany = async (
+  params: SearchCompanyParams,
+  options?: RequestInit
+): Promise<searchCompanyResponse> => {
+  return appFetch<searchCompanyResponse>(getSearchCompanyUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Search for keywords by their name.
  * @summary Keyword
  */
 export type searchKeywordResponse200 = {
-  data: SearchKeyword200
-  status: 200
-}
-    
-export type searchKeywordResponseSuccess = (searchKeywordResponse200) & {
+  data: SearchKeyword200;
+  status: 200;
+};
+
+export type searchKeywordResponseSuccess = searchKeywordResponse200 & {
   headers: Headers;
 };
-;
+export type searchKeywordResponse = searchKeywordResponseSuccess;
 
-export type searchKeywordResponse = (searchKeywordResponseSuccess)
-
-export const getSearchKeywordUrl = (params: SearchKeywordParams,) => {
+export const getSearchKeywordUrl = (params: SearchKeywordParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/search/keyword?${stringifiedParams}` : `https://api.themoviedb.org/3/search/keyword`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/search/keyword?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/search/keyword`;
+};
 
-export const searchKeyword = async (params: SearchKeywordParams, options?: RequestInit): Promise<searchKeywordResponse> => {
-  
-  return appFetch<searchKeywordResponse>(getSearchKeywordUrl(params),
-  {      
+export const searchKeyword = async (
+  params: SearchKeywordParams,
+  options?: RequestInit
+): Promise<searchKeywordResponse> => {
+  return appFetch<searchKeywordResponse>(getSearchKeywordUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Search for movies by their original, translated and alternative titles.
  * @summary Movie
  */
 export type searchMovieResponse200 = {
-  data: SearchMovie200
-  status: 200
-}
-    
-export type searchMovieResponseSuccess = (searchMovieResponse200) & {
+  data: SearchMovie200;
+  status: 200;
+};
+
+export type searchMovieResponseSuccess = searchMovieResponse200 & {
   headers: Headers;
 };
-;
+export type searchMovieResponse = searchMovieResponseSuccess;
 
-export type searchMovieResponse = (searchMovieResponseSuccess)
-
-export const getSearchMovieUrl = (params: SearchMovieParams,) => {
+export const getSearchMovieUrl = (params: SearchMovieParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/search/movie?${stringifiedParams}` : `https://api.themoviedb.org/3/search/movie`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/search/movie?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/search/movie`;
+};
 
-export const searchMovie = async (params: SearchMovieParams, options?: RequestInit): Promise<searchMovieResponse> => {
-  
-  return appFetch<searchMovieResponse>(getSearchMovieUrl(params),
-  {      
+export const searchMovie = async (
+  params: SearchMovieParams,
+  options?: RequestInit
+): Promise<searchMovieResponse> => {
+  return appFetch<searchMovieResponse>(getSearchMovieUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Use multi search when you want to search for movies, TV shows and people in a single request.
  * @summary Multi
  */
 export type searchMultiResponse200 = {
-  data: SearchMulti200
-  status: 200
-}
-    
-export type searchMultiResponseSuccess = (searchMultiResponse200) & {
+  data: SearchMulti200;
+  status: 200;
+};
+
+export type searchMultiResponseSuccess = searchMultiResponse200 & {
   headers: Headers;
 };
-;
+export type searchMultiResponse = searchMultiResponseSuccess;
 
-export type searchMultiResponse = (searchMultiResponseSuccess)
-
-export const getSearchMultiUrl = (params: SearchMultiParams,) => {
+export const getSearchMultiUrl = (params: SearchMultiParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/search/multi?${stringifiedParams}` : `https://api.themoviedb.org/3/search/multi`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/search/multi?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/search/multi`;
+};
 
-export const searchMulti = async (params: SearchMultiParams, options?: RequestInit): Promise<searchMultiResponse> => {
-  
-  return appFetch<searchMultiResponse>(getSearchMultiUrl(params),
-  {      
+export const searchMulti = async (
+  params: SearchMultiParams,
+  options?: RequestInit
+): Promise<searchMultiResponse> => {
+  return appFetch<searchMultiResponse>(getSearchMultiUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Search for people by their name and also known as names.
  * @summary Person
  */
 export type searchPersonResponse200 = {
-  data: SearchPerson200
-  status: 200
-}
-    
-export type searchPersonResponseSuccess = (searchPersonResponse200) & {
+  data: SearchPerson200;
+  status: 200;
+};
+
+export type searchPersonResponseSuccess = searchPersonResponse200 & {
   headers: Headers;
 };
-;
+export type searchPersonResponse = searchPersonResponseSuccess;
 
-export type searchPersonResponse = (searchPersonResponseSuccess)
-
-export const getSearchPersonUrl = (params: SearchPersonParams,) => {
+export const getSearchPersonUrl = (params: SearchPersonParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/search/person?${stringifiedParams}` : `https://api.themoviedb.org/3/search/person`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/search/person?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/search/person`;
+};
 
-export const searchPerson = async (params: SearchPersonParams, options?: RequestInit): Promise<searchPersonResponse> => {
-  
-  return appFetch<searchPersonResponse>(getSearchPersonUrl(params),
-  {      
+export const searchPerson = async (
+  params: SearchPersonParams,
+  options?: RequestInit
+): Promise<searchPersonResponse> => {
+  return appFetch<searchPersonResponse>(getSearchPersonUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Search for TV shows by their original, translated and also known as names.
  * @summary TV
  */
 export type searchTvResponse200 = {
-  data: SearchTv200
-  status: 200
-}
-    
-export type searchTvResponseSuccess = (searchTvResponse200) & {
+  data: SearchTv200;
+  status: 200;
+};
+
+export type searchTvResponseSuccess = searchTvResponse200 & {
   headers: Headers;
 };
-;
+export type searchTvResponse = searchTvResponseSuccess;
 
-export type searchTvResponse = (searchTvResponseSuccess)
-
-export const getSearchTvUrl = (params: SearchTvParams,) => {
+export const getSearchTvUrl = (params: SearchTvParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/search/tv?${stringifiedParams}` : `https://api.themoviedb.org/3/search/tv`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/search/tv?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/search/tv`;
+};
 
-export const searchTv = async (params: SearchTvParams, options?: RequestInit): Promise<searchTvResponse> => {
-  
-  return appFetch<searchTvResponse>(getSearchTvUrl(params),
-  {      
+export const searchTv = async (
+  params: SearchTvParams,
+  options?: RequestInit
+): Promise<searchTvResponse> => {
+  return appFetch<searchTvResponse>(getSearchTvUrl(params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the trending movies, TV shows and people.
  * @summary All
  */
 export type trendingAllResponse200 = {
-  data: TrendingAll200
-  status: 200
-}
-    
-export type trendingAllResponseSuccess = (trendingAllResponse200) & {
+  data: TrendingAll200;
+  status: 200;
+};
+
+export type trendingAllResponseSuccess = trendingAllResponse200 & {
   headers: Headers;
 };
-;
+export type trendingAllResponse = trendingAllResponseSuccess;
 
-export type trendingAllResponse = (trendingAllResponseSuccess)
-
-export const getTrendingAllUrl = (params?: TrendingAllParams,
-    timeWindow: 'day' | 'week' = 'day',) => {
+export const getTrendingAllUrl = (
+  params?: TrendingAllParams,
+  timeWindow: 'day' | 'week' = 'day'
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/trending/all/${timeWindow}?${stringifiedParams}` : `https://api.themoviedb.org/3/trending/all/${timeWindow}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/trending/all/${timeWindow}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/trending/all/${timeWindow}`;
+};
 
-export const trendingAll = async (params?: TrendingAllParams,
-    timeWindow: 'day' | 'week' = 'day', options?: RequestInit): Promise<trendingAllResponse> => {
-  
-  return appFetch<trendingAllResponse>(getTrendingAllUrl(params,timeWindow),
-  {      
+export const trendingAll = async (
+  params?: TrendingAllParams,
+  timeWindow: 'day' | 'week' = 'day',
+  options?: RequestInit
+): Promise<trendingAllResponse> => {
+  return appFetch<trendingAllResponse>(getTrendingAllUrl(params, timeWindow), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the trending movies on TMDB.
  * @summary Movies
  */
 export type trendingMoviesResponse200 = {
-  data: TrendingMovies200
-  status: 200
-}
-    
-export type trendingMoviesResponseSuccess = (trendingMoviesResponse200) & {
+  data: TrendingMovies200;
+  status: 200;
+};
+
+export type trendingMoviesResponseSuccess = trendingMoviesResponse200 & {
   headers: Headers;
 };
-;
+export type trendingMoviesResponse = trendingMoviesResponseSuccess;
 
-export type trendingMoviesResponse = (trendingMoviesResponseSuccess)
-
-export const getTrendingMoviesUrl = (params?: TrendingMoviesParams,
-    timeWindow: 'day' | 'week' = 'day',) => {
+export const getTrendingMoviesUrl = (
+  params?: TrendingMoviesParams,
+  timeWindow: 'day' | 'week' = 'day'
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/trending/movie/${timeWindow}?${stringifiedParams}` : `https://api.themoviedb.org/3/trending/movie/${timeWindow}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/trending/movie/${timeWindow}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/trending/movie/${timeWindow}`;
+};
 
-export const trendingMovies = async (params?: TrendingMoviesParams,
-    timeWindow: 'day' | 'week' = 'day', options?: RequestInit): Promise<trendingMoviesResponse> => {
-  
-  return appFetch<trendingMoviesResponse>(getTrendingMoviesUrl(params,timeWindow),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const trendingMovies = async (
+  params?: TrendingMoviesParams,
+  timeWindow: 'day' | 'week' = 'day',
+  options?: RequestInit
+): Promise<trendingMoviesResponse> => {
+  return appFetch<trendingMoviesResponse>(
+    getTrendingMoviesUrl(params, timeWindow),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the trending people on TMDB.
  * @summary People
  */
 export type trendingPeopleResponse200 = {
-  data: TrendingPeople200
-  status: 200
-}
-    
-export type trendingPeopleResponseSuccess = (trendingPeopleResponse200) & {
+  data: TrendingPeople200;
+  status: 200;
+};
+
+export type trendingPeopleResponseSuccess = trendingPeopleResponse200 & {
   headers: Headers;
 };
-;
+export type trendingPeopleResponse = trendingPeopleResponseSuccess;
 
-export type trendingPeopleResponse = (trendingPeopleResponseSuccess)
-
-export const getTrendingPeopleUrl = (params?: TrendingPeopleParams,
-    timeWindow: 'day' | 'week' = 'day',) => {
+export const getTrendingPeopleUrl = (
+  params?: TrendingPeopleParams,
+  timeWindow: 'day' | 'week' = 'day'
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/trending/person/${timeWindow}?${stringifiedParams}` : `https://api.themoviedb.org/3/trending/person/${timeWindow}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/trending/person/${timeWindow}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/trending/person/${timeWindow}`;
+};
 
-export const trendingPeople = async (params?: TrendingPeopleParams,
-    timeWindow: 'day' | 'week' = 'day', options?: RequestInit): Promise<trendingPeopleResponse> => {
-  
-  return appFetch<trendingPeopleResponse>(getTrendingPeopleUrl(params,timeWindow),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const trendingPeople = async (
+  params?: TrendingPeopleParams,
+  timeWindow: 'day' | 'week' = 'day',
+  options?: RequestInit
+): Promise<trendingPeopleResponse> => {
+  return appFetch<trendingPeopleResponse>(
+    getTrendingPeopleUrl(params, timeWindow),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the trending TV shows on TMDB.
  * @summary TV
  */
 export type trendingTvResponse200 = {
-  data: TrendingTv200
-  status: 200
-}
-    
-export type trendingTvResponseSuccess = (trendingTvResponse200) & {
+  data: TrendingTv200;
+  status: 200;
+};
+
+export type trendingTvResponseSuccess = trendingTvResponse200 & {
   headers: Headers;
 };
-;
+export type trendingTvResponse = trendingTvResponseSuccess;
 
-export type trendingTvResponse = (trendingTvResponseSuccess)
-
-export const getTrendingTvUrl = (params?: TrendingTvParams,
-    timeWindow: 'day' | 'week' = 'day',) => {
+export const getTrendingTvUrl = (
+  params?: TrendingTvParams,
+  timeWindow: 'day' | 'week' = 'day'
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/trending/tv/${timeWindow}?${stringifiedParams}` : `https://api.themoviedb.org/3/trending/tv/${timeWindow}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/trending/tv/${timeWindow}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/trending/tv/${timeWindow}`;
+};
 
-export const trendingTv = async (params?: TrendingTvParams,
-    timeWindow: 'day' | 'week' = 'day', options?: RequestInit): Promise<trendingTvResponse> => {
-  
-  return appFetch<trendingTvResponse>(getTrendingTvUrl(params,timeWindow),
-  {      
+export const trendingTv = async (
+  params?: TrendingTvParams,
+  timeWindow: 'day' | 'week' = 'day',
+  options?: RequestInit
+): Promise<trendingTvResponse> => {
+  return appFetch<trendingTvResponse>(getTrendingTvUrl(params, timeWindow), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get a list of TV shows airing today.
  * @summary Airing Today
  */
 export type tvSeriesAiringTodayListResponse200 = {
-  data: TvSeriesAiringTodayList200
-  status: 200
-}
-    
-export type tvSeriesAiringTodayListResponseSuccess = (tvSeriesAiringTodayListResponse200) & {
-  headers: Headers;
+  data: TvSeriesAiringTodayList200;
+  status: 200;
 };
-;
 
-export type tvSeriesAiringTodayListResponse = (tvSeriesAiringTodayListResponseSuccess)
+export type tvSeriesAiringTodayListResponseSuccess =
+  tvSeriesAiringTodayListResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesAiringTodayListResponse =
+  tvSeriesAiringTodayListResponseSuccess;
 
-export const getTvSeriesAiringTodayListUrl = (params?: TvSeriesAiringTodayListParams,) => {
+export const getTvSeriesAiringTodayListUrl = (
+  params?: TvSeriesAiringTodayListParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/airing_today?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/airing_today`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/airing_today?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/airing_today`;
+};
 
-export const tvSeriesAiringTodayList = async (params?: TvSeriesAiringTodayListParams, options?: RequestInit): Promise<tvSeriesAiringTodayListResponse> => {
-  
-  return appFetch<tvSeriesAiringTodayListResponse>(getTvSeriesAiringTodayListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesAiringTodayList = async (
+  params?: TvSeriesAiringTodayListParams,
+  options?: RequestInit
+): Promise<tvSeriesAiringTodayListResponse> => {
+  return appFetch<tvSeriesAiringTodayListResponse>(
+    getTvSeriesAiringTodayListUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of TV shows that air in the next 7 days.
  * @summary On The Air
  */
 export type tvSeriesOnTheAirListResponse200 = {
-  data: TvSeriesOnTheAirList200
-  status: 200
-}
-    
-export type tvSeriesOnTheAirListResponseSuccess = (tvSeriesOnTheAirListResponse200) & {
-  headers: Headers;
+  data: TvSeriesOnTheAirList200;
+  status: 200;
 };
-;
 
-export type tvSeriesOnTheAirListResponse = (tvSeriesOnTheAirListResponseSuccess)
+export type tvSeriesOnTheAirListResponseSuccess =
+  tvSeriesOnTheAirListResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesOnTheAirListResponse = tvSeriesOnTheAirListResponseSuccess;
 
-export const getTvSeriesOnTheAirListUrl = (params?: TvSeriesOnTheAirListParams,) => {
+export const getTvSeriesOnTheAirListUrl = (
+  params?: TvSeriesOnTheAirListParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/on_the_air?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/on_the_air`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/on_the_air?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/on_the_air`;
+};
 
-export const tvSeriesOnTheAirList = async (params?: TvSeriesOnTheAirListParams, options?: RequestInit): Promise<tvSeriesOnTheAirListResponse> => {
-  
-  return appFetch<tvSeriesOnTheAirListResponse>(getTvSeriesOnTheAirListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesOnTheAirList = async (
+  params?: TvSeriesOnTheAirListParams,
+  options?: RequestInit
+): Promise<tvSeriesOnTheAirListResponse> => {
+  return appFetch<tvSeriesOnTheAirListResponse>(
+    getTvSeriesOnTheAirListUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of TV shows ordered by popularity.
  * @summary Popular
  */
 export type tvSeriesPopularListResponse200 = {
-  data: TvSeriesPopularList200
-  status: 200
-}
-    
-export type tvSeriesPopularListResponseSuccess = (tvSeriesPopularListResponse200) & {
-  headers: Headers;
+  data: TvSeriesPopularList200;
+  status: 200;
 };
-;
 
-export type tvSeriesPopularListResponse = (tvSeriesPopularListResponseSuccess)
+export type tvSeriesPopularListResponseSuccess =
+  tvSeriesPopularListResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesPopularListResponse = tvSeriesPopularListResponseSuccess;
 
-export const getTvSeriesPopularListUrl = (params?: TvSeriesPopularListParams,) => {
+export const getTvSeriesPopularListUrl = (
+  params?: TvSeriesPopularListParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/popular?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/popular`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/popular?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/popular`;
+};
 
-export const tvSeriesPopularList = async (params?: TvSeriesPopularListParams, options?: RequestInit): Promise<tvSeriesPopularListResponse> => {
-  
-  return appFetch<tvSeriesPopularListResponse>(getTvSeriesPopularListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesPopularList = async (
+  params?: TvSeriesPopularListParams,
+  options?: RequestInit
+): Promise<tvSeriesPopularListResponse> => {
+  return appFetch<tvSeriesPopularListResponse>(
+    getTvSeriesPopularListUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of TV shows ordered by rating.
  * @summary Top Rated
  */
 export type tvSeriesTopRatedListResponse200 = {
-  data: TvSeriesTopRatedList200
-  status: 200
-}
-    
-export type tvSeriesTopRatedListResponseSuccess = (tvSeriesTopRatedListResponse200) & {
-  headers: Headers;
+  data: TvSeriesTopRatedList200;
+  status: 200;
 };
-;
 
-export type tvSeriesTopRatedListResponse = (tvSeriesTopRatedListResponseSuccess)
+export type tvSeriesTopRatedListResponseSuccess =
+  tvSeriesTopRatedListResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesTopRatedListResponse = tvSeriesTopRatedListResponseSuccess;
 
-export const getTvSeriesTopRatedListUrl = (params?: TvSeriesTopRatedListParams,) => {
+export const getTvSeriesTopRatedListUrl = (
+  params?: TvSeriesTopRatedListParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/top_rated?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/top_rated`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/top_rated?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/top_rated`;
+};
 
-export const tvSeriesTopRatedList = async (params?: TvSeriesTopRatedListParams, options?: RequestInit): Promise<tvSeriesTopRatedListResponse> => {
-  
-  return appFetch<tvSeriesTopRatedListResponse>(getTvSeriesTopRatedListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesTopRatedList = async (
+  params?: TvSeriesTopRatedListParams,
+  options?: RequestInit
+): Promise<tvSeriesTopRatedListResponse> => {
+  return appFetch<tvSeriesTopRatedListResponse>(
+    getTvSeriesTopRatedListUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the details of a TV show.
  * @summary Details
  */
 export type tvSeriesDetailsResponse200 = {
-  data: TvSeriesDetails200
-  status: 200
-}
-    
-export type tvSeriesDetailsResponseSuccess = (tvSeriesDetailsResponse200) & {
+  data: TvSeriesDetails200;
+  status: 200;
+};
+
+export type tvSeriesDetailsResponseSuccess = tvSeriesDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesDetailsResponse = tvSeriesDetailsResponseSuccess;
 
-export type tvSeriesDetailsResponse = (tvSeriesDetailsResponseSuccess)
-
-export const getTvSeriesDetailsUrl = (seriesId: number,
-    params?: TvSeriesDetailsParams,) => {
+export const getTvSeriesDetailsUrl = (
+  seriesId: number,
+  params?: TvSeriesDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}`;
+};
 
-export const tvSeriesDetails = async (seriesId: number,
-    params?: TvSeriesDetailsParams, options?: RequestInit): Promise<tvSeriesDetailsResponse> => {
-  
-  return appFetch<tvSeriesDetailsResponse>(getTvSeriesDetailsUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesDetails = async (
+  seriesId: number,
+  params?: TvSeriesDetailsParams,
+  options?: RequestInit
+): Promise<tvSeriesDetailsResponse> => {
+  return appFetch<tvSeriesDetailsResponse>(
+    getTvSeriesDetailsUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the rating, watchlist and favourite status.
  * @summary Account States
  */
 export type tvSeriesAccountStatesResponse200 = {
-  data: TvSeriesAccountStates200
-  status: 200
-}
-    
-export type tvSeriesAccountStatesResponseSuccess = (tvSeriesAccountStatesResponse200) & {
-  headers: Headers;
+  data: TvSeriesAccountStates200;
+  status: 200;
 };
-;
 
-export type tvSeriesAccountStatesResponse = (tvSeriesAccountStatesResponseSuccess)
+export type tvSeriesAccountStatesResponseSuccess =
+  tvSeriesAccountStatesResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesAccountStatesResponse =
+  tvSeriesAccountStatesResponseSuccess;
 
-export const getTvSeriesAccountStatesUrl = (seriesId: number,
-    params?: TvSeriesAccountStatesParams,) => {
+export const getTvSeriesAccountStatesUrl = (
+  seriesId: number,
+  params?: TvSeriesAccountStatesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/account_states?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/account_states`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/account_states?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/account_states`;
+};
 
-export const tvSeriesAccountStates = async (seriesId: number,
-    params?: TvSeriesAccountStatesParams, options?: RequestInit): Promise<tvSeriesAccountStatesResponse> => {
-  
-  return appFetch<tvSeriesAccountStatesResponse>(getTvSeriesAccountStatesUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesAccountStates = async (
+  seriesId: number,
+  params?: TvSeriesAccountStatesParams,
+  options?: RequestInit
+): Promise<tvSeriesAccountStatesResponse> => {
+  return appFetch<tvSeriesAccountStatesResponse>(
+    getTvSeriesAccountStatesUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the aggregate credits (cast and crew) that have been added to a TV show.
  * @summary Aggregate Credits
  */
 export type tvSeriesAggregateCreditsResponse200 = {
-  data: TvSeriesAggregateCredits200
-  status: 200
-}
-    
-export type tvSeriesAggregateCreditsResponseSuccess = (tvSeriesAggregateCreditsResponse200) & {
-  headers: Headers;
+  data: TvSeriesAggregateCredits200;
+  status: 200;
 };
-;
 
-export type tvSeriesAggregateCreditsResponse = (tvSeriesAggregateCreditsResponseSuccess)
+export type tvSeriesAggregateCreditsResponseSuccess =
+  tvSeriesAggregateCreditsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesAggregateCreditsResponse =
+  tvSeriesAggregateCreditsResponseSuccess;
 
-export const getTvSeriesAggregateCreditsUrl = (seriesId: number,
-    params?: TvSeriesAggregateCreditsParams,) => {
+export const getTvSeriesAggregateCreditsUrl = (
+  seriesId: number,
+  params?: TvSeriesAggregateCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/aggregate_credits?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/aggregate_credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/aggregate_credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/aggregate_credits`;
+};
 
-export const tvSeriesAggregateCredits = async (seriesId: number,
-    params?: TvSeriesAggregateCreditsParams, options?: RequestInit): Promise<tvSeriesAggregateCreditsResponse> => {
-  
-  return appFetch<tvSeriesAggregateCreditsResponse>(getTvSeriesAggregateCreditsUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesAggregateCredits = async (
+  seriesId: number,
+  params?: TvSeriesAggregateCreditsParams,
+  options?: RequestInit
+): Promise<tvSeriesAggregateCreditsResponse> => {
+  return appFetch<tvSeriesAggregateCreditsResponse>(
+    getTvSeriesAggregateCreditsUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the alternative titles that have been added to a TV show.
  * @summary Alternative Titles
  */
 export type tvSeriesAlternativeTitlesResponse200 = {
-  data: TvSeriesAlternativeTitles200
-  status: 200
-}
-    
-export type tvSeriesAlternativeTitlesResponseSuccess = (tvSeriesAlternativeTitlesResponse200) & {
-  headers: Headers;
+  data: TvSeriesAlternativeTitles200;
+  status: 200;
 };
-;
 
-export type tvSeriesAlternativeTitlesResponse = (tvSeriesAlternativeTitlesResponseSuccess)
+export type tvSeriesAlternativeTitlesResponseSuccess =
+  tvSeriesAlternativeTitlesResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesAlternativeTitlesResponse =
+  tvSeriesAlternativeTitlesResponseSuccess;
 
-export const getTvSeriesAlternativeTitlesUrl = (seriesId: number,) => {
+export const getTvSeriesAlternativeTitlesUrl = (seriesId: number) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/alternative_titles`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/alternative_titles`
-}
-
-export const tvSeriesAlternativeTitles = async (seriesId: number, options?: RequestInit): Promise<tvSeriesAlternativeTitlesResponse> => {
-  
-  return appFetch<tvSeriesAlternativeTitlesResponse>(getTvSeriesAlternativeTitlesUrl(seriesId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesAlternativeTitles = async (
+  seriesId: number,
+  options?: RequestInit
+): Promise<tvSeriesAlternativeTitlesResponse> => {
+  return appFetch<tvSeriesAlternativeTitlesResponse>(
+    getTvSeriesAlternativeTitlesUrl(seriesId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the recent changes for a TV show.
  * @summary Changes
  */
 export type tvSeriesChangesResponse200 = {
-  data: TvSeriesChanges200
-  status: 200
-}
-    
-export type tvSeriesChangesResponseSuccess = (tvSeriesChangesResponse200) & {
+  data: TvSeriesChanges200;
+  status: 200;
+};
+
+export type tvSeriesChangesResponseSuccess = tvSeriesChangesResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesChangesResponse = tvSeriesChangesResponseSuccess;
 
-export type tvSeriesChangesResponse = (tvSeriesChangesResponseSuccess)
-
-export const getTvSeriesChangesUrl = (seriesId: number,
-    params?: TvSeriesChangesParams,) => {
+export const getTvSeriesChangesUrl = (
+  seriesId: number,
+  params?: TvSeriesChangesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/changes?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/changes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/changes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/changes`;
+};
 
-export const tvSeriesChanges = async (seriesId: number,
-    params?: TvSeriesChangesParams, options?: RequestInit): Promise<tvSeriesChangesResponse> => {
-  
-  return appFetch<tvSeriesChangesResponse>(getTvSeriesChangesUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesChanges = async (
+  seriesId: number,
+  params?: TvSeriesChangesParams,
+  options?: RequestInit
+): Promise<tvSeriesChangesResponse> => {
+  return appFetch<tvSeriesChangesResponse>(
+    getTvSeriesChangesUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the content ratings that have been added to a TV show.
  * @summary Content Ratings
  */
 export type tvSeriesContentRatingsResponse200 = {
-  data: TvSeriesContentRatings200
-  status: 200
-}
-    
-export type tvSeriesContentRatingsResponseSuccess = (tvSeriesContentRatingsResponse200) & {
-  headers: Headers;
+  data: TvSeriesContentRatings200;
+  status: 200;
 };
-;
 
-export type tvSeriesContentRatingsResponse = (tvSeriesContentRatingsResponseSuccess)
+export type tvSeriesContentRatingsResponseSuccess =
+  tvSeriesContentRatingsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesContentRatingsResponse =
+  tvSeriesContentRatingsResponseSuccess;
 
-export const getTvSeriesContentRatingsUrl = (seriesId: number,) => {
+export const getTvSeriesContentRatingsUrl = (seriesId: number) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/content_ratings`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/content_ratings`
-}
-
-export const tvSeriesContentRatings = async (seriesId: number, options?: RequestInit): Promise<tvSeriesContentRatingsResponse> => {
-  
-  return appFetch<tvSeriesContentRatingsResponse>(getTvSeriesContentRatingsUrl(seriesId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesContentRatings = async (
+  seriesId: number,
+  options?: RequestInit
+): Promise<tvSeriesContentRatingsResponse> => {
+  return appFetch<tvSeriesContentRatingsResponse>(
+    getTvSeriesContentRatingsUrl(seriesId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the latest season credits of a TV show.
  * @summary Credits
  */
 export type tvSeriesCreditsResponse200 = {
-  data: TvSeriesCredits200
-  status: 200
-}
-    
-export type tvSeriesCreditsResponseSuccess = (tvSeriesCreditsResponse200) & {
+  data: TvSeriesCredits200;
+  status: 200;
+};
+
+export type tvSeriesCreditsResponseSuccess = tvSeriesCreditsResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesCreditsResponse = tvSeriesCreditsResponseSuccess;
 
-export type tvSeriesCreditsResponse = (tvSeriesCreditsResponseSuccess)
-
-export const getTvSeriesCreditsUrl = (seriesId: number,
-    params?: TvSeriesCreditsParams,) => {
+export const getTvSeriesCreditsUrl = (
+  seriesId: number,
+  params?: TvSeriesCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/credits?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/credits`;
+};
 
-export const tvSeriesCredits = async (seriesId: number,
-    params?: TvSeriesCreditsParams, options?: RequestInit): Promise<tvSeriesCreditsResponse> => {
-  
-  return appFetch<tvSeriesCreditsResponse>(getTvSeriesCreditsUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesCredits = async (
+  seriesId: number,
+  params?: TvSeriesCreditsParams,
+  options?: RequestInit
+): Promise<tvSeriesCreditsResponse> => {
+  return appFetch<tvSeriesCreditsResponse>(
+    getTvSeriesCreditsUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the episode groups that have been added to a TV show.
  * @summary Episode Groups
  */
 export type tvSeriesEpisodeGroupsResponse200 = {
-  data: TvSeriesEpisodeGroups200
-  status: 200
-}
-    
-export type tvSeriesEpisodeGroupsResponseSuccess = (tvSeriesEpisodeGroupsResponse200) & {
-  headers: Headers;
+  data: TvSeriesEpisodeGroups200;
+  status: 200;
 };
-;
 
-export type tvSeriesEpisodeGroupsResponse = (tvSeriesEpisodeGroupsResponseSuccess)
+export type tvSeriesEpisodeGroupsResponseSuccess =
+  tvSeriesEpisodeGroupsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesEpisodeGroupsResponse =
+  tvSeriesEpisodeGroupsResponseSuccess;
 
-export const getTvSeriesEpisodeGroupsUrl = (seriesId: number,) => {
+export const getTvSeriesEpisodeGroupsUrl = (seriesId: number) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/episode_groups`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/episode_groups`
-}
-
-export const tvSeriesEpisodeGroups = async (seriesId: number, options?: RequestInit): Promise<tvSeriesEpisodeGroupsResponse> => {
-  
-  return appFetch<tvSeriesEpisodeGroupsResponse>(getTvSeriesEpisodeGroupsUrl(seriesId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesEpisodeGroups = async (
+  seriesId: number,
+  options?: RequestInit
+): Promise<tvSeriesEpisodeGroupsResponse> => {
+  return appFetch<tvSeriesEpisodeGroupsResponse>(
+    getTvSeriesEpisodeGroupsUrl(seriesId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of external IDs that have been added to a TV show.
  * @summary External IDs
  */
 export type tvSeriesExternalIdsResponse200 = {
-  data: TvSeriesExternalIds200
-  status: 200
-}
-    
-export type tvSeriesExternalIdsResponseSuccess = (tvSeriesExternalIdsResponse200) & {
-  headers: Headers;
+  data: TvSeriesExternalIds200;
+  status: 200;
 };
-;
 
-export type tvSeriesExternalIdsResponse = (tvSeriesExternalIdsResponseSuccess)
+export type tvSeriesExternalIdsResponseSuccess =
+  tvSeriesExternalIdsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesExternalIdsResponse = tvSeriesExternalIdsResponseSuccess;
 
-export const getTvSeriesExternalIdsUrl = (seriesId: number,) => {
+export const getTvSeriesExternalIdsUrl = (seriesId: number) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/external_ids`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/external_ids`
-}
-
-export const tvSeriesExternalIds = async (seriesId: number, options?: RequestInit): Promise<tvSeriesExternalIdsResponse> => {
-  
-  return appFetch<tvSeriesExternalIdsResponse>(getTvSeriesExternalIdsUrl(seriesId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesExternalIds = async (
+  seriesId: number,
+  options?: RequestInit
+): Promise<tvSeriesExternalIdsResponse> => {
+  return appFetch<tvSeriesExternalIdsResponse>(
+    getTvSeriesExternalIdsUrl(seriesId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the images that belong to a TV series.
  * @summary Images
  */
 export type tvSeriesImagesResponse200 = {
-  data: TvSeriesImages200
-  status: 200
-}
-    
-export type tvSeriesImagesResponseSuccess = (tvSeriesImagesResponse200) & {
+  data: TvSeriesImages200;
+  status: 200;
+};
+
+export type tvSeriesImagesResponseSuccess = tvSeriesImagesResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesImagesResponse = tvSeriesImagesResponseSuccess;
 
-export type tvSeriesImagesResponse = (tvSeriesImagesResponseSuccess)
-
-export const getTvSeriesImagesUrl = (seriesId: number,
-    params?: TvSeriesImagesParams,) => {
+export const getTvSeriesImagesUrl = (
+  seriesId: number,
+  params?: TvSeriesImagesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/images?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/images`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/images?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/images`;
+};
 
-export const tvSeriesImages = async (seriesId: number,
-    params?: TvSeriesImagesParams, options?: RequestInit): Promise<tvSeriesImagesResponse> => {
-  
-  return appFetch<tvSeriesImagesResponse>(getTvSeriesImagesUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesImages = async (
+  seriesId: number,
+  params?: TvSeriesImagesParams,
+  options?: RequestInit
+): Promise<tvSeriesImagesResponse> => {
+  return appFetch<tvSeriesImagesResponse>(
+    getTvSeriesImagesUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of keywords that have been added to a TV show.
  * @summary Keywords
  */
 export type tvSeriesKeywordsResponse200 = {
-  data: TvSeriesKeywords200
-  status: 200
-}
-    
-export type tvSeriesKeywordsResponseSuccess = (tvSeriesKeywordsResponse200) & {
+  data: TvSeriesKeywords200;
+  status: 200;
+};
+
+export type tvSeriesKeywordsResponseSuccess = tvSeriesKeywordsResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesKeywordsResponse = tvSeriesKeywordsResponseSuccess;
 
-export type tvSeriesKeywordsResponse = (tvSeriesKeywordsResponseSuccess)
+export const getTvSeriesKeywordsUrl = (seriesId: number) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/keywords`;
+};
 
-export const getTvSeriesKeywordsUrl = (seriesId: number,) => {
-
-  return `https://api.themoviedb.org/3/tv/${seriesId}/keywords`
-}
-
-export const tvSeriesKeywords = async (seriesId: number, options?: RequestInit): Promise<tvSeriesKeywordsResponse> => {
-  
-  return appFetch<tvSeriesKeywordsResponse>(getTvSeriesKeywordsUrl(seriesId),
-  {      
+export const tvSeriesKeywords = async (
+  seriesId: number,
+  options?: RequestInit
+): Promise<tvSeriesKeywordsResponse> => {
+  return appFetch<tvSeriesKeywordsResponse>(getTvSeriesKeywordsUrl(seriesId), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the newest TV show ID.
  * @summary Latest
  */
 export type tvSeriesLatestIdResponse200 = {
-  data: TvSeriesLatestId200
-  status: 200
-}
-    
-export type tvSeriesLatestIdResponseSuccess = (tvSeriesLatestIdResponse200) & {
+  data: TvSeriesLatestId200;
+  status: 200;
+};
+
+export type tvSeriesLatestIdResponseSuccess = tvSeriesLatestIdResponse200 & {
   headers: Headers;
 };
-;
-
-export type tvSeriesLatestIdResponse = (tvSeriesLatestIdResponseSuccess)
+export type tvSeriesLatestIdResponse = tvSeriesLatestIdResponseSuccess;
 
 export const getTvSeriesLatestIdUrl = () => {
+  return `https://api.themoviedb.org/3/tv/latest`;
+};
 
-  return `https://api.themoviedb.org/3/tv/latest`
-}
-
-export const tvSeriesLatestId = async ( options?: RequestInit): Promise<tvSeriesLatestIdResponse> => {
-  
-  return appFetch<tvSeriesLatestIdResponse>(getTvSeriesLatestIdUrl(),
-  {      
+export const tvSeriesLatestId = async (
+  options?: RequestInit
+): Promise<tvSeriesLatestIdResponse> => {
+  return appFetch<tvSeriesLatestIdResponse>(getTvSeriesLatestIdUrl(), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * Get the lists that a TV series has been added to.
  * @summary Lists
  */
 export type listsCopyResponse200 = {
-  data: ListsCopy200
-  status: 200
-}
-    
-export type listsCopyResponseSuccess = (listsCopyResponse200) & {
+  data: ListsCopy200;
+  status: 200;
+};
+
+export type listsCopyResponseSuccess = listsCopyResponse200 & {
   headers: Headers;
 };
-;
+export type listsCopyResponse = listsCopyResponseSuccess;
 
-export type listsCopyResponse = (listsCopyResponseSuccess)
-
-export const getListsCopyUrl = (seriesId: number,
-    params?: ListsCopyParams,) => {
+export const getListsCopyUrl = (seriesId: number, params?: ListsCopyParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/lists?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/lists`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/lists?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/lists`;
+};
 
-export const listsCopy = async (seriesId: number,
-    params?: ListsCopyParams, options?: RequestInit): Promise<listsCopyResponse> => {
-  
-  return appFetch<listsCopyResponse>(getListsCopyUrl(seriesId,params),
-  {      
+export const listsCopy = async (
+  seriesId: number,
+  params?: ListsCopyParams,
+  options?: RequestInit
+): Promise<listsCopyResponse> => {
+  return appFetch<listsCopyResponse>(getListsCopyUrl(seriesId, params), {
     ...options,
-    method: 'GET'
-    
-  }
-);}
+    method: 'GET',
+  });
+};
 
 /**
  * @summary Recommendations
  */
 export type tvSeriesRecommendationsResponse200 = {
-  data: TvSeriesRecommendations200
-  status: 200
-}
-    
-export type tvSeriesRecommendationsResponseSuccess = (tvSeriesRecommendationsResponse200) & {
-  headers: Headers;
+  data: TvSeriesRecommendations200;
+  status: 200;
 };
-;
 
-export type tvSeriesRecommendationsResponse = (tvSeriesRecommendationsResponseSuccess)
+export type tvSeriesRecommendationsResponseSuccess =
+  tvSeriesRecommendationsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesRecommendationsResponse =
+  tvSeriesRecommendationsResponseSuccess;
 
-export const getTvSeriesRecommendationsUrl = (seriesId: number,
-    params?: TvSeriesRecommendationsParams,) => {
+export const getTvSeriesRecommendationsUrl = (
+  seriesId: number,
+  params?: TvSeriesRecommendationsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/recommendations?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/recommendations`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/recommendations?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/recommendations`;
+};
 
-export const tvSeriesRecommendations = async (seriesId: number,
-    params?: TvSeriesRecommendationsParams, options?: RequestInit): Promise<tvSeriesRecommendationsResponse> => {
-  
-  return appFetch<tvSeriesRecommendationsResponse>(getTvSeriesRecommendationsUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesRecommendations = async (
+  seriesId: number,
+  params?: TvSeriesRecommendationsParams,
+  options?: RequestInit
+): Promise<tvSeriesRecommendationsResponse> => {
+  return appFetch<tvSeriesRecommendationsResponse>(
+    getTvSeriesRecommendationsUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the reviews that have been added to a TV show.
  * @summary Reviews
  */
 export type tvSeriesReviewsResponse200 = {
-  data: TvSeriesReviews200
-  status: 200
-}
-    
-export type tvSeriesReviewsResponseSuccess = (tvSeriesReviewsResponse200) & {
+  data: TvSeriesReviews200;
+  status: 200;
+};
+
+export type tvSeriesReviewsResponseSuccess = tvSeriesReviewsResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesReviewsResponse = tvSeriesReviewsResponseSuccess;
 
-export type tvSeriesReviewsResponse = (tvSeriesReviewsResponseSuccess)
-
-export const getTvSeriesReviewsUrl = (seriesId: number,
-    params?: TvSeriesReviewsParams,) => {
+export const getTvSeriesReviewsUrl = (
+  seriesId: number,
+  params?: TvSeriesReviewsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/reviews?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/reviews`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/reviews?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/reviews`;
+};
 
-export const tvSeriesReviews = async (seriesId: number,
-    params?: TvSeriesReviewsParams, options?: RequestInit): Promise<tvSeriesReviewsResponse> => {
-  
-  return appFetch<tvSeriesReviewsResponse>(getTvSeriesReviewsUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesReviews = async (
+  seriesId: number,
+  params?: TvSeriesReviewsParams,
+  options?: RequestInit
+): Promise<tvSeriesReviewsResponse> => {
+  return appFetch<tvSeriesReviewsResponse>(
+    getTvSeriesReviewsUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the seasons and episodes that have screened theatrically.
  * @summary Screened Theatrically
  */
 export type tvSeriesScreenedTheatricallyResponse200 = {
-  data: TvSeriesScreenedTheatrically200
-  status: 200
-}
-    
-export type tvSeriesScreenedTheatricallyResponseSuccess = (tvSeriesScreenedTheatricallyResponse200) & {
-  headers: Headers;
+  data: TvSeriesScreenedTheatrically200;
+  status: 200;
 };
-;
 
-export type tvSeriesScreenedTheatricallyResponse = (tvSeriesScreenedTheatricallyResponseSuccess)
+export type tvSeriesScreenedTheatricallyResponseSuccess =
+  tvSeriesScreenedTheatricallyResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesScreenedTheatricallyResponse =
+  tvSeriesScreenedTheatricallyResponseSuccess;
 
-export const getTvSeriesScreenedTheatricallyUrl = (seriesId: number,) => {
+export const getTvSeriesScreenedTheatricallyUrl = (seriesId: number) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/screened_theatrically`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/screened_theatrically`
-}
-
-export const tvSeriesScreenedTheatrically = async (seriesId: number, options?: RequestInit): Promise<tvSeriesScreenedTheatricallyResponse> => {
-  
-  return appFetch<tvSeriesScreenedTheatricallyResponse>(getTvSeriesScreenedTheatricallyUrl(seriesId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesScreenedTheatrically = async (
+  seriesId: number,
+  options?: RequestInit
+): Promise<tvSeriesScreenedTheatricallyResponse> => {
+  return appFetch<tvSeriesScreenedTheatricallyResponse>(
+    getTvSeriesScreenedTheatricallyUrl(seriesId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the similar TV shows.
  * @summary Similar
  */
 export type tvSeriesSimilarResponse200 = {
-  data: TvSeriesSimilar200
-  status: 200
-}
-    
-export type tvSeriesSimilarResponseSuccess = (tvSeriesSimilarResponse200) & {
+  data: TvSeriesSimilar200;
+  status: 200;
+};
+
+export type tvSeriesSimilarResponseSuccess = tvSeriesSimilarResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesSimilarResponse = tvSeriesSimilarResponseSuccess;
 
-export type tvSeriesSimilarResponse = (tvSeriesSimilarResponseSuccess)
-
-export const getTvSeriesSimilarUrl = (seriesId: string,
-    params?: TvSeriesSimilarParams,) => {
+export const getTvSeriesSimilarUrl = (
+  seriesId: string,
+  params?: TvSeriesSimilarParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/similar?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/similar`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/similar?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/similar`;
+};
 
-export const tvSeriesSimilar = async (seriesId: string,
-    params?: TvSeriesSimilarParams, options?: RequestInit): Promise<tvSeriesSimilarResponse> => {
-  
-  return appFetch<tvSeriesSimilarResponse>(getTvSeriesSimilarUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesSimilar = async (
+  seriesId: string,
+  params?: TvSeriesSimilarParams,
+  options?: RequestInit
+): Promise<tvSeriesSimilarResponse> => {
+  return appFetch<tvSeriesSimilarResponse>(
+    getTvSeriesSimilarUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the translations that have been added to a TV show.
  * @summary Translations
  */
 export type tvSeriesTranslationsResponse200 = {
-  data: TvSeriesTranslations200
-  status: 200
-}
-    
-export type tvSeriesTranslationsResponseSuccess = (tvSeriesTranslationsResponse200) & {
-  headers: Headers;
+  data: TvSeriesTranslations200;
+  status: 200;
 };
-;
 
-export type tvSeriesTranslationsResponse = (tvSeriesTranslationsResponseSuccess)
+export type tvSeriesTranslationsResponseSuccess =
+  tvSeriesTranslationsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesTranslationsResponse = tvSeriesTranslationsResponseSuccess;
 
-export const getTvSeriesTranslationsUrl = (seriesId: number,) => {
+export const getTvSeriesTranslationsUrl = (seriesId: number) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/translations`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/translations`
-}
-
-export const tvSeriesTranslations = async (seriesId: number, options?: RequestInit): Promise<tvSeriesTranslationsResponse> => {
-  
-  return appFetch<tvSeriesTranslationsResponse>(getTvSeriesTranslationsUrl(seriesId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesTranslations = async (
+  seriesId: number,
+  options?: RequestInit
+): Promise<tvSeriesTranslationsResponse> => {
+  return appFetch<tvSeriesTranslationsResponse>(
+    getTvSeriesTranslationsUrl(seriesId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the videos that belong to a TV show.
  * @summary Videos
  */
 export type tvSeriesVideosResponse200 = {
-  data: TvSeriesVideos200
-  status: 200
-}
-    
-export type tvSeriesVideosResponseSuccess = (tvSeriesVideosResponse200) & {
+  data: TvSeriesVideos200;
+  status: 200;
+};
+
+export type tvSeriesVideosResponseSuccess = tvSeriesVideosResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesVideosResponse = tvSeriesVideosResponseSuccess;
 
-export type tvSeriesVideosResponse = (tvSeriesVideosResponseSuccess)
-
-export const getTvSeriesVideosUrl = (seriesId: number,
-    params?: TvSeriesVideosParams,) => {
+export const getTvSeriesVideosUrl = (
+  seriesId: number,
+  params?: TvSeriesVideosParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/videos?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/videos`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/videos?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/videos`;
+};
 
-export const tvSeriesVideos = async (seriesId: number,
-    params?: TvSeriesVideosParams, options?: RequestInit): Promise<tvSeriesVideosResponse> => {
-  
-  return appFetch<tvSeriesVideosResponse>(getTvSeriesVideosUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesVideos = async (
+  seriesId: number,
+  params?: TvSeriesVideosParams,
+  options?: RequestInit
+): Promise<tvSeriesVideosResponse> => {
+  return appFetch<tvSeriesVideosResponse>(
+    getTvSeriesVideosUrl(seriesId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the list of streaming providers we have for a TV show.
  * @summary Watch Providers
  */
 export type tvSeriesWatchProvidersResponse200 = {
-  data: TvSeriesWatchProviders200
-  status: 200
-}
-    
-export type tvSeriesWatchProvidersResponseSuccess = (tvSeriesWatchProvidersResponse200) & {
-  headers: Headers;
+  data: TvSeriesWatchProviders200;
+  status: 200;
 };
-;
 
-export type tvSeriesWatchProvidersResponse = (tvSeriesWatchProvidersResponseSuccess)
+export type tvSeriesWatchProvidersResponseSuccess =
+  tvSeriesWatchProvidersResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesWatchProvidersResponse =
+  tvSeriesWatchProvidersResponseSuccess;
 
-export const getTvSeriesWatchProvidersUrl = (seriesId: number,) => {
+export const getTvSeriesWatchProvidersUrl = (seriesId: number) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/watch/providers`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/watch/providers`
-}
-
-export const tvSeriesWatchProviders = async (seriesId: number, options?: RequestInit): Promise<tvSeriesWatchProvidersResponse> => {
-  
-  return appFetch<tvSeriesWatchProvidersResponse>(getTvSeriesWatchProvidersUrl(seriesId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeriesWatchProviders = async (
+  seriesId: number,
+  options?: RequestInit
+): Promise<tvSeriesWatchProvidersResponse> => {
+  return appFetch<tvSeriesWatchProvidersResponse>(
+    getTvSeriesWatchProvidersUrl(seriesId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Rate a TV show and save it to your rated list.
  * @summary Add Rating
  */
 export type tvSeriesAddRatingResponse200 = {
-  data: TvSeriesAddRating200
-  status: 200
-}
-    
-export type tvSeriesAddRatingResponseSuccess = (tvSeriesAddRatingResponse200) & {
+  data: TvSeriesAddRating200;
+  status: 200;
+};
+
+export type tvSeriesAddRatingResponseSuccess = tvSeriesAddRatingResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeriesAddRatingResponse = tvSeriesAddRatingResponseSuccess;
 
-export type tvSeriesAddRatingResponse = (tvSeriesAddRatingResponseSuccess)
-
-export const getTvSeriesAddRatingUrl = (seriesId: number,
-    params?: TvSeriesAddRatingParams,) => {
+export const getTvSeriesAddRatingUrl = (
+  seriesId: number,
+  params?: TvSeriesAddRatingParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/rating?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/rating`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/rating?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/rating`;
+};
 
-export const tvSeriesAddRating = async (seriesId: number,
-    tvSeriesAddRatingBody: TvSeriesAddRatingBody,
-    params?: TvSeriesAddRatingParams, options?: RequestInit): Promise<tvSeriesAddRatingResponse> => {
-  
-  return appFetch<tvSeriesAddRatingResponse>(getTvSeriesAddRatingUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      tvSeriesAddRatingBody,)
-  }
-);}
+export const tvSeriesAddRating = async (
+  seriesId: number,
+  tvSeriesAddRatingBody: TvSeriesAddRatingBody,
+  params?: TvSeriesAddRatingParams,
+  options?: RequestInit
+): Promise<tvSeriesAddRatingResponse> => {
+  return appFetch<tvSeriesAddRatingResponse>(
+    getTvSeriesAddRatingUrl(seriesId, params),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(tvSeriesAddRatingBody),
+    }
+  );
+};
 
 /**
  * @summary Delete Rating
  */
 export type tvSeriesDeleteRatingResponse200 = {
-  data: TvSeriesDeleteRating200
-  status: 200
-}
-    
-export type tvSeriesDeleteRatingResponseSuccess = (tvSeriesDeleteRatingResponse200) & {
-  headers: Headers;
+  data: TvSeriesDeleteRating200;
+  status: 200;
 };
-;
 
-export type tvSeriesDeleteRatingResponse = (tvSeriesDeleteRatingResponseSuccess)
+export type tvSeriesDeleteRatingResponseSuccess =
+  tvSeriesDeleteRatingResponse200 & {
+    headers: Headers;
+  };
+export type tvSeriesDeleteRatingResponse = tvSeriesDeleteRatingResponseSuccess;
 
-export const getTvSeriesDeleteRatingUrl = (seriesId: number,
-    params?: TvSeriesDeleteRatingParams,) => {
+export const getTvSeriesDeleteRatingUrl = (
+  seriesId: number,
+  params?: TvSeriesDeleteRatingParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/rating?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/rating`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/rating?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/rating`;
+};
 
-export const tvSeriesDeleteRating = async (seriesId: number,
-    params?: TvSeriesDeleteRatingParams, options?: RequestInit): Promise<tvSeriesDeleteRatingResponse> => {
-  
-  return appFetch<tvSeriesDeleteRatingResponse>(getTvSeriesDeleteRatingUrl(seriesId,params),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-  }
-);}
+export const tvSeriesDeleteRating = async (
+  seriesId: number,
+  params?: TvSeriesDeleteRatingParams,
+  options?: RequestInit
+): Promise<tvSeriesDeleteRatingResponse> => {
+  return appFetch<tvSeriesDeleteRatingResponse>(
+    getTvSeriesDeleteRatingUrl(seriesId, params),
+    {
+      ...options,
+      method: 'DELETE',
+    }
+  );
+};
 
 /**
  * Query the details of a TV season.
  * @summary Details
  */
 export type tvSeasonDetailsResponse200 = {
-  data: TvSeasonDetails200
-  status: 200
-}
-    
-export type tvSeasonDetailsResponseSuccess = (tvSeasonDetailsResponse200) & {
+  data: TvSeasonDetails200;
+  status: 200;
+};
+
+export type tvSeasonDetailsResponseSuccess = tvSeasonDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeasonDetailsResponse = tvSeasonDetailsResponseSuccess;
 
-export type tvSeasonDetailsResponse = (tvSeasonDetailsResponseSuccess)
-
-export const getTvSeasonDetailsUrl = (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonDetailsParams,) => {
+export const getTvSeasonDetailsUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}`;
+};
 
-export const tvSeasonDetails = async (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonDetailsParams, options?: RequestInit): Promise<tvSeasonDetailsResponse> => {
-  
-  return appFetch<tvSeasonDetailsResponse>(getTvSeasonDetailsUrl(seriesId,seasonNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonDetails = async (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonDetailsParams,
+  options?: RequestInit
+): Promise<tvSeasonDetailsResponse> => {
+  return appFetch<tvSeasonDetailsResponse>(
+    getTvSeasonDetailsUrl(seriesId, seasonNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the rating, watchlist and favourite status.
  * @summary Account States
  */
 export type tvSeasonAccountStatesResponse200 = {
-  data: TvSeasonAccountStates200
-  status: 200
-}
-    
-export type tvSeasonAccountStatesResponseSuccess = (tvSeasonAccountStatesResponse200) & {
-  headers: Headers;
+  data: TvSeasonAccountStates200;
+  status: 200;
 };
-;
 
-export type tvSeasonAccountStatesResponse = (tvSeasonAccountStatesResponseSuccess)
+export type tvSeasonAccountStatesResponseSuccess =
+  tvSeasonAccountStatesResponse200 & {
+    headers: Headers;
+  };
+export type tvSeasonAccountStatesResponse =
+  tvSeasonAccountStatesResponseSuccess;
 
-export const getTvSeasonAccountStatesUrl = (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonAccountStatesParams,) => {
+export const getTvSeasonAccountStatesUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonAccountStatesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/account_states?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/account_states`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/account_states?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/account_states`;
+};
 
-export const tvSeasonAccountStates = async (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonAccountStatesParams, options?: RequestInit): Promise<tvSeasonAccountStatesResponse> => {
-  
-  return appFetch<tvSeasonAccountStatesResponse>(getTvSeasonAccountStatesUrl(seriesId,seasonNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonAccountStates = async (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonAccountStatesParams,
+  options?: RequestInit
+): Promise<tvSeasonAccountStatesResponse> => {
+  return appFetch<tvSeasonAccountStatesResponse>(
+    getTvSeasonAccountStatesUrl(seriesId, seasonNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the aggregate credits (cast and crew) that have been added to a TV season.
  * @summary Aggregate Credits
  */
 export type tvSeasonAggregateCreditsResponse200 = {
-  data: TvSeasonAggregateCredits200
-  status: 200
-}
-    
-export type tvSeasonAggregateCreditsResponseSuccess = (tvSeasonAggregateCreditsResponse200) & {
-  headers: Headers;
+  data: TvSeasonAggregateCredits200;
+  status: 200;
 };
-;
 
-export type tvSeasonAggregateCreditsResponse = (tvSeasonAggregateCreditsResponseSuccess)
+export type tvSeasonAggregateCreditsResponseSuccess =
+  tvSeasonAggregateCreditsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeasonAggregateCreditsResponse =
+  tvSeasonAggregateCreditsResponseSuccess;
 
-export const getTvSeasonAggregateCreditsUrl = (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonAggregateCreditsParams,) => {
+export const getTvSeasonAggregateCreditsUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonAggregateCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/aggregate_credits?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/aggregate_credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/aggregate_credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/aggregate_credits`;
+};
 
-export const tvSeasonAggregateCredits = async (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonAggregateCreditsParams, options?: RequestInit): Promise<tvSeasonAggregateCreditsResponse> => {
-  
-  return appFetch<tvSeasonAggregateCreditsResponse>(getTvSeasonAggregateCreditsUrl(seriesId,seasonNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonAggregateCredits = async (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonAggregateCreditsParams,
+  options?: RequestInit
+): Promise<tvSeasonAggregateCreditsResponse> => {
+  return appFetch<tvSeasonAggregateCreditsResponse>(
+    getTvSeasonAggregateCreditsUrl(seriesId, seasonNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the recent changes for a TV season.
  * @summary Changes
  */
 export type tvSeasonChangesByIdResponse200 = {
-  data: TvSeasonChangesById200
-  status: 200
-}
-    
-export type tvSeasonChangesByIdResponseSuccess = (tvSeasonChangesByIdResponse200) & {
-  headers: Headers;
+  data: TvSeasonChangesById200;
+  status: 200;
 };
-;
 
-export type tvSeasonChangesByIdResponse = (tvSeasonChangesByIdResponseSuccess)
+export type tvSeasonChangesByIdResponseSuccess =
+  tvSeasonChangesByIdResponse200 & {
+    headers: Headers;
+  };
+export type tvSeasonChangesByIdResponse = tvSeasonChangesByIdResponseSuccess;
 
-export const getTvSeasonChangesByIdUrl = (seasonId: number,
-    params?: TvSeasonChangesByIdParams,) => {
+export const getTvSeasonChangesByIdUrl = (
+  seasonId: number,
+  params?: TvSeasonChangesByIdParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/season/${seasonId}/changes?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/season/${seasonId}/changes`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/season/${seasonId}/changes?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/season/${seasonId}/changes`;
+};
 
-export const tvSeasonChangesById = async (seasonId: number,
-    params?: TvSeasonChangesByIdParams, options?: RequestInit): Promise<tvSeasonChangesByIdResponse> => {
-  
-  return appFetch<tvSeasonChangesByIdResponse>(getTvSeasonChangesByIdUrl(seasonId,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonChangesById = async (
+  seasonId: number,
+  params?: TvSeasonChangesByIdParams,
+  options?: RequestInit
+): Promise<tvSeasonChangesByIdResponse> => {
+  return appFetch<tvSeasonChangesByIdResponse>(
+    getTvSeasonChangesByIdUrl(seasonId, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * @summary Credits
  */
 export type tvSeasonCreditsResponse200 = {
-  data: TvSeasonCredits200
-  status: 200
-}
-    
-export type tvSeasonCreditsResponseSuccess = (tvSeasonCreditsResponse200) & {
+  data: TvSeasonCredits200;
+  status: 200;
+};
+
+export type tvSeasonCreditsResponseSuccess = tvSeasonCreditsResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeasonCreditsResponse = tvSeasonCreditsResponseSuccess;
 
-export type tvSeasonCreditsResponse = (tvSeasonCreditsResponseSuccess)
-
-export const getTvSeasonCreditsUrl = (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonCreditsParams,) => {
+export const getTvSeasonCreditsUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/credits?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/credits`;
+};
 
-export const tvSeasonCredits = async (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonCreditsParams, options?: RequestInit): Promise<tvSeasonCreditsResponse> => {
-  
-  return appFetch<tvSeasonCreditsResponse>(getTvSeasonCreditsUrl(seriesId,seasonNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonCredits = async (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonCreditsParams,
+  options?: RequestInit
+): Promise<tvSeasonCreditsResponse> => {
+  return appFetch<tvSeasonCreditsResponse>(
+    getTvSeasonCreditsUrl(seriesId, seasonNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of external IDs that have been added to a TV season.
  * @summary External IDs
  */
 export type tvSeasonExternalIdsResponse200 = {
-  data: TvSeasonExternalIds200
-  status: 200
-}
-    
-export type tvSeasonExternalIdsResponseSuccess = (tvSeasonExternalIdsResponse200) & {
-  headers: Headers;
+  data: TvSeasonExternalIds200;
+  status: 200;
 };
-;
 
-export type tvSeasonExternalIdsResponse = (tvSeasonExternalIdsResponseSuccess)
+export type tvSeasonExternalIdsResponseSuccess =
+  tvSeasonExternalIdsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeasonExternalIdsResponse = tvSeasonExternalIdsResponseSuccess;
 
-export const getTvSeasonExternalIdsUrl = (seriesId: number,
-    seasonNumber: number,) => {
+export const getTvSeasonExternalIdsUrl = (
+  seriesId: number,
+  seasonNumber: number
+) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/external_ids`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/external_ids`
-}
-
-export const tvSeasonExternalIds = async (seriesId: number,
-    seasonNumber: number, options?: RequestInit): Promise<tvSeasonExternalIdsResponse> => {
-  
-  return appFetch<tvSeasonExternalIdsResponse>(getTvSeasonExternalIdsUrl(seriesId,seasonNumber),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonExternalIds = async (
+  seriesId: number,
+  seasonNumber: number,
+  options?: RequestInit
+): Promise<tvSeasonExternalIdsResponse> => {
+  return appFetch<tvSeasonExternalIdsResponse>(
+    getTvSeasonExternalIdsUrl(seriesId, seasonNumber),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the images that belong to a TV season.
  * @summary Images
  */
 export type tvSeasonImagesResponse200 = {
-  data: TvSeasonImages200
-  status: 200
-}
-    
-export type tvSeasonImagesResponseSuccess = (tvSeasonImagesResponse200) & {
+  data: TvSeasonImages200;
+  status: 200;
+};
+
+export type tvSeasonImagesResponseSuccess = tvSeasonImagesResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeasonImagesResponse = tvSeasonImagesResponseSuccess;
 
-export type tvSeasonImagesResponse = (tvSeasonImagesResponseSuccess)
-
-export const getTvSeasonImagesUrl = (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonImagesParams,) => {
+export const getTvSeasonImagesUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonImagesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/images?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/images`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/images?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/images`;
+};
 
-export const tvSeasonImages = async (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonImagesParams, options?: RequestInit): Promise<tvSeasonImagesResponse> => {
-  
-  return appFetch<tvSeasonImagesResponse>(getTvSeasonImagesUrl(seriesId,seasonNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonImages = async (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonImagesParams,
+  options?: RequestInit
+): Promise<tvSeasonImagesResponse> => {
+  return appFetch<tvSeasonImagesResponse>(
+    getTvSeasonImagesUrl(seriesId, seasonNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the translations for a TV season.
  * @summary Translations
  */
 export type tvSeasonTranslationsResponse200 = {
-  data: TvSeasonTranslations200
-  status: 200
-}
-    
-export type tvSeasonTranslationsResponseSuccess = (tvSeasonTranslationsResponse200) & {
-  headers: Headers;
+  data: TvSeasonTranslations200;
+  status: 200;
 };
-;
 
-export type tvSeasonTranslationsResponse = (tvSeasonTranslationsResponseSuccess)
+export type tvSeasonTranslationsResponseSuccess =
+  tvSeasonTranslationsResponse200 & {
+    headers: Headers;
+  };
+export type tvSeasonTranslationsResponse = tvSeasonTranslationsResponseSuccess;
 
-export const getTvSeasonTranslationsUrl = (seriesId: number,
-    seasonNumber: number,) => {
+export const getTvSeasonTranslationsUrl = (
+  seriesId: number,
+  seasonNumber: number
+) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/translations`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/translations`
-}
-
-export const tvSeasonTranslations = async (seriesId: number,
-    seasonNumber: number, options?: RequestInit): Promise<tvSeasonTranslationsResponse> => {
-  
-  return appFetch<tvSeasonTranslationsResponse>(getTvSeasonTranslationsUrl(seriesId,seasonNumber),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonTranslations = async (
+  seriesId: number,
+  seasonNumber: number,
+  options?: RequestInit
+): Promise<tvSeasonTranslationsResponse> => {
+  return appFetch<tvSeasonTranslationsResponse>(
+    getTvSeasonTranslationsUrl(seriesId, seasonNumber),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the videos that belong to a TV season.
  * @summary Videos
  */
 export type tvSeasonVideosResponse200 = {
-  data: TvSeasonVideos200
-  status: 200
-}
-    
-export type tvSeasonVideosResponseSuccess = (tvSeasonVideosResponse200) & {
+  data: TvSeasonVideos200;
+  status: 200;
+};
+
+export type tvSeasonVideosResponseSuccess = tvSeasonVideosResponse200 & {
   headers: Headers;
 };
-;
+export type tvSeasonVideosResponse = tvSeasonVideosResponseSuccess;
 
-export type tvSeasonVideosResponse = (tvSeasonVideosResponseSuccess)
-
-export const getTvSeasonVideosUrl = (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonVideosParams,) => {
+export const getTvSeasonVideosUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonVideosParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/videos?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/videos`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/videos?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/videos`;
+};
 
-export const tvSeasonVideos = async (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonVideosParams, options?: RequestInit): Promise<tvSeasonVideosResponse> => {
-  
-  return appFetch<tvSeasonVideosResponse>(getTvSeasonVideosUrl(seriesId,seasonNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonVideos = async (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonVideosParams,
+  options?: RequestInit
+): Promise<tvSeasonVideosResponse> => {
+  return appFetch<tvSeasonVideosResponse>(
+    getTvSeasonVideosUrl(seriesId, seasonNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the list of streaming providers we have for a TV season.
  * @summary Watch Providers
  */
 export type tvSeasonWatchProvidersResponse200 = {
-  data: TvSeasonWatchProviders200
-  status: 200
-}
-    
-export type tvSeasonWatchProvidersResponseSuccess = (tvSeasonWatchProvidersResponse200) & {
-  headers: Headers;
+  data: TvSeasonWatchProviders200;
+  status: 200;
 };
-;
 
-export type tvSeasonWatchProvidersResponse = (tvSeasonWatchProvidersResponseSuccess)
+export type tvSeasonWatchProvidersResponseSuccess =
+  tvSeasonWatchProvidersResponse200 & {
+    headers: Headers;
+  };
+export type tvSeasonWatchProvidersResponse =
+  tvSeasonWatchProvidersResponseSuccess;
 
-export const getTvSeasonWatchProvidersUrl = (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonWatchProvidersParams,) => {
+export const getTvSeasonWatchProvidersUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonWatchProvidersParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/watch/providers?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/watch/providers`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/watch/providers?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/watch/providers`;
+};
 
-export const tvSeasonWatchProviders = async (seriesId: number,
-    seasonNumber: number,
-    params?: TvSeasonWatchProvidersParams, options?: RequestInit): Promise<tvSeasonWatchProvidersResponse> => {
-  
-  return appFetch<tvSeasonWatchProvidersResponse>(getTvSeasonWatchProvidersUrl(seriesId,seasonNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvSeasonWatchProviders = async (
+  seriesId: number,
+  seasonNumber: number,
+  params?: TvSeasonWatchProvidersParams,
+  options?: RequestInit
+): Promise<tvSeasonWatchProvidersResponse> => {
+  return appFetch<tvSeasonWatchProvidersResponse>(
+    getTvSeasonWatchProvidersUrl(seriesId, seasonNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Query the details of a TV episode.
  * @summary Details
  */
 export type tvEpisodeDetailsResponse200 = {
-  data: TvEpisodeDetails200
-  status: 200
-}
-    
-export type tvEpisodeDetailsResponseSuccess = (tvEpisodeDetailsResponse200) & {
+  data: TvEpisodeDetails200;
+  status: 200;
+};
+
+export type tvEpisodeDetailsResponseSuccess = tvEpisodeDetailsResponse200 & {
   headers: Headers;
 };
-;
+export type tvEpisodeDetailsResponse = tvEpisodeDetailsResponseSuccess;
 
-export type tvEpisodeDetailsResponse = (tvEpisodeDetailsResponseSuccess)
-
-export const getTvEpisodeDetailsUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeDetailsParams,) => {
+export const getTvEpisodeDetailsUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeDetailsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}`;
+};
 
-export const tvEpisodeDetails = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeDetailsParams, options?: RequestInit): Promise<tvEpisodeDetailsResponse> => {
-  
-  return appFetch<tvEpisodeDetailsResponse>(getTvEpisodeDetailsUrl(seriesId,seasonNumber,episodeNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeDetails = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeDetailsParams,
+  options?: RequestInit
+): Promise<tvEpisodeDetailsResponse> => {
+  return appFetch<tvEpisodeDetailsResponse>(
+    getTvEpisodeDetailsUrl(seriesId, seasonNumber, episodeNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the rating, watchlist and favourite status.
  * @summary Account States
  */
 export type tvEpisodeAccountStatesResponse200 = {
-  data: TvEpisodeAccountStates200
-  status: 200
-}
-    
-export type tvEpisodeAccountStatesResponseSuccess = (tvEpisodeAccountStatesResponse200) & {
-  headers: Headers;
+  data: TvEpisodeAccountStates200;
+  status: 200;
 };
-;
 
-export type tvEpisodeAccountStatesResponse = (tvEpisodeAccountStatesResponseSuccess)
+export type tvEpisodeAccountStatesResponseSuccess =
+  tvEpisodeAccountStatesResponse200 & {
+    headers: Headers;
+  };
+export type tvEpisodeAccountStatesResponse =
+  tvEpisodeAccountStatesResponseSuccess;
 
-export const getTvEpisodeAccountStatesUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeAccountStatesParams,) => {
+export const getTvEpisodeAccountStatesUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeAccountStatesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/account_states?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/account_states`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/account_states?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/account_states`;
+};
 
-export const tvEpisodeAccountStates = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeAccountStatesParams, options?: RequestInit): Promise<tvEpisodeAccountStatesResponse> => {
-  
-  return appFetch<tvEpisodeAccountStatesResponse>(getTvEpisodeAccountStatesUrl(seriesId,seasonNumber,episodeNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeAccountStates = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeAccountStatesParams,
+  options?: RequestInit
+): Promise<tvEpisodeAccountStatesResponse> => {
+  return appFetch<tvEpisodeAccountStatesResponse>(
+    getTvEpisodeAccountStatesUrl(seriesId, seasonNumber, episodeNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the recent changes for a TV episode.
  * @summary Changes
  */
 export type tvEpisodeChangesByIdResponse200 = {
-  data: TvEpisodeChangesById200
-  status: 200
-}
-    
-export type tvEpisodeChangesByIdResponseSuccess = (tvEpisodeChangesByIdResponse200) & {
-  headers: Headers;
+  data: TvEpisodeChangesById200;
+  status: 200;
 };
-;
 
-export type tvEpisodeChangesByIdResponse = (tvEpisodeChangesByIdResponseSuccess)
+export type tvEpisodeChangesByIdResponseSuccess =
+  tvEpisodeChangesByIdResponse200 & {
+    headers: Headers;
+  };
+export type tvEpisodeChangesByIdResponse = tvEpisodeChangesByIdResponseSuccess;
 
-export const getTvEpisodeChangesByIdUrl = (episodeId: number,) => {
+export const getTvEpisodeChangesByIdUrl = (episodeId: number) => {
+  return `https://api.themoviedb.org/3/tv/episode/${episodeId}/changes`;
+};
 
-  return `https://api.themoviedb.org/3/tv/episode/${episodeId}/changes`
-}
-
-export const tvEpisodeChangesById = async (episodeId: number, options?: RequestInit): Promise<tvEpisodeChangesByIdResponse> => {
-  
-  return appFetch<tvEpisodeChangesByIdResponse>(getTvEpisodeChangesByIdUrl(episodeId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeChangesById = async (
+  episodeId: number,
+  options?: RequestInit
+): Promise<tvEpisodeChangesByIdResponse> => {
+  return appFetch<tvEpisodeChangesByIdResponse>(
+    getTvEpisodeChangesByIdUrl(episodeId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * @summary Credits
  */
 export type tvEpisodeCreditsResponse200 = {
-  data: TvEpisodeCredits200
-  status: 200
-}
-    
-export type tvEpisodeCreditsResponseSuccess = (tvEpisodeCreditsResponse200) & {
+  data: TvEpisodeCredits200;
+  status: 200;
+};
+
+export type tvEpisodeCreditsResponseSuccess = tvEpisodeCreditsResponse200 & {
   headers: Headers;
 };
-;
+export type tvEpisodeCreditsResponse = tvEpisodeCreditsResponseSuccess;
 
-export type tvEpisodeCreditsResponse = (tvEpisodeCreditsResponseSuccess)
-
-export const getTvEpisodeCreditsUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeCreditsParams,) => {
+export const getTvEpisodeCreditsUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeCreditsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/credits?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/credits`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/credits?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/credits`;
+};
 
-export const tvEpisodeCredits = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeCreditsParams, options?: RequestInit): Promise<tvEpisodeCreditsResponse> => {
-  
-  return appFetch<tvEpisodeCreditsResponse>(getTvEpisodeCreditsUrl(seriesId,seasonNumber,episodeNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeCredits = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeCreditsParams,
+  options?: RequestInit
+): Promise<tvEpisodeCreditsResponse> => {
+  return appFetch<tvEpisodeCreditsResponse>(
+    getTvEpisodeCreditsUrl(seriesId, seasonNumber, episodeNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get a list of external IDs that have been added to a TV episode.
  * @summary External IDs
  */
 export type tvEpisodeExternalIdsResponse200 = {
-  data: TvEpisodeExternalIds200
-  status: 200
-}
-    
-export type tvEpisodeExternalIdsResponseSuccess = (tvEpisodeExternalIdsResponse200) & {
-  headers: Headers;
+  data: TvEpisodeExternalIds200;
+  status: 200;
 };
-;
 
-export type tvEpisodeExternalIdsResponse = (tvEpisodeExternalIdsResponseSuccess)
+export type tvEpisodeExternalIdsResponseSuccess =
+  tvEpisodeExternalIdsResponse200 & {
+    headers: Headers;
+  };
+export type tvEpisodeExternalIdsResponse = tvEpisodeExternalIdsResponseSuccess;
 
-export const getTvEpisodeExternalIdsUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: string,) => {
+export const getTvEpisodeExternalIdsUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: string
+) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/external_ids`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/external_ids`
-}
-
-export const tvEpisodeExternalIds = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: string, options?: RequestInit): Promise<tvEpisodeExternalIdsResponse> => {
-  
-  return appFetch<tvEpisodeExternalIdsResponse>(getTvEpisodeExternalIdsUrl(seriesId,seasonNumber,episodeNumber),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeExternalIds = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: string,
+  options?: RequestInit
+): Promise<tvEpisodeExternalIdsResponse> => {
+  return appFetch<tvEpisodeExternalIdsResponse>(
+    getTvEpisodeExternalIdsUrl(seriesId, seasonNumber, episodeNumber),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the images that belong to a TV episode.
  * @summary Images
  */
 export type tvEpisodeImagesResponse200 = {
-  data: TvEpisodeImages200
-  status: 200
-}
-    
-export type tvEpisodeImagesResponseSuccess = (tvEpisodeImagesResponse200) & {
+  data: TvEpisodeImages200;
+  status: 200;
+};
+
+export type tvEpisodeImagesResponseSuccess = tvEpisodeImagesResponse200 & {
   headers: Headers;
 };
-;
+export type tvEpisodeImagesResponse = tvEpisodeImagesResponseSuccess;
 
-export type tvEpisodeImagesResponse = (tvEpisodeImagesResponseSuccess)
-
-export const getTvEpisodeImagesUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeImagesParams,) => {
+export const getTvEpisodeImagesUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeImagesParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/images?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/images`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/images?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/images`;
+};
 
-export const tvEpisodeImages = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeImagesParams, options?: RequestInit): Promise<tvEpisodeImagesResponse> => {
-  
-  return appFetch<tvEpisodeImagesResponse>(getTvEpisodeImagesUrl(seriesId,seasonNumber,episodeNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeImages = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeImagesParams,
+  options?: RequestInit
+): Promise<tvEpisodeImagesResponse> => {
+  return appFetch<tvEpisodeImagesResponse>(
+    getTvEpisodeImagesUrl(seriesId, seasonNumber, episodeNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the translations that have been added to a TV episode.
  * @summary Translations
  */
 export type tvEpisodeTranslationsResponse200 = {
-  data: TvEpisodeTranslations200
-  status: 200
-}
-    
-export type tvEpisodeTranslationsResponseSuccess = (tvEpisodeTranslationsResponse200) & {
-  headers: Headers;
+  data: TvEpisodeTranslations200;
+  status: 200;
 };
-;
 
-export type tvEpisodeTranslationsResponse = (tvEpisodeTranslationsResponseSuccess)
+export type tvEpisodeTranslationsResponseSuccess =
+  tvEpisodeTranslationsResponse200 & {
+    headers: Headers;
+  };
+export type tvEpisodeTranslationsResponse =
+  tvEpisodeTranslationsResponseSuccess;
 
-export const getTvEpisodeTranslationsUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,) => {
+export const getTvEpisodeTranslationsUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number
+) => {
+  return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/translations`;
+};
 
-  return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/translations`
-}
-
-export const tvEpisodeTranslations = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number, options?: RequestInit): Promise<tvEpisodeTranslationsResponse> => {
-  
-  return appFetch<tvEpisodeTranslationsResponse>(getTvEpisodeTranslationsUrl(seriesId,seasonNumber,episodeNumber),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeTranslations = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  options?: RequestInit
+): Promise<tvEpisodeTranslationsResponse> => {
+  return appFetch<tvEpisodeTranslationsResponse>(
+    getTvEpisodeTranslationsUrl(seriesId, seasonNumber, episodeNumber),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the videos that belong to a TV episode.
  * @summary Videos
  */
 export type tvEpisodeVideosResponse200 = {
-  data: TvEpisodeVideos200
-  status: 200
-}
-    
-export type tvEpisodeVideosResponseSuccess = (tvEpisodeVideosResponse200) & {
+  data: TvEpisodeVideos200;
+  status: 200;
+};
+
+export type tvEpisodeVideosResponseSuccess = tvEpisodeVideosResponse200 & {
   headers: Headers;
 };
-;
+export type tvEpisodeVideosResponse = tvEpisodeVideosResponseSuccess;
 
-export type tvEpisodeVideosResponse = (tvEpisodeVideosResponseSuccess)
-
-export const getTvEpisodeVideosUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeVideosParams,) => {
+export const getTvEpisodeVideosUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeVideosParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/videos?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/videos`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/videos?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/videos`;
+};
 
-export const tvEpisodeVideos = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeVideosParams, options?: RequestInit): Promise<tvEpisodeVideosResponse> => {
-  
-  return appFetch<tvEpisodeVideosResponse>(getTvEpisodeVideosUrl(seriesId,seasonNumber,episodeNumber,params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeVideos = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeVideosParams,
+  options?: RequestInit
+): Promise<tvEpisodeVideosResponse> => {
+  return appFetch<tvEpisodeVideosResponse>(
+    getTvEpisodeVideosUrl(seriesId, seasonNumber, episodeNumber, params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Rate a TV episode and save it to your rated list.
  * @summary Add Rating
  */
 export type tvEpisodeAddRatingResponse200 = {
-  data: TvEpisodeAddRating200
-  status: 200
-}
-    
-export type tvEpisodeAddRatingResponseSuccess = (tvEpisodeAddRatingResponse200) & {
-  headers: Headers;
+  data: TvEpisodeAddRating200;
+  status: 200;
 };
-;
 
-export type tvEpisodeAddRatingResponse = (tvEpisodeAddRatingResponseSuccess)
+export type tvEpisodeAddRatingResponseSuccess =
+  tvEpisodeAddRatingResponse200 & {
+    headers: Headers;
+  };
+export type tvEpisodeAddRatingResponse = tvEpisodeAddRatingResponseSuccess;
 
-export const getTvEpisodeAddRatingUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeAddRatingParams,) => {
+export const getTvEpisodeAddRatingUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeAddRatingParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating`;
+};
 
-export const tvEpisodeAddRating = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    tvEpisodeAddRatingBody: TvEpisodeAddRatingBody,
-    params?: TvEpisodeAddRatingParams, options?: RequestInit): Promise<tvEpisodeAddRatingResponse> => {
-  
-  return appFetch<tvEpisodeAddRatingResponse>(getTvEpisodeAddRatingUrl(seriesId,seasonNumber,episodeNumber,params),
-  {      
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(
-      tvEpisodeAddRatingBody,)
-  }
-);}
+export const tvEpisodeAddRating = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  tvEpisodeAddRatingBody: TvEpisodeAddRatingBody,
+  params?: TvEpisodeAddRatingParams,
+  options?: RequestInit
+): Promise<tvEpisodeAddRatingResponse> => {
+  return appFetch<tvEpisodeAddRatingResponse>(
+    getTvEpisodeAddRatingUrl(seriesId, seasonNumber, episodeNumber, params),
+    {
+      ...options,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      body: JSON.stringify(tvEpisodeAddRatingBody),
+    }
+  );
+};
 
 /**
  * Delete your rating on a TV episode.
  * @summary Delete Rating
  */
 export type tvEpisodeDeleteRatingResponse200 = {
-  data: TvEpisodeDeleteRating200
-  status: 200
-}
-    
-export type tvEpisodeDeleteRatingResponseSuccess = (tvEpisodeDeleteRatingResponse200) & {
-  headers: Headers;
+  data: TvEpisodeDeleteRating200;
+  status: 200;
 };
-;
 
-export type tvEpisodeDeleteRatingResponse = (tvEpisodeDeleteRatingResponseSuccess)
+export type tvEpisodeDeleteRatingResponseSuccess =
+  tvEpisodeDeleteRatingResponse200 & {
+    headers: Headers;
+  };
+export type tvEpisodeDeleteRatingResponse =
+  tvEpisodeDeleteRatingResponseSuccess;
 
-export const getTvEpisodeDeleteRatingUrl = (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeDeleteRatingParams,) => {
+export const getTvEpisodeDeleteRatingUrl = (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeDeleteRatingParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating?${stringifiedParams}` : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/rating`;
+};
 
-export const tvEpisodeDeleteRating = async (seriesId: number,
-    seasonNumber: number,
-    episodeNumber: number,
-    params?: TvEpisodeDeleteRatingParams, options?: RequestInit): Promise<tvEpisodeDeleteRatingResponse> => {
-  
-  return appFetch<tvEpisodeDeleteRatingResponse>(getTvEpisodeDeleteRatingUrl(seriesId,seasonNumber,episodeNumber,params),
-  {      
-    ...options,
-    method: 'DELETE'
-    
-  }
-);}
+export const tvEpisodeDeleteRating = async (
+  seriesId: number,
+  seasonNumber: number,
+  episodeNumber: number,
+  params?: TvEpisodeDeleteRatingParams,
+  options?: RequestInit
+): Promise<tvEpisodeDeleteRatingResponse> => {
+  return appFetch<tvEpisodeDeleteRatingResponse>(
+    getTvEpisodeDeleteRatingUrl(seriesId, seasonNumber, episodeNumber, params),
+    {
+      ...options,
+      method: 'DELETE',
+    }
+  );
+};
 
 /**
  * Get the details of a TV episode group.
  * @summary Details
  */
 export type tvEpisodeGroupDetailsResponse200 = {
-  data: TvEpisodeGroupDetails200
-  status: 200
-}
-    
-export type tvEpisodeGroupDetailsResponseSuccess = (tvEpisodeGroupDetailsResponse200) & {
-  headers: Headers;
+  data: TvEpisodeGroupDetails200;
+  status: 200;
 };
-;
 
-export type tvEpisodeGroupDetailsResponse = (tvEpisodeGroupDetailsResponseSuccess)
+export type tvEpisodeGroupDetailsResponseSuccess =
+  tvEpisodeGroupDetailsResponse200 & {
+    headers: Headers;
+  };
+export type tvEpisodeGroupDetailsResponse =
+  tvEpisodeGroupDetailsResponseSuccess;
 
-export const getTvEpisodeGroupDetailsUrl = (tvEpisodeGroupId: string,) => {
+export const getTvEpisodeGroupDetailsUrl = (tvEpisodeGroupId: string) => {
+  return `https://api.themoviedb.org/3/tv/episode_group/${tvEpisodeGroupId}`;
+};
 
-  return `https://api.themoviedb.org/3/tv/episode_group/${tvEpisodeGroupId}`
-}
-
-export const tvEpisodeGroupDetails = async (tvEpisodeGroupId: string, options?: RequestInit): Promise<tvEpisodeGroupDetailsResponse> => {
-  
-  return appFetch<tvEpisodeGroupDetailsResponse>(getTvEpisodeGroupDetailsUrl(tvEpisodeGroupId),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const tvEpisodeGroupDetails = async (
+  tvEpisodeGroupId: string,
+  options?: RequestInit
+): Promise<tvEpisodeGroupDetailsResponse> => {
+  return appFetch<tvEpisodeGroupDetailsResponse>(
+    getTvEpisodeGroupDetailsUrl(tvEpisodeGroupId),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the list of the countries we have watch provider (OTT/streaming) data for.
  * @summary Available Regions
  */
 export type watchProvidersAvailableRegionsResponse200 = {
-  data: WatchProvidersAvailableRegions200
-  status: 200
-}
-    
-export type watchProvidersAvailableRegionsResponseSuccess = (watchProvidersAvailableRegionsResponse200) & {
-  headers: Headers;
+  data: WatchProvidersAvailableRegions200;
+  status: 200;
 };
-;
 
-export type watchProvidersAvailableRegionsResponse = (watchProvidersAvailableRegionsResponseSuccess)
+export type watchProvidersAvailableRegionsResponseSuccess =
+  watchProvidersAvailableRegionsResponse200 & {
+    headers: Headers;
+  };
+export type watchProvidersAvailableRegionsResponse =
+  watchProvidersAvailableRegionsResponseSuccess;
 
-export const getWatchProvidersAvailableRegionsUrl = (params?: WatchProvidersAvailableRegionsParams,) => {
+export const getWatchProvidersAvailableRegionsUrl = (
+  params?: WatchProvidersAvailableRegionsParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/watch/providers/regions?${stringifiedParams}` : `https://api.themoviedb.org/3/watch/providers/regions`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/watch/providers/regions?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/watch/providers/regions`;
+};
 
-export const watchProvidersAvailableRegions = async (params?: WatchProvidersAvailableRegionsParams, options?: RequestInit): Promise<watchProvidersAvailableRegionsResponse> => {
-  
-  return appFetch<watchProvidersAvailableRegionsResponse>(getWatchProvidersAvailableRegionsUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const watchProvidersAvailableRegions = async (
+  params?: WatchProvidersAvailableRegionsParams,
+  options?: RequestInit
+): Promise<watchProvidersAvailableRegionsResponse> => {
+  return appFetch<watchProvidersAvailableRegionsResponse>(
+    getWatchProvidersAvailableRegionsUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the list of streaming providers we have for movies.
  * @summary Movie Providers
  */
 export type watchProvidersMovieListResponse200 = {
-  data: WatchProvidersMovieList200
-  status: 200
-}
-    
-export type watchProvidersMovieListResponseSuccess = (watchProvidersMovieListResponse200) & {
-  headers: Headers;
+  data: WatchProvidersMovieList200;
+  status: 200;
 };
-;
 
-export type watchProvidersMovieListResponse = (watchProvidersMovieListResponseSuccess)
+export type watchProvidersMovieListResponseSuccess =
+  watchProvidersMovieListResponse200 & {
+    headers: Headers;
+  };
+export type watchProvidersMovieListResponse =
+  watchProvidersMovieListResponseSuccess;
 
-export const getWatchProvidersMovieListUrl = (params?: WatchProvidersMovieListParams,) => {
+export const getWatchProvidersMovieListUrl = (
+  params?: WatchProvidersMovieListParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/watch/providers/movie?${stringifiedParams}` : `https://api.themoviedb.org/3/watch/providers/movie`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/watch/providers/movie?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/watch/providers/movie`;
+};
 
-export const watchProvidersMovieList = async (params?: WatchProvidersMovieListParams, options?: RequestInit): Promise<watchProvidersMovieListResponse> => {
-  
-  return appFetch<watchProvidersMovieListResponse>(getWatchProvidersMovieListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const watchProvidersMovieList = async (
+  params?: WatchProvidersMovieListParams,
+  options?: RequestInit
+): Promise<watchProvidersMovieListResponse> => {
+  return appFetch<watchProvidersMovieListResponse>(
+    getWatchProvidersMovieListUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};
 
 /**
  * Get the list of streaming providers we have for TV shows.
  * @summary TV Providers
  */
 export type watchProviderTvListResponse200 = {
-  data: WatchProviderTvList200
-  status: 200
-}
-    
-export type watchProviderTvListResponseSuccess = (watchProviderTvListResponse200) & {
-  headers: Headers;
+  data: WatchProviderTvList200;
+  status: 200;
 };
-;
 
-export type watchProviderTvListResponse = (watchProviderTvListResponseSuccess)
+export type watchProviderTvListResponseSuccess =
+  watchProviderTvListResponse200 & {
+    headers: Headers;
+  };
+export type watchProviderTvListResponse = watchProviderTvListResponseSuccess;
 
-export const getWatchProviderTvListUrl = (params?: WatchProviderTvListParams,) => {
+export const getWatchProviderTvListUrl = (
+  params?: WatchProviderTvListParams
+) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
-    
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString())
+      normalizedParams.append(key, value === null ? 'null' : value.toString());
     }
   });
 
   const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `https://api.themoviedb.org/3/watch/providers/tv?${stringifiedParams}` : `https://api.themoviedb.org/3/watch/providers/tv`
-}
+  return stringifiedParams.length > 0
+    ? `https://api.themoviedb.org/3/watch/providers/tv?${stringifiedParams}`
+    : `https://api.themoviedb.org/3/watch/providers/tv`;
+};
 
-export const watchProviderTvList = async (params?: WatchProviderTvListParams, options?: RequestInit): Promise<watchProviderTvListResponse> => {
-  
-  return appFetch<watchProviderTvListResponse>(getWatchProviderTvListUrl(params),
-  {      
-    ...options,
-    method: 'GET'
-    
-  }
-);}
+export const watchProviderTvList = async (
+  params?: WatchProviderTvListParams,
+  options?: RequestInit
+): Promise<watchProviderTvListResponse> => {
+  return appFetch<watchProviderTvListResponse>(
+    getWatchProviderTvListUrl(params),
+    {
+      ...options,
+      method: 'GET',
+    }
+  );
+};

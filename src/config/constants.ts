@@ -8,12 +8,15 @@ export const IMAGE_SIZES = {
   large: 'w1280',
 } as const;
 
-export const GENRE_TITLES: Record<number, string> = {
-  35: 'Комедии',
-  18: 'Драмы',
-  14: 'Фэнтези',
-  53: 'Триллеры',
-  9648: 'Детективы',
-};
+export interface HomeGenre {
+  id: number;
+  title: string;
+}
 
-export const ALLOWED_GENRE_IDS = [35, 18, 14, 53, 9648];
+export const HOME_GENRES: HomeGenre[] = [
+  { id: 35, title: 'Комедии' },
+  { id: 18, title: 'Драмы' },
+  { id: 14, title: 'Фэнтези' },
+  { id: 53, title: 'Триллеры' },
+  { id: 9648, title: 'Детективы' },
+];

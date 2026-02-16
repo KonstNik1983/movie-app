@@ -45,23 +45,16 @@
     <h2 class="movies__title">Каталог фильмов и сериалов</h2>
 
     <div
-      v-for="genre in movieStore.genres"
-      :key="genre.id"
+      v-for="section in movieStore.formattedSections"
+      :key="section.genre.id"
       class="movies__genre"
     >
-      <h3 class="movie__title">{{ genre.label }}</h3>
+      <h3 class="movie__title">{{ section.genre.title }}</h3>
       <div class="movies__cards">
-        <div v-for="movie in genre.movies" :key="movie.id" class="movie-card">
-          <img
-            class="movie-card-img"
-            :src="getMovieImage(movie)"
-            :alt="movie.title"
-          />
+        <div v-for="movie in section.movies" :key="movie.id" class="movie-card">
+          <img class="movie-card-img" :src="movie.image" :alt="movie.title" />
           <p class="movie-card-text">
-            ⭐ {{ movie.vote_average }} • {{ movie.type }} •
-            <span v-if="movie.genre_ids?.length">
-              {{ getMovieGenres(movie.genre_ids) }}
-            </span>
+            ⭐ {{ movie.rating }} • {{ movie.genres }}
           </p>
           <h4 class="movie-card-title">{{ movie.title }}</h4>
         </div>
@@ -72,20 +65,24 @@
     <h2 class="collections__title">Тематические подборки</h2>
 
     <div class="collections__grid">
-      <div
-        v-for="item in movieStore.collections"
+      <router-link
+        v-for="item in collections"
         :key="item.id"
+        :to="{ name: 'CollectionPage', params: { slug: item.slug } }"
         class="collection-card"
       >
         <img
           class="collection-card__img"
-          :src="item.posterUrl || placeholder"
+          :src="item.backgroundImage || placeholder"
           :alt="item.title"
         />
+
         <div class="collection-card__overlay">
-          <span class="collection-card__title">{{ item.title }}</span>
+          <span class="collection-card__title">
+            {{ item.title }}
+          </span>
         </div>
-      </div>
+      </router-link>
     </div>
   </section>
 
@@ -160,26 +157,27 @@
 </template>
 
 <script setup lang="ts">
-  import { useMovieStore } from '@/store/app-store/app.store';
-
   import BaseButton from '@/components/buttons/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
 
   import { ADVANTAGES } from '@/data/advantages.data';
   import { DISCOUNTS } from '@/data/discounts.data';
   import { PLANS } from '@/data/plans.data';
+  import { COLLECTIONS } from '@/config/collections.constants';
 
   import placeholder from '@/assets/placeholder-movie.jpg';
   import checkIcon from '@/assets/icons/check.svg';
   import lockIcon from '@/assets/icons/lock.svg';
 
-  import { getMovieImage, getMovieGenres } from '@/utils/movie.utils';
+  const collections = COLLECTIONS;
+
+  import { useMovieStore } from '@/store/movies/movies.ts';
+
+  const movieStore = useMovieStore();
 
   const advantages = ADVANTAGES;
   const discounts = DISCOUNTS;
   const plans = PLANS;
-
-  const movieStore = useMovieStore();
 </script>
 
 <style scoped>
@@ -412,6 +410,9 @@
     aspect-ratio: 1 / 1;
     border-radius: 10px;
     overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
   }
 
   .collection-card__img {

@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import { useSliderStore } from '@/store/slider/slider.ts';
+import { useMovieStore } from '@/store/movies/movies.ts';
+import { useGenreStore } from '@/store/genre/genre.ts';
 
 export const useInitStore = defineStore('init', {
   state: () => ({
@@ -14,11 +16,13 @@ export const useInitStore = defineStore('init', {
       this.isLoading = true;
 
       try {
-        // const movieStore = useMovieStore();
+        const movieStore = useMovieStore();
         const sliderStore = useSliderStore();
+        const genreStore = useGenreStore();
 
         await Promise.all([
-          // movieStore.loadHomeData(),
+          genreStore.loadGenres(),
+          movieStore.loadMovies(),
           sliderStore.loadSlider(),
         ]);
 
