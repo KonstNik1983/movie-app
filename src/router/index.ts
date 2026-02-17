@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import DefaultLayout from '@/layouts/DefaultLayout.vue';
 import HomeView from '@/pages/HomeView.vue';
 import MoviesView from '@/pages/MoviesView.vue';
+import MoviePage from '@/pages/MoviePage.vue';
 import SeriesView from '@/pages/SeriesView.vue';
 import CollectionsView from '@/pages/CollectionsView.vue';
 import CollectionPage from '@/pages/CollectionPage.vue';
@@ -35,6 +36,12 @@ const routes = [
         path: 'collections/:slug',
         name: 'CollectionPage',
         component: CollectionPage,
+      },
+      {
+        path: 'movies/:id',
+        name: 'MoviePage',
+        component: MoviePage,
+        props: true,
       },
     ],
   },
