@@ -1,6 +1,8 @@
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string;
 const DEFAULT_LANGUAGE = 'ru-RU';
 
+console.log('TMDB API Key in appFetch:', API_KEY);
+
 const getBody = <T>(c: Response | Request): Promise<T> => {
   const contentType = c.headers.get('content-type');
 
@@ -26,7 +28,7 @@ const getUrl = (contextUrl: string): string => {
 
   const pathname = url.pathname;
   const search = url.search;
-  const baseUrl = 'https://api.themoviedb.org'
+  const baseUrl = 'https://api.themoviedb.org';
 
   const requestUrl = new URL(`${baseUrl}${pathname}${search}`);
 
@@ -41,7 +43,7 @@ const getHeaders = (headers?: HeadersInit): HeadersInit => {
 
 export const appFetch = async <T>(
   url: string,
-  options: RequestInit,
+  options: RequestInit
 ): Promise<T> => {
   const requestUrl = getUrl(url);
   const requestHeaders = getHeaders(options.headers);
