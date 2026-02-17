@@ -4,7 +4,7 @@ import {
   PLACEHOLDER_IMAGE,
   HOME_GENRES,
 } from '@/config/constants';
-import type { Movie } from '@/types/movie.types';
+
 import { useGenreStore } from '@/store/genre/genre.ts';
 
 export function buildImage(
@@ -36,17 +36,6 @@ export function isInCinema(movie: { release_date?: string }): boolean {
   const release = new Date(movie.release_date);
 
   return release <= today;
-}
-
-export function getMovieImage(
-  movie: Movie,
-  size: keyof typeof IMAGE_SIZES = 'medium'
-): string {
-  const path = movie.backdrop_path ?? movie.poster_path;
-
-  if (!path) return PLACEHOLDER_IMAGE;
-
-  return `${IMAGE_BASE_URL}${IMAGE_SIZES[size]}${path}`;
 }
 
 export function getMovieGenres(genreIds?: number[] | null): string {

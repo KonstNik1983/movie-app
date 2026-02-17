@@ -35,7 +35,7 @@
   import useEmblaCarousel from 'embla-carousel-vue';
   import { useSliderStore } from '@/store/slider/slider.ts';
   import { isInCinema, getReleaseLabel } from '@/utils/movie.utils';
-  import { onMounted } from 'vue'
+  import { onMounted } from 'vue';
 
   const sliderStore = useSliderStore();
 
@@ -50,8 +50,8 @@
   }
 
   onMounted(() => {
-    console.log(sliderStore.formattedSlides)
-  })
+    console.log(emblaRef.value);
+  });
 </script>
 
 <style scoped>
