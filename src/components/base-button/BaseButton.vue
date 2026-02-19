@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
-  import type { ButtonVariant } from '@/types/ui.types';
+  import type { ButtonVariant } from '@/components/base-button/button.types';
 
   const props = defineProps<{
     variant?: ButtonVariant;

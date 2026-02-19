@@ -42,29 +42,10 @@
   </section>
 
   <section class="movies section-padding">
-    <h2 class="movies__title">Каталог фильмов и сериалов</h2>
-
-    <div
-      v-for="section in movieStore.formattedSections"
-      :key="section.genre.id"
-      class="movies__genre"
-    >
-      <h3 class="movie__title">{{ section.genre.title }}</h3>
-      <div class="movies__cards">
-        <router-link
-          v-for="movie in section.movies"
-          :key="movie.id"
-          :to="moviePage(movie.id)"
-          class="movie-card"
-        >
-          <img class="movie-card-img" :src="movie.image" :alt="movie.title" />
-          <p class="movie-card-text">
-            ⭐ {{ movie.rating }} • {{ movie.genres }}
-          </p>
-          <h4 class="movie-card-title">{{ movie.title }}</h4>
-        </router-link>
-      </div>
-    </div>
+    <MediaSection
+      title="Каталог фильмов"
+      :sections="movieStore.formattedSections"
+    />
   </section>
   <section class="collections section-padding">
     <h2 class="collections__title">Тематические подборки</h2>
@@ -162,9 +143,9 @@
 </template>
 
 <script setup lang="ts">
-  import BaseButton from '@/components/buttons/BaseButton.vue';
+  import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
-  import { moviePage } from '@/router/paths';
+  import MediaSection from '@/components/media/MediaSections.vue';
   import { collectionPage } from '@/router/paths';
 
   import { ADVANTAGES } from '@/data/advantages.data';

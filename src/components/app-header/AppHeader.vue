@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useAuthStore } from '@/store/auth-store/auth';
+  import { useAuthStore } from '@/store/auth/auth.ts';
   import { ROUTES } from '@/router/paths';
 
   const authStore = useAuthStore();
