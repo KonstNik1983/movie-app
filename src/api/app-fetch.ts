@@ -1,8 +1,6 @@
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string;
 const DEFAULT_LANGUAGE = 'ru-RU';
 
-console.log('TMDB API Key in appFetch:', API_KEY);
-
 const getBody = <T>(c: Response | Request): Promise<T> => {
   const contentType = c.headers.get('content-type');
 

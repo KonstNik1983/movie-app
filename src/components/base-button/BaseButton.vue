@@ -14,6 +14,7 @@
 
   const buttonClass = computed(() => {
     const variant = props.variant || 'primary';
+
     return `base-btn--${variant}`;
   });
 </script>
