@@ -159,9 +159,9 @@
 
   const collections = COLLECTIONS;
 
-  import { useMovieStore } from '@/store/movies/movies.ts';
+  import { useMoviesStore } from '@/store/movies/movies.ts';
 
-  const movieStore = useMovieStore();
+  const movieStore = useMoviesStore();
 
   const advantages = ADVANTAGES;
   const discounts = DISCOUNTS;
