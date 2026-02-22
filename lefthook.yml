@@ -1,0 +1,8 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - run: eslint --fix "{staged_files}"
+      glob: '*.{ts,vue}'
+
+    - run: prettier --write "{staged_files}"
+      glob: '*.{ts,vue,js,json,css,scss,md}'

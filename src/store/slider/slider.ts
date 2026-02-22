@@ -11,17 +11,20 @@ export const useSliderStore = defineStore('sliderStore', {
 
   getters: {
     formattedSlides(state) {
-      const slides = state.slides
+      const slides = state.slides;
 
-      const result = slides.map(movie => ({
+      const result = slides.map((movie) => ({
         id: movie.id,
-        title: movie.original_title ?? '',
-        image: buildImage(movie.backdrop_path ?? movie.poster_path ?? '', 'medium'),
+        title: movie.title ?? movie.original_title ?? '',
+        image: buildImage(
+          movie.backdrop_path ?? movie.poster_path ?? '',
+          'medium'
+        ),
         release_date: movie.release_date ?? '',
-      }))
+      }));
 
-      return result
-    }
+      return result;
+    },
   },
 
   actions: {
@@ -29,16 +32,14 @@ export const useSliderStore = defineStore('sliderStore', {
       this.isLoading = true;
 
       try {
-        const results = await Promise.allSettled([
-          movieNowPlayingList(),
-        ]);
+        const results = await Promise.allSettled([movieNowPlayingList()]);
 
-        const data = results.filter(item => item.status === 'fulfilled')
-        const [moviesResponse] = data
+        const data = results.filter((item) => item.status === 'fulfilled');
+        const [moviesResponse] = data;
 
-        const { data: movies } = moviesResponse?.value ?? {}
+        const { data: movies } = moviesResponse?.value ?? {};
 
-        this.slides = movies?.results ?? []
+        this.slides = movies?.results ?? [];
       } catch (error) {
         console.error('Ошибка загрузки слайдера:', error);
       } finally {

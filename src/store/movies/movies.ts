@@ -11,7 +11,7 @@ import type {
   MoviesByGenreState,
 } from '@/store/movies/movies.types.ts';
 
-export const useMovieStore = defineStore('movieStore', {
+export const useMoviesStore = defineStore('moviesStore', {
   state: (): MoviesByGenreState => ({
     sections: [],
     isLoading: false,
@@ -24,7 +24,7 @@ export const useMovieStore = defineStore('movieStore', {
       const result = sections.map((section) => ({
         genre: section.genre,
         movies: section.movies.map((movie: MovieByGenre) => ({
-          id: movie.id,
+          id: movie.id!,
           title: movie.title ?? movie.original_title ?? '',
           image: buildImage(movie.backdrop_path ?? movie.poster_path ?? ''),
           rating: movie.vote_average ?? '',

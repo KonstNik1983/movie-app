@@ -42,24 +42,10 @@
   </section>
 
   <section class="movies section-padding">
-    <h2 class="movies__title">Каталог фильмов и сериалов</h2>
-
-    <div
-      v-for="section in movieStore.formattedSections"
-      :key="section.genre.id"
-      class="movies__genre"
-    >
-      <h3 class="movie__title">{{ section.genre.title }}</h3>
-      <div class="movies__cards">
-        <div v-for="movie in section.movies" :key="movie.id" class="movie-card">
-          <img class="movie-card-img" :src="movie.image" :alt="movie.title" />
-          <p class="movie-card-text">
-            ⭐ {{ movie.rating }} • {{ movie.genres }}
-          </p>
-          <h4 class="movie-card-title">{{ movie.title }}</h4>
-        </div>
-      </div>
-    </div>
+    <MediaSection
+      title="Каталог фильмов и сериалов"
+      :sections="movieStore.formattedSections"
+    />
   </section>
   <section class="collections section-padding">
     <h2 class="collections__title">Тематические подборки</h2>
@@ -68,7 +54,7 @@
       <router-link
         v-for="item in collections"
         :key="item.id"
-        :to="{ name: 'CollectionPage', params: { slug: item.slug } }"
+        :to="collectionPage(item.slug)"
         class="collection-card"
       >
         <img
@@ -157,8 +143,10 @@
 </template>
 
 <script setup lang="ts">
-  import BaseButton from '@/components/buttons/BaseButton.vue';
+  import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
+  import MediaSection from '@/components/media/MediaSections.vue';
+  import { collectionPage } from '@/router/paths';
 
   import { ADVANTAGES } from '@/data/advantages.data';
   import { DISCOUNTS } from '@/data/discounts.data';
@@ -171,9 +159,9 @@
 
   const collections = COLLECTIONS;
 
-  import { useMovieStore } from '@/store/movies/movies.ts';
+  import { useMoviesStore } from '@/store/movies/movies.ts';
 
-  const movieStore = useMovieStore();
+  const movieStore = useMoviesStore();
 
   const advantages = ADVANTAGES;
   const discounts = DISCOUNTS;
@@ -365,6 +353,12 @@
   .movie__title {
     font-size: 20px;
     margin-bottom: 30px;
+  }
+
+  .movie-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
   }
 
   .movies__cards {
