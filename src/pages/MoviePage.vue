@@ -59,67 +59,74 @@
 
         <div class="movie-details__reviews">
           <h2 class="movie-details__reviews-title">Рецензии</h2>
+          <template v-if="visibleReviews?.length">
+            <div
+              v-for="review in visibleReviews"
+              :key="review.id"
+              class="movie-details__review"
+            >
+              <div class="movie-details__review-header">
+                <img
+                  :src="getAvatar(review)"
+                  alt="Author avatar"
+                  class="movie-details__review-avatar"
+                />
 
-          <div
-            v-for="review in visibleReviews"
-            :key="review.id"
-            class="movie-details__review"
-          >
-            <div class="movie-details__review-header">
-              <img
-                :src="getAvatar(review)"
-                alt="Author avatar"
-                class="movie-details__review-avatar"
-              />
+                <div class="movie-details__review-meta">
+                  <span class="movie-details__review-author">
+                    {{ review.author }}
+                  </span>
+                  <span class="movie-details__review-date">
+                    {{ formatDate(review.created_at) }}
+                  </span>
+                </div>
+              </div>
 
-              <div class="movie-details__review-meta">
-                <span class="movie-details__review-author">
-                  {{ review.author }}
-                </span>
-                <span class="movie-details__review-date">
-                  {{ formatDate(review.created_at) }}
-                </span>
+              <div class="movie-details__review-content">
+                <p>{{ review.content }}</p>
+              </div>
+
+              <div class="movie-details__review-actions">
+                <button
+                  class="movie-details__review-btn"
+                  aria-label="Коментарии"
+                >
+                  <img
+                    class="movie-details__review-img"
+                    src="@/assets/icons/Vector (10).svg"
+                    alt=""
+                  />
+                  <span class="movie-details__review-count">5</span>
+                </button>
+                <button class="movie-details__review-btn" aria-label="Лайк">
+                  <img
+                    class="movie-details__review-img"
+                    src="@/assets/icons/Vector (11).svg"
+                    alt=""
+                  />
+                  <span class="movie-details__review-count">12</span>
+                </button>
+                <button class="movie-details__review-btn" aria-label="Дизлайк">
+                  <img
+                    class="movie-details__review-img"
+                    src="@/assets/icons/Vector (12).svg"
+                    alt=""
+                  />
+                  <span class="movie-details__review-count">3</span>
+                </button>
               </div>
             </div>
 
-            <div class="movie-details__review-content">
-              <p>{{ review.content }}</p>
-            </div>
+            <BaseButton
+              v-if="hasMoreReviews"
+              variant="ghost"
+              @click="toggleShowReviews"
+            >
+              {{ showAllReviews ? 'Скрыть' : 'Смотреть все' }}
+            </BaseButton>
+          </template>
 
-            <div class="movie-details__review-actions">
-              <button class="movie-details__review-btn" aria-label="Коментарии">
-                <img
-                  class="movie-details__review-img"
-                  src="@/assets/icons/Vector (10).svg"
-                  alt=""
-                />
-                <span class="movie-details__review-count">5</span>
-              </button>
-              <button class="movie-details__review-btn" aria-label="Лайк">
-                <img
-                  class="movie-details__review-img"
-                  src="@/assets/icons/Vector (11).svg"
-                  alt=""
-                />
-                <span class="movie-details__review-count">12</span>
-              </button>
-              <button class="movie-details__review-btn" aria-label="Дизлайк">
-                <img
-                  class="movie-details__review-img"
-                  src="@/assets/icons/Vector (12).svg"
-                  alt=""
-                />
-                <span class="movie-details__review-count">3</span>
-              </button>
-            </div>
-          </div>
-          <BaseButton
-            v-if="hasMoreReviews"
-            variant="ghost"
-            @click="toggleShowReviews"
-          >
-            {{ showAllReviews ? 'Скрыть' : 'Смотреть все' }}
-          </BaseButton>
+          <div v-else>Рецензии к данному фильму не найдены!</div>
         </div>
       </div>
 
@@ -183,19 +190,48 @@
       </aside>
     </div>
   </section>
+  <section class="movie-similar">
+    <h2 class="movie-similar__title">
+      Если вам понравился «{{ movie?.title }}»
+    </h2>
+
+    <div class="movie-similar__list">
+      <router-link
+        v-for="movie in topSimilarMovies"
+        :key="movie.id"
+        :to="moviePage(movie.id!)"
+        class="movie-similar__card"
+      >
+        <img
+          class="movie-similar__card-image"
+          :src="getSimilarImage(movie)"
+          :alt="movie.title"
+        />
+        <p class="movie-similar__card-meta">
+          ⭐ {{ movie.vote_average }} • {{ buildMovieGenres(movie.genre_ids) }}
+        </p>
+        <h4 class="movie-similar__card-title">{{ movie.title }}</h4>
+      </router-link>
+    </div>
+  </section>
 </template>
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { onMounted, computed, ref } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { useMoviePageStore } from '@/store/movie/movie';
   import { useRoute } from 'vue-router';
-  import type { MovieReviews200ResultsItem } from '@/api/types';
+  import type {
+    MovieReviews200ResultsItem,
+    MovieSimilar200ResultsItem,
+  } from '@/api/types';
 
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import { buildImage } from '@/utils/movie.utils';
+  import { moviePage } from '@/router/paths';
+  import { buildMovieGenres } from '@/utils/movie.utils';
 
   const route = useRoute();
-  const movieId = Number(route.params.id);
+
   const movieStore = useMoviePageStore();
 
   const { movie, credits, reviews, similar, releaseDates } =
@@ -225,6 +261,14 @@
     return buildImage(
       movie.value.backdrop_path ?? movie.value.poster_path ?? ''
     );
+  });
+
+  const getSimilarImage = (movie: MovieSimilar200ResultsItem) => {
+    return buildImage(movie.backdrop_path ?? movie.poster_path ?? '');
+  };
+
+  const topSimilarMovies = computed(() => {
+    return similar.value?.results?.slice(0, 4) ?? [];
   });
 
   const releaseDate = computed(() => {
@@ -346,9 +390,14 @@
       .join(', ');
   });
 
-  onMounted(() => {
-    movieStore.loadMovie(movieId);
-  });
+  watch(
+    () => route.params.id,
+    (newId) => {
+      if (!newId) return;
+      movieStore.loadMovie(Number(newId));
+    },
+    { immediate: true }
+  );
 </script>
 
 <style scoped>
@@ -448,6 +497,7 @@
 
   .movie-details {
     padding: 120px 0 30px 0;
+    margin-bottom: 50px;
   }
 
   .movie-details__container {
@@ -560,5 +610,43 @@
 
   .value {
     max-width: 200px;
+  }
+
+  .movie-similar {
+    margin-bottom: 120px;
+  }
+
+  .movie-similar__title {
+    margin-bottom: 80px;
+  }
+
+  .movie-similar__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .movie-similar__card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .movie-similar__card-image {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .movie-similar__card-title {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+
+  .movie-similar__card-meta {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-top: 10px;
   }
 </style>
