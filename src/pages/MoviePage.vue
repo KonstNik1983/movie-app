@@ -1,7 +1,7 @@
 <template>
   <section class="movie-hero">
     <div class="movie-hero__bg">
-      <img :src="posterImg" alt="Poster" class="movie-hero__image" />
+      <img :src="posterImg" alt="Постер фильма" class="movie-hero__image" />
 
       <div class="movie-hero__overlay"></div>
       <div class="movie-hero__gradient"></div>
@@ -20,8 +20,7 @@
 
       <div class="movie-hero__meta">
         <span>
-          ⭐ {{ movie?.vote_average }} • {{ releaseDate }}, {{ movieGenres }} •
-          {{ movieDuration }}
+          {{ movieMeta }}
         </span>
       </div>
 
@@ -32,7 +31,7 @@
 
         <button class="movie-hero__btn" aria-label="Поделиться">
           <img
-            class="movie-hero__btn--img"
+            class="movie-hero__btn-img"
             src="@/assets/icons/Frame 75.svg"
             alt=""
           />
@@ -40,7 +39,7 @@
 
         <button class="movie-hero__btn" aria-label="Избранное">
           <img
-            class="movie-hero__btn--img"
+            class="movie-hero__btn-img"
             src="@/assets/icons/Frame 77.svg"
             alt=""
           />
@@ -48,10 +47,146 @@
       </div>
     </div>
   </section>
+  <section class="movie-details">
+    <h2 class="movie-details__about-title">О фильме</h2>
+    <div class="movie-details__container">
+      <div class="movie-details__main">
+        <div class="movie-details__about">
+          <p class="movie-details__about-description">
+            {{ movie?.overview }}
+          </p>
+        </div>
+
+        <div class="movie-details__reviews">
+          <h2 class="movie-details__reviews-title">Рецензии</h2>
+
+          <div
+            v-for="review in visibleReviews"
+            :key="review.id"
+            class="movie-details__review"
+          >
+            <div class="movie-details__review-header">
+              <img
+                :src="getAvatar(review)"
+                alt="Author avatar"
+                class="movie-details__review-avatar"
+              />
+
+              <div class="movie-details__review-meta">
+                <span class="movie-details__review-author">
+                  {{ review.author }}
+                </span>
+                <span class="movie-details__review-date">
+                  {{ formatDate(review.created_at) }}
+                </span>
+              </div>
+            </div>
+
+            <div class="movie-details__review-content">
+              <p>{{ review.content }}</p>
+            </div>
+
+            <div class="movie-details__review-actions">
+              <button class="movie-details__review-btn" aria-label="Коментарии">
+                <img
+                  class="movie-details__review-img"
+                  src="@/assets/icons/Vector (10).svg"
+                  alt=""
+                />
+                <span class="movie-details__review-count">5</span>
+              </button>
+              <button class="movie-details__review-btn" aria-label="Лайк">
+                <img
+                  class="movie-details__review-img"
+                  src="@/assets/icons/Vector (11).svg"
+                  alt=""
+                />
+                <span class="movie-details__review-count">12</span>
+              </button>
+              <button class="movie-details__review-btn" aria-label="Дизлайк">
+                <img
+                  class="movie-details__review-img"
+                  src="@/assets/icons/Vector (12).svg"
+                  alt=""
+                />
+                <span class="movie-details__review-count">3</span>
+              </button>
+            </div>
+          </div>
+          <BaseButton
+            variant="ghost"
+            v-if="hasMoreReviews"
+            @click="toggleShowReviews"
+          >
+            {{ showAllReviews ? 'Скрыть' : 'Смотреть все' }}
+          </BaseButton>
+        </div>
+      </div>
+
+      <aside class="movie-details__sidebar">
+        <div class="movie-details__info-list">
+          <div class="movie-details__info-row">
+            <span class="label">Рейтинг:</span>
+            <span class="value">
+              {{ formattedRating }}
+            </span>
+          </div>
+
+          <div v-if="movieGenres" class="movie-details__info-row">
+            <span class="label">Жанр:</span>
+            <span class="value">
+              {{ movieGenres }}
+            </span>
+          </div>
+
+          <div v-if="director" class="movie-details__info-row">
+            <span class="label">Режиссёр:</span>
+            <span class="value">{{ director }}</span>
+          </div>
+
+          <div v-if="topCast" class="movie-details__info-row">
+            <span class="label">В ролях:</span>
+            <span class="value">
+              {{ topCast }}
+            </span>
+          </div>
+
+          <div v-if="movieCountries" class="movie-details__info-row">
+            <span class="label">Страна:</span>
+            <span class="value">
+              {{ movieCountries }}
+            </span>
+          </div>
+
+          <div v-if="movieDuration" class="movie-details__info-row">
+            <span class="label">Длительность:</span>
+            <span class="value">{{ movieDuration }}</span>
+          </div>
+
+          <div v-if="spokenLanguages" class="movie-details__info-row">
+            <span class="label">Аудио:</span>
+            <span class="value">
+              {{ spokenLanguages }}
+            </span>
+          </div>
+
+          <div class="movie-details__info-row">
+            <span class="label">Субтитры:</span>
+            <span class="value">—</span>
+          </div>
+
+          <div class="movie-details__info-row">
+            <span class="label">Награды:</span>
+            <span class="value">—</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
 </template>
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { onMounted, computed } from 'vue';
+  import { onMounted, computed, ref } from 'vue';
   import { useMoviePageStore } from '@/store/movie/movie';
   import { useRoute } from 'vue-router';
 
@@ -62,11 +197,30 @@
   const movieId = Number(route.params.id);
   const movieStore = useMoviePageStore();
 
-  const { movie, credits, reviews, similar, isLoading, releaseDates } =
+  const { movie, credits, reviews, similar, releaseDates } =
     storeToRefs(movieStore);
+
+  const showAllReviews = ref(false);
+
+  const visibleReviews = computed(() => {
+    if (!reviews.value) return [];
+
+    return showAllReviews.value
+      ? reviews.value.results
+      : reviews.value.results?.slice(0, 2);
+  });
+
+  const hasMoreReviews = computed(
+    () => (reviews.value?.results?.length ?? 0) > 2
+  );
+
+  const toggleShowReviews = () => {
+    showAllReviews.value = !showAllReviews.value;
+  };
 
   const posterImg = computed(() => {
     if (!movie.value) return '';
+
     return buildImage(
       movie.value.backdrop_path ?? movie.value.poster_path ?? ''
     );
@@ -76,19 +230,44 @@
     return movie.value?.release_date?.split('-')[0];
   });
 
-  const movieGenres = computed(() => {
-    if (!movie.value) return [];
+  const movieGenres = computed<string | null>(() => {
+    if (!movie.value?.genres?.length) return null;
+
     return movie.value.genres
-      ?.map((genre) => genre.name)
+      .map((g) => g.name)
       .slice(0, 2)
       .join(', ');
   });
 
   const movieDuration = computed(() => {
-    if (!movie.value?.runtime) return '';
+    if (!movie.value?.runtime) return null;
     const hours = Math.floor(movie.value.runtime / 60);
     const minutes = movie.value.runtime % 60;
+
     return `${hours} ч ${minutes} мин`;
+  });
+
+  const movieMeta = computed(() => {
+    const parts: string[] = [];
+
+    const rating = movie.value?.vote_average;
+    if (rating && rating > 0) {
+      parts.push(`⭐ ${rating.toFixed(1)}`);
+    }
+
+    if (releaseDate.value) {
+      parts.push(releaseDate.value);
+    }
+
+    if (movieGenres.value) {
+      parts.push(movieGenres.value);
+    }
+
+    if (movieDuration.value) {
+      parts.push(movieDuration.value);
+    }
+
+    return parts.join(' • ');
   });
 
   const certification = computed(() => {
@@ -97,6 +276,72 @@
     );
 
     return de?.release_dates?.find((r) => r.certification)?.certification ?? '';
+  });
+
+  const getAvatar = (review: any) => {
+    const avatarPath = review.author_details?.avatar_path;
+
+    if (!avatarPath) {
+      return 'https://i.pravatar.cc/100?img=3';
+    }
+
+    if (avatarPath.startsWith('/https')) {
+      return avatarPath.slice(1);
+    }
+
+    return `https://image.tmdb.org/t/p/w185${avatarPath}`;
+  };
+
+  const formatDate = (dateString?: string) => {
+    if (!dateString) {
+      return '';
+    }
+    return new Date(dateString).toLocaleDateString('ru-RU', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const director = computed(() => {
+    return (
+      credits.value?.crew?.find((person) => person.job === 'Director')?.name ||
+      null
+    );
+  });
+
+  const topCast = computed(() => {
+    if (!credits.value?.cast?.length) return null;
+
+    return credits.value.cast
+      .slice(0, 5)
+      .map((actor) => actor.name)
+      .join(', ');
+  });
+
+  const formattedRating = computed(() => {
+    const rating = movie.value?.vote_average;
+
+    if (!rating || rating === 0) return '—';
+
+    return rating.toFixed(1);
+  });
+
+  const movieCountries = computed<string | null>(() => {
+    if (!movie.value?.production_countries?.length) return null;
+
+    return movie.value.production_countries
+      .map((country) => country.name)
+      .slice(0, 1)
+      .join(', ');
+  });
+
+  const spokenLanguages = computed<string | null>(() => {
+    if (!movie.value?.spoken_languages?.length) return null;
+
+    return movie.value.spoken_languages
+      .map((language) => language.english_name)
+      .join(', ');
   });
 
   onMounted(() => {
@@ -148,7 +393,7 @@
   .movie-hero__content {
     position: relative;
     z-index: 4;
-    padding: 20px 40px;
+    padding: 30px 40px;
   }
 
   .movie-hero__title {
@@ -170,7 +415,7 @@
     padding: 4px 10px;
     font-size: 14px;
     font-weight: 600;
-    border: 1px solid white;
+    border: 1px solid var(--color-text-primary);
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.6);
   }
@@ -194,8 +439,124 @@
     cursor: pointer;
   }
 
-  .movie-hero__btn--img {
+  .movie-hero__btn-img {
     width: 47px;
     height: 43px;
+  }
+
+  .movie-details {
+    padding: 120px 0 30px 0;
+  }
+
+  .movie-details__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .movie-details__about {
+    margin-bottom: 60px;
+  }
+
+  .movie-details__about-title {
+    margin-bottom: 60px;
+  }
+
+  .movie-details__about-description {
+    color: var(--color-text-secondary);
+  }
+
+  .movie-details__review {
+    margin-bottom: 50px;
+  }
+
+  .movie-details__review:not(:last-of-type) {
+    border-bottom: 1px solid var(--color-text-secondary);
+  }
+
+  .movie-details__reviews-title {
+    margin-bottom: 60px;
+  }
+
+  .movie-details__review-header {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .movie-details__review-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .movie-details__review-meta {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .movie-details__review-author {
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .movie-details__review-date {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+
+  .movie-details__review-content {
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-bottom: 50px;
+  }
+
+  .movie-details__review-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    margin-bottom: 40px;
+  }
+
+  .movie-details__review-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .movie-details__review-img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .movie-details__sidebar {
+    padding-left: 40px;
+  }
+
+  .movie-details__info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .movie-details__info-row {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    align-items: start;
+  }
+
+  .label {
+    color: var(--color-text-secondary);
+  }
+
+  .value {
+    max-width: 200px;
   }
 </style>

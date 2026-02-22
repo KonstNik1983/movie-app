@@ -32,7 +32,7 @@ export const useMoviePageStore = defineStore('movieStore', () => {
         await Promise.all([
           movieDetails(movieId),
           movieCredits(movieId),
-          movieReviews(movieId),
+          movieReviews(movieId, { language: 'en-US' }),
           movieSimilar(movieId),
           movieReleaseDates(movieId),
         ]);
