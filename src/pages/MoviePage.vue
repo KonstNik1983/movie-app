@@ -192,7 +192,7 @@
   </section>
   <section class="movie-similar">
     <h2 class="movie-similar__title">
-      Если вам понравился «{{ movie?.title }}»
+      Если вам понравился - «{{ movie?.title }}»
     </h2>
 
     <div class="movie-similar__list">
