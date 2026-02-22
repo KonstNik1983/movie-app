@@ -114,8 +114,8 @@
             </div>
           </div>
           <BaseButton
-            variant="ghost"
             v-if="hasMoreReviews"
+            variant="ghost"
             @click="toggleShowReviews"
           >
             {{ showAllReviews ? 'Скрыть' : 'Смотреть все' }}
@@ -189,6 +189,7 @@
   import { onMounted, computed, ref } from 'vue';
   import { useMoviePageStore } from '@/store/movie/movie';
   import { useRoute } from 'vue-router';
+  import type { MovieReviews200ResultsItem } from '@/api/types';
 
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import { buildImage } from '@/utils/movie.utils';
@@ -278,7 +279,7 @@
     return de?.release_dates?.find((r) => r.certification)?.certification ?? '';
   });
 
-  const getAvatar = (review: any) => {
+  const getAvatar = (review: MovieReviews200ResultsItem) => {
     const avatarPath = review.author_details?.avatar_path;
 
     if (!avatarPath) {
@@ -296,6 +297,7 @@
     if (!dateString) {
       return '';
     }
+
     return new Date(dateString).toLocaleDateString('ru-RU', {
       year: 'numeric',
       month: 'long',
