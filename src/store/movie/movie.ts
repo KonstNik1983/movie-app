@@ -27,29 +27,25 @@ export const useMoviePageStore = defineStore('movieStore', () => {
 
   const loadMovie = async (movieId: number) => {
     isLoading.value = true;
+
     try {
-      const [detailsRes, creditsRes, reviewsRes, similarRes, releaseRes] =
-        await Promise.all([
-          movieDetails(movieId),
-          movieCredits(movieId),
-          movieReviews(movieId, { language: 'en-US' }),
-          movieSimilar(movieId),
-          movieReleaseDates(movieId),
-        ]);
+      const results = await Promise.allSettled([
+        movieDetails(movieId),
+        movieCredits(movieId),
+        movieReviews(movieId, { language: 'en-US' }),
+        movieSimilar(movieId),
+        movieReleaseDates(movieId),
+      ]);
 
-      console.log(
-        detailsRes.data,
-        creditsRes.data,
-        reviewsRes.data,
-        similarRes.data,
-        releaseRes.data
-      );
+      const getData = <T>(res: PromiseSettledResult<{ data: T }>): T | null => {
+        return res.status === 'fulfilled' ? res.value.data : null;
+      };
 
-      movie.value = detailsRes.data;
-      credits.value = creditsRes.data;
-      reviews.value = reviewsRes.data;
-      similar.value = similarRes.data;
-      releaseDates.value = releaseRes.data;
+      movie.value = getData<MovieDetails200>(results[0]);
+      credits.value = getData<MovieCredits200>(results[1]);
+      reviews.value = getData<MovieReviews200>(results[2]);
+      similar.value = getData<MovieSimilar200>(results[3]);
+      releaseDates.value = getData<MovieReleaseDates200>(results[4]);
     } catch (error) {
       console.error('Ошибка загрузки данных фильма:', error);
     } finally {
@@ -62,8 +58,8 @@ export const useMoviePageStore = defineStore('movieStore', () => {
     credits,
     reviews,
     similar,
-    isLoading,
     releaseDates,
+    isLoading,
     loadMovie,
   };
 });

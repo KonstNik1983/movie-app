@@ -197,20 +197,21 @@
 
     <div class="movie-similar__list">
       <router-link
-        v-for="movie in topSimilarMovies"
-        :key="movie.id"
-        :to="moviePage(movie.id!)"
+        v-for="similarMovie in topSimilarMovies"
+        :key="similarMovie.id"
+        :to="moviePage(similarMovie.id!)"
         class="movie-similar__card"
       >
         <img
           class="movie-similar__card-image"
-          :src="getSimilarImage(movie)"
-          :alt="movie.title"
+          :src="getSimilarImage(similarMovie)"
+          :alt="similarMovie.title"
         />
         <p class="movie-similar__card-meta">
-          ⭐ {{ movie.vote_average }} • {{ buildMovieGenres(movie.genre_ids) }}
+          ⭐ {{ similarMovie.vote_average }} •
+          {{ buildMovieGenres(similarMovie.genre_ids) }}
         </p>
-        <h4 class="movie-similar__card-title">{{ movie.title }}</h4>
+        <h4 class="movie-similar__card-title">{{ similarMovie.title }}</h4>
       </router-link>
     </div>
   </section>
