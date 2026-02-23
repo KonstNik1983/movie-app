@@ -9,8 +9,3 @@ export interface GenreSection {
   };
   movies: MovieByGenre[];
 }
-
-export interface MoviesByGenreState {
-  sections: GenreSection[];
-  isLoading: boolean;
-}

@@ -1,50 +1,44 @@
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
+
 import { buildImage } from '@/utils/movie.utils';
-import { movieNowPlayingList } from '@/api/tmdb.ts';
-import type { SliderState } from '@/store/slider/slider.types.ts';
+import { movieNowPlayingList } from '@/api/tmdb';
+import type { MovieNowPlayingList200ResultsItem } from '@/api/types';
 
-export const useSliderStore = defineStore('sliderStore', {
-  state: (): SliderState => ({
-    slides: [],
-    isLoading: false,
-  }),
+export const useSliderStore = defineStore('sliderStore', () => {
+  const slides = ref<MovieNowPlayingList200ResultsItem[]>([]);
+  const isLoading = ref(false);
 
-  getters: {
-    formattedSlides(state) {
-      const slides = state.slides;
+  const formattedSlides = computed(() => {
+    return slides.value.map((movie) => ({
+      id: movie.id,
+      title: movie.title ?? movie.original_title ?? '',
+      image: buildImage(
+        movie.backdrop_path ?? movie.poster_path ?? '',
+        'medium'
+      ),
+      release_date: movie.release_date ?? '',
+    }));
+  });
 
-      const result = slides.map((movie) => ({
-        id: movie.id,
-        title: movie.title ?? movie.original_title ?? '',
-        image: buildImage(
-          movie.backdrop_path ?? movie.poster_path ?? '',
-          'medium'
-        ),
-        release_date: movie.release_date ?? '',
-      }));
+  const loadSlider = async () => {
+    isLoading.value = true;
 
-      return result;
-    },
-  },
+    try {
+      const response = await movieNowPlayingList();
+      const { data: movies } = response;
 
-  actions: {
-    async loadSlider() {
-      this.isLoading = true;
+      slides.value = movies?.results ?? [];
+    } catch (error) {
+      console.error('Ошибка загрузки слайдера:', error);
+    } finally {
+      isLoading.value = false;
+    }
+  };
 
-      try {
-        const results = await Promise.allSettled([movieNowPlayingList()]);
-
-        const data = results.filter((item) => item.status === 'fulfilled');
-        const [moviesResponse] = data;
-
-        const { data: movies } = moviesResponse?.value ?? {};
-
-        this.slides = movies?.results ?? [];
-      } catch (error) {
-        console.error('Ошибка загрузки слайдера:', error);
-      } finally {
-        this.isLoading = false;
-      }
-    },
-  },
+  return {
+    slides,
+    formattedSlides,
+    loadSlider,
+  };
 });
