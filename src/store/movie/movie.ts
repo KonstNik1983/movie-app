@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
+import { getSettledData } from '@/utils/promise';
 
 import type {
   MovieDetails200,
@@ -37,15 +38,19 @@ export const useMoviePageStore = defineStore('movieStore', () => {
         movieReleaseDates(movieId),
       ]);
 
-      const getData = <T>(res: PromiseSettledResult<{ data: T }>): T | null => {
-        return res.status === 'fulfilled' ? res.value.data : null;
-      };
+      const [
+        detailsResult,
+        creditsResult,
+        reviewsResult,
+        similarResult,
+        releaseResult,
+      ] = results;
 
-      movie.value = getData<MovieDetails200>(results[0]);
-      credits.value = getData<MovieCredits200>(results[1]);
-      reviews.value = getData<MovieReviews200>(results[2]);
-      similar.value = getData<MovieSimilar200>(results[3]);
-      releaseDates.value = getData<MovieReleaseDates200>(results[4]);
+      movie.value = getSettledData<MovieDetails200>(detailsResult);
+      credits.value = getSettledData<MovieCredits200>(creditsResult);
+      reviews.value = getSettledData<MovieReviews200>(reviewsResult);
+      similar.value = getSettledData<MovieSimilar200>(similarResult);
+      releaseDates.value = getSettledData<MovieReleaseDates200>(releaseResult);
     } catch (error) {
       console.error('Ошибка загрузки данных фильма:', error);
     } finally {
