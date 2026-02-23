@@ -12,19 +12,25 @@
           <h3 class="site-footer__column-title">Меню</h3>
           <ul class="site-footer__column-list">
             <li class="site-footer__column-item">
-              <router-link class="site-footer__column-link" :to="ROUTES.movies">
+              <router-link
+                class="site-footer__column-link"
+                :to="{ name: ROUTES.movies.name }"
+              >
                 Фильмы
               </router-link>
             </li>
             <li class="site-footer__column-item">
-              <router-link class="site-footer__column-link" :to="ROUTES.series">
+              <router-link
+                class="site-footer__column-link"
+                :to="{ name: ROUTES.series.name }"
+              >
                 Сериалы
               </router-link>
             </li>
             <li class="site-footer__column-item">
               <router-link
                 class="site-footer__column-link"
-                :to="ROUTES.collections"
+                :to="{ name: ROUTES.collections.name }"
               >
                 Подборки
               </router-link>

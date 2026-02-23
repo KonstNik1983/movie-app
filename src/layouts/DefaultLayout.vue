@@ -18,7 +18,7 @@
   import AppHeader from '@/components/app-header/AppHeader.vue';
 
   import { onMounted } from 'vue';
-  import { useInitStore } from '@/store/init-store/init.store';
+  import { useInitStore } from '@/store/init/init';
 
   const initStore = useInitStore();
 

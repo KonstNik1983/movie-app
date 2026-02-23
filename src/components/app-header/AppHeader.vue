@@ -1,24 +1,33 @@
 <template>
   <header class="app-header">
     <div class="app-header-left">
-      <router-link :to="ROUTES.home">
+      <router-link :to="{ name: ROUTES.home.name }">
         <img src="@/assets/logo.svg" alt="Кинодом Logo" class="logo" />
       </router-link>
 
       <nav class="header-nav">
         <ul class="header-nav-list">
           <li class="header-nav-item">
-            <router-link :to="ROUTES.movies" class="header-nav-link">
+            <router-link
+              :to="{ name: ROUTES.movies.name }"
+              class="header-nav-link"
+            >
               Фильмы
             </router-link>
           </li>
           <li class="header-nav-item">
-            <router-link :to="ROUTES.series" class="header-nav-link">
+            <router-link
+              :to="{ name: ROUTES.series.name }"
+              class="header-nav-link"
+            >
               Сериалы
             </router-link>
           </li>
           <li class="header-nav-item">
-            <router-link :to="ROUTES.collections" class="header-nav-link">
+            <router-link
+              :to="{ name: ROUTES.collections.name }"
+              class="header-nav-link"
+            >
               Подборки
             </router-link>
           </li>
@@ -55,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useAuthStore } from '@/store/auth-store/auth';
+  import { useAuthStore } from '@/store/auth/auth.ts';
   import { ROUTES } from '@/router/paths';
 
   const authStore = useAuthStore();
@@ -68,7 +77,6 @@
     align-items: center;
     background-color: transparent;
     padding: 20px 0;
-    border-bottom: 1px solid var(--color-text-secondary, #555);
   }
 
   .app-header-left {
