@@ -1,6 +1,6 @@
 import ricSanches from '@/assets/icons/ric-sanches.png';
 import gin from '@/assets/icons/gin.png';
-import type { ButtonVariant } from '@/types/ui.types';
+import type { ButtonVariant } from '@/components/base-button/button.types';
 
 export interface Discount {
   id: number;
