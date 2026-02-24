@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { useSliderStore } from '@/store/slider/slider.ts';
 import { useMoviesStore } from '@/store/movies/movies.ts';
 import { useGenreStore } from '@/store/genre/genre.ts';
+import { useTvStore } from '@/store/tv/tv.ts';
 
 export const useInitStore = defineStore('init', {
   state: () => ({
@@ -19,11 +20,13 @@ export const useInitStore = defineStore('init', {
         const movieStore = useMoviesStore();
         const sliderStore = useSliderStore();
         const genreStore = useGenreStore();
+        const tvStore = useTvStore();
 
         await Promise.all([
           genreStore.loadGenres(),
           movieStore.loadMovies(),
           sliderStore.loadSlider(),
+          tvStore.loadTv(),
         ]);
 
         this.isInitialized = true;

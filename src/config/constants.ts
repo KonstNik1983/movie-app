@@ -13,10 +13,18 @@ export interface HomeGenre {
   title: string;
 }
 
-export const HOME_GENRES: HomeGenre[] = [
+export const HOME_MOVIE_GENRES: HomeGenre[] = [
   { id: 35, title: 'Комедии' },
   { id: 18, title: 'Драмы' },
   { id: 14, title: 'Фэнтези' },
   { id: 53, title: 'Триллеры' },
   { id: 9648, title: 'Детективы' },
+];
+
+export const HOME_TV_GENRES: HomeGenre[] = [
+  { id: 35, title: 'Комедии' },
+  { id: 18, title: 'Драмы' },
+  { id: 10765, title: 'Фантастика' },
+  { id: 9648, title: 'Детективы' },
+  { id: 80, title: 'Криминал' },
 ];

@@ -2,7 +2,8 @@ import {
   IMAGE_BASE_URL,
   IMAGE_SIZES,
   PLACEHOLDER_IMAGE,
-  HOME_GENRES,
+  HOME_MOVIE_GENRES,
+  HOME_TV_GENRES,
 } from '@/config/constants';
 
 import { useGenreStore } from '@/store/genre/genre.ts';
@@ -44,7 +45,18 @@ export function getMovieGenres(genreIds?: number[] | null): string {
   }
 
   return genreIds
-    .map((id) => HOME_GENRES.find((g) => g.id === id)?.title)
+    .map((id) => HOME_MOVIE_GENRES.find((g) => g.id === id)?.title)
+    .filter(Boolean)
+    .join(', ');
+}
+
+export function getTvGenres(genreIds?: number[] | null): string {
+  if (!Array.isArray(genreIds) || genreIds.length === 0) {
+    return '';
+  }
+
+  return genreIds
+    .map((id) => HOME_TV_GENRES.find((g) => g.id === id)?.title)
     .filter(Boolean)
     .join(', ');
 }

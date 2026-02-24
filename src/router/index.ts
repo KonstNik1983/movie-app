@@ -8,6 +8,7 @@ import CollectionsView from '@/pages/CollectionsView.vue';
 import CollectionPage from '@/pages/CollectionPage.vue';
 
 import { ROUTES } from '@/router/paths';
+import TvPage from '@/pages/TvPage.vue';
 
 const routes = [
   {
@@ -44,6 +45,12 @@ const routes = [
         path: ROUTES.movie.path,
         name: ROUTES.movie.name,
         component: MoviePage,
+        props: true,
+      },
+      {
+        path: ROUTES.tv.path,
+        name: ROUTES.tv.name,
+        component: TvPage,
         props: true,
       },
     ],

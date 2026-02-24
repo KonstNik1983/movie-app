@@ -2,17 +2,20 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import { discoverMovie } from '@/api/tmdb';
-import { HOME_GENRES } from '@/config/constants';
+import { HOME_MOVIE_GENRES } from '@/config/constants';
 import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
 
-import type { GenreSection, MovieByGenre } from '@/store/movies/movies.types';
+import type {
+  MovieGenreSection,
+  MovieByGenre,
+} from '@/store/movies/movies.types';
 
 export const useMoviesStore = defineStore('moviesStore', () => {
-  const sections = ref<GenreSection[]>([]);
+  const movieSections = ref<MovieGenreSection[]>([]);
   const isLoading = ref(false);
 
   const formattedSections = computed(() => {
-    return sections.value.map((section) => ({
+    return movieSections.value.map((section) => ({
       genre: section.genre,
       movies: section.movies.map((movie: MovieByGenre) => ({
         id: movie.id!,
@@ -28,7 +31,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     isLoading.value = true;
 
     try {
-      const promises = HOME_GENRES.map(async (genre) => {
+      const promises = HOME_MOVIE_GENRES.map(async (genre) => {
         const { data } = await discoverMovie({
           with_genres: String(genre.id),
         });
@@ -41,7 +44,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
         };
       });
 
-      sections.value = await Promise.all(promises);
+      movieSections.value = await Promise.all(promises);
     } catch (error) {
       console.error('Ошибка загрузки фильмов по жанру:', error);
     } finally {
@@ -50,7 +53,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
   };
 
   return {
-    sections,
+    movieSections,
     formattedSections,
     loadMovies,
   };
