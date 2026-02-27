@@ -45,6 +45,7 @@
     <MediaSection
       title="Каталог фильмов и сериалов"
       :sections="movieStore.formattedSections"
+      :getMediaLink="moviePage"
     />
   </section>
   <section class="collections section-padding">
@@ -147,6 +148,7 @@
   import HeroSlider from '@/components/slider/HeroSlider.vue';
   import MediaSection from '@/components/media/MediaSections.vue';
   import { collectionPage } from '@/router/paths';
+  import { moviePage } from '@/router/paths';
 
   import { ADVANTAGES } from '@/data/advantages.data';
   import { DISCOUNTS } from '@/data/discounts.data';

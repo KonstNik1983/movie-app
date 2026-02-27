@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-  import { useTvStore } from '@/store/tv/tv.ts';
+  import { useTvStore } from '@/store/series/series';
   import MediaSection from '@/components/media/MediaSections.vue';
   import { tvPage } from '@/router/paths';
 

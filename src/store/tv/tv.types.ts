@@ -1,11 +1,4 @@
-import type { DiscoverTv200ResultsItem } from '@/api/types';
+import { tvSeriesSimilar } from '@/api/tmdb';
 
-export type TvByGenre = DiscoverTv200ResultsItem;
-
-export interface TvGenreSection {
-  genre: {
-    id: number;
-    title: string;
-  };
-  tv: TvByGenre[];
-}
+export const tvSimilar = (seriesId: number) =>
+  tvSeriesSimilar(String(seriesId));

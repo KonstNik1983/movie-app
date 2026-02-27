@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { useSliderStore } from '@/store/slider/slider.ts';
 import { useMoviesStore } from '@/store/movies/movies.ts';
 import { useGenreStore } from '@/store/genre/genre.ts';
-import { useTvStore } from '@/store/tv/tv.ts';
+import { useTvStore } from '@/store/series/series';
 
 export const useInitStore = defineStore('init', {
   state: () => ({
