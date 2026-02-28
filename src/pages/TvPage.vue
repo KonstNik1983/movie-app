@@ -6,6 +6,16 @@
     primaryButtonText="Смотреть сериал"
   />
 
+  <TvSeasonsSection
+    v-if="tv?.seasons?.length"
+    :tv-id="Number(route.params.id)"
+    :seasons="
+      tv.seasons
+        .filter((s) => s.season_number != null)
+        .map((s) => ({ season_number: s.season_number!, name: s.name }))
+    "
+  />
+
   <section class="media-details">
     <h2 class="media-details__title">О сериале</h2>
     <div class="media-details__container">
@@ -44,17 +54,20 @@
   import { useTvPageStore } from '@/store/tv/tv';
 
   import MediaHero from '@/components/media/MediaHero.vue';
+  import TvSeasonsSection from '@/components/tv-seasons-section/TvSeasonsSection.vue';
   import MediaReviews from '@/components/media/MediaReviews.vue';
   import MediaSidebarInfo from '@/components/media/MediaSidebarInfo.vue';
   import MediaSimilar from '@/components/media/MediaSimilar.vue';
 
   import type { TvSeriesSimilar200ResultsItem } from '@/api/types';
+
   import { buildImage, getTvGenres } from '@/utils/movie.utils';
   import { tvPage } from '@/router/paths';
 
   const route = useRoute();
   const tvStore = useTvPageStore();
-  const { tv, credits, reviews, similar } = storeToRefs(tvStore);
+  const { tv, credits, reviews, similar, seasonEpisodes } =
+    storeToRefs(tvStore);
 
   const backdropImg = computed(() => {
     if (!tv.value) return '';
@@ -114,13 +127,26 @@
   const tvCountries = computed(
     () => tv.value?.origin_country?.slice(0, 1).join(', ') ?? null
   );
-  const episodeDuration = computed(() => {
-    const minutes = tv.value?.episode_run_time?.[0] ?? 0;
-    if (!minutes) return null;
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours} ч ${mins} мин`;
+
+  const activeSeasonNumber = computed(() => {
+    const firstSeason = tv.value?.seasons?.find((s) => s.season_number != null);
+    return firstSeason?.season_number ?? 1;
   });
+
+  const activeSeason = computed(() => {
+    return seasonEpisodes.value[activeSeasonNumber.value] ?? null;
+  });
+
+  const episodeDuration = computed(() => {
+    const firstEpisode = activeSeason.value?.episodes?.[0];
+    const minutes =
+      firstEpisode?.runtime ?? tv.value?.episode_run_time?.[0] ?? 0;
+    if (!minutes) return null;
+
+    const mins = minutes % 60;
+    return `${mins} мин`;
+  });
+
   const spokenLanguages = computed(
     () =>
       tv.value?.spoken_languages?.map((l) => l.english_name).join(', ') ?? null

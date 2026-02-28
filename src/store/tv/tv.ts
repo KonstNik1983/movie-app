@@ -4,6 +4,7 @@ import { getSettledData } from '@/utils/promise';
 
 import type {
   TvSeriesDetails200,
+  TvSeasonDetails200,
   TvSeriesCredits200,
   TvSeriesReviews200,
   TvSeriesSimilar200,
@@ -12,6 +13,7 @@ import type {
 
 import {
   tvSeriesDetails,
+  tvSeasonDetails,
   tvSeriesCredits,
   tvSeriesReviews,
   tvSeriesContentRatings,
@@ -21,6 +23,7 @@ import { tvSimilar } from '@/store/tv/tv.types.ts';
 
 export const useTvPageStore = defineStore('tvPageStore', () => {
   const tv = ref<TvSeriesDetails200 | null>(null);
+  const seasonEpisodes = ref<Record<number, TvSeasonDetails200>>({});
   const credits = ref<TvSeriesCredits200 | null>(null);
   const reviews = ref<TvSeriesReviews200 | null>(null);
   const similar = ref<TvSeriesSimilar200 | null>(null);
@@ -57,15 +60,31 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       console.error('Ошибка загрузки данных сериала:', error);
     } finally {
       isLoading.value = false;
+      seasonEpisodes.value = {};
+    }
+  };
+
+  const loadSeason = async (tvId: number, seasonNumber: number) => {
+    if (seasonEpisodes.value[seasonNumber]) return;
+    isLoading.value = true;
+    try {
+      const response = await tvSeasonDetails(tvId, seasonNumber);
+      seasonEpisodes.value[seasonNumber] = response.data;
+    } catch (error) {
+      console.error('Ошибка загрузки данных сезона:', error);
+    } finally {
+      isLoading.value = false;
     }
   };
 
   return {
     tv,
+    seasonEpisodes,
     credits,
     reviews,
     similar,
     contentRatings,
     loadTv,
+    loadSeason,
   };
 });
