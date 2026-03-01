@@ -4,7 +4,7 @@ import {
   PLACEHOLDER_IMAGE,
   HOME_MOVIE_GENRES,
   HOME_TV_GENRES,
-} from '@/config/constants';
+} from '@/constants/constants';
 
 import { useGenreStore } from '@/store/genre/genre.ts';
 

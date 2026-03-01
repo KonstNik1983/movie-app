@@ -33,7 +33,7 @@
   defineProps<{
     title: string;
     sections: FormattedSection[];
-    getMediaLink: (id: number) => string;
+    getMediaLink: (id: number | string) => string;
   }>();
 </script>
 <style scoped>

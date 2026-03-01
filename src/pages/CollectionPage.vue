@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
   import { useRoute } from 'vue-router';
-  import { COLLECTIONS } from '@/config/collections.constants.ts';
+  import { COLLECTIONS } from '@/constants/collections.constants';
 
   const route = useRoute();
   const slug = route.params.slug as string;

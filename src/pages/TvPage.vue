@@ -3,7 +3,7 @@
     :title="tv?.name ?? ''"
     :backdrop="backdropImg"
     :meta="tvMeta"
-    primaryButtonText="Смотреть сериал"
+    buttonText="Смотреть сериал"
   />
 
   <TvSeasonsSection

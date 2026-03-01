@@ -2,7 +2,7 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import { discoverTv } from '@/api/tmdb';
-import { HOME_TV_GENRES } from '@/config/constants';
+import { HOME_TV_GENRES } from '@/constants/constants';
 import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
 
 import type { TvGenreSection, TvByGenre } from '@/store/series/series.types';

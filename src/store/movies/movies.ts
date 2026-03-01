@@ -2,7 +2,7 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import { discoverMovie } from '@/api/tmdb';
-import { HOME_MOVIE_GENRES } from '@/config/constants';
+import { HOME_MOVIE_GENRES } from '@/constants/constants';
 import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
 
 import type {

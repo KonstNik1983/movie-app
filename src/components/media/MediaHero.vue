@@ -29,7 +29,7 @@
 
       <div class="media-hero__actions">
         <BaseButton variant="primary">
-          {{ primaryButtonText }}
+          {{ buttonText }}
         </BaseButton>
 
         <BaseButton variant="ghost">Трейлер</BaseButton>
@@ -62,7 +62,7 @@
     backdrop?: string;
     meta?: string;
     badge?: string;
-    primaryButtonText?: string;
+    buttonText?: string;
   }>();
 </script>
 

@@ -4,7 +4,7 @@
     :backdrop="posterImg"
     :meta="movieMeta"
     :badge="certification"
-    primaryButtonText="Смотреть фильм"
+    buttonText="Смотреть фильм"
   />
   <section class="media-details">
     <h2 class="media-details__title">О фильме</h2>

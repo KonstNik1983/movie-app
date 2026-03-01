@@ -153,7 +153,7 @@
   import { ADVANTAGES } from '@/data/advantages.data';
   import { DISCOUNTS } from '@/data/discounts.data';
   import { PLANS } from '@/data/plans.data';
-  import { COLLECTIONS } from '@/config/collections.constants';
+  import { COLLECTIONS } from '@/constants/collections.constants';
 
   import placeholder from '@/assets/placeholder-movie.jpg';
   import checkIcon from '@/assets/icons/check.svg';

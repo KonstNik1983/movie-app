@@ -45,6 +45,8 @@
 <script setup lang="ts">
   import { ref, computed } from 'vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
+  import { formatDate } from '@/utils/date';
+  import { buildAvatarUrl } from '@/utils/image';
 
   import type { MovieReviews200ResultsItem } from '@/api/types';
 
@@ -65,22 +67,8 @@
     showAllReviews.value = !showAllReviews.value;
   };
 
-  const getAvatar = (review: MovieReviews200ResultsItem) => {
-    const path = review.author_details?.avatar_path;
-    if (!path) return 'https://i.pravatar.cc/100?img=3';
-    return path.startsWith('/https')
-      ? path.slice(1)
-      : `https://image.tmdb.org/t/p/w185${path}`;
-  };
-
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return '';
-    return new Date(dateString).toLocaleDateString('ru-RU', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
+  const getAvatar = (review: MovieReviews200ResultsItem) =>
+    buildAvatarUrl(review.author_details?.avatar_path);
 </script>
 
 <style scoped>
