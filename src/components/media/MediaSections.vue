@@ -13,7 +13,7 @@
         <router-link
           v-for="item in section.movies"
           :key="item.id"
-          :to="getMediaLink(item.id)"
+          :to="item.link"
           class="movie-card"
         >
           <img class="movie-card-img" :src="item.image" :alt="item.title" />
@@ -33,7 +33,6 @@
   defineProps<{
     title: string;
     sections: FormattedSection[];
-    getMediaLink: (id: number | string) => string;
   }>();
 </script>
 <style scoped>

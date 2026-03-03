@@ -1,19 +1,15 @@
 <template>
   <MediaHero
     :title="tv?.name ?? ''"
-    :backdrop="backdropImg"
+    :backdrop="posterImg"
     :meta="tvMeta"
     buttonText="Смотреть сериал"
   />
 
   <TvSeasonsSection
     v-if="tv?.seasons?.length"
-    :tv-id="Number(route.params.id)"
-    :seasons="
-      tv.seasons
-        .filter((s) => s.season_number != null)
-        .map((s) => ({ season_number: s.season_number!, name: s.name }))
-    "
+    :tvId="Number(route.params.id)"
+    :seasons="seasonsList"
   />
 
   <section class="media-details">
@@ -26,7 +22,7 @@
         />
       </div>
 
-      <MediaSidebarInfo
+      <MediaSidebar
         :rating="formattedRating"
         :genres="tvGenres"
         :director="creator"
@@ -38,13 +34,7 @@
     </div>
   </section>
 
-  <MediaSimilar
-    :title="tv?.name"
-    :movies="topSimilarTv"
-    :getImage="getSimilarImage"
-    :getMediaLink="tvPage"
-    :buildGenres="getTvGenres"
-  />
+  <MediaSimilar :title="tv?.name" :movies="topSimilarTvFormatted" />
 </template>
 
 <script setup lang="ts">
@@ -56,12 +46,10 @@
   import MediaHero from '@/components/media/MediaHero.vue';
   import TvSeasonsSection from '@/components/tv-seasons-section/TvSeasonsSection.vue';
   import MediaReviews from '@/components/media/MediaReviews.vue';
-  import MediaSidebarInfo from '@/components/media/MediaSidebarInfo.vue';
-  import MediaSimilar from '@/components/media/MediaSimilar.vue';
+  import MediaSidebar from '@/components/media-sidebar/MediaSidebar.vue';
+  import MediaSimilar from '@/components/media-similar/MediaSimilar.vue';
 
-  import type { TvSeriesSimilar200ResultsItem } from '@/api/types';
-
-  import { buildImage, getTvGenres } from '@/utils/movie.utils';
+  import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
   import { tvPage } from '@/router/paths';
 
   const route = useRoute();
@@ -69,20 +57,23 @@
   const { tv, credits, reviews, similar, seasonEpisodes } =
     storeToRefs(tvStore);
 
-  const backdropImg = computed(() => {
+  const seasonsList = computed(() => {
+    return (
+      tv.value?.seasons
+        ?.filter((s) => s.season_number != null)
+        .map((s) => ({
+          season_number: s.season_number!,
+          name: s.name,
+        })) || []
+    );
+  });
+
+  const posterImg = computed(() => {
     if (!tv.value) return '';
     return buildImage(tv.value.backdrop_path ?? tv.value.poster_path ?? '');
   });
 
   const firstAirYear = computed(() => tv.value?.first_air_date?.split('-')[0]);
-
-  const episodeRuntime = computed(() => {
-    const runtime = tv.value?.episode_run_time?.[0];
-    if (!runtime) return null;
-    const hours = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
-    return `${hours} ч ${minutes} мин`;
-  });
 
   const genres = computed(() => {
     if (!tv.value?.genres?.length) return null;
@@ -98,7 +89,7 @@
       parts.push(`⭐ ${tv.value.vote_average.toFixed(1)}`);
     if (firstAirYear.value) parts.push(firstAirYear.value);
     if (genres.value) parts.push(genres.value);
-    if (episodeRuntime.value) parts.push(episodeRuntime.value);
+    if (episodeDuration.value) parts.push(episodeDuration.value);
     return parts.join(' • ');
   });
 
@@ -120,7 +111,7 @@
   const topCast = computed(
     () =>
       credits.value?.cast
-        ?.slice(0, 5)
+        ?.slice(0, 4)
         .map((c) => c.name)
         .join(', ') ?? null
   );
@@ -152,15 +143,20 @@
       tv.value?.spoken_languages?.map((l) => l.english_name).join(', ') ?? null
   );
 
-  const topSimilarTv = computed(
+  const topSimilarTvFormatted = computed(
     () =>
       similar.value?.results
         ?.slice(0, 4)
-        .map((tv) => ({ ...tv, title: tv.name })) ?? []
+        .filter((item): item is typeof item & { id: number } => !!item.id)
+        .map((item) => ({
+          id: item.id!,
+          title: item.name ?? '',
+          vote_average: item.vote_average ?? 0,
+          image: buildImage(item.backdrop_path ?? item.poster_path ?? ''),
+          genres: buildMovieGenres(item.genre_ids),
+          link: tvPage(item.id!),
+        })) ?? []
   );
-
-  const getSimilarImage = (item: TvSeriesSimilar200ResultsItem) =>
-    buildImage(item.backdrop_path ?? item.poster_path ?? '');
 
   watch(
     () => route.params.id,

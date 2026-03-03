@@ -147,8 +147,7 @@
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
   import MediaSection from '@/components/media/MediaSections.vue';
-  import { collectionPage } from '@/router/paths';
-  import { moviePage } from '@/router/paths';
+  import { collectionPage, moviePage } from '@/router/paths';
 
   import { ADVANTAGES } from '@/data/advantages.data';
   import { DISCOUNTS } from '@/data/discounts.data';
@@ -159,11 +158,11 @@
   import checkIcon from '@/assets/icons/check.svg';
   import lockIcon from '@/assets/icons/lock.svg';
 
-  const collections = COLLECTIONS;
-
   import { useMoviesStore } from '@/store/movies/movies.ts';
 
   const movieStore = useMoviesStore();
+
+  const collections = COLLECTIONS;
 
   const advantages = ADVANTAGES;
   const discounts = DISCOUNTS;

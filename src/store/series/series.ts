@@ -6,6 +6,7 @@ import { HOME_TV_GENRES } from '@/constants/constants';
 import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
 
 import type { TvGenreSection, TvByGenre } from '@/store/series/series.types';
+import { tvPage } from '@/router/paths';
 
 export const useTvStore = defineStore('tvStore', () => {
   const tvSections = ref<TvGenreSection[]>([]);
@@ -20,6 +21,7 @@ export const useTvStore = defineStore('tvStore', () => {
         image: buildImage(tv.backdrop_path ?? tv.poster_path ?? ''),
         rating: tv.vote_average ?? '',
         genres: buildMovieGenres(tv.genre_ids),
+        link: tvPage(tv.id),
       })),
     }));
   });
@@ -28,10 +30,22 @@ export const useTvStore = defineStore('tvStore', () => {
     isLoading.value = true;
 
     try {
-      const promises = HOME_TV_GENRES.map(async (genre) => {
-        const { data } = await discoverTv({ with_genres: String(genre.id) });
+      const genreEntries = Object.entries(HOME_TV_GENRES);
+
+      const promises = genreEntries.map(async ([id, title]) => {
+        const { data } = await discoverTv({
+          with_genres: id,
+        });
+
         const tv: TvByGenre[] = (data.results ?? []).slice(0, 4);
-        return { genre, tv };
+
+        return {
+          genre: {
+            id: Number(id),
+            title,
+          },
+          tv,
+        };
       });
 
       tvSections.value = await Promise.all(promises);

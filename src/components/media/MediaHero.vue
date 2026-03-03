@@ -37,7 +37,7 @@
         <button class="media-hero__btn" aria-label="Поделиться">
           <img
             class="media-hero__btn-img"
-            src="@/assets/icons/Frame 75.svg"
+            src="@/assets/icons/Frame-75.svg"
             alt=""
           />
         </button>
@@ -45,7 +45,7 @@
         <button class="media-hero__btn" aria-label="Избранное">
           <img
             class="media-hero__btn-img"
-            src="@/assets/icons/Frame 77.svg"
+            src="@/assets/icons/Frame-77.svg"
             alt=""
           />
         </button>

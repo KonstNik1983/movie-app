@@ -16,7 +16,7 @@
         />
       </div>
 
-      <MediaSidebarInfo
+      <MediaSidebar
         :rating="formattedRating"
         :genres="movieGenres"
         :director="director"
@@ -27,24 +27,17 @@
       />
     </div>
   </section>
-  <MediaSimilar
-    :title="movie?.title"
-    :movies="topSimilarMovies"
-    :getImage="getSimilarImage"
-    :getMediaLink="moviePage"
-    :buildGenres="buildMovieGenres"
-  />
+  <MediaSimilar :title="movie?.title" :movies="topSimilarMoviesFormatted" />
 </template>
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
   import { computed, watch } from 'vue';
   import { useMoviePageStore } from '@/store/movie/movie';
   import { useRoute } from 'vue-router';
-  import type { MovieSimilar200ResultsItem } from '@/api/types';
   import MediaHero from '@/components/media/MediaHero.vue';
   import MediaReviews from '@/components/media/MediaReviews.vue';
-  import MediaSidebarInfo from '@/components/media/MediaSidebarInfo.vue';
-  import MediaSimilar from '@/components/media/MediaSimilar.vue';
+  import MediaSidebar from '@/components/media-sidebar/MediaSidebar.vue';
+  import MediaSimilar from '@/components/media-similar/MediaSimilar.vue';
 
   import { buildImage } from '@/utils/movie.utils';
   import { moviePage } from '@/router/paths';
@@ -65,33 +58,24 @@
     );
   });
 
-  const getSimilarImage = (movie: MovieSimilar200ResultsItem) => {
-    return buildImage(movie.backdrop_path ?? movie.poster_path ?? '');
-  };
-
-  const topSimilarMovies = computed(() => {
-    return similar.value?.results?.slice(0, 4) ?? [];
+  const topSimilarMoviesFormatted = computed(() => {
+    return (
+      similar.value?.results
+        ?.slice(0, 4)
+        .filter((item): item is typeof item & { id: number } => !!item.id)
+        .map((item) => ({
+          id: item.id!,
+          title: item.title ?? '',
+          vote_average: item.vote_average ?? 0,
+          image: buildImage(item.backdrop_path ?? item.poster_path ?? ''),
+          genres: buildMovieGenres(item.genre_ids),
+          link: moviePage(item.id!),
+        })) ?? []
+    );
   });
 
   const releaseDate = computed(() => {
     return movie.value?.release_date?.split('-')[0];
-  });
-
-  const movieGenres = computed<string | null>(() => {
-    if (!movie.value?.genres?.length) return null;
-
-    return movie.value.genres
-      .map((g) => g.name)
-      .slice(0, 2)
-      .join(', ');
-  });
-
-  const movieDuration = computed(() => {
-    if (!movie.value?.runtime) return null;
-    const hours = Math.floor(movie.value.runtime / 60);
-    const minutes = movie.value.runtime % 60;
-
-    return `${hours} ч ${minutes} мин`;
   });
 
   const movieMeta = computed(() => {
@@ -117,12 +101,29 @@
     return parts.join(' • ');
   });
 
+  const movieGenres = computed(() => {
+    if (!movie.value?.genres?.length) return null;
+
+    return movie.value.genres
+      .map((g) => g.name)
+      .slice(0, 2)
+      .join(', ');
+  });
+
   const certification = computed(() => {
     const de = releaseDates.value?.results?.find(
       (item) => item.iso_3166_1 === 'DE'
     );
 
     return de?.release_dates?.find((r) => r.certification)?.certification ?? '';
+  });
+
+  const formattedRating = computed(() => {
+    const rating = movie.value?.vote_average;
+
+    if (!rating || rating === 0) return '—';
+
+    return rating.toFixed(1);
   });
 
   const director = computed(() => {
@@ -141,14 +142,6 @@
       .join(', ');
   });
 
-  const formattedRating = computed(() => {
-    const rating = movie.value?.vote_average;
-
-    if (!rating || rating === 0) return '—';
-
-    return rating.toFixed(1);
-  });
-
   const movieCountries = computed<string | null>(() => {
     if (!movie.value?.production_countries?.length) return null;
 
@@ -156,6 +149,14 @@
       .map((country) => country.name)
       .slice(0, 1)
       .join(', ');
+  });
+
+  const movieDuration = computed(() => {
+    if (!movie.value?.runtime) return null;
+    const hours = Math.floor(movie.value.runtime / 60);
+    const minutes = movie.value.runtime % 60;
+
+    return `${hours} ч ${minutes} мин`;
   });
 
   const spokenLanguages = computed<string | null>(() => {

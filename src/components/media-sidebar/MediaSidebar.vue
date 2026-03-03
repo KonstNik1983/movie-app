@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+  import { computed } from 'vue';
   const props = defineProps<{
     rating?: string | number | null;
     genres?: string | null;
@@ -22,7 +23,7 @@
     languages?: string | null;
   }>();
 
-  const sidebarItems = [
+  const sidebarItems = computed(() => [
     { label: 'Рейтинг', value: props.rating },
     { label: 'Жанр', value: props.genres },
     { label: 'Режиссёр', value: props.director },
@@ -30,7 +31,7 @@
     { label: 'Страна', value: props.countries },
     { label: 'Длительность', value: props.duration },
     { label: 'Аудио', value: props.languages },
-  ] as const;
+  ]);
 </script>
 
 <style scoped>
