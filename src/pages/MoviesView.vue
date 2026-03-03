@@ -1,7 +1,7 @@
 <template>
   <MediaSection
     title="Каталог фильмов"
-    :sections="movieStore.formattedSections"
+    :sections="movieStore.formattedMovieSections"
   />
 </template>
 

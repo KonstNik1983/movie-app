@@ -44,7 +44,7 @@
   <section class="movies section-padding">
     <MediaSection
       title="Каталог фильмов и сериалов"
-      :sections="movieStore.formattedSections"
+      :sections="movieStore.formattedMovieSections"
       :getMediaLink="moviePage"
     />
   </section>

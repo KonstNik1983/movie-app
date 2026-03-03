@@ -4,16 +4,18 @@ import { defineStore } from 'pinia';
 import { discoverTv } from '@/api/tmdb';
 import { HOME_TV_GENRES } from '@/constants/constants';
 import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
+import { tvPage } from '@/router/paths';
+import { getSettledDataApi } from '@/utils/promise';
 
 import type { TvGenreSection, TvByGenre } from '@/store/series/series.types';
-import { tvPage } from '@/router/paths';
+import type { discoverTvResponse200 } from '@/api/tmdb';
 
 export const useTvStore = defineStore('tvStore', () => {
   const tvSections = ref<TvGenreSection[]>([]);
   const isLoading = ref(false);
 
-  const formattedTvSections = computed(() => {
-    return tvSections.value.map((section) => ({
+  const formattedTvSections = computed(() =>
+    tvSections.value.map((section) => ({
       genre: section.genre,
       movies: section.tv.map((tv: TvByGenre) => ({
         id: tv.id!,
@@ -23,32 +25,31 @@ export const useTvStore = defineStore('tvStore', () => {
         genres: buildMovieGenres(tv.genre_ids),
         link: tvPage(tv.id),
       })),
-    }));
-  });
+    }))
+  );
 
   const loadTv = async () => {
     isLoading.value = true;
 
     try {
-      const genreEntries = Object.entries(HOME_TV_GENRES);
+      const promises = HOME_TV_GENRES.map((genre) =>
+        discoverTv({ with_genres: String(genre.id) })
+      );
 
-      const promises = genreEntries.map(async ([id, title]) => {
-        const { data } = await discoverTv({
-          with_genres: id,
-        });
+      const results = await Promise.allSettled(promises);
 
-        const tv: TvByGenre[] = (data.results ?? []).slice(0, 4);
+      tvSections.value = results.map((res, index): TvGenreSection => {
+        const genre = HOME_TV_GENRES[index];
+        if (!genre) throw new Error('Жанр не найден');
+
+        const data = getSettledDataApi<discoverTvResponse200>(res)?.data;
+        const tv: TvByGenre[] = data?.results?.slice(0, 4) ?? [];
 
         return {
-          genre: {
-            id: Number(id),
-            title,
-          },
+          genre: { id: Number(genre.id), title: genre.title },
           tv,
         };
       });
-
-      tvSections.value = await Promise.all(promises);
     } catch (error) {
       console.error('Ошибка загрузки сериалов по жанру:', error);
     } finally {
@@ -60,5 +61,6 @@ export const useTvStore = defineStore('tvStore', () => {
     tvSections,
     formattedTvSections,
     loadTv,
+    isLoading,
   };
 });
