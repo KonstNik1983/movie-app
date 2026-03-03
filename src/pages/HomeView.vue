@@ -146,7 +146,7 @@
 <script setup lang="ts">
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
-  import MediaSection from '@/components/media/MediaSections.vue';
+  import MediaSection from '@/components/media-sections/MediaSections.vue';
   import { collectionPage, moviePage } from '@/router/paths';
 
   import { ADVANTAGES } from '@/data/advantages.data';

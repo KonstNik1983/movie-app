@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
   import { useTvStore } from '@/store/series/series';
-  import MediaSection from '@/components/media/MediaSections.vue';
+  import MediaSection from '@/components/media-sections/MediaSections.vue';
 
   const tvStore = useTvStore();
 </script>

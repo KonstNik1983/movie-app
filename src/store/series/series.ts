@@ -10,6 +10,9 @@ import { getSettledDataApi } from '@/utils/promise';
 import type { TvGenreSection, TvByGenre } from '@/store/series/series.types';
 import type { discoverTvResponse200 } from '@/api/tmdb';
 
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+
 export const useTvStore = defineStore('tvStore', () => {
   const tvSections = ref<TvGenreSection[]>([]);
   const isLoading = ref(false);
@@ -21,7 +24,7 @@ export const useTvStore = defineStore('tvStore', () => {
         id: tv.id!,
         title: tv.name ?? tv.original_name ?? '',
         image: buildImage(tv.backdrop_path ?? tv.poster_path ?? ''),
-        rating: tv.vote_average ?? '',
+        rating: tv.vote_average?.toFixed(1) ?? '',
         genres: buildMovieGenres(tv.genre_ids),
         link: tvPage(tv.id),
       })),
@@ -51,7 +54,7 @@ export const useTvStore = defineStore('tvStore', () => {
         };
       });
     } catch (error) {
-      console.error('Ошибка загрузки сериалов по жанру:', error);
+      toast.error('Ошибка загрузки сериалов по жанру!');
     } finally {
       isLoading.value = false;
     }

@@ -34,6 +34,7 @@
   import { computed, watch } from 'vue';
   import { useMoviePageStore } from '@/store/movie/movie';
   import { useRoute } from 'vue-router';
+  import { parseISO, format } from 'date-fns';
   import MediaHero from '@/components/media/MediaHero.vue';
   import MediaReviews from '@/components/media/MediaReviews.vue';
   import MediaSidebar from '@/components/media-sidebar/MediaSidebar.vue';
@@ -74,20 +75,23 @@
     );
   });
 
-  const releaseDate = computed(() => {
-    return movie.value?.release_date?.split('-')[0];
+  const releaseYear = computed(() => {
+    if (!movie.value?.release_date) return '';
+    const date = parseISO(movie.value.release_date);
+    return format(date, 'yyyy');
   });
 
   const movieMeta = computed(() => {
     const parts: string[] = [];
 
     const rating = movie.value?.vote_average;
+
     if (rating && rating > 0) {
       parts.push(`⭐ ${rating.toFixed(1)}`);
     }
 
-    if (releaseDate.value) {
-      parts.push(releaseDate.value);
+    if (releaseYear.value) {
+      parts.push(releaseYear.value);
     }
 
     if (movieGenres.value) {

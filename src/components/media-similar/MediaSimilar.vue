@@ -20,7 +20,7 @@
         />
 
         <p class="media-similar__card-meta">
-          ⭐ {{ item.vote_average }} • {{ item.genres }}
+          ⭐ {{ item.vote_average.toFixed(1) }} • {{ item.genres }}
         </p>
 
         <h4 class="media-similar__card-title">

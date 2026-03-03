@@ -21,6 +21,9 @@ import {
 
 import { tvSimilar } from '@/store/tv/tv.types.ts';
 
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+
 export const useTvPageStore = defineStore('tvPageStore', () => {
   const tv = ref<TvSeriesDetails200 | null>(null);
   const seasonEpisodes = ref<Record<number, TvSeasonDetails200>>({});
@@ -71,7 +74,7 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       const response = await tvSeasonDetails(tvId, seasonNumber);
       seasonEpisodes.value[seasonNumber] = response.data;
     } catch (error) {
-      console.error('Ошибка загрузки данных сезона:', error);
+      toast.error('Ошибка загрузки данных сезона!');
     } finally {
       isLoading.value = false;
     }

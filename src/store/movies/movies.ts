@@ -14,6 +14,9 @@ import type {
 
 import type { discoverMovieResponse200 } from '@/api/tmdb';
 
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+
 export const useMoviesStore = defineStore('moviesStore', () => {
   const movieSections = ref<MovieGenreSection[]>([]);
   const isLoading = ref(false);
@@ -25,7 +28,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
         id: movie.id!,
         title: movie.title ?? movie.original_title ?? '',
         image: buildImage(movie.backdrop_path ?? movie.poster_path ?? ''),
-        rating: movie.vote_average ?? '',
+        rating: movie.vote_average?.toFixed(1) ?? '',
         genres: buildMovieGenres(movie.genre_ids),
         link: moviePage(movie.id),
       })),
@@ -56,7 +59,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
         };
       });
     } catch (error) {
-      console.error('Ошибка загрузки фильмов по жанру:', error);
+      toast.error('Ошибка загрузки фильмов по жанру!');
     } finally {
       isLoading.value = false;
     }

@@ -5,6 +5,9 @@ import { buildImage } from '@/utils/movie.utils';
 import { movieNowPlayingList } from '@/api/tmdb';
 import type { MovieNowPlayingList200ResultsItem } from '@/api/types';
 
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+
 export const useSliderStore = defineStore('sliderStore', () => {
   const slides = ref<MovieNowPlayingList200ResultsItem[]>([]);
   const isLoading = ref(false);
@@ -30,7 +33,7 @@ export const useSliderStore = defineStore('sliderStore', () => {
 
       slides.value = movies?.results ?? [];
     } catch (error) {
-      console.error('Ошибка загрузки слайдера:', error);
+      toast.error('Ошибка загрузки слайдера!');
     } finally {
       isLoading.value = false;
     }

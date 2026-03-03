@@ -18,6 +18,9 @@ import {
   movieReleaseDates,
 } from '@/api/tmdb';
 
+import { useToast } from 'vue-toastification';
+const toast = useToast();
+
 export const useMoviePageStore = defineStore('movieStore', () => {
   const movie = ref<MovieDetails200 | null>(null);
   const credits = ref<MovieCredits200 | null>(null);
@@ -52,7 +55,7 @@ export const useMoviePageStore = defineStore('movieStore', () => {
       similar.value = getSettledData<MovieSimilar200>(similarResult);
       releaseDates.value = getSettledData<MovieReleaseDates200>(releaseResult);
     } catch (error) {
-      console.error('Ошибка загрузки данных фильма:', error);
+      toast.error('Ошибка загрузки данных фильма!');
     } finally {
       isLoading.value = false;
     }
