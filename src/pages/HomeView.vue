@@ -144,9 +144,12 @@
 </template>
 
 <script setup lang="ts">
+  import { onMounted } from 'vue';
+
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
   import MediaSection from '@/components/media-sections/MediaSections.vue';
+
   import { collectionPage, moviePage } from '@/router/paths';
 
   import { ADVANTAGES } from '@/data/advantages.data';
@@ -159,14 +162,20 @@
   import lockIcon from '@/assets/icons/lock.svg';
 
   import { useMoviesStore } from '@/store/movies/movies.ts';
+  import { useHomePageStore } from '@/store/home-page/home-page';
 
   const movieStore = useMoviesStore();
+  const homeStore = useHomePageStore();
 
   const collections = COLLECTIONS;
 
   const advantages = ADVANTAGES;
   const discounts = DISCOUNTS;
   const plans = PLANS;
+
+  onMounted(() => {
+    homeStore.loadHomePage();
+  });
 </script>
 
 <style scoped>

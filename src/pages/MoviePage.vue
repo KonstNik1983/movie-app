@@ -35,14 +35,15 @@
   import { useMoviePageStore } from '@/store/movie/movie';
   import { useRoute } from 'vue-router';
   import { parseISO, format } from 'date-fns';
-  import MediaHero from '@/components/media/MediaHero.vue';
-  import MediaReviews from '@/components/media/MediaReviews.vue';
+  import MediaHero from '@/components/media-hero/MediaHero.vue';
+  import MediaReviews from '@/components/media-reviews/MediaReviews.vue';
   import MediaSidebar from '@/components/media-sidebar/MediaSidebar.vue';
   import MediaSimilar from '@/components/media-similar/MediaSimilar.vue';
 
   import { buildImage } from '@/utils/movie.utils';
   import { moviePage } from '@/router/paths';
   import { buildMovieGenres } from '@/utils/movie.utils';
+  import { FULL_YEAR_FORMAT } from '@/constants/date';
 
   const route = useRoute();
 
@@ -78,7 +79,7 @@
   const releaseYear = computed(() => {
     if (!movie.value?.release_date) return '';
     const date = parseISO(movie.value.release_date);
-    return format(date, 'yyyy');
+    return format(date, FULL_YEAR_FORMAT);
   });
 
   const movieMeta = computed(() => {

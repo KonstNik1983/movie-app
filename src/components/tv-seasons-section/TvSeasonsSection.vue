@@ -2,16 +2,17 @@
   <div class="tv-seasons-section">
     <div class="season-tabs">
       <button
+        type="button"
         v-for="season in visibleSeasons"
         :key="season.season_number"
         class="season-tab__btn"
         :class="{ active: season.season_number === activeSeasonNumber }"
         @click="activeSeasonNumber = season.season_number ?? 1"
       >
-        {{ season.name || 'Сезон ' + season.season_number }}
+        {{ 'Сезон ' + season.season_number }}
       </button>
       <span v-if="extraSeasonsCount > 0" class="more-seasons">
-        +{{ extraSeasonsCount }}
+        + {{ extraSeasonsCount }}
       </span>
     </div>
 
@@ -37,7 +38,9 @@
       {{ extraEpisodesText }}
     </span>
 
-    <div v-else>Загрузка эпизодов...</div>
+    <div v-else class="skeleton">
+      <div class="skeleton-bg" v-for="n in 4" :key="n"></div>
+    </div>
   </div>
 </template>
 
@@ -46,6 +49,7 @@
   import { useTvPageStore } from '@/store/tv/tv';
   import { buildImage } from '@/utils/movie.utils';
   import type { TvSeasonDetails200 } from '@/api/types';
+  import { pluralizeRu } from '@/utils/pluralize';
 
   const props = defineProps<{
     tvId: number;
@@ -85,17 +89,11 @@
     () => activeSeasonEpisodes.value?.episodes?.slice(0, 4) || []
   );
 
-  function formatEpisodesCount(count: number) {
-    if (count % 10 === 1 && count % 100 !== 11) return `${count} серия`;
-    if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100))
-      return `${count} серии`;
-    return `${count} серий`;
-  }
-
   const extraEpisodesText = computed(() => {
     const total = activeSeasonEpisodes.value?.episodes?.length ?? 0;
     const extra = total - 4;
-    if (extra > 0) return `+ ${formatEpisodesCount(extra)}`;
+    if (extra > 0)
+      return `+ ${pluralizeRu(extra, ['серия', 'серии', 'серий'])}`;
     return null;
   });
 </script>
@@ -128,6 +126,7 @@
   }
 
   .more-episodes {
+    min-height: 50px;
     display: inline-flex;
     padding: 18px 25px;
     margin-top: 30px;
@@ -141,9 +140,35 @@
   }
   .episode-card__img {
     width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
     border-radius: 4px;
   }
   .episode-info {
     margin-top: 15px;
+  }
+
+  .skeleton {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .skeleton-bg {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
   }
 </style>

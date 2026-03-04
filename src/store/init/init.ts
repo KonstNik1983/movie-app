@@ -1,40 +1,33 @@
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { useSliderStore } from '@/store/slider/slider.ts';
-import { useMoviesStore } from '@/store/movies/movies.ts';
 import { useGenreStore } from '@/store/genre/genre.ts';
-import { useTvStore } from '@/store/series/series';
 
-export const useInitStore = defineStore('init', {
-  state: () => ({
-    isInitialized: false,
-    isLoading: false,
-  }),
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 
-  actions: {
-    async init() {
-      if (this.isInitialized || this.isLoading) return;
+export const useInitStore = defineStore('init', () => {
+  const genreStore = useGenreStore();
+  const isInitialized = ref(false);
+  const isLoading = ref(false);
 
-      this.isLoading = true;
+  const init = async () => {
+    if (isInitialized.value || isLoading.value) return;
 
-      try {
-        const movieStore = useMoviesStore();
-        const sliderStore = useSliderStore();
-        const genreStore = useGenreStore();
-        const tvStore = useTvStore();
+    isLoading.value = true;
 
-        await Promise.all([
-          genreStore.loadGenres(),
-          movieStore.loadMovies(),
-          sliderStore.loadSlider(),
-          tvStore.loadTv(),
-        ]);
+    try {
+      await genreStore.loadGenres();
+      isInitialized.value = true;
+    } catch (error) {
+      toast.error('App init error!');
+    } finally {
+      isLoading.value = false;
+    }
+  };
 
-        this.isInitialized = true;
-      } catch (error) {
-        console.error('App init error:', error);
-      } finally {
-        this.isLoading = false;
-      }
-    },
-  },
+  return {
+    isInitialized,
+    isLoading,
+    init,
+  };
 });

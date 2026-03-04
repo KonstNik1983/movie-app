@@ -42,15 +42,17 @@
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useTvPageStore } from '@/store/tv/tv';
+  import { parseISO, format } from 'date-fns';
 
-  import MediaHero from '@/components/media/MediaHero.vue';
+  import MediaHero from '@/components/media-hero/MediaHero.vue';
   import TvSeasonsSection from '@/components/tv-seasons-section/TvSeasonsSection.vue';
-  import MediaReviews from '@/components/media/MediaReviews.vue';
+  import MediaReviews from '@/components/media-reviews/MediaReviews.vue';
   import MediaSidebar from '@/components/media-sidebar/MediaSidebar.vue';
   import MediaSimilar from '@/components/media-similar/MediaSimilar.vue';
 
   import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
   import { tvPage } from '@/router/paths';
+  import { FULL_YEAR_FORMAT } from '@/constants/date';
 
   const route = useRoute();
   const tvStore = useTvPageStore();
@@ -73,7 +75,11 @@
     return buildImage(tv.value.backdrop_path ?? tv.value.poster_path ?? '');
   });
 
-  const firstAirYear = computed(() => tv.value?.first_air_date?.split('-')[0]);
+  const releaseYear = computed(() => {
+    if (!tv.value?.first_air_date) return '';
+    const date = parseISO(tv.value.first_air_date);
+    return format(date, FULL_YEAR_FORMAT);
+  });
 
   const genres = computed(() => {
     if (!tv.value?.genres?.length) return null;
@@ -87,7 +93,7 @@
     const parts: string[] = [];
     if (tv.value?.vote_average)
       parts.push(`⭐ ${tv.value.vote_average.toFixed(1)}`);
-    if (firstAirYear.value) parts.push(firstAirYear.value);
+    if (releaseYear.value) parts.push(releaseYear.value);
     if (genres.value) parts.push(genres.value);
     if (episodeDuration.value) parts.push(episodeDuration.value);
     return parts.join(' • ');
