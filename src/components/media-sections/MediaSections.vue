@@ -11,16 +11,16 @@
 
       <div class="movies__cards">
         <router-link
-          v-for="movie in section.movies"
-          :key="movie.id"
-          :to="moviePage(movie.id!)"
+          v-for="item in section.movies"
+          :key="item.id"
+          :to="item.link"
           class="movie-card"
         >
-          <img class="movie-card-img" :src="movie.image" :alt="movie.title" />
+          <img class="movie-card-img" :src="item.image" :alt="item.title" />
           <p class="movie-card-text">
-            ⭐ {{ movie.rating }} • {{ movie.genres }}
+            ⭐ {{ item.rating }} • {{ item.genres }}
           </p>
-          <h4 class="movie-card-title">{{ movie.title }}</h4>
+          <h4 class="movie-card-title">{{ item.title }}</h4>
         </router-link>
       </div>
     </div>
@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-  import { moviePage } from '@/router/paths';
   import type { FormattedSection } from '@/components/media/media.types';
 
   defineProps<{

@@ -2,8 +2,7 @@ import {
   IMAGE_BASE_URL,
   IMAGE_SIZES,
   PLACEHOLDER_IMAGE,
-  HOME_GENRES,
-} from '@/config/constants';
+} from '@/constants/constants';
 
 import { useGenreStore } from '@/store/genre/genre.ts';
 
@@ -36,17 +35,6 @@ export function isInCinema(movie: { release_date?: string }): boolean {
   const release = new Date(movie.release_date);
 
   return release <= today;
-}
-
-export function getMovieGenres(genreIds?: number[] | null): string {
-  if (!Array.isArray(genreIds) || genreIds.length === 0) {
-    return '';
-  }
-
-  return genreIds
-    .map((id) => HOME_GENRES.find((g) => g.id === id)?.title)
-    .filter(Boolean)
-    .join(', ');
 }
 
 export function buildMovieGenres(

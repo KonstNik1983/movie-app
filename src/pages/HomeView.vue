@@ -44,7 +44,8 @@
   <section class="movies section-padding">
     <MediaSection
       title="Каталог фильмов и сериалов"
-      :sections="movieStore.formattedSections"
+      :sections="movieStore.formattedMovieSections"
+      :getMediaLink="moviePage"
     />
   </section>
   <section class="collections section-padding">
@@ -143,29 +144,38 @@
 </template>
 
 <script setup lang="ts">
+  import { onMounted } from 'vue';
+
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
-  import MediaSection from '@/components/media/MediaSections.vue';
-  import { collectionPage } from '@/router/paths';
+  import MediaSection from '@/components/media-sections/MediaSections.vue';
+
+  import { collectionPage, moviePage } from '@/router/paths';
 
   import { ADVANTAGES } from '@/data/advantages.data';
   import { DISCOUNTS } from '@/data/discounts.data';
   import { PLANS } from '@/data/plans.data';
-  import { COLLECTIONS } from '@/config/collections.constants';
+  import { COLLECTIONS } from '@/constants/collections.constants';
 
   import placeholder from '@/assets/placeholder-movie.jpg';
   import checkIcon from '@/assets/icons/check.svg';
   import lockIcon from '@/assets/icons/lock.svg';
 
-  const collections = COLLECTIONS;
-
   import { useMoviesStore } from '@/store/movies/movies.ts';
+  import { useHomePageStore } from '@/store/home-page/home-page';
 
   const movieStore = useMoviesStore();
+  const homeStore = useHomePageStore();
+
+  const collections = COLLECTIONS;
 
   const advantages = ADVANTAGES;
   const discounts = DISCOUNTS;
   const plans = PLANS;
+
+  onMounted(() => {
+    homeStore.loadHomePage();
+  });
 </script>
 
 <style scoped>

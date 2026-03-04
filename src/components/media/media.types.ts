@@ -4,6 +4,7 @@ export interface FormattedMedia {
   image: string;
   rating: string | number;
   genres: string;
+  link: string;
 }
 
 export interface FormattedSection {
