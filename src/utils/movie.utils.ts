@@ -52,6 +52,18 @@ export function buildMovieGenres(
     .join(', ');
 }
 
+export function buildTvGenres(genreIds?: number[] | null, limit = 2): string {
+  if (!Array.isArray(genreIds) || genreIds.length === 0) return '';
+
+  const genreStore = useGenreStore();
+
+  return genreIds
+    .map((id) => genreStore.getTvGenreById(id)?.name?.toLowerCase())
+    .filter(Boolean)
+    .slice(0, limit)
+    .join(', ');
+}
+
 export function shuffleArray<T>(arr: T[]): T[] {
   return [...arr].sort(() => Math.random() - 0.5);
 }

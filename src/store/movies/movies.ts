@@ -2,10 +2,13 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import { discoverMovie } from '@/api/tmdb';
-import { HOME_MOVIE_GENRES } from '@/constants/constants';
+
 import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
+import { capitalize } from '@/utils/capitalize';
 import { moviePage } from '@/router/paths';
 import { getSettledDataApi } from '@/utils/promise';
+
+import { useGenreStore } from '@/store/genre/genre';
 
 import type {
   MovieGenreSection,
@@ -18,6 +21,8 @@ import { useToast } from 'vue-toastification';
 const toast = useToast();
 
 export const useMoviesStore = defineStore('moviesStore', () => {
+  const genreStore = useGenreStore();
+
   const movieSections = ref<MovieGenreSection[]>([]);
   const isLoading = ref(false);
 
@@ -39,14 +44,20 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     isLoading.value = true;
 
     try {
-      const promises = HOME_MOVIE_GENRES.map((genre) =>
+      if (!genreStore.allGenres.length) {
+        await genreStore.loadGenres();
+      }
+
+      const genres = genreStore.allGenres.slice(0, 5);
+
+      const promises = genres.map((genre) =>
         discoverMovie({ with_genres: String(genre.id) })
       );
 
       const results = await Promise.allSettled(promises);
 
       movieSections.value = results.map((res, index): MovieGenreSection => {
-        const genre = HOME_MOVIE_GENRES[index];
+        const genre = genres[index];
         if (!genre) throw new Error('Жанр не найден');
 
         const data = getSettledDataApi<discoverMovieResponse200>(res)?.data;
@@ -54,7 +65,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
         const movies: MovieByGenre[] = data?.results?.slice(0, 4) ?? [];
 
         return {
-          genre: { id: Number(genre.id), title: genre.title },
+          genre: { id: Number(genre.id), title: capitalize(genre.name!) },
           movies,
         };
       });

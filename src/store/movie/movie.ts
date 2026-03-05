@@ -61,6 +61,15 @@ export const useMoviePageStore = defineStore('movieStore', () => {
     }
   };
 
+  const reset = () => {
+    movie.value = null;
+    credits.value = null;
+    reviews.value = null;
+    similar.value = null;
+    releaseDates.value = null;
+    isLoading.value = false;
+  };
+
   return {
     movie,
     credits,
@@ -69,5 +78,6 @@ export const useMoviePageStore = defineStore('movieStore', () => {
     releaseDates,
     isLoading,
     loadMovie,
+    reset,
   };
 });

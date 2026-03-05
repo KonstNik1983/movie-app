@@ -31,7 +31,7 @@
 </template>
 <script setup lang="ts">
   import { storeToRefs } from 'pinia';
-  import { computed, watch } from 'vue';
+  import { computed, watch, onUnmounted } from 'vue';
   import { useMoviePageStore } from '@/store/movie/movie';
   import { useRoute } from 'vue-router';
   import { parseISO, format } from 'date-fns';
@@ -180,6 +180,10 @@
     },
     { immediate: true }
   );
+
+  onUnmounted(() => {
+    movieStore.reset();
+  });
 </script>
 
 <style scoped></style>

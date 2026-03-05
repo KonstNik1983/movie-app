@@ -16,7 +16,7 @@ export const useInitStore = defineStore('init', () => {
     isLoading.value = true;
 
     try {
-      await genreStore.loadGenres();
+      await Promise.all([genreStore.loadGenres(), genreStore.loadTvGenres()]);
       isInitialized.value = true;
     } catch (error) {
       toast.error('App init error!');

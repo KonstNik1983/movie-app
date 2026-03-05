@@ -80,6 +80,16 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
     }
   };
 
+  const reset = () => {
+    tv.value = null;
+    seasonEpisodes.value = {};
+    credits.value = null;
+    reviews.value = null;
+    similar.value = null;
+    contentRatings.value = null;
+    isLoading.value = false;
+  };
+
   return {
     tv,
     seasonEpisodes,
@@ -89,5 +99,6 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
     contentRatings,
     loadTv,
     loadSeason,
+    reset,
   };
 });

@@ -2,10 +2,13 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import { discoverTv } from '@/api/tmdb';
-import { HOME_TV_GENRES } from '@/constants/constants';
-import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
+
+import { buildImage, buildTvGenres } from '@/utils/movie.utils';
+import { capitalize } from '@/utils/capitalize';
 import { tvPage } from '@/router/paths';
 import { getSettledDataApi } from '@/utils/promise';
+
+import { useGenreStore } from '@/store/genre/genre';
 
 import type { TvGenreSection, TvByGenre } from '@/store/series/series.types';
 import type { discoverTvResponse200 } from '@/api/tmdb';
@@ -14,6 +17,8 @@ import { useToast } from 'vue-toastification';
 const toast = useToast();
 
 export const useTvStore = defineStore('tvStore', () => {
+  const genreStore = useGenreStore();
+
   const tvSections = ref<TvGenreSection[]>([]);
   const isLoading = ref(false);
 
@@ -25,7 +30,7 @@ export const useTvStore = defineStore('tvStore', () => {
         title: tv.name ?? tv.original_name ?? '',
         image: buildImage(tv.backdrop_path ?? tv.poster_path ?? ''),
         rating: tv.vote_average?.toFixed(1) ?? '',
-        genres: buildMovieGenres(tv.genre_ids),
+        genres: buildTvGenres(tv.genre_ids),
         link: tvPage(tv.id),
       })),
     }))
@@ -35,21 +40,27 @@ export const useTvStore = defineStore('tvStore', () => {
     isLoading.value = true;
 
     try {
-      const promises = HOME_TV_GENRES.map((genre) =>
+      if (!genreStore.allTvGenres.length) {
+        await genreStore.loadTvGenres();
+      }
+
+      const genres = genreStore.allTvGenres.slice(0, 5);
+
+      const promises = genres.map((genre) =>
         discoverTv({ with_genres: String(genre.id) })
       );
 
       const results = await Promise.allSettled(promises);
 
       tvSections.value = results.map((res, index): TvGenreSection => {
-        const genre = HOME_TV_GENRES[index];
+        const genre = genres[index];
         if (!genre) throw new Error('Жанр не найден');
 
         const data = getSettledDataApi<discoverTvResponse200>(res)?.data;
         const tv: TvByGenre[] = data?.results?.slice(0, 4) ?? [];
 
         return {
-          genre: { id: Number(genre.id), title: genre.title },
+          genre: { id: Number(genre.id), title: capitalize(genre.name!) },
           tv,
         };
       });

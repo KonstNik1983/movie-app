@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, watch } from 'vue';
+  import { computed, watch, onUnmounted } from 'vue';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useTvPageStore } from '@/store/tv/tv';
@@ -172,6 +172,10 @@
     },
     { immediate: true }
   );
+
+  onUnmounted(() => {
+    tvStore.reset();
+  });
 </script>
 
 <style scoped></style>
