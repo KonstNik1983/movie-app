@@ -40,6 +40,10 @@ export const useMoviesStore = defineStore('moviesStore', () => {
     }))
   );
 
+  const formattedHomeMovieSections = computed(() =>
+    formattedMovieSections.value.slice(0, 3)
+  );
+
   const loadMovies = async () => {
     isLoading.value = true;
 
@@ -48,7 +52,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
         await genreStore.loadGenres();
       }
 
-      const genres = genreStore.allGenres.slice(0, 5);
+      const genres = genreStore.allGenres.slice(0, 6);
 
       const promises = genres.map((genre) =>
         discoverMovie({ with_genres: String(genre.id) })
@@ -79,6 +83,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
   return {
     movieSections,
     formattedMovieSections,
+    formattedHomeMovieSections,
     loadMovies,
     isLoading,
   };

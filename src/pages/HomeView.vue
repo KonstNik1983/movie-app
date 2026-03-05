@@ -43,10 +43,10 @@
 
   <section class="movies section-padding">
     <MediaSection
-      title="Каталог фильмов и сериалов"
-      :sections="movieStore.formattedMovieSections"
-      :getMediaLink="moviePage"
+      title="Коталог фильмов и сериалов"
+      :sections="movieStore.formattedHomeMovieSections"
     />
+    <MediaSection title="" :sections="tvStore.formattedHomeTvSections" />
   </section>
   <section class="collections section-padding">
     <h2 class="collections__title">Тематические подборки</h2>
@@ -150,7 +150,7 @@
   import HeroSlider from '@/components/slider/HeroSlider.vue';
   import MediaSection from '@/components/media-sections/MediaSections.vue';
 
-  import { collectionPage, moviePage } from '@/router/paths';
+  import { collectionPage } from '@/router/paths';
 
   import { ADVANTAGES } from '@/data/advantages.data';
   import { DISCOUNTS } from '@/data/discounts.data';
@@ -162,9 +162,11 @@
   import lockIcon from '@/assets/icons/lock.svg';
 
   import { useMoviesStore } from '@/store/movies/movies.ts';
+  import { useTvStore } from '@/store/series/series';
   import { useHomePageStore } from '@/store/home-page/home-page';
 
   const movieStore = useMoviesStore();
+  const tvStore = useTvStore();
   const homeStore = useHomePageStore();
 
   const collections = COLLECTIONS;

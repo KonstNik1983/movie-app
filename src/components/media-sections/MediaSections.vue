@@ -1,6 +1,6 @@
 <template>
   <section class="movies section-padding">
-    <h2 class="movies__title">{{ title }}</h2>
+    <h2 v-if="title" class="movies__title">{{ title }}</h2>
 
     <div
       v-for="section in sections"

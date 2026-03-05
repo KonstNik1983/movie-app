@@ -36,6 +36,10 @@ export const useTvStore = defineStore('tvStore', () => {
     }))
   );
 
+  const formattedHomeTvSections = computed(() =>
+    formattedTvSections.value.slice(0, 3)
+  );
+
   const loadTv = async () => {
     isLoading.value = true;
 
@@ -44,7 +48,7 @@ export const useTvStore = defineStore('tvStore', () => {
         await genreStore.loadTvGenres();
       }
 
-      const genres = genreStore.allTvGenres.slice(0, 5);
+      const genres = genreStore.allTvGenres.slice(0, 6);
 
       const promises = genres.map((genre) =>
         discoverTv({ with_genres: String(genre.id) })
@@ -74,6 +78,7 @@ export const useTvStore = defineStore('tvStore', () => {
   return {
     tvSections,
     formattedTvSections,
+    formattedHomeTvSections,
     loadTv,
     isLoading,
   };
