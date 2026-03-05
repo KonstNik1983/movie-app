@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { getSettledData } from '@/utils/promise';
 
@@ -21,6 +21,8 @@ import {
 
 import { tvSimilar } from '@/store/tv/tv.types.ts';
 
+import { parseReview } from '@/utils/parse-review';
+
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 
@@ -32,6 +34,14 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
   const similar = ref<TvSeriesSimilar200 | null>(null);
   const contentRatings = ref<TvSeriesContentRatings200 | null>(null);
   const isLoading = ref(false);
+
+  const formattedReviews = computed(
+    () =>
+      reviews.value?.results?.map((r) => ({
+        ...r,
+        contentHtml: parseReview(r.content ?? ''),
+      })) ?? []
+  );
 
   const loadTv = async (tvId: number) => {
     isLoading.value = true;
@@ -95,6 +105,7 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
     seasonEpisodes,
     credits,
     reviews,
+    formattedReviews,
     similar,
     contentRatings,
     loadTv,

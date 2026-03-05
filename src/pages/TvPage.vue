@@ -17,7 +17,7 @@
     <div class="media-details__container">
       <div>
         <MediaReviews
-          :reviews="reviews?.results ?? []"
+          :reviews="tvStore.formattedReviews"
           :overview="tv?.overview"
         />
       </div>
@@ -56,8 +56,7 @@
 
   const route = useRoute();
   const tvStore = useTvPageStore();
-  const { tv, credits, reviews, similar, seasonEpisodes } =
-    storeToRefs(tvStore);
+  const { tv, credits, similar, seasonEpisodes } = storeToRefs(tvStore);
 
   const seasonsList = computed(() => {
     return (

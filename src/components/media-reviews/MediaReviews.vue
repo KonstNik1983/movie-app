@@ -23,9 +23,10 @@
         </div>
 
         <div class="media-review__content">
-          <p class="media-review__content-description">
-            {{ review.content }}
-          </p>
+          <div
+            class="media-review__content-description"
+            v-html="review.contentHtml"
+          ></div>
         </div>
       </div>
 
@@ -51,7 +52,7 @@
   import type { MovieReviews200ResultsItem } from '@/api/types';
 
   const props = defineProps<{
-    reviews: MovieReviews200ResultsItem[];
+    reviews: (MovieReviews200ResultsItem & { contentHtml: string })[];
     overview?: string | null;
   }>();
 

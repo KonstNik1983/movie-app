@@ -11,7 +11,7 @@
     <div class="media-details__container">
       <div>
         <MediaReviews
-          :reviews="reviews?.results ?? []"
+          :reviews="movieStore.formattedReviews"
           :overview="movie?.overview"
         />
       </div>
@@ -49,8 +49,7 @@
 
   const movieStore = useMoviePageStore();
 
-  const { movie, credits, reviews, similar, releaseDates } =
-    storeToRefs(movieStore);
+  const { movie, credits, similar, releaseDates } = storeToRefs(movieStore);
 
   const posterImg = computed(() => {
     if (!movie.value) return '';

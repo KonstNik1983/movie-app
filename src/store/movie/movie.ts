@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { getSettledData } from '@/utils/promise';
 
@@ -18,6 +18,8 @@ import {
   movieReleaseDates,
 } from '@/api/tmdb';
 
+import { parseReview } from '@/utils/parse-review';
+
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 
@@ -28,6 +30,14 @@ export const useMoviePageStore = defineStore('movieStore', () => {
   const similar = ref<MovieSimilar200 | null>(null);
   const releaseDates = ref<MovieReleaseDates200 | null>(null);
   const isLoading = ref(false);
+
+  const formattedReviews = computed(
+    () =>
+      reviews.value?.results?.map((r) => ({
+        ...r,
+        contentHtml: parseReview(r.content ?? ''),
+      })) ?? []
+  );
 
   const loadMovie = async (movieId: number) => {
     isLoading.value = true;
@@ -74,6 +84,7 @@ export const useMoviePageStore = defineStore('movieStore', () => {
     movie,
     credits,
     reviews,
+    formattedReviews,
     similar,
     releaseDates,
     isLoading,
