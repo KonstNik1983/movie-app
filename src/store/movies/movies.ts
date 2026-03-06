@@ -36,6 +36,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
         rating: movie.vote_average?.toFixed(1) ?? '',
         genres: buildMovieGenres(movie.genre_ids),
         link: moviePage(movie.id),
+        media: 'Фильм',
       })),
     }))
   );

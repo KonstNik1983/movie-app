@@ -18,7 +18,7 @@
         >
           <img class="movie-card-img" :src="item.image" :alt="item.title" />
           <p class="movie-card-text">
-            ⭐ {{ item.rating }} • {{ item.genres }}
+            ⭐ {{ item.rating }} • {{ item.media }} • {{ item.genres }}
           </p>
           <h4 class="movie-card-title">{{ item.title }}</h4>
         </router-link>

@@ -32,6 +32,7 @@ export const useTvStore = defineStore('tvStore', () => {
         rating: tv.vote_average?.toFixed(1) ?? '',
         genres: buildTvGenres(tv.genre_ids),
         link: tvPage(tv.id),
+        media: 'Сериал',
       })),
     }))
   );
