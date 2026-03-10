@@ -1,13 +1,17 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
-import { searchMulti, trendingAll } from '@/api/tmdb';
+import { searchMulti, trendingAll, trendingPeople } from '@/api/tmdb';
 import type {
   SearchMulti200ResultsItem,
   TrendingAll200ResultsItem,
+  TrendingPeople200ResultsItem,
+  TrendingTv200ResultsItem,
 } from '@/api/types';
 
 import { useToast } from 'vue-toastification';
+
+const isRussian = (str: string) => /[А-Яа-яЁё]/.test(str);
 
 export const useSearchStore = defineStore('search', () => {
   const toast = useToast();
@@ -17,8 +21,8 @@ export const useSearchStore = defineStore('search', () => {
   const isLoading = ref(false);
 
   const popularMovies = ref<TrendingAll200ResultsItem[]>([]);
-  const popularTv = ref<TrendingAll200ResultsItem[]>([]);
-  const popularPeople = ref<TrendingAll200ResultsItem[]>([]);
+  const popularTv = ref<TrendingTv200ResultsItem[]>([]);
+  const popularPeople = ref<TrendingPeople200ResultsItem[]>([]);
 
   const movieResults = computed(() =>
     results.value.filter((item) => item.media_type === 'movie')
@@ -35,7 +39,7 @@ export const useSearchStore = defineStore('search', () => {
   const displayedMovies = computed(() =>
     query.value.length >= 2 ? movieResults.value : popularMovies.value
   );
-  const displayedTv = computed(() =>
+  const displayedTv = computed<TrendingTv200ResultsItem[]>(() =>
     query.value.length >= 2 ? tvResults.value : popularTv.value
   );
   const displayedPeople = computed(() =>
@@ -76,8 +80,12 @@ export const useSearchStore = defineStore('search', () => {
 
       popularMovies.value = items.filter((i) => i.media_type === 'movie');
       popularTv.value = items.filter((i) => i.media_type === 'tv');
-      popularPeople.value = items.filter((i) => i.media_type === 'person');
-    } catch (e: any) {
+
+      const peopleResponse = await trendingPeople({}, 'week');
+      popularPeople.value = (peopleResponse.data.results ?? []).filter(
+        (person) => person.name && isRussian(person.name)
+      );
+    } catch (error) {
       toast.error('Ошибка загрузки популярных медиа');
     }
   };
