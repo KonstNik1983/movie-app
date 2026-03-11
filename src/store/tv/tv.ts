@@ -20,9 +20,7 @@ import {
 } from '@/api/tmdb';
 
 import { tvSimilar } from '@/store/tv/tv.types.ts';
-
 import { parseReview } from '@/utils/parse-review';
-
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 
@@ -43,8 +41,18 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       })) ?? []
   );
 
-  const loadTv = async (tvId: number) => {
+  const resetMedia = () => {
+    tv.value = null;
+    seasonEpisodes.value = {};
+    credits.value = null;
+    reviews.value = null;
+    similar.value = null;
+    contentRatings.value = null;
     isLoading.value = true;
+  };
+
+  const loadTv = async (tvId: number) => {
+    resetMedia();
 
     try {
       const results = await Promise.allSettled([
@@ -70,10 +78,10 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       contentRatings.value =
         getSettledData<TvSeriesContentRatings200>(ratingsResult);
     } catch (error) {
-      console.error('Ошибка загрузки данных сериала:', error);
+      toast.error('Ошибка загрузки данных сериала!');
+      console.error('Ошибка loadTv:', error);
     } finally {
       isLoading.value = false;
-      seasonEpisodes.value = {};
     }
   };
 
@@ -85,6 +93,7 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       seasonEpisodes.value[seasonNumber] = response.data;
     } catch (error) {
       toast.error('Ошибка загрузки данных сезона!');
+      console.error('Ошибка loadSeason:', error);
     } finally {
       isLoading.value = false;
     }
@@ -108,6 +117,7 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
     formattedReviews,
     similar,
     contentRatings,
+    isLoading,
     loadTv,
     loadSeason,
     reset,

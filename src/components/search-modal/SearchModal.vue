@@ -25,14 +25,15 @@
 
           <button
             type="button"
-            class="search-modal__search-close-btn"
-            @click="closeModal"
+            class="search-modal__search-clear-btn"
+            @click="resetQuery"
+            title="Очистить поиск"
           >
-            <img src="@/assets/icons/modal-close.svg" alt="Закрыть" />
+            <img src="@/assets/icons/modal-close.svg" alt="Очистить" />
           </button>
         </div>
-        <div class="search-modal__user">
-          <BaseButton variant="ghost">Войти</BaseButton>
+        <div class="search-modal__user" @click="closeModal">
+          <BaseButton variant="ghost">Закрыть</BaseButton>
         </div>
       </div>
       <div class="search-modal__body">
@@ -41,37 +42,41 @@
             {{ searchQuery.length >= 2 ? 'Результаты поиска' : 'Часто ищут' }}
           </h2>
           <div class="search-section__list-movie">
-            <div
+            <router-link
               v-for="movie in searchStore.displayedMovies.slice(0, 3)"
               :key="movie.id"
+              :to="moviePage(movie.id)"
               class="search-card"
+              @click="closeModal"
             >
               <img
                 class="search-card-img"
-                :src="`https://image.tmdb.org/t/p/w200${movie.backdrop_path}`"
+                :src="buildImage(movie.backdrop_path)"
                 :alt="movie.title"
               />
               <p class="search-card__title">{{ movie.title }}</p>
-            </div>
+            </router-link>
           </div>
           <div class="search-section__list-tv">
-            <div
+            <router-link
               v-for="tv in searchStore.displayedTv.slice(0, 3)"
               :key="tv.id"
+              :to="tvPage(tv.id)"
               class="search-card"
+              @click="closeModal"
             >
               <img
                 class="search-card-img"
-                :src="`https://image.tmdb.org/t/p/w200${tv.backdrop_path}`"
+                :src="buildImage(tv.backdrop_path)"
                 :alt="tv.name ?? ''"
               />
               <p class="search-card__title">{{ tv.name }}</p>
-            </div>
+            </router-link>
           </div>
           <h3 class="search-section__list-people-title">АКТЕРЫ И РЕЖИССЕРЫ</h3>
           <div class="search-section__list-people">
             <div
-              v-for="person in searchStore.popularPeople.slice(0, 6)"
+              v-for="person in searchStore.displayedPeople.slice(0, 6)"
               :key="person.id"
               class="search-card"
             >
@@ -89,6 +94,8 @@
   import { ref, watch } from 'vue';
   import { ROUTES } from '@/router/paths';
   import BaseButton from '@/components/base-button/BaseButton.vue';
+  import { buildImage } from '@/utils/movie.utils';
+  import { moviePage, tvPage } from '@/router/paths';
 
   import { useSearchStore } from '@/store/search/search';
 
@@ -112,6 +119,10 @@
     document.body.classList.remove('modal-open');
   };
 
+  const resetQuery = () => {
+    searchQuery.value = '';
+  };
+
   const getRole = (person: { known_for_department?: string }) => {
     const dep = person.known_for_department?.toLowerCase();
     if (dep?.includes('acting')) return 'Актёр';
@@ -130,21 +141,26 @@
   .search-modal {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: var(--z-modal);
   }
 
   .search-modal__overlay {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: var(--z-modal-backdrop);
   }
 
   .search-modal__container {
     position: relative;
     background: black;
     width: 100%;
+    max-height: 100vh;
     padding: 40px 0;
+    overflow-y: auto;
     backdrop-filter: blur(20px);
+    z-index: var(--z-modal);
   }
 
   .search-modal__header {
@@ -176,10 +192,16 @@
     height: 25px;
   }
 
-  .search-modal__search-close-btn {
+  .search-modal__search-clear-btn {
     background: transparent;
     border: none;
     cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+
+  .search-modal__search-clear-btn:hover {
+    opacity: 1;
   }
 
   .search-modal__body {
@@ -195,10 +217,13 @@
     flex-direction: column;
     width: 250px;
     flex-shrink: 0;
+    text-decoration: none;
+    color: inherit;
   }
 
   .search-section__title {
-    font-size: 22px;
+    font-size: 26px;
+    margin-bottom: 50px;
   }
 
   .search-card-img {
@@ -224,6 +249,7 @@
   .search-section__list-people-title {
     margin-top: 30px;
     color: var(--color-text-secondary);
+    font-size: 16px;
   }
 
   .search-section__list-people {

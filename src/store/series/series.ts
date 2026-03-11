@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import { discoverTv } from '@/api/tmdb';
 
 import { buildImage, buildTvGenres } from '@/utils/movie.utils';
-import { capitalize } from '@/utils/capitalize';
+import { capitalize } from '@/utils/string-helpers';
 import { tvPage } from '@/router/paths';
 import { getSettledDataApi } from '@/utils/promise';
 

@@ -1,5 +1,6 @@
 <template>
   <MediaHero
+    :mediaId="movie?.id"
     :title="movie?.title ?? ''"
     :backdrop="posterImg"
     :meta="movieMeta"

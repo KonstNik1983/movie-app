@@ -1,5 +1,5 @@
 <template>
-  <section class="media-hero">
+  <section class="media-hero" :key="mediaId">
     <div class="media-hero__bg">
       <img
         v-if="backdrop"
@@ -63,6 +63,7 @@
     meta?: string;
     badge?: string;
     buttonText?: string;
+    mediaId?: number;
   }>();
 </script>
 
@@ -80,7 +81,7 @@
   .media-hero__bg {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: var(--z-hero-bg);
   }
 
   .media-hero__image {
@@ -94,7 +95,7 @@
     position: absolute;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.1);
-    z-index: 2;
+    z-index: var(--z-hero-overlay);
   }
 
   .media-hero__gradient {
@@ -104,12 +105,12 @@
     width: 100%;
     height: 300px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    z-index: 3;
+    z-index: var(--z-hero-gradient);
   }
 
   .media-hero__content {
     position: relative;
-    z-index: 4;
+    z-index: var(--z-hero-content);
     padding: 30px 40px;
   }
 

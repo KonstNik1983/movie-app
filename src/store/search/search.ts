@@ -1,7 +1,12 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
-import { searchMulti, trendingAll, trendingPeople } from '@/api/tmdb';
+import {
+  searchMulti,
+  searchPerson,
+  trendingAll,
+  trendingPeople,
+} from '@/api/tmdb';
 import type {
   SearchMulti200ResultsItem,
   TrendingAll200ResultsItem,
@@ -10,14 +15,14 @@ import type {
 } from '@/api/types';
 
 import { useToast } from 'vue-toastification';
-
-const isRussian = (str: string) => /[А-Яа-яЁё]/.test(str);
+import { isRussian } from '@/utils/string-helpers';
 
 export const useSearchStore = defineStore('search', () => {
   const toast = useToast();
 
   const query = ref('');
   const results = ref<SearchMulti200ResultsItem[]>([]);
+  const personResults = ref<TrendingPeople200ResultsItem[]>([]);
   const isLoading = ref(false);
 
   const popularMovies = ref<TrendingAll200ResultsItem[]>([]);
@@ -32,29 +37,28 @@ export const useSearchStore = defineStore('search', () => {
     results.value.filter((item) => item.media_type === 'tv')
   );
 
-  const personResults = computed(() =>
-    results.value.filter((item) => item.media_type === 'person')
-  );
-
   const displayedMovies = computed(() =>
     query.value.length >= 2 ? movieResults.value : popularMovies.value
   );
   const displayedTv = computed<TrendingTv200ResultsItem[]>(() =>
     query.value.length >= 2 ? tvResults.value : popularTv.value
   );
-  const displayedPeople = computed(() =>
+  const displayedPeople = computed<TrendingPeople200ResultsItem[]>(() =>
     query.value.length >= 2 ? personResults.value : popularPeople.value
   );
 
   let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
   const DEBOUNCE_DELAY = 400;
 
-  const searchMedia = (q: string) => {
-    query.value = q;
+  const searchMedia = (searchQuery: string) => {
+    query.value = searchQuery;
 
     if (debounceTimeout) clearTimeout(debounceTimeout);
 
-    if (!q || q.length < 2) {
+    results.value = [];
+    personResults.value = [];
+
+    if (!searchQuery || searchQuery.length < 2) {
       results.value = [];
       isLoading.value = false;
       return;
@@ -63,8 +67,13 @@ export const useSearchStore = defineStore('search', () => {
     debounceTimeout = setTimeout(async () => {
       isLoading.value = true;
       try {
-        const response = await searchMulti({ query: q });
+        const response = await searchMulti({ query: searchQuery });
         results.value = response.data.results ?? [];
+
+        const peopleResp = await searchPerson({ query: searchQuery });
+        personResults.value = (peopleResp.data.results ?? []).filter(
+          (person) => person.name && isRussian(person.name)
+        );
       } catch (error) {
         toast.error('Ошибка поиска');
       } finally {

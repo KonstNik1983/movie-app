@@ -5,6 +5,7 @@ import App from './App.vue';
 import router from './router';
 import './styles/main.css';
 import './styles/variables.css';
+import './styles/z-index.css';
 
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';

@@ -19,7 +19,6 @@ import {
 } from '@/api/tmdb';
 
 import { parseReview } from '@/utils/parse-review';
-
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 
@@ -39,8 +38,17 @@ export const useMoviePageStore = defineStore('movieStore', () => {
       })) ?? []
   );
 
-  const loadMovie = async (movieId: number) => {
+  const resetMedia = () => {
+    movie.value = null;
+    credits.value = null;
+    reviews.value = null;
+    similar.value = null;
+    releaseDates.value = null;
     isLoading.value = true;
+  };
+
+  const loadMovie = async (movieId: number) => {
+    resetMedia();
 
     try {
       const results = await Promise.allSettled([
@@ -66,6 +74,7 @@ export const useMoviePageStore = defineStore('movieStore', () => {
       releaseDates.value = getSettledData<MovieReleaseDates200>(releaseResult);
     } catch (error) {
       toast.error('Ошибка загрузки данных фильма!');
+      console.error('Ошибка loadMovie:', error);
     } finally {
       isLoading.value = false;
     }

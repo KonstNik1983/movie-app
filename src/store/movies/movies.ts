@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 import { discoverMovie } from '@/api/tmdb';
 
 import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
-import { capitalize } from '@/utils/capitalize';
+import { capitalize } from '@/utils/string-helpers';
 import { moviePage } from '@/router/paths';
 import { getSettledDataApi } from '@/utils/promise';
 
