@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body,
 #app {
@@ -13,6 +17,10 @@ body,
   font-family: 'Prisma Nova', sans-serif;
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 .section-padding {

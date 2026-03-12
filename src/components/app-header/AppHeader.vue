@@ -36,7 +36,7 @@
     </div>
 
     <div class="app-header-right">
-      <button class="header-btn">
+      <button class="header-btn" @click="openModal">
         <img src="@/assets/icons/search.svg" alt="" />
         <span class="header-btn-text">Поиск</span>
       </button>
@@ -60,14 +60,28 @@
         <img src="@/assets/icons/account.svg" alt="" />
       </button>
     </div>
+
+    <SearchModal :isShow="isModalOpen" @close="closeModal" />
   </header>
 </template>
 
 <script setup lang="ts">
+  import { ref } from 'vue';
   import { useAuthStore } from '@/store/auth/auth.ts';
   import { ROUTES } from '@/router/paths';
+  import SearchModal from '@/components/search-modal/SearchModal.vue';
 
   const authStore = useAuthStore();
+
+  const isModalOpen = ref(false);
+
+  const openModal = () => {
+    isModalOpen.value = true;
+  };
+
+  const closeModal = () => {
+    isModalOpen.value = false;
+  };
 </script>
 
 <style scoped>

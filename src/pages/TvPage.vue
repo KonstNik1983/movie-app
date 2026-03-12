@@ -1,5 +1,6 @@
 <template>
   <MediaHero
+    :mediaId="tv?.id"
     :title="tv?.name ?? ''"
     :backdrop="posterImg"
     :meta="tvMeta"
