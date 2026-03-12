@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
+import debounce from 'lodash/debounce';
 
 import {
   searchMulti,
@@ -47,39 +48,33 @@ export const useSearchStore = defineStore('search', () => {
     query.value.length >= 2 ? personResults.value : popularPeople.value
   );
 
-  let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
-  const DEBOUNCE_DELAY = 400;
-
-  const searchMedia = (searchQuery: string) => {
-    query.value = searchQuery;
-
-    if (debounceTimeout) clearTimeout(debounceTimeout);
-
-    results.value = [];
-    personResults.value = [];
-
+  const performSearch = debounce(async (searchQuery: string) => {
     if (!searchQuery || searchQuery.length < 2) {
       results.value = [];
+      personResults.value = [];
       isLoading.value = false;
       return;
     }
 
-    debounceTimeout = setTimeout(async () => {
-      isLoading.value = true;
-      try {
-        const response = await searchMulti({ query: searchQuery });
-        results.value = response.data.results ?? [];
+    isLoading.value = true;
+    try {
+      const response = await searchMulti({ query: searchQuery });
+      results.value = response.data.results ?? [];
 
-        const peopleResp = await searchPerson({ query: searchQuery });
-        personResults.value = (peopleResp.data.results ?? []).filter(
-          (person) => person.name && isRussian(person.name)
-        );
-      } catch (error) {
-        toast.error('Ошибка поиска');
-      } finally {
-        isLoading.value = false;
-      }
-    }, DEBOUNCE_DELAY);
+      const peopleResp = await searchPerson({ query: searchQuery });
+      personResults.value = (peopleResp.data.results ?? []).filter((person) =>
+        person.name ? isRussian(person.name) : false
+      );
+    } catch (error) {
+      toast.error('Ошибка поиска');
+    } finally {
+      isLoading.value = false;
+    }
+  }, 400);
+
+  const searchMedia = (searchQuery: string) => {
+    query.value = searchQuery;
+    performSearch(searchQuery);
   };
 
   const loadPopular = async () => {
@@ -97,6 +92,10 @@ export const useSearchStore = defineStore('search', () => {
     } catch (error) {
       toast.error('Ошибка загрузки популярных медиа');
     }
+  };
+
+  const cancelSearch = () => {
+    performSearch.cancel();
   };
 
   const reset = () => {
@@ -125,5 +124,6 @@ export const useSearchStore = defineStore('search', () => {
     searchMedia,
     loadPopular,
     reset,
+    cancelSearch,
   };
 });

@@ -36,7 +36,7 @@
     </div>
 
     <div class="app-header-right">
-      <button class="header-btn" @click="searchModalRef?.openModal()">
+      <button class="header-btn" @click="openModal">
         <img src="@/assets/icons/search.svg" alt="" />
         <span class="header-btn-text">Поиск</span>
       </button>
@@ -61,7 +61,7 @@
       </button>
     </div>
 
-    <SearchModal ref="searchModalRef" />
+    <SearchModal :isShow="isModalOpen" @close="closeModal" />
   </header>
 </template>
 
@@ -73,7 +73,15 @@
 
   const authStore = useAuthStore();
 
-  const searchModalRef = ref<{ openModal: () => void }>();
+  const isModalOpen = ref(false);
+
+  const openModal = () => {
+    isModalOpen.value = true;
+  };
+
+  const closeModal = () => {
+    isModalOpen.value = false;
+  };
 </script>
 
 <style scoped>

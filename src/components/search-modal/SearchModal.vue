@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isOpen" class="search-modal">
+  <div v-if="isShow" class="search-modal">
     <div class="search-modal__overlay" @click="closeModal"></div>
 
     <div class="search-modal__container">
@@ -42,47 +42,55 @@
             {{ searchQuery.length >= 2 ? 'Результаты поиска' : 'Часто ищут' }}
           </h2>
           <div class="search-section__list-movie">
-            <router-link
-              v-for="movie in searchStore.displayedMovies.slice(0, 3)"
-              :key="movie.id"
-              :to="moviePage(movie.id)"
-              class="search-card"
-              @click="closeModal"
-            >
-              <img
-                class="search-card-img"
-                :src="buildImage(movie.backdrop_path)"
-                :alt="movie.title"
-              />
-              <p class="search-card__title">{{ movie.title }}</p>
-            </router-link>
+            <template v-if="searchStore.displayedMovies.length">
+              <router-link
+                v-for="movie in searchStore.displayedMovies.slice(0, 3)"
+                :key="movie.id"
+                :to="moviePage(movie.id)"
+                class="search-card"
+                @click="closeModal"
+              >
+                <img
+                  :src="buildImage(movie.backdrop_path)"
+                  :alt="movie.title"
+                />
+                <p class="search-card__title">{{ movie.title }}</p>
+              </router-link>
+            </template>
+            <p v-else>Фильмы не найдены</p>
           </div>
           <div class="search-section__list-tv">
-            <router-link
-              v-for="tv in searchStore.displayedTv.slice(0, 3)"
-              :key="tv.id"
-              :to="tvPage(tv.id)"
-              class="search-card"
-              @click="closeModal"
-            >
-              <img
-                class="search-card-img"
-                :src="buildImage(tv.backdrop_path)"
-                :alt="tv.name ?? ''"
-              />
-              <p class="search-card__title">{{ tv.name }}</p>
-            </router-link>
+            <template v-if="searchStore.displayedTv.length">
+              <router-link
+                v-for="tv in searchStore.displayedTv.slice(0, 3)"
+                :key="tv.id"
+                :to="tvPage(tv.id)"
+                class="search-card"
+                @click="closeModal"
+              >
+                <img
+                  class="search-card-img"
+                  :src="buildImage(tv.backdrop_path)"
+                  :alt="tv.name ?? ''"
+                />
+                <p class="search-card__title">{{ tv.name }}</p>
+              </router-link>
+            </template>
+            <p v-else>Сериалы не найдены</p>
           </div>
           <h3 class="search-section__list-people-title">АКТЕРЫ И РЕЖИССЕРЫ</h3>
           <div class="search-section__list-people">
-            <div
-              v-for="person in searchStore.displayedPeople.slice(0, 6)"
-              :key="person.id"
-              class="search-card"
-            >
-              <p class="search-card__title">{{ person.name }}</p>
-              <p class="search-card__role">{{ getRole(person) }}</p>
-            </div>
+            <template v-if="searchStore.displayedPeople.length">
+              <div
+                v-for="person in searchStore.displayedPeople.slice(0, 6)"
+                :key="person.id"
+                class="search-card"
+              >
+                <p class="search-card__title">{{ person.name }}</p>
+                <p class="search-card__role">{{ getRole(person) }}</p>
+              </div>
+            </template>
+            <p v-else>Люди не найдены</p>
           </div>
         </div>
       </div>
@@ -96,27 +104,26 @@
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import { buildImage } from '@/utils/movie.utils';
   import { moviePage, tvPage } from '@/router/paths';
+  import { lock, unlock } from 'tua-body-scroll-lock';
 
   import { useSearchStore } from '@/store/search/search';
 
-  const isOpen = ref(false);
+  const props = defineProps<{
+    isShow: boolean;
+  }>();
+
+  const emit = defineEmits(['close']);
+
   const inputRef = ref<HTMLInputElement | null>(null);
   const searchQuery = ref('');
 
   const searchStore = useSearchStore();
 
-  const openModal = () => {
-    isOpen.value = true;
-    inputRef.value?.focus();
-    document.body.classList.add('modal-open');
-    searchStore.loadPopular();
-  };
-
   const closeModal = () => {
-    isOpen.value = false;
     searchQuery.value = '';
     searchStore.reset();
-    document.body.classList.remove('modal-open');
+    searchStore.cancelSearch();
+    emit('close');
   };
 
   const resetQuery = () => {
@@ -130,11 +137,22 @@
     return '—';
   };
 
+  watch(
+    () => props.isShow,
+    (val) => {
+      if (val) {
+        inputRef.value?.focus();
+        searchStore.loadPopular();
+        lock();
+      } else {
+        unlock();
+      }
+    }
+  );
+
   watch(searchQuery, (newVal) => {
     searchStore.searchMedia(newVal);
   });
-
-  defineExpose({ openModal });
 </script>
 
 <style scoped>
