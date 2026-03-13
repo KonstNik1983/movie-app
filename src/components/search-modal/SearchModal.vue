@@ -166,19 +166,16 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-    z-index: var(--z-modal-backdrop);
   }
 
   .search-modal__container {
     position: relative;
-    background: black;
+    background: var(--color-bg-primary);
     width: 100%;
     max-height: 100vh;
     padding: 40px 0;
     overflow-y: auto;
     backdrop-filter: blur(20px);
-    z-index: var(--z-modal);
   }
 
   .search-modal__header {

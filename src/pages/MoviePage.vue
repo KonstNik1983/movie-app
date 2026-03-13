@@ -1,11 +1,13 @@
 <template>
   <MediaHero
+    v-if="movie?.id"
     :mediaId="movie?.id"
     :title="movie?.title ?? ''"
     :backdrop="posterImg"
     :meta="movieMeta"
     :badge="certification"
     buttonText="Смотреть фильм"
+    mediaType="movie"
   />
   <section class="media-details">
     <h2 class="media-details__title">О фильме</h2>
