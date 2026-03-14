@@ -32,7 +32,7 @@
           {{ buttonText }}
         </BaseButton>
 
-        <BaseButton variant="ghost">Трейлер</BaseButton>
+        <BaseButton variant="ghost" @click="openModal">Трейлер</BaseButton>
 
         <button class="media-hero__btn" aria-label="Поделиться">
           <img
@@ -51,20 +51,34 @@
         </button>
       </div>
     </div>
+
+    <TrailerModal
+      :isShow="isModalOpen"
+      :mediaId="mediaId"
+      :mediaType="mediaType"
+      @close="closeModal"
+    />
   </section>
 </template>
 
 <script setup lang="ts">
+  import { ref } from 'vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
+  import TrailerModal from '@/components/trailer-modal/TrailerModal.vue';
 
-  defineProps<{
+  const props = defineProps<{
     title: string;
     backdrop?: string;
     meta?: string;
     badge?: string;
     buttonText?: string;
-    mediaId?: number;
+    mediaId: number;
+    mediaType: 'movie' | 'tv';
   }>();
+
+  const isModalOpen = ref(false);
+  const openModal = () => (isModalOpen.value = true);
+  const closeModal = () => (isModalOpen.value = false);
 </script>
 
 <style scoped>

@@ -93,7 +93,6 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       seasonEpisodes.value[seasonNumber] = response.data;
     } catch (error) {
       toast.error('Ошибка загрузки данных сезона!');
-      console.error('Ошибка loadSeason:', error);
     } finally {
       isLoading.value = false;
     }

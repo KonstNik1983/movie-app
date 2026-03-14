@@ -66,21 +66,30 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { computed } from 'vue';
+  import { useRouter, useRoute } from 'vue-router';
   import { useAuthStore } from '@/store/auth/auth.ts';
   import { ROUTES } from '@/router/paths';
   import SearchModal from '@/components/search-modal/SearchModal.vue';
 
   const authStore = useAuthStore();
 
-  const isModalOpen = ref(false);
+  const router = useRouter();
+  const route = useRoute();
+
+  const isModalOpen = computed(() => route.query.modal === 'search');
 
   const openModal = () => {
-    isModalOpen.value = true;
+    router.push({
+      query: { ...route.query, modal: 'search' },
+    });
   };
 
   const closeModal = () => {
-    isModalOpen.value = false;
+    const query = { ...route.query };
+    delete query.modal;
+
+    router.push({ query });
   };
 </script>
 

@@ -1,10 +1,12 @@
 <template>
   <MediaHero
+    v-if="tv?.id"
     :mediaId="tv?.id"
     :title="tv?.name ?? ''"
     :backdrop="posterImg"
     :meta="tvMeta"
     buttonText="Смотреть сериал"
+    mediaType="tv"
   />
 
   <TvSeasonsSection
