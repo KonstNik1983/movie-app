@@ -1,12 +1,15 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { movieVideos } from '@/api/tmdb';
-import type { MovieVideos200ResultsItem } from '@/api/types';
+import type {
+  MovieVideos200ResultsItem,
+  TvSeasonVideos200ResultsItem,
+} from '@/api/types';
 import { tvVideos } from '@/store/trailer/trailer-tv.api';
-import type { TvVideosItem } from '@/store/trailer/trailer-tv.api';
+
 import { useToast } from 'vue-toastification';
 
-type VideoItem = TvVideosItem | MovieVideos200ResultsItem;
+type VideoItem = TvSeasonVideos200ResultsItem | MovieVideos200ResultsItem;
 
 export const useTrailerStore = defineStore('trailerStore', () => {
   const toast = useToast();
