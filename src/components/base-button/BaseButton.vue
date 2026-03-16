@@ -48,4 +48,14 @@
   .base-btn--ghost:hover {
     background: rgba(255, 255, 255, 0.1);
   }
+
+  .base-btn--auth {
+    background: transparent;
+    color: var(--color-bg-primary);
+    border: 1px solid black;
+  }
+
+  .base-btn--auth:hover {
+    background: rgba(112, 99, 99, 0.1);
+  }
 </style>

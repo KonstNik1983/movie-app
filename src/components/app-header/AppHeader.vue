@@ -56,12 +56,18 @@
         />
       </button>
 
-      <button v-else class="header-btn" aria-label="Логин">
+      <button
+        v-else
+        class="header-btn"
+        aria-label="Логин"
+        @click="openAuthModal"
+      >
         <img src="@/assets/icons/account.svg" alt="" />
       </button>
     </div>
 
     <SearchModal :isShow="isModalOpen" @close="closeModal" />
+    <AuthModal :isShow="isAuthModalOpen" @close="closeModal"></AuthModal>
   </header>
 </template>
 
@@ -71,6 +77,7 @@
   import { useAuthStore } from '@/store/auth/auth.ts';
   import { ROUTES } from '@/router/paths';
   import SearchModal from '@/components/search-modal/SearchModal.vue';
+  import AuthModal from '@/components/auth-modal/AuthModal.vue';
 
   const authStore = useAuthStore();
 
@@ -78,10 +85,17 @@
   const route = useRoute();
 
   const isModalOpen = computed(() => route.query.modal === 'search');
+  const isAuthModalOpen = computed(() => route.query.modal === 'auth');
 
   const openModal = () => {
     router.push({
       query: { ...route.query, modal: 'search' },
+    });
+  };
+
+  const openAuthModal = () => {
+    router.push({
+      query: { ...route.query, modal: 'auth' },
     });
   };
 
