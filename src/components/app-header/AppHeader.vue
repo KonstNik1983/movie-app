@@ -36,7 +36,7 @@
     </div>
 
     <div class="app-header-right">
-      <button class="header-btn" @click="openModal">
+      <button class="header-btn" @click="openSearchModal">
         <img src="@/assets/icons/search.svg" alt="" />
         <span class="header-btn-text">Поиск</span>
       </button>
@@ -48,6 +48,7 @@
         v-if="authStore.isAuth"
         class="header-btn header-avatar"
         aria-label="Профиль пользователя"
+        @click="goToUserPage"
       >
         <img
           src="https://i.pravatar.cc/150"
@@ -87,7 +88,7 @@
   const isModalOpen = computed(() => route.query.modal === 'search');
   const isAuthModalOpen = computed(() => route.query.modal === 'auth');
 
-  const openModal = () => {
+  const openSearchModal = () => {
     router.push({
       query: { ...route.query, modal: 'search' },
     });
@@ -104,6 +105,10 @@
     delete query.modal;
 
     router.push({ query });
+  };
+
+  const goToUserPage = () => {
+    router.push({ name: 'UserPage' });
   };
 </script>
 

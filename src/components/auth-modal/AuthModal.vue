@@ -76,40 +76,17 @@
   const handleRegister = () => {
     if (!validate()) return;
 
-    const user = {
-      username: username.value,
-      password: password.value,
-    };
+    authStore.registerUser(username.value, password.value);
 
-    localStorage.setItem('user', JSON.stringify(user));
-
-    authStore.isAuth = true;
-    authStore.userData = user;
     closeModal();
     resetForm();
   };
 
   const handleLogin = () => {
-    if (!username.value.trim() || !password.value.trim()) {
-      alert('Введите логин и пароль');
-      return;
-    }
-    const stored = localStorage.getItem('user');
+    if (!validate()) return;
 
-    if (!stored) {
-      alert('Пользователь не найден, зарегистрируйтесь');
-      return;
-    }
+    authStore.loginUser(username.value, password.value);
 
-    const user = JSON.parse(stored);
-
-    if (user.password !== password.value || user.username !== username.value) {
-      alert('Неверный логин или пароль');
-      return;
-    }
-
-    authStore.isAuth = true;
-    authStore.userData = user;
     closeModal();
     resetForm();
   };
