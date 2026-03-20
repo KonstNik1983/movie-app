@@ -10,18 +10,17 @@
       <h3 class="movie__title">{{ section.genre.title }}</h3>
 
       <div class="movies__cards">
-        <router-link
+        <MediaCard
           v-for="item in section.movies"
           :key="item.id"
-          :to="item.link"
-          class="movie-card"
-        >
-          <img class="movie-card-img" :src="item.image" :alt="item.title" />
-          <p class="movie-card-text">
-            ⭐ {{ item.rating }} • {{ item.media }} • {{ item.genres }}
-          </p>
-          <h4 class="movie-card-title">{{ item.title }}</h4>
-        </router-link>
+          :id="item.id"
+          :title="item.title"
+          :image="item.image"
+          :rating="item.rating"
+          :media="item.media"
+          :genres="item.genres"
+          :link="item.link"
+        />
       </div>
     </div>
   </section>
@@ -29,6 +28,7 @@
 
 <script setup lang="ts">
   import type { FormattedSection } from '@/components/media/media.types';
+  import MediaCard from '@/components/media-card/MediaCard.vue';
 
   defineProps<{
     title: string;

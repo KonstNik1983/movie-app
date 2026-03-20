@@ -82,7 +82,7 @@ router.beforeEach(async (to, _from, next) => {
 
   if (to.meta.requiresAuth && !authStore.isAuth) {
     alert('Сначала нужно войти в систему');
-    return next({ name: ROUTES.home.name });
+    return next({ name: 'HomeView' });
   }
 
   next();

@@ -34,7 +34,11 @@
 
         <BaseButton variant="ghost" @click="openModal">Трейлер</BaseButton>
 
-        <button class="media-hero__btn" aria-label="Поделиться">
+        <button
+          class="media-hero__btn"
+          aria-label="Смотреть позже"
+          @click="authStore.addToWatchList(mediaId, mediaType)"
+        >
           <img
             class="media-hero__btn-img"
             src="@/assets/icons/Frame-75.svg"
@@ -42,7 +46,11 @@
           />
         </button>
 
-        <button class="media-hero__btn" aria-label="Избранное">
+        <button
+          class="media-hero__btn"
+          aria-label="Избранное"
+          @click="authStore.addToFavoritesList(mediaId, mediaType)"
+        >
           <img
             class="media-hero__btn-img"
             src="@/assets/icons/Frame-77.svg"
@@ -63,8 +71,11 @@
 
 <script setup lang="ts">
   import { ref } from 'vue';
+  import { useAuthStore } from '@/store/auth/auth';
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import TrailerModal from '@/components/trailer-modal/TrailerModal.vue';
+
+  const authStore = useAuthStore();
 
   const props = defineProps<{
     title: string;

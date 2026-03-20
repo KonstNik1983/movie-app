@@ -28,6 +28,8 @@ export const useAuthStore = defineStore('auth', () => {
       id: crypto.randomUUID(),
       username,
       password,
+      favorites: [],
+      watchList: [],
     };
 
     users.push(newUser);
@@ -70,19 +72,73 @@ export const useAuthStore = defineStore('auth', () => {
 
     const user = JSON.parse(stored);
 
+    user.watchList = user.watchList || [];
+    user.favorites = user.favorites || [];
+
     isAuth.value = true;
     userData.value = user;
 
     isAuthInitialized.value = true;
   };
 
+  const addToWatchList = (id: number, type: 'movie' | 'tv') => {
+    if (!userData.value) return;
+
+    const isExistItem = userData.value.watchList.some(
+      (item) => item.id === id && item.type === type
+    );
+
+    if (!isExistItem) {
+      userData.value.watchList.push({ id, type });
+
+      localStorage.setItem('currentUser', JSON.stringify(userData.value));
+
+      const users = getUsers();
+
+      const updatedUsers = users.map((user) =>
+        user.id === userData.value!.id ? userData.value! : user
+      );
+      saveUsers(updatedUsers);
+
+      alert('Добавлено в "Хочу посмотреть"');
+    } else {
+      alert('Этот фильм уже в списке');
+    }
+  };
+
+  const addToFavoritesList = (id: number, type: 'movie' | 'tv') => {
+    if (!userData.value) return;
+
+    const isExistItem = userData.value.favorites.some(
+      (item) => item.id === id && item.type === type
+    );
+
+    if (!isExistItem) {
+      userData.value.favorites.push({ id, type });
+
+      localStorage.setItem('currentUser', JSON.stringify(userData.value));
+
+      const users = getUsers();
+      const updatedUsers = users.map((user) =>
+        user.id === userData.value!.id ? userData.value! : user
+      );
+      saveUsers(updatedUsers);
+
+      alert('Добалено в "избранное"');
+    } else {
+      alert('Этот фильм уже в списке');
+    }
+  };
+
   return {
     isAuth,
     userData,
+    isAuthInitialized,
     initAuth,
     registerUser,
     loginUser,
     logoutUser,
-    isAuthInitialized,
+    addToWatchList,
+    addToFavoritesList,
   };
 });
