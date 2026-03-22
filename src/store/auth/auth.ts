@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import type { User } from '@/types/user';
+import { STORAGE_KEYS } from '@/constants/storage-keys';
+
+import { useToast } from 'vue-toastification';
+import { nanoid } from 'nanoid';
+
+const toast = useToast();
 
 export const useAuthStore = defineStore('auth', () => {
   const isAuth = ref(false);
@@ -8,24 +14,24 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthInitialized = ref(false);
 
   const getUsers = (): User[] => {
-    const stored = localStorage.getItem('users');
+    const stored = localStorage.getItem(STORAGE_KEYS.USERS);
     return stored ? JSON.parse(stored) : [];
   };
 
   const saveUsers = (users: User[]) => {
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
   };
 
   const registerUser = (username: string, password: string) => {
     const users = getUsers();
 
     if (users.some((user) => user.username === username)) {
-      alert('Пользователь с таким логином уже существует');
-      return;
+      toast.error('Пользователь с таким логином уже существует');
+      return false;
     }
 
     const newUser: User = {
-      id: crypto.randomUUID(),
+      id: nanoid(10),
       username,
       password,
       favorites: [],
@@ -35,9 +41,13 @@ export const useAuthStore = defineStore('auth', () => {
     users.push(newUser);
     saveUsers(users);
 
-    localStorage.setItem('currentUser', JSON.stringify(newUser));
+    localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(newUser));
     isAuth.value = true;
     userData.value = newUser;
+
+    toast.success(`Добро пожаловать, ${newUser.username}!`);
+
+    return true;
   };
 
   const loginUser = (username: string, password: string) => {
@@ -45,28 +55,32 @@ export const useAuthStore = defineStore('auth', () => {
     const user = users.find((user) => user.username === username);
 
     if (!user) {
-      alert('Пользователь не найден, зарегистрируйтесь');
-      return;
+      toast.error('Пользователь не найден, зарегистрируйтесь');
+      return false;
     }
     if (user.password !== password) {
-      alert('Неверный логин или пароль');
-      return;
+      toast.error('Неверный логин или пароль');
+      return false;
     }
 
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
     isAuth.value = true;
     userData.value = user;
+
+    toast.success(`Добро пожаловать, ${user.username}!`);
+
+    return true;
   };
 
   const logoutUser = () => {
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
 
     isAuth.value = false;
     userData.value = null;
   };
 
   const initAuth = () => {
-    const stored = localStorage.getItem('currentUser');
+    const stored = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
 
     if (!stored) return;
 
@@ -91,7 +105,10 @@ export const useAuthStore = defineStore('auth', () => {
     if (!isExistItem) {
       userData.value.watchList.push({ id, type });
 
-      localStorage.setItem('currentUser', JSON.stringify(userData.value));
+      localStorage.setItem(
+        STORAGE_KEYS.CURRENT_USER,
+        JSON.stringify(userData.value)
+      );
 
       const users = getUsers();
 
@@ -100,9 +117,9 @@ export const useAuthStore = defineStore('auth', () => {
       );
       saveUsers(updatedUsers);
 
-      alert('Добавлено в "Хочу посмотреть"');
+      toast.success('Добавлено в "Хочу посмотреть"');
     } else {
-      alert('Этот фильм уже в списке');
+      toast.warning('Этот фильм уже в списке');
     }
   };
 
@@ -116,7 +133,10 @@ export const useAuthStore = defineStore('auth', () => {
     if (!isExistItem) {
       userData.value.favorites.push({ id, type });
 
-      localStorage.setItem('currentUser', JSON.stringify(userData.value));
+      localStorage.setItem(
+        STORAGE_KEYS.CURRENT_USER,
+        JSON.stringify(userData.value)
+      );
 
       const users = getUsers();
       const updatedUsers = users.map((user) =>
@@ -124,9 +144,9 @@ export const useAuthStore = defineStore('auth', () => {
       );
       saveUsers(updatedUsers);
 
-      alert('Добалено в "избранное"');
+      toast.success('Добавлено в "Избранное"');
     } else {
-      alert('Этот фильм уже в списке');
+      toast.warning('Этот фильм уже в списке');
     }
   };
 

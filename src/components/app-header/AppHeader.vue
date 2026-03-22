@@ -108,7 +108,7 @@
   };
 
   const goToUserPage = () => {
-    router.push({ name: 'UserPage' });
+    router.push({ name: ROUTES.user.name });
   };
 </script>
 

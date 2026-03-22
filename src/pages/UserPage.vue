@@ -74,6 +74,7 @@
   import { useUserMediaStore } from '@/store/user-media/user-media';
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import MediaCard from '@/components/media-card/MediaCard.vue';
+  import { ROUTES } from '@/router/paths';
 
   const authStore = useAuthStore();
   const userMediaStore = useUserMediaStore();
@@ -83,7 +84,7 @@
 
   const logoutUser = () => {
     authStore.logoutUser();
-    router.push({ name: 'HomeView' });
+    router.push({ name: ROUTES.home.name });
   };
 
   watch(activeTab, (tab) => {

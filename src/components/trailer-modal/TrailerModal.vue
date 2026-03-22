@@ -1,7 +1,13 @@
 <template>
   <BaseModal :isShow="isShow" @close="closeModal">
     <div class="modal__content">
-      <button class="close-btn" @click="closeModal">×</button>
+      <button
+        class="close-btn"
+        @click="closeModal"
+        aria-label="Закрыть трейлер"
+      >
+        <img src="@/assets/icons/modal-close.svg" alt="" />
+      </button>
 
       <div v-if="trailerStore.isLoading" class="loader">Загрузка...</div>
 

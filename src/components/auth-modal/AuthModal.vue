@@ -1,38 +1,48 @@
 <template>
   <BaseModal :isShow="isShow" @close="closeModal">
     <form class="auth-modal-form" @submit.prevent="handleLogin">
-      <button type="button" class="auth-modal-close" @click="closeModal">
-        ×
+      <button
+        type="button"
+        class="auth-modal__close"
+        @click="closeModal"
+        aria-label="Закрыть"
+      >
+        <img
+          src="@/assets/icons/close-icon.svg"
+          alt=""
+          class="auth-modal__close-icon"
+        />
       </button>
       <h2 class="auth-modal-title">Авторизация</h2>
-      <input
-        class="auth-modal-input"
-        type="text"
-        v-model="username"
-        placeholder="Логин"
-      />
-      <input
-        class="auth-modal-input"
-        type="password"
-        v-model="password"
-        placeholder="Пароль"
-      />
+
+      <BaseInput :field="usernameField" placeholder="Логин" />
+
+      <BaseInput :field="passwordField" type="password" placeholder="Пароль" />
 
       <div class="auth-modal-buttons">
         <BaseButton type="submit">Войти</BaseButton>
 
-        <BaseButton type="button" variant="auth" @click="handleRegister">
+        <BaseButton
+          type="button"
+          variant="ghost-secondary"
+          @click="handleRegister"
+        >
           Зарегистрироваться
         </BaseButton>
       </div>
     </form>
   </BaseModal>
 </template>
+
 <script setup lang="ts">
-  import { ref } from 'vue';
   import BaseModal from '@/components/base-modal/BaseModal.vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
+  import BaseInput from '../base-input/BaseInput.vue';
   import { useAuthStore } from '@/store/auth/auth.ts';
+
+  import { useForm, useField } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
 
   const authStore = useAuthStore();
 
@@ -43,54 +53,42 @@
   const emit = defineEmits(['close']);
 
   const closeModal = () => {
+    resetForm();
     emit('close');
   };
 
-  const username = ref('');
-  const password = ref('');
+  const schema = z.object({
+    username: z.string().min(3, 'Минимум 3 символа').nonempty('Введите логин'),
 
-  const validate = () => {
-    if (!username.value.trim() || !password.value.trim()) {
-      alert('Заполните все поля');
-      return false;
+    password: z.string().min(4, 'Минимум 4 символа').nonempty('Введите пароль'),
+  });
+
+  const { handleSubmit, resetForm } = useForm({
+    validationSchema: toTypedSchema(schema),
+  });
+
+  const usernameField = useField<string>('username');
+  const passwordField = useField<string>('password');
+
+  const handleLogin = handleSubmit((values) => {
+    const success = authStore.loginUser(values.username, values.password);
+    if (success) {
+      closeModal();
+      resetForm();
     }
-
-    if (username.value.length < 3) {
-      alert('Логин минимум 3 символа');
-      return false;
-    }
-
-    if (password.value.length < 4) {
-      alert('Пароль минимум 4 символа');
-      return false;
-    }
-
-    return true;
-  };
-
-  const resetForm = () => {
-    username.value = '';
-    password.value = '';
-  };
-
-  const handleRegister = () => {
-    if (!validate()) return;
-
-    authStore.registerUser(username.value, password.value);
-
-    closeModal();
     resetForm();
-  };
+  });
 
-  const handleLogin = () => {
-    if (!validate()) return;
-
-    authStore.loginUser(username.value, password.value);
-
-    closeModal();
+  const handleRegister = handleSubmit((values) => {
+    const success = authStore.registerUser(values.username, values.password);
+    if (success) {
+      closeModal();
+      resetForm();
+    }
     resetForm();
-  };
+  });
 </script>
+
 <style scoped>
   .auth-modal-form {
     position: absolute;
@@ -114,7 +112,7 @@
     color: var(--color-bg-primary);
   }
 
-  .auth-modal-close {
+  .auth-modal__close {
     position: absolute;
     top: 6px;
     right: 10px;
@@ -126,11 +124,9 @@
     color: var(--color-bg-primary);
   }
 
-  .auth-modal-input {
-    padding: 13px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+  .auth-modal__close-icon {
+    width: 30px;
+    height: 30px;
   }
 
   .auth-modal-buttons {

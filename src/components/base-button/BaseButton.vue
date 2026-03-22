@@ -49,13 +49,13 @@
     background: rgba(255, 255, 255, 0.1);
   }
 
-  .base-btn--auth {
+  .base-btn--ghost-secondary {
     background: transparent;
     color: var(--color-bg-primary);
     border: 1px solid black;
   }
 
-  .base-btn--auth:hover {
+  .base-btn--ghost-secondary:hover {
     background: rgba(112, 99, 99, 0.1);
   }
 </style>
