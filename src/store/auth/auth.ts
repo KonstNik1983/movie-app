@@ -150,6 +150,34 @@ export const useAuthStore = defineStore('auth', () => {
     }
   };
 
+  const updateProfile = (updates: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  }) => {
+    if (!userData.value) return;
+
+    userData.value = {
+      ...userData.value,
+      ...updates,
+    };
+
+    localStorage.setItem(
+      STORAGE_KEYS.CURRENT_USER,
+      JSON.stringify(userData.value)
+    );
+
+    const users = getUsers();
+
+    const updatedUsers = users.map((user) =>
+      user.id === userData.value!.id ? userData.value! : user
+    );
+
+    saveUsers(updatedUsers);
+
+    toast.success('Данные профиля обновлены');
+  };
+
   return {
     isAuth,
     userData,
@@ -160,5 +188,6 @@ export const useAuthStore = defineStore('auth', () => {
     logoutUser,
     addToWatchList,
     addToFavoritesList,
+    updateProfile,
   };
 });

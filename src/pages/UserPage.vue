@@ -39,12 +39,6 @@
 
     <div class="user-tab-content">
       <div v-if="activeTab === 'watch-list' || activeTab === 'favorites'">
-        <p class="user-tab-content--title">
-          {{
-            activeTab === 'watch-list' ? 'Хочу посмотреть' : 'Мне понравились'
-          }}
-        </p>
-
         <div class="movies__cards">
           <MediaCard
             v-for="item in userMediaStore.userMedia"
@@ -61,7 +55,26 @@
       </div>
 
       <div v-else>
-        <p>Настройки аккаунта будут здесь...</p>
+        <div class="user-profile">
+          <div class="user-avatar">
+            <img
+              src="https://i.pravatar.cc/150"
+              alt="Аватар пользователя"
+              class="user-avatar__img"
+            />
+          </div>
+          <div class="user-form">
+            <h2 class="user-form__title">Личные данные</h2>
+            <form class="user-form__data" @submit.prevent="handleProfileSave">
+              <BaseInput :field="firstNameField" placeholder="Имя" />
+              <BaseInput :field="lastNameField" placeholder="Фамилия" />
+              <BaseInput :field="emailField" placeholder="Email" type="email" />
+              <BaseButton type="submit" variant="ghost">
+                Сохранить изменения
+              </BaseButton>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -74,7 +87,12 @@
   import { useUserMediaStore } from '@/store/user-media/user-media';
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import MediaCard from '@/components/media-card/MediaCard.vue';
+  import BaseInput from '@/components/base-input/BaseInput.vue';
   import { ROUTES } from '@/router/paths';
+
+  import { useForm, useField } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
 
   const authStore = useAuthStore();
   const userMediaStore = useUserMediaStore();
@@ -100,6 +118,29 @@
       userMediaStore.loadUserMedia(authStore.userData?.watchList ?? []);
     }
   });
+
+  const schemaProfile = z.object({
+    firstName: z.string().min(2, 'Минимум 2 символа'),
+    lastName: z.string().min(2, 'Минимум 2 символа'),
+    email: z.string().email('Неверный email'),
+  });
+
+  const { handleSubmit } = useForm({
+    validationSchema: toTypedSchema(schemaProfile),
+    initialValues: {
+      firstName: authStore.userData?.firstName || '',
+      lastName: authStore.userData?.lastName || '',
+      email: authStore.userData?.email || '',
+    },
+  });
+
+  const firstNameField = useField<string>('firstName');
+  const lastNameField = useField<string>('lastName');
+  const emailField = useField<string>('email');
+
+  const handleProfileSave = handleSubmit((values) => {
+    authStore.updateProfile(values);
+  });
 </script>
 
 <style scoped>
@@ -111,6 +152,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 30px;
     margin-bottom: 20px;
     border-top: 1px solid var(--color-text-secondary);
     border-bottom: 1px solid var(--color-text-secondary);
@@ -131,12 +173,11 @@
   .user-tabs {
     display: flex;
     gap: 20px;
-    margin-bottom: 20px;
     border-bottom: 1px solid var(--color-text-secondary);
   }
 
-  .user-tab-content--title {
-    margin-bottom: 20px;
+  .user-tab-content {
+    padding: 40px 0;
   }
 
   .user-tabs-btn {
@@ -158,5 +199,31 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     margin-bottom: 30px;
+  }
+
+  .user-profile {
+    display: flex;
+    gap: 30px;
+  }
+
+  .user-form__title {
+    margin-bottom: 30px;
+  }
+
+  .user-avatar {
+    align-self: self-end;
+  }
+
+  .user-avatar__img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .user-form__data {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 </style>

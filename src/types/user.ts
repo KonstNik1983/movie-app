@@ -9,4 +9,7 @@ export interface User {
   password: string;
   favorites: UserMedia[];
   watchList: UserMedia[];
+  firstName?: string;
+  lastName?: string;
+  email?: string;
 }

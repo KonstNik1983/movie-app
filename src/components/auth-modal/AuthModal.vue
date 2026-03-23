@@ -37,7 +37,7 @@
 <script setup lang="ts">
   import BaseModal from '@/components/base-modal/BaseModal.vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
-  import BaseInput from '../base-input/BaseInput.vue';
+  import BaseInput from '@/components/base-input/BaseInput.vue';
   import { useAuthStore } from '@/store/auth/auth.ts';
 
   import { useForm, useField } from 'vee-validate';
