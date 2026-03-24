@@ -22,6 +22,18 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
   };
 
+  const saveCurrentUser = () => {
+    const users = getUsers();
+    const updatedUsers = users.map((user) =>
+      user.id === userData.value!.id ? userData.value! : user
+    );
+    saveUsers(updatedUsers);
+    localStorage.setItem(
+      STORAGE_KEYS.CURRENT_USER,
+      JSON.stringify(userData.value)
+    );
+  };
+
   const registerUser = (username: string, password: string) => {
     const users = getUsers();
 
@@ -98,56 +110,41 @@ export const useAuthStore = defineStore('auth', () => {
   const addToWatchList = (id: number, type: 'movie' | 'tv') => {
     if (!userData.value) return;
 
-    const isExistItem = userData.value.watchList.some(
+    const exists = userData.value.watchList.some(
       (item) => item.id === id && item.type === type
     );
 
-    if (!isExistItem) {
-      userData.value.watchList.push({ id, type });
-
-      localStorage.setItem(
-        STORAGE_KEYS.CURRENT_USER,
-        JSON.stringify(userData.value)
+    if (exists) {
+      userData.value.watchList = userData.value.watchList.filter(
+        (item) => !(item.id === id && item.type === type)
       );
-
-      const users = getUsers();
-
-      const updatedUsers = users.map((user) =>
-        user.id === userData.value!.id ? userData.value! : user
-      );
-      saveUsers(updatedUsers);
-
-      toast.success('Добавлено в "Хочу посмотреть"');
+      toast.info('Удалено из "Хочу посмотреть"');
     } else {
-      toast.warning('Этот фильм уже в списке');
+      userData.value.watchList.push({ id, type });
+      toast.success('Добавлено в "Хочу посмотреть"');
     }
+
+    saveCurrentUser();
   };
 
   const addToFavoritesList = (id: number, type: 'movie' | 'tv') => {
     if (!userData.value) return;
 
-    const isExistItem = userData.value.favorites.some(
+    const exists = userData.value.favorites.some(
       (item) => item.id === id && item.type === type
     );
 
-    if (!isExistItem) {
-      userData.value.favorites.push({ id, type });
-
-      localStorage.setItem(
-        STORAGE_KEYS.CURRENT_USER,
-        JSON.stringify(userData.value)
+    if (exists) {
+      userData.value.favorites = userData.value.favorites.filter(
+        (item) => !(item.id === id && item.type === type)
       );
-
-      const users = getUsers();
-      const updatedUsers = users.map((user) =>
-        user.id === userData.value!.id ? userData.value! : user
-      );
-      saveUsers(updatedUsers);
-
-      toast.success('Добавлено в "Избранное"');
+      toast.info('Удалено из "Избранное"');
     } else {
-      toast.warning('Этот фильм уже в списке');
+      userData.value.favorites.push({ id, type });
+      toast.success('Добавлено в "Избранное"');
     }
+
+    saveCurrentUser();
   };
 
   const updateProfile = (updates: {
