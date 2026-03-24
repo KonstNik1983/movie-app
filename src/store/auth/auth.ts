@@ -178,6 +178,31 @@ export const useAuthStore = defineStore('auth', () => {
     toast.success('Данные профиля обновлены');
   };
 
+  const changePassword = (currentPassword: string, newPassword: string) => {
+    if (!userData.value) return false;
+
+    if (userData.value.password !== currentPassword) {
+      toast.error('Текущий пароль неверный');
+      return false;
+    }
+
+    userData.value.password = newPassword;
+
+    const users = getUsers();
+    const updatedUsers = users.map((user) =>
+      user.id === userData.value!.id ? userData.value! : user
+    );
+    saveUsers(updatedUsers);
+
+    localStorage.setItem(
+      STORAGE_KEYS.CURRENT_USER,
+      JSON.stringify(userData.value)
+    );
+
+    toast.success('Пароль успешно изменён');
+    return true;
+  };
+
   return {
     isAuth,
     userData,
@@ -189,5 +214,6 @@ export const useAuthStore = defineStore('auth', () => {
     addToWatchList,
     addToFavoritesList,
     updateProfile,
+    changePassword,
   };
 });

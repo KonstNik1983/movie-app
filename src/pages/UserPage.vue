@@ -55,24 +55,57 @@
       </div>
 
       <div v-else>
-        <div class="user-profile">
-          <div class="user-avatar">
-            <img
-              src="https://i.pravatar.cc/150"
-              alt="Аватар пользователя"
-              class="user-avatar__img"
-            />
-          </div>
-          <div class="user-form">
-            <h2 class="user-form__title">Личные данные</h2>
-            <form class="user-form__data" @submit.prevent="handleProfileSave">
-              <BaseInput :field="firstNameField" placeholder="Имя" />
-              <BaseInput :field="lastNameField" placeholder="Фамилия" />
-              <BaseInput :field="emailField" placeholder="Email" type="email" />
-              <BaseButton type="submit" variant="ghost">
-                Сохранить изменения
-              </BaseButton>
-            </form>
+        <div class="user-profile-section">
+          <div class="user-layout">
+            <div class="user-layout__left">
+              <img :src="avatarUrl" alt="Аватар" class="user-avatar__img" />
+            </div>
+
+            <div class="user-layout__right">
+              <div class="user-block">
+                <h2 class="user-block__title">Личные данные</h2>
+
+                <form class="user-form" @submit.prevent="handleProfileSave">
+                  <BaseInput :field="firstNameField" placeholder="Имя" />
+                  <BaseInput :field="lastNameField" placeholder="Фамилия" />
+                  <BaseInput
+                    :field="emailField"
+                    placeholder="Email"
+                    type="email"
+                  />
+
+                  <BaseButton type="submit" variant="ghost" class="form-btn">
+                    Сохранить изменения
+                  </BaseButton>
+                </form>
+              </div>
+
+              <div class="user-block">
+                <h2 class="user-block__title">Изменение пароля</h2>
+
+                <form class="user-form" @submit.prevent="handlePasswordChange">
+                  <BaseInput
+                    :field="currentPasswordField"
+                    placeholder="Текущий пароль"
+                    type="password"
+                  />
+                  <BaseInput
+                    :field="newPasswordField"
+                    placeholder="Новый пароль"
+                    type="password"
+                  />
+                  <BaseInput
+                    :field="confirmPasswordField"
+                    placeholder="Повторите пароль"
+                    type="password"
+                  />
+
+                  <BaseButton type="submit" variant="ghost" class="form-btn">
+                    Сохранить изменения
+                  </BaseButton>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -81,7 +114,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, watch, onMounted } from 'vue';
+  import { ref, watch, onMounted, computed } from 'vue';
   import { useRouter } from 'vue-router';
   import { useAuthStore } from '@/store/auth/auth';
   import { useUserMediaStore } from '@/store/user-media/user-media';
@@ -98,7 +131,9 @@
   const userMediaStore = useUserMediaStore();
   const router = useRouter();
 
-  const activeTab = ref<'watch-list' | 'favorites' | 'settings'>('watch-list');
+  type Tabs = 'watch-list' | 'favorites' | 'settings';
+  const activeTab = ref<Tabs>('watch-list');
+  const tabs: Tabs[] = ['watch-list', 'favorites', 'settings'];
 
   const logoutUser = () => {
     authStore.logoutUser();
@@ -106,6 +141,8 @@
   };
 
   watch(activeTab, (tab) => {
+    localStorage.setItem('user_active_tab', tab);
+
     if (tab === 'watch-list') {
       userMediaStore.loadUserMedia(authStore.userData?.watchList ?? []);
     } else if (tab === 'favorites') {
@@ -114,10 +151,20 @@
   });
 
   onMounted(() => {
+    const savedTab = localStorage.getItem('user_active_tab');
+
+    if (tabs.includes(savedTab as Tabs)) {
+      activeTab.value = savedTab as Tabs;
+    }
+
     if (activeTab.value === 'watch-list') {
       userMediaStore.loadUserMedia(authStore.userData?.watchList ?? []);
     }
   });
+
+  const avatarUrl = computed(
+    () => `https://i.pravatar.cc/150?u=${authStore.userData?.id}`
+  );
 
   const schemaProfile = z.object({
     firstName: z.string().min(2, 'Минимум 2 символа'),
@@ -125,7 +172,7 @@
     email: z.string().email('Неверный email'),
   });
 
-  const { handleSubmit } = useForm({
+  const { handleSubmit: handleProfileSubmit } = useForm({
     validationSchema: toTypedSchema(schemaProfile),
     initialValues: {
       firstName: authStore.userData?.firstName || '',
@@ -138,8 +185,38 @@
   const lastNameField = useField<string>('lastName');
   const emailField = useField<string>('email');
 
-  const handleProfileSave = handleSubmit((values) => {
+  const handleProfileSave = handleProfileSubmit((values) => {
     authStore.updateProfile(values);
+  });
+
+  const schemaPassword = z
+    .object({
+      currentPassword: z.string().min(4, 'Минимум 4 символа'),
+      newPassword: z.string().min(4, 'Минимум 4 символа'),
+      confirmPassword: z.string().min(4, 'Минимум 4 символа'),
+    })
+    .refine((data) => data.newPassword === data.confirmPassword, {
+      message: 'Пароли не совпадают',
+      path: ['confirmPassword'],
+    });
+
+  const { handleSubmit: handlePasswordSubmit, resetForm } = useForm({
+    validationSchema: toTypedSchema(schemaPassword),
+  });
+
+  const currentPasswordField = useField<string>('currentPassword');
+  const newPasswordField = useField<string>('newPassword');
+  const confirmPasswordField = useField<string>('confirmPassword');
+
+  const handlePasswordChange = handlePasswordSubmit((values) => {
+    const success = authStore.changePassword(
+      values.currentPassword,
+      values.newPassword
+    );
+
+    if (success) {
+      resetForm();
+    }
   });
 </script>
 
@@ -201,29 +278,51 @@
     margin-bottom: 30px;
   }
 
-  .user-profile {
-    display: flex;
-    gap: 30px;
+  .user-profile-section {
+    padding-top: 40px;
   }
 
-  .user-form__title {
+  .user-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+  }
+
+  .user-layout__left {
+    width: 150px;
+    flex-shrink: 0;
+  }
+
+  .user-layout__right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .user-block {
+    border-bottom: 1px solid var(--color-text-secondary);
+    padding-bottom: 40px;
+  }
+
+  .user-block:last-child {
+    border-bottom: none;
+  }
+
+  .user-block__title {
     margin-bottom: 30px;
   }
 
-  .user-avatar {
-    align-self: self-end;
-  }
-
-  .user-avatar__img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-
-  .user-form__data {
+  .user-form {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    max-width: 300px;
+    width: 100%;
+  }
+
+  .form-btn {
+    align-self: flex-start;
   }
 </style>

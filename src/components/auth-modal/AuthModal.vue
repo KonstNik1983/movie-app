@@ -58,9 +58,8 @@
   };
 
   const schema = z.object({
-    username: z.string().min(3, 'Минимум 3 символа').nonempty('Введите логин'),
-
-    password: z.string().min(4, 'Минимум 4 символа').nonempty('Введите пароль'),
+    username: z.string().min(3, 'Минимум 3 символа'),
+    password: z.string().min(4, 'Минимум 4 символа'),
   });
 
   const { handleSubmit, resetForm } = useForm({
