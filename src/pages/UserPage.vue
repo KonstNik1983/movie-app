@@ -66,10 +66,19 @@
                 <h2 class="user-block__title">Личные данные</h2>
 
                 <form class="user-form" @submit.prevent="handleProfileSave">
-                  <BaseInput :field="firstNameField" placeholder="Имя" />
-                  <BaseInput :field="lastNameField" placeholder="Фамилия" />
                   <BaseInput
-                    :field="emailField"
+                    v-model="firstName"
+                    :error="firstNameField.errorMessage.value"
+                    placeholder="Имя"
+                  />
+                  <BaseInput
+                    v-model="lastName"
+                    :error="lastNameField.errorMessage.value"
+                    placeholder="Фамилия"
+                  />
+                  <BaseInput
+                    v-model="email"
+                    :error="emailField.errorMessage.value"
                     placeholder="Email"
                     type="email"
                   />
@@ -85,19 +94,22 @@
 
                 <form class="user-form" @submit.prevent="handlePasswordChange">
                   <BaseInput
-                    :field="currentPasswordField"
+                    v-model="currentPassword"
+                    :error="currentPasswordField.errorMessage.value"
+                    type="password"
                     placeholder="Текущий пароль"
-                    type="password"
                   />
                   <BaseInput
-                    :field="newPasswordField"
+                    v-model="newPassword"
+                    :error="newPasswordField.errorMessage.value"
+                    type="password"
                     placeholder="Новый пароль"
-                    type="password"
                   />
                   <BaseInput
-                    :field="confirmPasswordField"
-                    placeholder="Повторите пароль"
+                    v-model="confirmPassword"
+                    :error="confirmPasswordField.errorMessage.value"
                     type="password"
+                    placeholder="Повторите пароль"
                   />
 
                   <BaseButton type="submit" variant="ghost" class="form-btn">
@@ -122,6 +134,7 @@
   import MediaCard from '@/components/media-card/MediaCard.vue';
   import BaseInput from '@/components/base-input/BaseInput.vue';
   import { ROUTES } from '@/router/paths';
+  import { STORAGE_KEYS } from '@/constants/storage-keys';
 
   import { useForm, useField } from 'vee-validate';
   import { toTypedSchema } from '@vee-validate/zod';
@@ -141,7 +154,7 @@
   };
 
   watch(activeTab, (tab) => {
-    localStorage.setItem('user_active_tab', tab);
+    localStorage.setItem(STORAGE_KEYS.USER_ACTIVE_TAB, tab);
 
     if (tab === 'watch-list') {
       userMediaStore.loadUserMedia(authStore.userData?.watchList ?? []);
@@ -151,7 +164,7 @@
   });
 
   onMounted(() => {
-    const savedTab = localStorage.getItem('user_active_tab');
+    const savedTab = localStorage.getItem(STORAGE_KEYS.USER_ACTIVE_TAB);
 
     if (tabs.includes(savedTab as Tabs)) {
       activeTab.value = savedTab as Tabs;
@@ -185,6 +198,21 @@
   const lastNameField = useField<string>('lastName');
   const emailField = useField<string>('email');
 
+  const firstName = computed({
+    get: () => firstNameField.value.value,
+    set: (val: string) => firstNameField.setValue(val),
+  });
+
+  const lastName = computed({
+    get: () => lastNameField.value.value,
+    set: (val: string) => lastNameField.setValue(val),
+  });
+
+  const email = computed({
+    get: () => emailField.value.value,
+    set: (val: string) => emailField.setValue(val),
+  });
+
   const handleProfileSave = handleProfileSubmit((values) => {
     authStore.updateProfile(values);
   });
@@ -207,6 +235,21 @@
   const currentPasswordField = useField<string>('currentPassword');
   const newPasswordField = useField<string>('newPassword');
   const confirmPasswordField = useField<string>('confirmPassword');
+
+  const currentPassword = computed({
+    get: () => currentPasswordField.value.value,
+    set: (val: string) => currentPasswordField.setValue(val),
+  });
+
+  const newPassword = computed({
+    get: () => newPasswordField.value.value,
+    set: (val: string) => newPasswordField.setValue(val),
+  });
+
+  const confirmPassword = computed({
+    get: () => confirmPasswordField.value.value,
+    set: (val: string) => confirmPasswordField.setValue(val),
+  });
 
   const handlePasswordChange = handlePasswordSubmit((values) => {
     const success = authStore.changePassword(
