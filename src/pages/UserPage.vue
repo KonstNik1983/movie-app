@@ -66,12 +66,6 @@
                 <h2 class="user-block__title">Личные данные</h2>
 
                 <form class="user-form" @submit.prevent="handleProfileSave">
-<<<<<<< HEAD
-                  <BaseInput :field="firstNameField" placeholder="Имя" />
-                  <BaseInput :field="lastNameField" placeholder="Фамилия" />
-                  <BaseInput
-                    :field="emailField"
-=======
                   <BaseInput
                     v-model="firstName"
                     :error="firstNameField.errorMessage.value"
@@ -85,7 +79,6 @@
                   <BaseInput
                     v-model="email"
                     :error="emailField.errorMessage.value"
->>>>>>> feature/auth
                     placeholder="Email"
                     type="email"
                   />
@@ -101,21 +94,6 @@
 
                 <form class="user-form" @submit.prevent="handlePasswordChange">
                   <BaseInput
-<<<<<<< HEAD
-                    :field="currentPasswordField"
-                    placeholder="Текущий пароль"
-                    type="password"
-                  />
-                  <BaseInput
-                    :field="newPasswordField"
-                    placeholder="Новый пароль"
-                    type="password"
-                  />
-                  <BaseInput
-                    :field="confirmPasswordField"
-                    placeholder="Повторите пароль"
-                    type="password"
-=======
                     v-model="currentPassword"
                     :error="currentPasswordField.errorMessage.value"
                     type="password"
@@ -132,7 +110,6 @@
                     :error="confirmPasswordField.errorMessage.value"
                     type="password"
                     placeholder="Повторите пароль"
->>>>>>> feature/auth
                   />
 
                   <BaseButton type="submit" variant="ghost" class="form-btn">
@@ -157,10 +134,7 @@
   import MediaCard from '@/components/media-card/MediaCard.vue';
   import BaseInput from '@/components/base-input/BaseInput.vue';
   import { ROUTES } from '@/router/paths';
-<<<<<<< HEAD
-=======
   import { STORAGE_KEYS } from '@/constants/storage-keys';
->>>>>>> feature/auth
 
   import { useForm, useField } from 'vee-validate';
   import { toTypedSchema } from '@vee-validate/zod';
@@ -180,11 +154,7 @@
   };
 
   watch(activeTab, (tab) => {
-<<<<<<< HEAD
-    localStorage.setItem('user_active_tab', tab);
-=======
     localStorage.setItem(STORAGE_KEYS.USER_ACTIVE_TAB, tab);
->>>>>>> feature/auth
 
     if (tab === 'watch-list') {
       userMediaStore.loadUserMedia(authStore.userData?.watchList ?? []);
@@ -194,11 +164,7 @@
   });
 
   onMounted(() => {
-<<<<<<< HEAD
-    const savedTab = localStorage.getItem('user_active_tab');
-=======
     const savedTab = localStorage.getItem(STORAGE_KEYS.USER_ACTIVE_TAB);
->>>>>>> feature/auth
 
     if (tabs.includes(savedTab as Tabs)) {
       activeTab.value = savedTab as Tabs;
@@ -232,8 +198,6 @@
   const lastNameField = useField<string>('lastName');
   const emailField = useField<string>('email');
 
-<<<<<<< HEAD
-=======
   const firstName = computed({
     get: () => firstNameField.value.value,
     set: (val: string) => firstNameField.setValue(val),
@@ -249,7 +213,6 @@
     set: (val: string) => emailField.setValue(val),
   });
 
->>>>>>> feature/auth
   const handleProfileSave = handleProfileSubmit((values) => {
     authStore.updateProfile(values);
   });
@@ -273,8 +236,6 @@
   const newPasswordField = useField<string>('newPassword');
   const confirmPasswordField = useField<string>('confirmPassword');
 
-<<<<<<< HEAD
-=======
   const currentPassword = computed({
     get: () => currentPasswordField.value.value,
     set: (val: string) => currentPasswordField.setValue(val),
@@ -290,7 +251,6 @@
     set: (val: string) => confirmPasswordField.setValue(val),
   });
 
->>>>>>> feature/auth
   const handlePasswordChange = handlePasswordSubmit((values) => {
     const success = authStore.changePassword(
       values.currentPassword,

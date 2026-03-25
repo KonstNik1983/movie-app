@@ -15,11 +15,6 @@
       </button>
       <h2 class="auth-modal-title">Авторизация</h2>
 
-<<<<<<< HEAD
-      <BaseInput :field="usernameField" placeholder="Логин" />
-
-      <BaseInput :field="passwordField" type="password" placeholder="Пароль" />
-=======
       <BaseInput
         v-model="username"
         :error="usernameField.errorMessage.value"
@@ -32,7 +27,6 @@
         type="password"
         placeholder="Пароль"
       />
->>>>>>> feature/auth
 
       <div class="auth-modal-buttons">
         <BaseButton type="submit">Войти</BaseButton>
@@ -50,10 +44,7 @@
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD
-=======
   import { computed } from 'vue';
->>>>>>> feature/auth
   import BaseModal from '@/components/base-modal/BaseModal.vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import BaseInput from '@/components/base-input/BaseInput.vue';
@@ -88,8 +79,6 @@
   const usernameField = useField<string>('username');
   const passwordField = useField<string>('password');
 
-<<<<<<< HEAD
-=======
   const username = computed({
     get: () => usernameField.value.value,
     set: (value: string) => usernameField.setValue(value),
@@ -100,7 +89,6 @@
     set: (value: string) => passwordField.setValue(value),
   });
 
->>>>>>> feature/auth
   const handleLogin = handleSubmit((values) => {
     const success = authStore.loginUser(values.username, values.password);
     if (success) {
