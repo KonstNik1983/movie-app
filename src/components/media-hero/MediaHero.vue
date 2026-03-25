@@ -34,18 +34,26 @@
 
         <BaseButton variant="ghost" @click="openModal">Трейлер</BaseButton>
 
-        <button class="media-hero__btn" aria-label="Поделиться">
+        <button
+          class="media-hero__btn"
+          aria-label="Смотреть позже"
+          @click="authStore.addToWatchList(mediaId, mediaType)"
+        >
           <img
             class="media-hero__btn-img"
-            src="@/assets/icons/Frame-75.svg"
+            :src="inWatchList ? watchListIconFilled : watchListIcon"
             alt=""
           />
         </button>
 
-        <button class="media-hero__btn" aria-label="Избранное">
+        <button
+          class="media-hero__btn"
+          aria-label="Избранное"
+          @click="authStore.addToFavoritesList(mediaId, mediaType)"
+        >
           <img
             class="media-hero__btn-img"
-            src="@/assets/icons/Frame-77.svg"
+            :src="isFavorite ? favoritesFilledIcon : favoritesIcon"
             alt=""
           />
         </button>
@@ -62,9 +70,18 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
+  import { useAuthStore } from '@/store/auth/auth';
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import TrailerModal from '@/components/trailer-modal/TrailerModal.vue';
+
+  import favoritesIcon from '@/assets/icons/favorites.svg';
+  import favoritesFilledIcon from '@/assets/icons/favorites-filled.png';
+
+  import watchListIcon from '@/assets/icons/watch-list.svg';
+  import watchListIconFilled from '@/assets/icons/watch-list-filled.png';
+
+  const authStore = useAuthStore();
 
   const props = defineProps<{
     title: string;
@@ -79,6 +96,22 @@
   const isModalOpen = ref(false);
   const openModal = () => (isModalOpen.value = true);
   const closeModal = () => (isModalOpen.value = false);
+
+  const isFavorite = computed(() => {
+    if (!authStore.userData) return false;
+
+    return authStore.userData.favorites.some(
+      (item) => item.id === props.mediaId && item.type === props.mediaType
+    );
+  });
+
+  const inWatchList = computed(() => {
+    if (!authStore.userData) return false;
+
+    return authStore.userData.watchList.some(
+      (item) => item.id === props.mediaId && item.type === props.mediaType
+    );
+  });
 </script>
 
 <style scoped>

@@ -36,6 +36,7 @@
   import { storeToRefs } from 'pinia';
   import { computed, watch, onUnmounted } from 'vue';
   import { useMoviePageStore } from '@/store/movie/movie';
+
   import { useRoute } from 'vue-router';
   import { parseISO, format } from 'date-fns';
   import MediaHero from '@/components/media-hero/MediaHero.vue';

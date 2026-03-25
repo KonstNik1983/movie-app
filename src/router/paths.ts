@@ -34,6 +34,10 @@ export const ROUTES = {
     name: 'TvPage',
     path: 'series/:id',
   },
+  user: {
+    name: 'UserPage',
+    path: 'user',
+  },
 } as const;
 
 export const moviePage = (id?: number | string) => (id ? `/movies/${id}` : '#');
