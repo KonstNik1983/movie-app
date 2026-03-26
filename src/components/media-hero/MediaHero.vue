@@ -37,25 +37,17 @@
         <button
           class="media-hero__btn"
           aria-label="Смотреть позже"
-          @click="authStore.addToWatchList(mediaId, mediaType)"
+          @click="toggleWatchList"
         >
-          <img
-            class="media-hero__btn-img"
-            :src="inWatchList ? watchListIconFilled : watchListIcon"
-            alt=""
-          />
+          <BookmarkIcon :isAdded="inWatchList" />
         </button>
 
         <button
           class="media-hero__btn"
           aria-label="Избранное"
-          @click="authStore.addToFavoritesList(mediaId, mediaType)"
+          @click="toggleFavorite"
         >
-          <img
-            class="media-hero__btn-img"
-            :src="isFavorite ? favoritesFilledIcon : favoritesIcon"
-            alt=""
-          />
+          <HeartIcon :isLiked="isFavorite" />
         </button>
       </div>
     </div>
@@ -75,11 +67,8 @@
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import TrailerModal from '@/components/trailer-modal/TrailerModal.vue';
 
-  import favoritesIcon from '@/assets/icons/favorites.svg';
-  import favoritesFilledIcon from '@/assets/icons/favorites-filled.png';
-
-  import watchListIcon from '@/assets/icons/watch-list.svg';
-  import watchListIconFilled from '@/assets/icons/watch-list-filled.png';
+  import HeartIcon from '@/components/icons/HeartIcon.vue';
+  import BookmarkIcon from '@/components/icons/BookmarkIcon.vue';
 
   const authStore = useAuthStore();
 
@@ -105,6 +94,10 @@
     );
   });
 
+  const toggleFavorite = () => {
+    authStore.addToFavoritesList(props.mediaId, props.mediaType);
+  };
+
   const inWatchList = computed(() => {
     if (!authStore.userData) return false;
 
@@ -112,6 +105,10 @@
       (item) => item.id === props.mediaId && item.type === props.mediaType
     );
   });
+
+  const toggleWatchList = () => {
+    authStore.addToWatchList(props.mediaId, props.mediaType);
+  };
 </script>
 
 <style scoped>
@@ -193,7 +190,7 @@
   .media-hero__actions {
     margin-top: 20px;
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 15px;
   }
 
@@ -201,10 +198,8 @@
     background: transparent;
     border: none;
     cursor: pointer;
-  }
-
-  .media-hero__btn-img {
-    width: 47px;
-    height: 43px;
+    border: 1px solid gray;
+    padding: 12px 12px 5px 12px;
+    border-radius: 5px;
   }
 </style>
