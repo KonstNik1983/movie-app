@@ -6,7 +6,7 @@
         @click="closeModal"
         aria-label="Закрыть трейлер"
       >
-        <img src="@/assets/icons/modal-close.svg" alt="" />
+        <BaseCloseIcon />
       </button>
 
       <div v-if="trailerStore.isLoading" class="loader">Загрузка...</div>
@@ -26,6 +26,7 @@
 <script setup lang="ts">
   import { computed, watch } from 'vue';
   import BaseModal from '@/components/base-modal/BaseModal.vue';
+  import BaseCloseIcon from '@/components/icons/BaseCloseIcon.vue';
   import { useTrailerStore } from '@/store/trailer/trailer';
 
   const props = defineProps<{

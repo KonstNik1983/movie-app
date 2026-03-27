@@ -3,7 +3,6 @@
     viewBox="0 0 24 24"
     width="30"
     height="30"
-    @click="$emit('click')"
     :stroke="
       isAdded ? 'var(--color-btn-primary)' : 'var(--color-text-secondary)'
     "

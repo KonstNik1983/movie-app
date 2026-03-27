@@ -70,6 +70,10 @@
   import HeartIcon from '@/components/icons/HeartIcon.vue';
   import BookmarkIcon from '@/components/icons/BookmarkIcon.vue';
 
+  import { useToast } from 'vue-toastification';
+
+  const toast = useToast();
+
   const authStore = useAuthStore();
 
   const props = defineProps<{
@@ -95,6 +99,7 @@
   });
 
   const toggleFavorite = () => {
+    if (!authStore.isAuth) toast.warning('Зарегистрируйтесь!');
     authStore.addToFavoritesList(props.mediaId, props.mediaType);
   };
 
@@ -107,6 +112,7 @@
   });
 
   const toggleWatchList = () => {
+    if (!authStore.isAuth) toast.warning('Зарегистрируйтесь!');
     authStore.addToWatchList(props.mediaId, props.mediaType);
   };
 </script>
@@ -199,7 +205,9 @@
     border: none;
     cursor: pointer;
     border: 1px solid gray;
-    padding: 12px 12px 5px 12px;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
   }
 </style>

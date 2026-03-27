@@ -7,11 +7,7 @@
         @click="closeModal"
         aria-label="Закрыть"
       >
-        <img
-          src="@/assets/icons/close-icon.svg"
-          alt=""
-          class="auth-modal__close-icon"
-        />
+        <BaseCloseIcon />
       </button>
       <h2 class="auth-modal-title">Авторизация</h2>
 
@@ -31,11 +27,7 @@
       <div class="auth-modal-buttons">
         <BaseButton type="submit">Войти</BaseButton>
 
-        <BaseButton
-          type="button"
-          variant="ghost-secondary"
-          @click="handleRegister"
-        >
+        <BaseButton type="button" variant="ghost" @click="handleRegister">
           Зарегистрироваться
         </BaseButton>
       </div>
@@ -48,6 +40,7 @@
   import BaseModal from '@/components/base-modal/BaseModal.vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import BaseInput from '@/components/base-input/BaseInput.vue';
+  import BaseCloseIcon from '@/components/icons/BaseCloseIcon.vue';
   import { useAuthStore } from '@/store/auth/auth.ts';
 
   import { useForm, useField } from 'vee-validate';
@@ -114,33 +107,34 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--color-text-primary);
+    background: #4a4a4a;
+    color: var(--color-text-primary);
     padding: 30px 20px 20px;
     border-radius: 12px;
     width: 420px;
     max-width: 90%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 25px;
+    box-shadow: 0 12px 24px rgba(255, 255, 255, 0.12);
   }
 
   .auth-modal-title {
     font-size: 20px;
     text-align: center;
-    margin-bottom: 20px;
-    color: var(--color-bg-primary);
+    margin-bottom: 15px;
+    color: var(--color-text-primary);
   }
 
   .auth-modal__close {
     position: absolute;
-    top: 6px;
+    top: 10px;
     right: 10px;
     border: none;
     background: transparent;
     font-size: 25px;
     cursor: pointer;
     line-height: 1;
-    color: var(--color-bg-primary);
   }
 
   .auth-modal__close-icon {
@@ -150,8 +144,7 @@
 
   .auth-modal-buttons {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 10px;
+    gap: 20px;
+    margin-top: 5px;
   }
 </style>
