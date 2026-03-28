@@ -28,6 +28,6 @@
     fill: transparent;
     stroke: currentColor;
     stroke-width: 1.5;
-    transition: all 0.2s;
+    transition: stroke 0.2s;
   }
 </style>

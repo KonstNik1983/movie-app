@@ -33,6 +33,6 @@
     stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
-    transition: all 0.2s;
+    transition: stroke 0.2s;
   }
 </style>
