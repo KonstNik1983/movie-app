@@ -1,25 +1,24 @@
-import BaseHeartIcon from './HeartIcon.vue';
+import HeartIcon from './HeartIcon.vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-const meta: Meta<typeof BaseHeartIcon> = {
-  title: 'Components/BaseHeartIcon',
-  component: BaseHeartIcon,
-  argTypes: {
-    isLiked: { control: 'boolean' },
-  },
+const meta: Meta<typeof HeartIcon> = {
+  title: 'Components/HeartIcon',
+  component: HeartIcon,
 };
 
 export default meta;
-type Story = StoryObj<typeof BaseHeartIcon>;
+type Story = StoryObj<typeof HeartIcon>;
 
 export const Default: Story = {
-  args: {
-    isLiked: false,
-  },
+  render: () => ({
+    components: { HeartIcon },
+    template: `<div style="color: gray;"><HeartIcon /></div>`,
+  }),
 };
 
 export const Liked: Story = {
-  args: {
-    isLiked: true,
-  },
+  render: () => ({
+    components: { HeartIcon },
+    template: `<div style="color: red;"><HeartIcon /></div>`,
+  }),
 };

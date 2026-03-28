@@ -38,16 +38,18 @@
           class="media-hero__btn"
           aria-label="Смотреть позже"
           @click="toggleWatchList"
+          :class="{ active: inWatchList }"
         >
-          <BookmarkIcon :isAdded="inWatchList" />
+          <BookmarkIcon />
         </button>
 
         <button
           class="media-hero__btn"
           aria-label="Избранное"
           @click="toggleFavorite"
+          :class="{ active: isFavorite }"
         >
-          <HeartIcon :isLiked="isFavorite" />
+          <HeartIcon />
         </button>
       </div>
     </div>
@@ -204,10 +206,15 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    border: 1px solid gray;
+    border: 1px solid var(--color-text-secondary);
     border-radius: 5px;
     display: flex;
     align-items: center;
     padding: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  .media-hero__btn.active {
+    color: var(--color-btn-primary);
   }
 </style>

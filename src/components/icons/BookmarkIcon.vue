@@ -1,15 +1,10 @@
 <template>
   <svg
+    xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    width="30"
-    height="30"
-    :stroke="
-      isAdded ? 'var(--color-btn-primary)' : 'var(--color-text-secondary)'
-    "
-    stroke-width="1.5"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    fill="none"
+    :width="size"
+    :height="size"
+    class="add-icon"
   >
     <path
       d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
@@ -21,7 +16,23 @@
 </template>
 
 <script setup lang="ts">
-  defineProps<{
-    isAdded?: boolean;
-  }>();
+  const props = withDefaults(
+    defineProps<{
+      size?: number;
+    }>(),
+    {
+      size: 30,
+    }
+  );
 </script>
+
+<style scoped>
+  .add-icon {
+    fill: transparent;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.2s;
+  }
+</style>

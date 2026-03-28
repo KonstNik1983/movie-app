@@ -7,7 +7,7 @@
         @click="closeModal"
         aria-label="Закрыть"
       >
-        <BaseCloseIcon />
+        <CloseIcon />
       </button>
       <h2 class="auth-modal-title">Авторизация</h2>
 
@@ -40,7 +40,7 @@
   import BaseModal from '@/components/base-modal/BaseModal.vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import BaseInput from '@/components/base-input/BaseInput.vue';
-  import BaseCloseIcon from '@/components/icons/BaseCloseIcon.vue';
+  import CloseIcon from '@/components/icons/CloseIcon.vue';
   import { useAuthStore } from '@/store/auth/auth.ts';
 
   import { useForm, useField } from 'vee-validate';
@@ -135,11 +135,13 @@
     font-size: 25px;
     cursor: pointer;
     line-height: 1;
+    color: var(--color-text-primary);
+    opacity: 0.7;
+    transition: opacity 0.2s;
   }
 
-  .auth-modal__close-icon {
-    width: 30px;
-    height: 30px;
+  .auth-modal__close:hover {
+    opacity: 1;
   }
 
   .auth-modal-buttons {
