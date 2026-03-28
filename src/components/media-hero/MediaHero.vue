@@ -37,25 +37,19 @@
         <button
           class="media-hero__btn"
           aria-label="Смотреть позже"
-          @click="authStore.addToWatchList(mediaId, mediaType)"
+          @click="toggleWatchList"
+          :class="{ active: inWatchList }"
         >
-          <img
-            class="media-hero__btn-img"
-            :src="inWatchList ? watchListIconFilled : watchListIcon"
-            alt=""
-          />
+          <BookmarkIcon />
         </button>
 
         <button
           class="media-hero__btn"
           aria-label="Избранное"
-          @click="authStore.addToFavoritesList(mediaId, mediaType)"
+          @click="toggleFavorite"
+          :class="{ active: isFavorite }"
         >
-          <img
-            class="media-hero__btn-img"
-            :src="isFavorite ? favoritesFilledIcon : favoritesIcon"
-            alt=""
-          />
+          <HeartIcon />
         </button>
       </div>
     </div>
@@ -75,11 +69,12 @@
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import TrailerModal from '@/components/trailer-modal/TrailerModal.vue';
 
-  import favoritesIcon from '@/assets/icons/favorites.svg';
-  import favoritesFilledIcon from '@/assets/icons/favorites-filled.png';
+  import HeartIcon from '@/components/icons/HeartIcon.vue';
+  import BookmarkIcon from '@/components/icons/BookmarkIcon.vue';
 
-  import watchListIcon from '@/assets/icons/watch-list.svg';
-  import watchListIconFilled from '@/assets/icons/watch-list-filled.png';
+  import { useToast } from 'vue-toastification';
+
+  const toast = useToast();
 
   const authStore = useAuthStore();
 
@@ -105,6 +100,11 @@
     );
   });
 
+  const toggleFavorite = () => {
+    if (!authStore.isAuth) toast.warning('Зарегистрируйтесь!');
+    authStore.addToFavoritesList(props.mediaId, props.mediaType);
+  };
+
   const inWatchList = computed(() => {
     if (!authStore.userData) return false;
 
@@ -112,6 +112,11 @@
       (item) => item.id === props.mediaId && item.type === props.mediaType
     );
   });
+
+  const toggleWatchList = () => {
+    if (!authStore.isAuth) toast.warning('Зарегистрируйтесь!');
+    authStore.addToWatchList(props.mediaId, props.mediaType);
+  };
 </script>
 
 <style scoped>
@@ -193,7 +198,7 @@
   .media-hero__actions {
     margin-top: 20px;
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 15px;
   }
 
@@ -201,10 +206,15 @@
     background: transparent;
     border: none;
     cursor: pointer;
+    border: 1px solid var(--color-text-secondary);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    color: var(--color-text-secondary);
   }
 
-  .media-hero__btn-img {
-    width: 47px;
-    height: 43px;
+  .media-hero__btn.active {
+    color: var(--color-btn-primary);
   }
 </style>

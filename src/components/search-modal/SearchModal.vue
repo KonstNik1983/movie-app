@@ -25,9 +25,9 @@
               type="button"
               class="search-modal__search-clear-btn"
               @click="resetQuery"
-              title="Очистить поиск"
+              aria-label="Очистить поиск"
             >
-              <img src="@/assets/icons/modal-close.svg" alt="Очистить" />
+              <CloseIcon />
             </button>
           </div>
 
@@ -109,6 +109,7 @@
   import { ref, watch } from 'vue';
   import BaseModal from '@/components/base-modal/BaseModal.vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
+  import CloseIcon from '@/components/icons/CloseIcon.vue';
   import { ROUTES } from '@/router/paths';
   import { buildImage } from '@/utils/movie.utils';
   import { moviePage, tvPage } from '@/router/paths';
@@ -192,8 +193,9 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.7;
     transition: opacity 0.2s;
+    color: var(--color-text-primary);
   }
 
   .search-modal__search-clear-btn:hover {

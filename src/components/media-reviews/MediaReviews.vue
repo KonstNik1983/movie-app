@@ -27,6 +27,19 @@
             class="media-review__content-description"
             v-html="review.contentHtml"
           ></div>
+          <div class="media-review__actions">
+            <button class="review-action-btn" aria-label="Комментарии">
+              <img src="@/assets/icons/comment.svg" alt="" />
+            </button>
+
+            <button class="review-action-btn" aria-label="Лайк">
+              <img src="@/assets/icons/like.svg" alt="" />
+            </button>
+
+            <button class="review-action-btn down" aria-label="Дизлайк">
+              <img src="@/assets/icons/dislike.svg" alt="" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -120,5 +133,29 @@
     color: var(--color-text-secondary);
     margin: 0;
     white-space: pre-line;
+  }
+
+  .media-review__content-description * {
+    color: inherit;
+  }
+
+  .media-review__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  .review-action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .down {
+    transform: translateY(6px);
   }
 </style>

@@ -37,8 +37,20 @@
     width: 100%;
     padding: 13px 10px;
     border-radius: 6px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-text-primary);
     font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-primary);
+  }
+
+  .base-input__field:focus {
+    outline: none;
+    border: 1px solid var(--color-text-primary);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
+
+  .base-input__field::placeholder {
+    color: var(--color-text-primary);
   }
 
   .base-input__error {
