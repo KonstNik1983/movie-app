@@ -17,8 +17,8 @@
 <style scoped>
   .media-hero-skeleton {
     width: 100%;
-    height: 600px;
-    background: #1a1a1a;
+    min-height: 600px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2));
     display: flex;
     align-items: flex-end;
   }
@@ -30,22 +30,16 @@
     gap: 20px;
   }
 
-  .skeleton-item {
-    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
-    background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
+  .title {
+    width: 50%;
+    height: 40px;
     border-radius: 4px;
   }
 
-  .title {
-    width: 250px;
-    height: 40px;
-    margin-bottom: 20px;
-  }
-
   .meta {
-    width: 300px;
+    width: 60%;
     height: 20px;
+    border-radius: 4px;
   }
 
   .actions {
@@ -68,14 +62,5 @@
     width: 55px;
     height: 55px;
     border-radius: 6px;
-  }
-
-  @keyframes skeleton-loading {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
   }
 </style>

@@ -23,30 +23,17 @@
   .poster {
     width: 100%;
     aspect-ratio: 16 / 9;
+    border-radius: 6px;
   }
 
   .meta {
     width: 60%;
     height: 20px;
+    border-radius: 4px;
   }
   .title {
     width: 80%;
     height: 20px;
-  }
-
-  .skeleton-item {
-    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-    background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
     border-radius: 4px;
-  }
-
-  @keyframes skeleton-loading {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
   }
 </style>

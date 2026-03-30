@@ -16,6 +16,7 @@
         <MediaReviews
           :reviews="movieStore.formattedReviews"
           :overview="movie?.overview"
+          :isLoading="isLoading"
         />
       </div>
 
@@ -27,6 +28,7 @@
         :countries="movieCountries"
         :duration="movieDuration"
         :languages="spokenLanguages"
+        :isLoading="isLoading"
       />
     </div>
   </section>

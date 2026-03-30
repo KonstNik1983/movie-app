@@ -1,64 +1,75 @@
 <template>
   <div class="media-reviews">
-    <div v-if="reviews.length">
-      <p class="media-review__description">{{ overview }}</p>
-      <div
-        v-for="review in visibleReviews"
-        :key="review.id"
-        class="media-review"
-      >
-        <div class="media-review__header">
-          <img
-            :src="getAvatar(review)"
-            alt="Author avatar"
-            class="media-review__avatar"
-          />
-
-          <div class="media-review__meta">
-            <span class="media-review__author">{{ review.author }}</span>
-            <span class="media-review__date">
-              {{ formatDate(review.created_at) }}
-            </span>
-          </div>
-        </div>
-
-        <div class="media-review__content">
-          <div
-            class="media-review__content-description"
-            v-html="review.contentHtml"
-          ></div>
-          <div class="media-review__actions">
-            <button class="review-action-btn" aria-label="Комментарии">
-              <img src="@/assets/icons/comment.svg" alt="" />
-            </button>
-
-            <button class="review-action-btn" aria-label="Лайк">
-              <img src="@/assets/icons/like.svg" alt="" />
-            </button>
-
-            <button class="review-action-btn down" aria-label="Дизлайк">
-              <img src="@/assets/icons/dislike.svg" alt="" />
-            </button>
-          </div>
-        </div>
+    <template v-if="isLoading">
+      <div class="skeleton-overview">
+        <p class="description-skeleton skeleton-item"></p>
+        <p class="description-skeleton skeleton-item"></p>
+        <p class="description-skeleton skeleton-item short"></p>
       </div>
+      <MediaReviewsSkeleton v-for="n in 2" :key="n" />
+    </template>
 
-      <BaseButton
-        v-if="hasMoreReviews"
-        variant="ghost"
-        @click="toggleShowReviews"
-      >
-        {{ showAllReviews ? 'Скрыть' : 'Смотреть все' }}
-      </BaseButton>
-    </div>
+    <template v-else>
+      <div v-if="reviews.length">
+        <p class="media-review__description">{{ overview }}</p>
+        <div
+          v-for="review in visibleReviews"
+          :key="review.id"
+          class="media-review"
+        >
+          <div class="media-review__header">
+            <img
+              :src="getAvatar(review)"
+              alt="Author avatar"
+              class="media-review__avatar"
+            />
 
-    <div v-else>Рецензии к данному материалу не найдены!</div>
+            <div class="media-review__meta">
+              <span class="media-review__author">{{ review.author }}</span>
+              <span class="media-review__date">
+                {{ formatDate(review.created_at) }}
+              </span>
+            </div>
+          </div>
+
+          <div class="media-review__content">
+            <div
+              class="media-review__content-description"
+              v-html="review.contentHtml"
+            ></div>
+            <div class="media-review__actions">
+              <button class="review-action-btn" aria-label="Комментарии">
+                <img src="@/assets/icons/comment.svg" alt="" />
+              </button>
+
+              <button class="review-action-btn" aria-label="Лайк">
+                <img src="@/assets/icons/like.svg" alt="" />
+              </button>
+
+              <button class="review-action-btn down" aria-label="Дизлайк">
+                <img src="@/assets/icons/dislike.svg" alt="" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <BaseButton
+          v-if="hasMoreReviews"
+          variant="ghost"
+          @click="toggleShowReviews"
+        >
+          {{ showAllReviews ? 'Скрыть' : 'Смотреть все' }}
+        </BaseButton>
+      </div>
+      <div v-else>Рецензии к данному материалу не найдены!</div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref, computed } from 'vue';
   import BaseButton from '@/components/base-button/BaseButton.vue';
+  import MediaReviewsSkeleton from '../skeletons/media-reviews-skeleton/MediaReviewsSkeleton.vue';
   import { formatDate } from '@/utils/date';
   import { buildAvatarUrl } from '@/utils/image';
 
@@ -67,6 +78,7 @@
   const props = defineProps<{
     reviews: (MovieReviews200ResultsItem & { contentHtml: string })[];
     overview?: string | null;
+    isLoading: boolean;
   }>();
 
   const showAllReviews = ref(false);
@@ -97,6 +109,23 @@
 
   .media-review__description {
     margin-bottom: 40px;
+  }
+
+  .skeleton-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .description-skeleton {
+    width: 80%;
+    height: 15px;
+    border-radius: 4px;
+  }
+
+  .short {
+    width: 60%;
   }
 
   .media-review__header {

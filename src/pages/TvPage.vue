@@ -22,6 +22,7 @@
         <MediaReviews
           :reviews="tvStore.formattedReviews"
           :overview="tv?.overview"
+          :isLoading="isLoading"
         />
       </div>
 
@@ -33,6 +34,7 @@
         :countries="tvCountries"
         :duration="episodeDuration"
         :languages="spokenLanguages"
+        :isLoading="isLoading"
       />
     </div>
   </section>

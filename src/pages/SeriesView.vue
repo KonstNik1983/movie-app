@@ -2,6 +2,8 @@
   <MediaSection
     title="Каталог сериалов"
     :sections="tvStore.formattedTvSections"
+    :isLoading="tvStore.isLoading"
+    :genresCount="6"
   />
 </template>
 

@@ -18,7 +18,8 @@
       <BaseButton variant="primary">Смотреть сейчас</BaseButton>
     </div>
     <div class="hero__right">
-      <HeroSlider />
+      <SliderSkeleton v-if="homeStore.isLoading" />
+      <HeroSlider v-else />
     </div>
   </section>
 
@@ -45,8 +46,15 @@
     <MediaSection
       title="Коталог фильмов и сериалов"
       :sections="movieStore.formattedHomeMovieSections"
+      :isLoading="homeStore.isLoading"
+      :genresCount="3"
     />
-    <MediaSection title="" :sections="tvStore.formattedHomeTvSections" />
+    <MediaSection
+      title=""
+      :sections="tvStore.formattedHomeTvSections"
+      :isLoading="homeStore.isLoading"
+      :genresCount="3"
+    />
   </section>
   <section class="collections section-padding">
     <h2 class="collections__title">Тематические подборки</h2>
@@ -149,6 +157,7 @@
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
   import MediaSection from '@/components/media-sections/MediaSections.vue';
+  import SliderSkeleton from '@/components/skeletons/slider-skeleton/SliderSkeleton.vue';
 
   import { collectionPage } from '@/router/paths';
 
