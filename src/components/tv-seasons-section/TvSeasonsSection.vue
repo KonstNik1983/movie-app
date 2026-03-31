@@ -34,13 +34,13 @@
       </div>
     </div>
 
+    <div v-else class="skeleton-grid">
+      <MovieCardSkeleton v-for="n in 4" :key="n" />
+    </div>
+
     <span v-if="extraEpisodesText" class="more-episodes">
       {{ extraEpisodesText }}
     </span>
-
-    <div v-else class="skeleton">
-      <div class="skeleton-bg" v-for="n in 4" :key="n"></div>
-    </div>
   </div>
 </template>
 
@@ -50,6 +50,7 @@
   import { buildImage } from '@/utils/movie.utils';
   import type { TvSeasonDetails200 } from '@/api/types';
   import { pluralizeRu } from '@/utils/pluralize';
+  import MovieCardSkeleton from '@/components/skeletons/movie-card-skeleton/MovieCardSkeleton.vue';
 
   const props = defineProps<{
     tvId: number;
@@ -148,27 +149,9 @@
     margin-top: 15px;
   }
 
-  .skeleton {
+  .skeleton-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-  }
-
-  .skeleton-bg {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
-    background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite;
-  }
-
-  @keyframes skeleton-loading {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
   }
 </style>

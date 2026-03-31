@@ -1,5 +1,8 @@
 <template>
-  <aside class="media-sidebar-info">
+  <aside v-if="isLoading">
+    <MediaSidebarSkeleton />
+  </aside>
+  <aside v-else class="media-sidebar-info">
     <div
       v-for="item in sidebarItems"
       :key="item.label"
@@ -13,6 +16,8 @@
 
 <script setup lang="ts">
   import { computed } from 'vue';
+  import MediaSidebarSkeleton from '../skeletons/media-sidebar-skeleton/MediaSidebarSkeleton.vue';
+
   const props = defineProps<{
     rating?: string | number | null;
     genres?: string | null;
@@ -21,6 +26,7 @@
     countries?: string | null;
     duration?: string | null;
     languages?: string | null;
+    isLoading: boolean;
   }>();
 
   const sidebarItems = computed(() => [

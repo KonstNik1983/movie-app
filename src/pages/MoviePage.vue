@@ -1,7 +1,7 @@
 <template>
   <MediaHero
-    v-if="movie?.id"
-    :mediaId="movie?.id"
+    :isLoading="isLoading"
+    :mediaId="movie?.id ?? 0"
     :title="movie?.title ?? ''"
     :backdrop="posterImg"
     :meta="movieMeta"
@@ -16,6 +16,7 @@
         <MediaReviews
           :reviews="movieStore.formattedReviews"
           :overview="movie?.overview"
+          :isLoading="isLoading"
         />
       </div>
 
@@ -27,6 +28,7 @@
         :countries="movieCountries"
         :duration="movieDuration"
         :languages="spokenLanguages"
+        :isLoading="isLoading"
       />
     </div>
   </section>
@@ -53,7 +55,8 @@
 
   const movieStore = useMoviePageStore();
 
-  const { movie, credits, similar, releaseDates } = storeToRefs(movieStore);
+  const { movie, credits, similar, releaseDates, isLoading } =
+    storeToRefs(movieStore);
 
   const posterImg = computed(() => {
     if (!movie.value) return '';

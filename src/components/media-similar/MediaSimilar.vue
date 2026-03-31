@@ -6,7 +6,7 @@
 
     <h2 v-else class="media-similar__title">Похожие фильмы</h2>
 
-    <div class="media-similar__list">
+    <div v-if="movies?.length" class="media-similar__list">
       <router-link
         v-for="item in movies"
         :key="item.id"
@@ -28,10 +28,15 @@
         </h4>
       </router-link>
     </div>
+    <div v-else class="media-similar__list">
+      <MovieCardSkeleton v-for="n in 4" :key="n" :hasMeta="true" />
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
+  import MovieCardSkeleton from '../skeletons/movie-card-skeleton/MovieCardSkeleton.vue';
+
   defineProps<{
     title?: string;
     movies: {

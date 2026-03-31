@@ -1,7 +1,7 @@
 <template>
   <MediaHero
-    v-if="tv?.id"
-    :mediaId="tv?.id"
+    :isLoading="isLoading"
+    :mediaId="tv?.id ?? 0"
     :title="tv?.name ?? ''"
     :backdrop="posterImg"
     :meta="tvMeta"
@@ -22,6 +22,7 @@
         <MediaReviews
           :reviews="tvStore.formattedReviews"
           :overview="tv?.overview"
+          :isLoading="isLoading"
         />
       </div>
 
@@ -33,6 +34,7 @@
         :countries="tvCountries"
         :duration="episodeDuration"
         :languages="spokenLanguages"
+        :isLoading="isLoading"
       />
     </div>
   </section>
@@ -59,7 +61,8 @@
 
   const route = useRoute();
   const tvStore = useTvPageStore();
-  const { tv, credits, similar, seasonEpisodes } = storeToRefs(tvStore);
+  const { tv, credits, similar, seasonEpisodes, isLoading } =
+    storeToRefs(tvStore);
 
   const seasonsList = computed(() => {
     return (

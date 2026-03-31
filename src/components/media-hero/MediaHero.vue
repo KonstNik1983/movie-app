@@ -1,5 +1,6 @@
 <template>
-  <section class="media-hero" :key="mediaId">
+  <MediaHeroSkeleton v-if="isLoading" />
+  <section v-else class="media-hero" :key="mediaId">
     <div class="media-hero__bg">
       <img
         v-if="backdrop"
@@ -68,6 +69,7 @@
   import { useAuthStore } from '@/store/auth/auth';
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import TrailerModal from '@/components/trailer-modal/TrailerModal.vue';
+  import MediaHeroSkeleton from '../skeletons/media-hero-skeleton/MediaHeroSkeleton.vue';
 
   import HeartIcon from '@/components/icons/HeartIcon.vue';
   import BookmarkIcon from '@/components/icons/BookmarkIcon.vue';
@@ -79,6 +81,7 @@
   const authStore = useAuthStore();
 
   const props = defineProps<{
+    isLoading: boolean;
     title: string;
     backdrop?: string;
     meta?: string;

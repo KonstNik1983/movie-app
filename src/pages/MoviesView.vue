@@ -2,6 +2,8 @@
   <MediaSection
     title="Каталог фильмов"
     :sections="movieStore.formattedMovieSections"
+    :isLoading="movieStore.isLoading"
+    :genresCount="6"
   />
 </template>
 

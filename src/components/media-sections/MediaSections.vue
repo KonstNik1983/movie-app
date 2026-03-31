@@ -2,37 +2,60 @@
   <section class="movies section-padding">
     <h2 v-if="title" class="movies__title">{{ title }}</h2>
 
-    <div
-      v-for="section in sections"
-      :key="section.genre.id"
-      class="movies__genre"
-    >
-      <h3 class="movie__title">{{ section.genre.title }}</h3>
+    <template v-if="isLoading">
+      <div
+        v-for="genreIndex in genresCount"
+        :key="genreIndex"
+        class="movies__genre"
+      >
+        <h3 class="movie__title movie__title--skeleton skeleton-item"></h3>
 
-      <div class="movies__cards">
-        <MediaCard
-          v-for="item in section.movies"
-          :key="item.id"
-          :id="item.id"
-          :title="item.title"
-          :image="item.image"
-          :rating="item.rating"
-          :media="item.media"
-          :genres="item.genres"
-          :link="item.link"
-        />
+        <div class="movies__cards">
+          <MovieCardSkeleton
+            v-for="cardIndex in 4"
+            :key="cardIndex"
+            :hasMeta="true"
+          />
+        </div>
       </div>
-    </div>
+    </template>
+
+    <template v-else>
+      <div
+        v-for="section in sections"
+        :key="section.genre.id"
+        class="movies__genre"
+      >
+        <h3 class="movie__title">{{ section.genre.title }}</h3>
+
+        <div class="movies__cards">
+          <MediaCard
+            v-for="item in section.movies"
+            :key="item.id"
+            :id="item.id"
+            :title="item.title"
+            :image="item.image"
+            :rating="item.rating"
+            :media="item.media"
+            :genres="item.genres"
+            :link="item.link"
+          />
+        </div>
+      </div>
+    </template>
   </section>
 </template>
 
 <script setup lang="ts">
   import type { FormattedSection } from '@/components/media/media.types';
   import MediaCard from '@/components/media-card/MediaCard.vue';
+  import MovieCardSkeleton from '../skeletons/movie-card-skeleton/MovieCardSkeleton.vue';
 
   defineProps<{
     title: string;
     sections: FormattedSection[];
+    isLoading: boolean;
+    genresCount: number;
   }>();
 </script>
 <style scoped>
@@ -43,6 +66,13 @@
     font-size: 20px;
     margin-bottom: 30px;
   }
+
+  .movie__title--skeleton {
+    width: 200px;
+    height: 25px;
+    border-radius: 4px;
+  }
+
   .movies__cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
