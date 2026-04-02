@@ -13,7 +13,8 @@
     "build-storybook": "storybook build",
     "oxlint": "oxlint",
     "oxlint:fix": "oxlint --fix",
-    "oxfmt": "oxfmt ."
+    "oxfmt": "oxfmt .",
+    "test": "vitest"
   },
   "dependencies": {
     "@vee-validate/zod": "^4.15.1",
@@ -40,6 +41,8 @@
     "@storybook/addon-onboarding": "^10.3.3",
     "@storybook/addon-vitest": "^10.3.3",
     "@storybook/vue3-vite": "^10.3.3",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/vue": "^8.1.0",
     "@types/lodash": "^4.17.24",
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
@@ -47,11 +50,13 @@
     "@vitejs/plugin-vue": "^6.0.5",
     "@vitest/browser-playwright": "^4.1.1",
     "@vitest/coverage-v8": "^4.1.1",
+    "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-storybook": "^10.3.3",
     "eslint-plugin-vue": "^9.33.0",
+    "jsdom": "^29.0.1",
     "orval": "^8.3.0",
     "oxfmt": "^0.43.0",
     "oxlint": "^1.58.0",
