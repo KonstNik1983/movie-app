@@ -65,7 +65,7 @@ export const useSearchStore = defineStore('search', () => {
       personResults.value = (peopleResp.data.results ?? []).filter((person) =>
         person.name ? isRussian(person.name) : false
       );
-    } catch (error) {
+    } catch {
       toast.error('Ошибка поиска');
     } finally {
       isLoading.value = false;
@@ -89,7 +89,7 @@ export const useSearchStore = defineStore('search', () => {
       popularPeople.value = (peopleResponse.data.results ?? []).filter(
         (person) => person.name && isRussian(person.name)
       );
-    } catch (error) {
+    } catch {
       toast.error('Ошибка загрузки популярных медиа');
     }
   };

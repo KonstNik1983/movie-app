@@ -74,7 +74,7 @@ export const useMoviesStore = defineStore('moviesStore', () => {
           movies,
         };
       });
-    } catch (error) {
+    } catch {
       toast.error('Ошибка загрузки фильмов по жанру!');
     } finally {
       isLoading.value = false;

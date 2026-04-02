@@ -77,9 +77,8 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       similar.value = getSettledData<TvSeriesSimilar200>(similarResult);
       contentRatings.value =
         getSettledData<TvSeriesContentRatings200>(ratingsResult);
-    } catch (error) {
+    } catch {
       toast.error('Ошибка загрузки данных сериала!');
-      console.error('Ошибка loadTv:', error);
     } finally {
       isLoading.value = false;
     }
@@ -91,7 +90,7 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
     try {
       const response = await tvSeasonDetails(tvId, seasonNumber);
       seasonEpisodes.value[seasonNumber] = response.data;
-    } catch (error) {
+    } catch {
       toast.error('Ошибка загрузки данных сезона!');
     } finally {
       isLoading.value = false;

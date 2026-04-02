@@ -32,7 +32,7 @@ export const useSliderStore = defineStore('sliderStore', () => {
       const { data: movies } = response;
 
       slides.value = movies?.results ?? [];
-    } catch (error) {
+    } catch {
       toast.error('Ошибка загрузки слайдера!');
     } finally {
       isLoading.value = false;

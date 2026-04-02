@@ -69,7 +69,7 @@ export const useTvStore = defineStore('tvStore', () => {
           tv,
         };
       });
-    } catch (error) {
+    } catch {
       toast.error('Ошибка загрузки сериалов по жанру!');
     } finally {
       isLoading.value = false;

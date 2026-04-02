@@ -72,9 +72,8 @@ export const useMoviePageStore = defineStore('movieStore', () => {
       reviews.value = getSettledData<MovieReviews200>(reviewsResult);
       similar.value = getSettledData<MovieSimilar200>(similarResult);
       releaseDates.value = getSettledData<MovieReleaseDates200>(releaseResult);
-    } catch (error) {
+    } catch {
       toast.error('Ошибка загрузки данных фильма!');
-      console.error('Ошибка loadMovie:', error);
     } finally {
       isLoading.value = false;
     }

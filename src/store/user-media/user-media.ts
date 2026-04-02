@@ -67,7 +67,7 @@ export const useUserMediaStore = defineStore('userMediaStore', () => {
           };
         })
         .filter(Boolean) as typeof userMedia.value;
-    } catch (error) {
+    } catch {
       toast.error('Ошибка получения медиа');
     } finally {
       isLoading.value = false;

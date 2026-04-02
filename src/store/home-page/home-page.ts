@@ -25,7 +25,7 @@ export const useHomePageStore = defineStore('homePage', () => {
         movieStore.loadMovies(),
         tvStore.loadTv(),
       ]);
-    } catch (error) {
+    } catch {
       toast.error('Home page load error!');
     } finally {
       isLoading.value = false;

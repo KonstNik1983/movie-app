@@ -44,7 +44,7 @@ export const useTrailerStore = defineStore('trailerStore', () => {
         videos.find((video) => video.site === 'YouTube');
 
       trailerKey.value = trailer?.key ?? null;
-    } catch (err) {
+    } catch {
       toast.error('Ошибка загрузки трейлера');
       reset();
     } finally {
