@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { FindById200MovieResultsItem } from './findById200MovieResultsItem';
+import type { FindById200MovieResultsItem } from "./findById200MovieResultsItem";
 
 export type FindById200 = {
   movie_results?: FindById200MovieResultsItem[];

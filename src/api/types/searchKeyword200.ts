@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { SearchKeyword200ResultsItem } from './searchKeyword200ResultsItem';
+import type { SearchKeyword200ResultsItem } from "./searchKeyword200ResultsItem";
 
 export type SearchKeyword200 = {
   page?: number;

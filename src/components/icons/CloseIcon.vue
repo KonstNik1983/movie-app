@@ -13,18 +13,18 @@
 </template>
 
 <script setup lang="ts">
-  const props = withDefaults(
-    defineProps<{
-      size?: number;
-    }>(),
-    {
-      size: 24,
-    }
-  );
+const props = withDefaults(
+  defineProps<{
+    size?: number;
+  }>(),
+  {
+    size: 24,
+  },
+);
 </script>
 
 <style scoped>
-  .base-close-icon {
-    fill: currentColor;
-  }
+.base-close-icon {
+  fill: currentColor;
+}
 </style>

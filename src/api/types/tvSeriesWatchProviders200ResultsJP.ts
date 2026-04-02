@@ -4,9 +4,9 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvSeriesWatchProviders200ResultsJPBuyItem } from './tvSeriesWatchProviders200ResultsJPBuyItem';
-import type { TvSeriesWatchProviders200ResultsJPFlatrateItem } from './tvSeriesWatchProviders200ResultsJPFlatrateItem';
-import type { TvSeriesWatchProviders200ResultsJPRentItem } from './tvSeriesWatchProviders200ResultsJPRentItem';
+import type { TvSeriesWatchProviders200ResultsJPBuyItem } from "./tvSeriesWatchProviders200ResultsJPBuyItem";
+import type { TvSeriesWatchProviders200ResultsJPFlatrateItem } from "./tvSeriesWatchProviders200ResultsJPFlatrateItem";
+import type { TvSeriesWatchProviders200ResultsJPRentItem } from "./tvSeriesWatchProviders200ResultsJPRentItem";
 
 export type TvSeriesWatchProviders200ResultsJP = {
   link?: string;

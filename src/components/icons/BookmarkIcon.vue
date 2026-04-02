@@ -16,23 +16,23 @@
 </template>
 
 <script setup lang="ts">
-  const props = withDefaults(
-    defineProps<{
-      size?: number;
-    }>(),
-    {
-      size: 30,
-    }
-  );
+const props = withDefaults(
+  defineProps<{
+    size?: number;
+  }>(),
+  {
+    size: 30,
+  },
+);
 </script>
 
 <style scoped>
-  .add-icon {
-    fill: transparent;
-    stroke: currentColor;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: stroke 0.2s;
-  }
+.add-icon {
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.2s;
+}
 </style>

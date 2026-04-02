@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { PersonChanges200ChangesItemItemsItem } from './personChanges200ChangesItemItemsItem';
+import type { PersonChanges200ChangesItemItemsItem } from "./personChanges200ChangesItemItemsItem";
 
 export type PersonChanges200ChangesItem = {
   key?: string;

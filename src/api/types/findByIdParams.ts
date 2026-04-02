@@ -4,9 +4,9 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { FindByIdExternalSource } from './findByIdExternalSource';
+import type { FindByIdExternalSource } from "./findByIdExternalSource";
 
 export type FindByIdParams = {
-external_source: FindByIdExternalSource;
-language?: string;
+  external_source: FindByIdExternalSource;
+  language?: string;
 };

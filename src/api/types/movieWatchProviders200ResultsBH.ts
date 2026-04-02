@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { MovieWatchProviders200ResultsBHBuyItem } from './movieWatchProviders200ResultsBHBuyItem';
+import type { MovieWatchProviders200ResultsBHBuyItem } from "./movieWatchProviders200ResultsBHBuyItem";
 
 export type MovieWatchProviders200ResultsBH = {
   link?: string;

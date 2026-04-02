@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { MovieReleaseDates200ResultsItem } from './movieReleaseDates200ResultsItem';
+import type { MovieReleaseDates200ResultsItem } from "./movieReleaseDates200ResultsItem";
 
 export type MovieReleaseDates200 = {
   id?: number;

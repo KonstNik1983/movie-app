@@ -1,4 +1,4 @@
-@import './media-details.css';
+@import "./media-details.css";
 
 * {
   margin: 0;
@@ -14,7 +14,7 @@ html,
 body,
 #app {
   height: 100%;
-  font-family: 'Prisma Nova', sans-serif;
+  font-family: "Prisma Nova", sans-serif;
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
 }

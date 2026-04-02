@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvEpisodeGroupDetails200GroupsItemEpisodesItem } from './tvEpisodeGroupDetails200GroupsItemEpisodesItem';
+import type { TvEpisodeGroupDetails200GroupsItemEpisodesItem } from "./tvEpisodeGroupDetails200GroupsItemEpisodesItem";
 
 export type TvEpisodeGroupDetails200GroupsItem = {
   id?: string;

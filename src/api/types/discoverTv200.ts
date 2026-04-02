@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { DiscoverTv200ResultsItem } from './discoverTv200ResultsItem';
+import type { DiscoverTv200ResultsItem } from "./discoverTv200ResultsItem";
 
 export type DiscoverTv200 = {
   page?: number;

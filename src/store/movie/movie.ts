@@ -1,6 +1,6 @@
-import { ref, computed } from 'vue';
-import { defineStore } from 'pinia';
-import { getSettledData } from '@/utils/promise';
+import { ref, computed } from "vue";
+import { defineStore } from "pinia";
+import { getSettledData } from "@/utils/promise";
 
 import type {
   MovieDetails200,
@@ -8,7 +8,7 @@ import type {
   MovieCredits200,
   MovieSimilar200,
   MovieReleaseDates200,
-} from '@/api/types';
+} from "@/api/types";
 
 import {
   movieDetails,
@@ -16,13 +16,13 @@ import {
   movieReviews,
   movieSimilar,
   movieReleaseDates,
-} from '@/api/tmdb';
+} from "@/api/tmdb";
 
-import { parseReview } from '@/utils/parse-review';
-import { useToast } from 'vue-toastification';
+import { parseReview } from "@/utils/parse-review";
+import { useToast } from "vue-toastification";
 const toast = useToast();
 
-export const useMoviePageStore = defineStore('movieStore', () => {
+export const useMoviePageStore = defineStore("movieStore", () => {
   const movie = ref<MovieDetails200 | null>(null);
   const credits = ref<MovieCredits200 | null>(null);
   const reviews = ref<MovieReviews200 | null>(null);
@@ -34,8 +34,8 @@ export const useMoviePageStore = defineStore('movieStore', () => {
     () =>
       reviews.value?.results?.map((r) => ({
         ...r,
-        contentHtml: parseReview(r.content ?? ''),
-      })) ?? []
+        contentHtml: parseReview(r.content ?? ""),
+      })) ?? [],
   );
 
   const resetMedia = () => {
@@ -54,18 +54,12 @@ export const useMoviePageStore = defineStore('movieStore', () => {
       const results = await Promise.allSettled([
         movieDetails(movieId),
         movieCredits(movieId),
-        movieReviews(movieId, { language: 'en-US' }),
+        movieReviews(movieId, { language: "en-US" }),
         movieSimilar(movieId),
         movieReleaseDates(movieId),
       ]);
 
-      const [
-        detailsResult,
-        creditsResult,
-        reviewsResult,
-        similarResult,
-        releaseResult,
-      ] = results;
+      const [detailsResult, creditsResult, reviewsResult, similarResult, releaseResult] = results;
 
       movie.value = getSettledData<MovieDetails200>(detailsResult);
       credits.value = getSettledData<MovieCredits200>(creditsResult);
@@ -73,7 +67,7 @@ export const useMoviePageStore = defineStore('movieStore', () => {
       similar.value = getSettledData<MovieSimilar200>(similarResult);
       releaseDates.value = getSettledData<MovieReleaseDates200>(releaseResult);
     } catch {
-      toast.error('Ошибка загрузки данных фильма!');
+      toast.error("Ошибка загрузки данных фильма!");
     } finally {
       isLoading.value = false;
     }

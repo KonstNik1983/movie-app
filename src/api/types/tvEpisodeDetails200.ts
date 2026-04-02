@@ -4,8 +4,8 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvEpisodeDetails200CrewItem } from './tvEpisodeDetails200CrewItem';
-import type { TvEpisodeDetails200GuestStarsItem } from './tvEpisodeDetails200GuestStarsItem';
+import type { TvEpisodeDetails200CrewItem } from "./tvEpisodeDetails200CrewItem";
+import type { TvEpisodeDetails200GuestStarsItem } from "./tvEpisodeDetails200GuestStarsItem";
 
 export type TvEpisodeDetails200 = {
   air_date?: string;

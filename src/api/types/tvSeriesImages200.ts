@@ -4,9 +4,9 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvSeriesImages200BackdropsItem } from './tvSeriesImages200BackdropsItem';
-import type { TvSeriesImages200LogosItem } from './tvSeriesImages200LogosItem';
-import type { TvSeriesImages200PostersItem } from './tvSeriesImages200PostersItem';
+import type { TvSeriesImages200BackdropsItem } from "./tvSeriesImages200BackdropsItem";
+import type { TvSeriesImages200LogosItem } from "./tvSeriesImages200LogosItem";
+import type { TvSeriesImages200PostersItem } from "./tvSeriesImages200PostersItem";
 
 export type TvSeriesImages200 = {
   backdrops?: TvSeriesImages200BackdropsItem[];

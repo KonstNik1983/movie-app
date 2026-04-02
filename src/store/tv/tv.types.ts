@@ -1,4 +1,3 @@
-import { tvSeriesSimilar } from '@/api/tmdb';
+import { tvSeriesSimilar } from "@/api/tmdb";
 
-export const tvSimilar = (seriesId: number) =>
-  tvSeriesSimilar(String(seriesId));
+export const tvSimilar = (seriesId: number) => tvSeriesSimilar(String(seriesId));

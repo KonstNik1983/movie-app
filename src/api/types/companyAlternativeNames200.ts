@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { CompanyAlternativeNames200ResultsItem } from './companyAlternativeNames200ResultsItem';
+import type { CompanyAlternativeNames200ResultsItem } from "./companyAlternativeNames200ResultsItem";
 
 export type CompanyAlternativeNames200 = {
   id?: number;

@@ -1,4 +1,4 @@
-import type { DiscoverMovie200ResultsItem } from '@/api/types';
+import type { DiscoverMovie200ResultsItem } from "@/api/types";
 
 export type MovieByGenre = DiscoverMovie200ResultsItem;
 

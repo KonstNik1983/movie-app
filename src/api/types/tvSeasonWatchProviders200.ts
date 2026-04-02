@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvSeasonWatchProviders200Results } from './tvSeasonWatchProviders200Results';
+import type { TvSeasonWatchProviders200Results } from "./tvSeasonWatchProviders200Results";
 
 export type TvSeasonWatchProviders200 = {
   id?: number;

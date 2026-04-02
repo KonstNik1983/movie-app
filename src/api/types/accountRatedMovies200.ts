@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { AccountRatedMovies200ResultsItem } from './accountRatedMovies200ResultsItem';
+import type { AccountRatedMovies200ResultsItem } from "./accountRatedMovies200ResultsItem";
 
 export type AccountRatedMovies200 = {
   page?: number;

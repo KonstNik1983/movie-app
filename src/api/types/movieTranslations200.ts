@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { MovieTranslations200TranslationsItem } from './movieTranslations200TranslationsItem';
+import type { MovieTranslations200TranslationsItem } from "./movieTranslations200TranslationsItem";
 
 export type MovieTranslations200 = {
   id?: number;

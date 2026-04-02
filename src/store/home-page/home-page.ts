@@ -1,13 +1,13 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
-import { useSliderStore } from '@/store/slider/slider.ts';
-import { useMoviesStore } from '@/store/movies/movies.ts';
-import { useTvStore } from '@/store/series/series.ts';
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import { useSliderStore } from "@/store/slider/slider.ts";
+import { useMoviesStore } from "@/store/movies/movies.ts";
+import { useTvStore } from "@/store/series/series.ts";
 
-import { useToast } from 'vue-toastification';
+import { useToast } from "vue-toastification";
 const toast = useToast();
 
-export const useHomePageStore = defineStore('homePage', () => {
+export const useHomePageStore = defineStore("homePage", () => {
   const sliderStore = useSliderStore();
   const movieStore = useMoviesStore();
   const tvStore = useTvStore();
@@ -20,13 +20,9 @@ export const useHomePageStore = defineStore('homePage', () => {
     isLoading.value = true;
 
     try {
-      await Promise.all([
-        sliderStore.loadSlider(),
-        movieStore.loadMovies(),
-        tvStore.loadTv(),
-      ]);
+      await Promise.all([sliderStore.loadSlider(), movieStore.loadMovies(), tvStore.loadTv()]);
     } catch {
-      toast.error('Home page load error!');
+      toast.error("Home page load error!");
     } finally {
       isLoading.value = false;
     }

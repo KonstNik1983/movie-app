@@ -5,5 +5,5 @@ export interface UserMediaCard {
   rating: number | undefined;
   genres: string;
   link: string;
-  media: 'Фильм' | 'Сериал';
+  media: "Фильм" | "Сериал";
 }

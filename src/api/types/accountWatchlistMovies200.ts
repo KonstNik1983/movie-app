@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { AccountWatchlistMovies200ResultsItem } from './accountWatchlistMovies200ResultsItem';
+import type { AccountWatchlistMovies200ResultsItem } from "./accountWatchlistMovies200ResultsItem";
 
 export type AccountWatchlistMovies200 = {
   page?: number;

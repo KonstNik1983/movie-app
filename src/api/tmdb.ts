@@ -273,9 +273,9 @@ import type {
   WatchProvidersAvailableRegionsParams,
   WatchProvidersMovieList200,
   WatchProvidersMovieListParams,
-} from './types';
+} from "./types";
 
-import { appFetch } from './app-fetch';
+import { appFetch } from "./app-fetch";
 /**
  * Test your API Key to see if it's valid.
  * @summary Validate Key
@@ -290,14 +290,12 @@ export type authenticationValidateKeyResponse401 = {
   status: 401;
 };
 
-export type authenticationValidateKeyResponseSuccess =
-  authenticationValidateKeyResponse200 & {
-    headers: Headers;
-  };
-export type authenticationValidateKeyResponseError =
-  authenticationValidateKeyResponse401 & {
-    headers: Headers;
-  };
+export type authenticationValidateKeyResponseSuccess = authenticationValidateKeyResponse200 & {
+  headers: Headers;
+};
+export type authenticationValidateKeyResponseError = authenticationValidateKeyResponse401 & {
+  headers: Headers;
+};
 
 export type authenticationValidateKeyResponse =
   | authenticationValidateKeyResponseSuccess
@@ -308,15 +306,12 @@ export const getAuthenticationValidateKeyUrl = () => {
 };
 
 export const authenticationValidateKey = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<authenticationValidateKeyResponse> => {
-  return appFetch<authenticationValidateKeyResponse>(
-    getAuthenticationValidateKeyUrl(),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<authenticationValidateKeyResponse>(getAuthenticationValidateKeyUrl(), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -333,15 +328,12 @@ export type accountDetailsResponseSuccess = accountDetailsResponse200 & {
 };
 export type accountDetailsResponse = accountDetailsResponseSuccess;
 
-export const getAccountDetailsUrl = (
-  accountId: number,
-  params?: AccountDetailsParams
-) => {
+export const getAccountDetailsUrl = (accountId: number, params?: AccountDetailsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -355,15 +347,12 @@ export const getAccountDetailsUrl = (
 export const accountDetails = async (
   accountId: number,
   params?: AccountDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountDetailsResponse> => {
-  return appFetch<accountDetailsResponse>(
-    getAccountDetailsUrl(accountId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<accountDetailsResponse>(getAccountDetailsUrl(accountId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -375,21 +364,17 @@ export type accountAddFavoriteResponse200 = {
   status: 200;
 };
 
-export type accountAddFavoriteResponseSuccess =
-  accountAddFavoriteResponse200 & {
-    headers: Headers;
-  };
+export type accountAddFavoriteResponseSuccess = accountAddFavoriteResponse200 & {
+  headers: Headers;
+};
 export type accountAddFavoriteResponse = accountAddFavoriteResponseSuccess;
 
-export const getAccountAddFavoriteUrl = (
-  accountId: number,
-  params?: AccountAddFavoriteParams
-) => {
+export const getAccountAddFavoriteUrl = (accountId: number, params?: AccountAddFavoriteParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -404,17 +389,14 @@ export const accountAddFavorite = async (
   accountId: number,
   accountAddFavoriteBody: AccountAddFavoriteBody,
   params?: AccountAddFavoriteParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountAddFavoriteResponse> => {
-  return appFetch<accountAddFavoriteResponse>(
-    getAccountAddFavoriteUrl(accountId, params),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(accountAddFavoriteBody),
-    }
-  );
+  return appFetch<accountAddFavoriteResponse>(getAccountAddFavoriteUrl(accountId, params), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(accountAddFavoriteBody),
+  });
 };
 
 /**
@@ -426,22 +408,20 @@ export type accountAddToWatchlistResponse200 = {
   status: 200;
 };
 
-export type accountAddToWatchlistResponseSuccess =
-  accountAddToWatchlistResponse200 & {
-    headers: Headers;
-  };
-export type accountAddToWatchlistResponse =
-  accountAddToWatchlistResponseSuccess;
+export type accountAddToWatchlistResponseSuccess = accountAddToWatchlistResponse200 & {
+  headers: Headers;
+};
+export type accountAddToWatchlistResponse = accountAddToWatchlistResponseSuccess;
 
 export const getAccountAddToWatchlistUrl = (
   accountId: number,
-  params?: AccountAddToWatchlistParams
+  params?: AccountAddToWatchlistParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -456,17 +436,14 @@ export const accountAddToWatchlist = async (
   accountId: number,
   accountAddToWatchlistBody: AccountAddToWatchlistBody,
   params?: AccountAddToWatchlistParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountAddToWatchlistResponse> => {
-  return appFetch<accountAddToWatchlistResponse>(
-    getAccountAddToWatchlistUrl(accountId, params),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(accountAddToWatchlistBody),
-    }
-  );
+  return appFetch<accountAddToWatchlistResponse>(getAccountAddToWatchlistUrl(accountId, params), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(accountAddToWatchlistBody),
+  });
 };
 
 /**
@@ -478,21 +455,20 @@ export type accountGetFavoritesResponse200 = {
   status: 200;
 };
 
-export type accountGetFavoritesResponseSuccess =
-  accountGetFavoritesResponse200 & {
-    headers: Headers;
-  };
+export type accountGetFavoritesResponseSuccess = accountGetFavoritesResponse200 & {
+  headers: Headers;
+};
 export type accountGetFavoritesResponse = accountGetFavoritesResponseSuccess;
 
 export const getAccountGetFavoritesUrl = (
   accountId: number,
-  params?: AccountGetFavoritesParams
+  params?: AccountGetFavoritesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -506,15 +482,12 @@ export const getAccountGetFavoritesUrl = (
 export const accountGetFavorites = async (
   accountId: number,
   params?: AccountGetFavoritesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountGetFavoritesResponse> => {
-  return appFetch<accountGetFavoritesResponse>(
-    getAccountGetFavoritesUrl(accountId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<accountGetFavoritesResponse>(getAccountGetFavoritesUrl(accountId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -531,15 +504,12 @@ export type accountFavoriteTvResponseSuccess = accountFavoriteTvResponse200 & {
 };
 export type accountFavoriteTvResponse = accountFavoriteTvResponseSuccess;
 
-export const getAccountFavoriteTvUrl = (
-  accountId: number,
-  params?: AccountFavoriteTvParams
-) => {
+export const getAccountFavoriteTvUrl = (accountId: number, params?: AccountFavoriteTvParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -553,15 +523,12 @@ export const getAccountFavoriteTvUrl = (
 export const accountFavoriteTv = async (
   accountId: number,
   params?: AccountFavoriteTvParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountFavoriteTvResponse> => {
-  return appFetch<accountFavoriteTvResponse>(
-    getAccountFavoriteTvUrl(accountId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<accountFavoriteTvResponse>(getAccountFavoriteTvUrl(accountId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -578,15 +545,12 @@ export type accountListsResponseSuccess = accountListsResponse200 & {
 };
 export type accountListsResponse = accountListsResponseSuccess;
 
-export const getAccountListsUrl = (
-  accountId: number,
-  params?: AccountListsParams
-) => {
+export const getAccountListsUrl = (accountId: number, params?: AccountListsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -600,11 +564,11 @@ export const getAccountListsUrl = (
 export const accountLists = async (
   accountId: number,
   params?: AccountListsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountListsResponse> => {
   return appFetch<accountListsResponse>(getAccountListsUrl(accountId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -617,21 +581,17 @@ export type accountRatedMoviesResponse200 = {
   status: 200;
 };
 
-export type accountRatedMoviesResponseSuccess =
-  accountRatedMoviesResponse200 & {
-    headers: Headers;
-  };
+export type accountRatedMoviesResponseSuccess = accountRatedMoviesResponse200 & {
+  headers: Headers;
+};
 export type accountRatedMoviesResponse = accountRatedMoviesResponseSuccess;
 
-export const getAccountRatedMoviesUrl = (
-  accountId: number,
-  params?: AccountRatedMoviesParams
-) => {
+export const getAccountRatedMoviesUrl = (accountId: number, params?: AccountRatedMoviesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -645,15 +605,12 @@ export const getAccountRatedMoviesUrl = (
 export const accountRatedMovies = async (
   accountId: number,
   params?: AccountRatedMoviesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountRatedMoviesResponse> => {
-  return appFetch<accountRatedMoviesResponse>(
-    getAccountRatedMoviesUrl(accountId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<accountRatedMoviesResponse>(getAccountRatedMoviesUrl(accountId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -670,15 +627,12 @@ export type accountRatedTvResponseSuccess = accountRatedTvResponse200 & {
 };
 export type accountRatedTvResponse = accountRatedTvResponseSuccess;
 
-export const getAccountRatedTvUrl = (
-  accountId: number,
-  params?: AccountRatedTvParams
-) => {
+export const getAccountRatedTvUrl = (accountId: number, params?: AccountRatedTvParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -692,15 +646,12 @@ export const getAccountRatedTvUrl = (
 export const accountRatedTv = async (
   accountId: number,
   params?: AccountRatedTvParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountRatedTvResponse> => {
-  return appFetch<accountRatedTvResponse>(
-    getAccountRatedTvUrl(accountId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<accountRatedTvResponse>(getAccountRatedTvUrl(accountId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -712,22 +663,20 @@ export type accountRatedTvEpisodesResponse200 = {
   status: 200;
 };
 
-export type accountRatedTvEpisodesResponseSuccess =
-  accountRatedTvEpisodesResponse200 & {
-    headers: Headers;
-  };
-export type accountRatedTvEpisodesResponse =
-  accountRatedTvEpisodesResponseSuccess;
+export type accountRatedTvEpisodesResponseSuccess = accountRatedTvEpisodesResponse200 & {
+  headers: Headers;
+};
+export type accountRatedTvEpisodesResponse = accountRatedTvEpisodesResponseSuccess;
 
 export const getAccountRatedTvEpisodesUrl = (
   accountId: number,
-  params?: AccountRatedTvEpisodesParams
+  params?: AccountRatedTvEpisodesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -741,15 +690,12 @@ export const getAccountRatedTvEpisodesUrl = (
 export const accountRatedTvEpisodes = async (
   accountId: number,
   params?: AccountRatedTvEpisodesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountRatedTvEpisodesResponse> => {
-  return appFetch<accountRatedTvEpisodesResponse>(
-    getAccountRatedTvEpisodesUrl(accountId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<accountRatedTvEpisodesResponse>(getAccountRatedTvEpisodesUrl(accountId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -761,22 +707,20 @@ export type accountWatchlistMoviesResponse200 = {
   status: 200;
 };
 
-export type accountWatchlistMoviesResponseSuccess =
-  accountWatchlistMoviesResponse200 & {
-    headers: Headers;
-  };
-export type accountWatchlistMoviesResponse =
-  accountWatchlistMoviesResponseSuccess;
+export type accountWatchlistMoviesResponseSuccess = accountWatchlistMoviesResponse200 & {
+  headers: Headers;
+};
+export type accountWatchlistMoviesResponse = accountWatchlistMoviesResponseSuccess;
 
 export const getAccountWatchlistMoviesUrl = (
   accountId: number,
-  params?: AccountWatchlistMoviesParams
+  params?: AccountWatchlistMoviesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -790,15 +734,12 @@ export const getAccountWatchlistMoviesUrl = (
 export const accountWatchlistMovies = async (
   accountId: number,
   params?: AccountWatchlistMoviesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountWatchlistMoviesResponse> => {
-  return appFetch<accountWatchlistMoviesResponse>(
-    getAccountWatchlistMoviesUrl(accountId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<accountWatchlistMoviesResponse>(getAccountWatchlistMoviesUrl(accountId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -810,21 +751,17 @@ export type accountWatchlistTvResponse200 = {
   status: 200;
 };
 
-export type accountWatchlistTvResponseSuccess =
-  accountWatchlistTvResponse200 & {
-    headers: Headers;
-  };
+export type accountWatchlistTvResponseSuccess = accountWatchlistTvResponse200 & {
+  headers: Headers;
+};
 export type accountWatchlistTvResponse = accountWatchlistTvResponseSuccess;
 
-export const getAccountWatchlistTvUrl = (
-  accountId: number,
-  params?: AccountWatchlistTvParams
-) => {
+export const getAccountWatchlistTvUrl = (accountId: number, params?: AccountWatchlistTvParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -838,15 +775,12 @@ export const getAccountWatchlistTvUrl = (
 export const accountWatchlistTv = async (
   accountId: number,
   params?: AccountWatchlistTvParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<accountWatchlistTvResponse> => {
-  return appFetch<accountWatchlistTvResponse>(
-    getAccountWatchlistTvUrl(accountId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<accountWatchlistTvResponse>(getAccountWatchlistTvUrl(accountId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -869,14 +803,14 @@ export const getAuthenticationCreateGuestSessionUrl = () => {
 };
 
 export const authenticationCreateGuestSession = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<authenticationCreateGuestSessionResponse> => {
   return appFetch<authenticationCreateGuestSessionResponse>(
     getAuthenticationCreateGuestSessionUrl(),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -900,14 +834,14 @@ export const getAuthenticationCreateRequestTokenUrl = () => {
 };
 
 export const authenticationCreateRequestToken = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<authenticationCreateRequestTokenResponse> => {
   return appFetch<authenticationCreateRequestTokenResponse>(
     getAuthenticationCreateRequestTokenUrl(),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -919,12 +853,10 @@ export type authenticationCreateSessionResponse200 = {
   status: 200;
 };
 
-export type authenticationCreateSessionResponseSuccess =
-  authenticationCreateSessionResponse200 & {
-    headers: Headers;
-  };
-export type authenticationCreateSessionResponse =
-  authenticationCreateSessionResponseSuccess;
+export type authenticationCreateSessionResponseSuccess = authenticationCreateSessionResponse200 & {
+  headers: Headers;
+};
+export type authenticationCreateSessionResponse = authenticationCreateSessionResponseSuccess;
 
 export const getAuthenticationCreateSessionUrl = () => {
   return `https://api.themoviedb.org/3/authentication/session/new`;
@@ -932,17 +864,14 @@ export const getAuthenticationCreateSessionUrl = () => {
 
 export const authenticationCreateSession = async (
   authenticationCreateSessionBody: AuthenticationCreateSessionBody,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<authenticationCreateSessionResponse> => {
-  return appFetch<authenticationCreateSessionResponse>(
-    getAuthenticationCreateSessionUrl(),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(authenticationCreateSessionBody),
-    }
-  );
+  return appFetch<authenticationCreateSessionResponse>(getAuthenticationCreateSessionUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(authenticationCreateSessionBody),
+  });
 };
 
 /**
@@ -966,16 +895,16 @@ export const getAuthenticationCreateSessionFromV4TokenUrl = () => {
 
 export const authenticationCreateSessionFromV4Token = async (
   authenticationCreateSessionFromV4TokenBody: AuthenticationCreateSessionFromV4TokenBody,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<authenticationCreateSessionFromV4TokenResponse> => {
   return appFetch<authenticationCreateSessionFromV4TokenResponse>(
     getAuthenticationCreateSessionFromV4TokenUrl(),
     {
       ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...options?.headers },
       body: JSON.stringify(authenticationCreateSessionFromV4TokenBody),
-    }
+    },
   );
 };
 
@@ -1001,16 +930,16 @@ export const getAuthenticationCreateSessionFromLoginUrl = () => {
 
 export const authenticationCreateSessionFromLogin = async (
   authenticationCreateSessionFromLoginBody: AuthenticationCreateSessionFromLoginBody,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<authenticationCreateSessionFromLoginResponse> => {
   return appFetch<authenticationCreateSessionFromLoginResponse>(
     getAuthenticationCreateSessionFromLoginUrl(),
     {
       ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...options?.headers },
       body: JSON.stringify(authenticationCreateSessionFromLoginBody),
-    }
+    },
   );
 };
 
@@ -1022,12 +951,10 @@ export type authenticationDeleteSessionResponse200 = {
   status: 200;
 };
 
-export type authenticationDeleteSessionResponseSuccess =
-  authenticationDeleteSessionResponse200 & {
-    headers: Headers;
-  };
-export type authenticationDeleteSessionResponse =
-  authenticationDeleteSessionResponseSuccess;
+export type authenticationDeleteSessionResponseSuccess = authenticationDeleteSessionResponse200 & {
+  headers: Headers;
+};
+export type authenticationDeleteSessionResponse = authenticationDeleteSessionResponseSuccess;
 
 export const getAuthenticationDeleteSessionUrl = () => {
   return `https://api.themoviedb.org/3/authentication/session`;
@@ -1035,17 +962,14 @@ export const getAuthenticationDeleteSessionUrl = () => {
 
 export const authenticationDeleteSession = async (
   authenticationDeleteSessionBody: AuthenticationDeleteSessionBody,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<authenticationDeleteSessionResponse> => {
-  return appFetch<authenticationDeleteSessionResponse>(
-    getAuthenticationDeleteSessionUrl(),
-    {
-      ...options,
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(authenticationDeleteSessionBody),
-    }
-  );
+  return appFetch<authenticationDeleteSessionResponse>(getAuthenticationDeleteSessionUrl(), {
+    ...options,
+    method: "DELETE",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(authenticationDeleteSessionBody),
+  });
 };
 
 /**
@@ -1057,27 +981,22 @@ export type certificationMovieListResponse200 = {
   status: 200;
 };
 
-export type certificationMovieListResponseSuccess =
-  certificationMovieListResponse200 & {
-    headers: Headers;
-  };
-export type certificationMovieListResponse =
-  certificationMovieListResponseSuccess;
+export type certificationMovieListResponseSuccess = certificationMovieListResponse200 & {
+  headers: Headers;
+};
+export type certificationMovieListResponse = certificationMovieListResponseSuccess;
 
 export const getCertificationMovieListUrl = () => {
   return `https://api.themoviedb.org/3/certification/movie/list`;
 };
 
 export const certificationMovieList = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<certificationMovieListResponse> => {
-  return appFetch<certificationMovieListResponse>(
-    getCertificationMovieListUrl(),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<certificationMovieListResponse>(getCertificationMovieListUrl(), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1088,10 +1007,9 @@ export type certificationsTvListResponse200 = {
   status: 200;
 };
 
-export type certificationsTvListResponseSuccess =
-  certificationsTvListResponse200 & {
-    headers: Headers;
-  };
+export type certificationsTvListResponseSuccess = certificationsTvListResponse200 & {
+  headers: Headers;
+};
 export type certificationsTvListResponse = certificationsTvListResponseSuccess;
 
 export const getCertificationsTvListUrl = () => {
@@ -1099,11 +1017,11 @@ export const getCertificationsTvListUrl = () => {
 };
 
 export const certificationsTvList = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<certificationsTvListResponse> => {
   return appFetch<certificationsTvListResponse>(getCertificationsTvListUrl(), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1126,7 +1044,7 @@ export const getChangesMovieListUrl = (params?: ChangesMovieListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1139,11 +1057,11 @@ export const getChangesMovieListUrl = (params?: ChangesMovieListParams) => {
 
 export const changesMovieList = async (
   params?: ChangesMovieListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<changesMovieListResponse> => {
   return appFetch<changesMovieListResponse>(getChangesMovieListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1165,7 +1083,7 @@ export const getChangesPeopleListUrl = (params?: ChangesPeopleListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1178,11 +1096,11 @@ export const getChangesPeopleListUrl = (params?: ChangesPeopleListParams) => {
 
 export const changesPeopleList = async (
   params?: ChangesPeopleListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<changesPeopleListResponse> => {
   return appFetch<changesPeopleListResponse>(getChangesPeopleListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1204,7 +1122,7 @@ export const getChangesTvListUrl = (params?: ChangesTvListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1217,11 +1135,11 @@ export const getChangesTvListUrl = (params?: ChangesTvListParams) => {
 
 export const changesTvList = async (
   params?: ChangesTvListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<changesTvListResponse> => {
   return appFetch<changesTvListResponse>(getChangesTvListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1239,15 +1157,12 @@ export type collectionDetailsResponseSuccess = collectionDetailsResponse200 & {
 };
 export type collectionDetailsResponse = collectionDetailsResponseSuccess;
 
-export const getCollectionDetailsUrl = (
-  collectionId: number,
-  params?: CollectionDetailsParams
-) => {
+export const getCollectionDetailsUrl = (collectionId: number, params?: CollectionDetailsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1261,15 +1176,12 @@ export const getCollectionDetailsUrl = (
 export const collectionDetails = async (
   collectionId: number,
   params?: CollectionDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<collectionDetailsResponse> => {
-  return appFetch<collectionDetailsResponse>(
-    getCollectionDetailsUrl(collectionId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<collectionDetailsResponse>(getCollectionDetailsUrl(collectionId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1286,15 +1198,12 @@ export type collectionImagesResponseSuccess = collectionImagesResponse200 & {
 };
 export type collectionImagesResponse = collectionImagesResponseSuccess;
 
-export const getCollectionImagesUrl = (
-  collectionId: number,
-  params?: CollectionImagesParams
-) => {
+export const getCollectionImagesUrl = (collectionId: number, params?: CollectionImagesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1308,15 +1217,12 @@ export const getCollectionImagesUrl = (
 export const collectionImages = async (
   collectionId: number,
   params?: CollectionImagesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<collectionImagesResponse> => {
-  return appFetch<collectionImagesResponse>(
-    getCollectionImagesUrl(collectionId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<collectionImagesResponse>(getCollectionImagesUrl(collectionId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1327,12 +1233,10 @@ export type collectionTranslationsResponse200 = {
   status: 200;
 };
 
-export type collectionTranslationsResponseSuccess =
-  collectionTranslationsResponse200 & {
-    headers: Headers;
-  };
-export type collectionTranslationsResponse =
-  collectionTranslationsResponseSuccess;
+export type collectionTranslationsResponseSuccess = collectionTranslationsResponse200 & {
+  headers: Headers;
+};
+export type collectionTranslationsResponse = collectionTranslationsResponseSuccess;
 
 export const getCollectionTranslationsUrl = (collectionId: number) => {
   return `https://api.themoviedb.org/3/collection/${collectionId}/translations`;
@@ -1340,15 +1244,12 @@ export const getCollectionTranslationsUrl = (collectionId: number) => {
 
 export const collectionTranslations = async (
   collectionId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<collectionTranslationsResponse> => {
-  return appFetch<collectionTranslationsResponse>(
-    getCollectionTranslationsUrl(collectionId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<collectionTranslationsResponse>(getCollectionTranslationsUrl(collectionId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1371,11 +1272,11 @@ export const getCompanyDetailsUrl = (companyId: number) => {
 
 export const companyDetails = async (
   companyId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<companyDetailsResponse> => {
   return appFetch<companyDetailsResponse>(getCompanyDetailsUrl(companyId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1388,12 +1289,10 @@ export type companyAlternativeNamesResponse200 = {
   status: 200;
 };
 
-export type companyAlternativeNamesResponseSuccess =
-  companyAlternativeNamesResponse200 & {
-    headers: Headers;
-  };
-export type companyAlternativeNamesResponse =
-  companyAlternativeNamesResponseSuccess;
+export type companyAlternativeNamesResponseSuccess = companyAlternativeNamesResponse200 & {
+  headers: Headers;
+};
+export type companyAlternativeNamesResponse = companyAlternativeNamesResponseSuccess;
 
 export const getCompanyAlternativeNamesUrl = (companyId: number) => {
   return `https://api.themoviedb.org/3/company/${companyId}/alternative_names`;
@@ -1401,15 +1300,12 @@ export const getCompanyAlternativeNamesUrl = (companyId: number) => {
 
 export const companyAlternativeNames = async (
   companyId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<companyAlternativeNamesResponse> => {
-  return appFetch<companyAlternativeNamesResponse>(
-    getCompanyAlternativeNamesUrl(companyId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<companyAlternativeNamesResponse>(getCompanyAlternativeNamesUrl(companyId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1432,11 +1328,11 @@ export const getCompanyImagesUrl = (companyId: number) => {
 
 export const companyImages = async (
   companyId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<companyImagesResponse> => {
   return appFetch<companyImagesResponse>(getCompanyImagesUrl(companyId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1449,10 +1345,9 @@ export type configurationDetailsResponse200 = {
   status: 200;
 };
 
-export type configurationDetailsResponseSuccess =
-  configurationDetailsResponse200 & {
-    headers: Headers;
-  };
+export type configurationDetailsResponseSuccess = configurationDetailsResponse200 & {
+  headers: Headers;
+};
 export type configurationDetailsResponse = configurationDetailsResponseSuccess;
 
 export const getConfigurationDetailsUrl = () => {
@@ -1460,11 +1355,11 @@ export const getConfigurationDetailsUrl = () => {
 };
 
 export const configurationDetails = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<configurationDetailsResponse> => {
   return appFetch<configurationDetailsResponse>(getConfigurationDetailsUrl(), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1477,21 +1372,17 @@ export type configurationCountriesResponse200 = {
   status: 200;
 };
 
-export type configurationCountriesResponseSuccess =
-  configurationCountriesResponse200 & {
-    headers: Headers;
-  };
-export type configurationCountriesResponse =
-  configurationCountriesResponseSuccess;
+export type configurationCountriesResponseSuccess = configurationCountriesResponse200 & {
+  headers: Headers;
+};
+export type configurationCountriesResponse = configurationCountriesResponseSuccess;
 
-export const getConfigurationCountriesUrl = (
-  params?: ConfigurationCountriesParams
-) => {
+export const getConfigurationCountriesUrl = (params?: ConfigurationCountriesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1504,15 +1395,12 @@ export const getConfigurationCountriesUrl = (
 
 export const configurationCountries = async (
   params?: ConfigurationCountriesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<configurationCountriesResponse> => {
-  return appFetch<configurationCountriesResponse>(
-    getConfigurationCountriesUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<configurationCountriesResponse>(getConfigurationCountriesUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1534,11 +1422,11 @@ export const getConfigurationJobsUrl = () => {
 };
 
 export const configurationJobs = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<configurationJobsResponse> => {
   return appFetch<configurationJobsResponse>(getConfigurationJobsUrl(), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1551,27 +1439,22 @@ export type configurationLanguagesResponse200 = {
   status: 200;
 };
 
-export type configurationLanguagesResponseSuccess =
-  configurationLanguagesResponse200 & {
-    headers: Headers;
-  };
-export type configurationLanguagesResponse =
-  configurationLanguagesResponseSuccess;
+export type configurationLanguagesResponseSuccess = configurationLanguagesResponse200 & {
+  headers: Headers;
+};
+export type configurationLanguagesResponse = configurationLanguagesResponseSuccess;
 
 export const getConfigurationLanguagesUrl = () => {
   return `https://api.themoviedb.org/3/configuration/languages`;
 };
 
 export const configurationLanguages = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<configurationLanguagesResponse> => {
-  return appFetch<configurationLanguagesResponse>(
-    getConfigurationLanguagesUrl(),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<configurationLanguagesResponse>(getConfigurationLanguagesUrl(), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1595,14 +1478,14 @@ export const getConfigurationPrimaryTranslationsUrl = () => {
 };
 
 export const configurationPrimaryTranslations = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<configurationPrimaryTranslationsResponse> => {
   return appFetch<configurationPrimaryTranslationsResponse>(
     getConfigurationPrimaryTranslationsUrl(),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -1615,27 +1498,22 @@ export type configurationTimezonesResponse200 = {
   status: 200;
 };
 
-export type configurationTimezonesResponseSuccess =
-  configurationTimezonesResponse200 & {
-    headers: Headers;
-  };
-export type configurationTimezonesResponse =
-  configurationTimezonesResponseSuccess;
+export type configurationTimezonesResponseSuccess = configurationTimezonesResponse200 & {
+  headers: Headers;
+};
+export type configurationTimezonesResponse = configurationTimezonesResponseSuccess;
 
 export const getConfigurationTimezonesUrl = () => {
   return `https://api.themoviedb.org/3/configuration/timezones`;
 };
 
 export const configurationTimezones = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<configurationTimezonesResponse> => {
-  return appFetch<configurationTimezonesResponse>(
-    getConfigurationTimezonesUrl(),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<configurationTimezonesResponse>(getConfigurationTimezonesUrl(), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1652,15 +1530,12 @@ export type creditDetailsResponseSuccess = creditDetailsResponse200 & {
 };
 export type creditDetailsResponse = creditDetailsResponseSuccess;
 
-export const getCreditDetailsUrl = (
-  creditId: string,
-  params?: CreditDetailsParams
-) => {
+export const getCreditDetailsUrl = (creditId: string, params?: CreditDetailsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1674,15 +1549,12 @@ export const getCreditDetailsUrl = (
 export const creditDetails = async (
   creditId: string,
   params?: CreditDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<creditDetailsResponse> => {
-  return appFetch<creditDetailsResponse>(
-    getCreditDetailsUrl(creditId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<creditDetailsResponse>(getCreditDetailsUrl(creditId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1704,7 +1576,7 @@ export const getDiscoverMovieUrl = (params?: DiscoverMovieParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1717,11 +1589,11 @@ export const getDiscoverMovieUrl = (params?: DiscoverMovieParams) => {
 
 export const discoverMovie = async (
   params?: DiscoverMovieParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<discoverMovieResponse> => {
   return appFetch<discoverMovieResponse>(getDiscoverMovieUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1744,7 +1616,7 @@ export const getDiscoverTvUrl = (params?: DiscoverTvParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1757,11 +1629,11 @@ export const getDiscoverTvUrl = (params?: DiscoverTvParams) => {
 
 export const discoverTv = async (
   params?: DiscoverTvParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<discoverTvResponse> => {
   return appFetch<discoverTvResponse>(getDiscoverTvUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1784,7 +1656,7 @@ export const getFindByIdUrl = (externalId: string, params: FindByIdParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1798,11 +1670,11 @@ export const getFindByIdUrl = (externalId: string, params: FindByIdParams) => {
 export const findById = async (
   externalId: string,
   params: FindByIdParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<findByIdResponse> => {
   return appFetch<findByIdResponse>(getFindByIdUrl(externalId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1825,7 +1697,7 @@ export const getGenreMovieListUrl = (params?: GenreMovieListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1838,11 +1710,11 @@ export const getGenreMovieListUrl = (params?: GenreMovieListParams) => {
 
 export const genreMovieList = async (
   params?: GenreMovieListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<genreMovieListResponse> => {
   return appFetch<genreMovieListResponse>(getGenreMovieListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1865,7 +1737,7 @@ export const getGenreTvListUrl = (params?: GenreTvListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1878,11 +1750,11 @@ export const getGenreTvListUrl = (params?: GenreTvListParams) => {
 
 export const genreTvList = async (
   params?: GenreTvListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<genreTvListResponse> => {
   return appFetch<genreTvListResponse>(getGenreTvListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -1895,22 +1767,20 @@ export type guestSessionRatedMoviesResponse200 = {
   status: 200;
 };
 
-export type guestSessionRatedMoviesResponseSuccess =
-  guestSessionRatedMoviesResponse200 & {
-    headers: Headers;
-  };
-export type guestSessionRatedMoviesResponse =
-  guestSessionRatedMoviesResponseSuccess;
+export type guestSessionRatedMoviesResponseSuccess = guestSessionRatedMoviesResponse200 & {
+  headers: Headers;
+};
+export type guestSessionRatedMoviesResponse = guestSessionRatedMoviesResponseSuccess;
 
 export const getGuestSessionRatedMoviesUrl = (
   guestSessionId: string,
-  params?: GuestSessionRatedMoviesParams
+  params?: GuestSessionRatedMoviesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1924,14 +1794,14 @@ export const getGuestSessionRatedMoviesUrl = (
 export const guestSessionRatedMovies = async (
   guestSessionId: string,
   params?: GuestSessionRatedMoviesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<guestSessionRatedMoviesResponse> => {
   return appFetch<guestSessionRatedMoviesResponse>(
     getGuestSessionRatedMoviesUrl(guestSessionId, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -1944,21 +1814,20 @@ export type guestSessionRatedTvResponse200 = {
   status: 200;
 };
 
-export type guestSessionRatedTvResponseSuccess =
-  guestSessionRatedTvResponse200 & {
-    headers: Headers;
-  };
+export type guestSessionRatedTvResponseSuccess = guestSessionRatedTvResponse200 & {
+  headers: Headers;
+};
 export type guestSessionRatedTvResponse = guestSessionRatedTvResponseSuccess;
 
 export const getGuestSessionRatedTvUrl = (
   guestSessionId: string,
-  params?: GuestSessionRatedTvParams
+  params?: GuestSessionRatedTvParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -1972,15 +1841,12 @@ export const getGuestSessionRatedTvUrl = (
 export const guestSessionRatedTv = async (
   guestSessionId: string,
   params?: GuestSessionRatedTvParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<guestSessionRatedTvResponse> => {
-  return appFetch<guestSessionRatedTvResponse>(
-    getGuestSessionRatedTvUrl(guestSessionId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<guestSessionRatedTvResponse>(getGuestSessionRatedTvUrl(guestSessionId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -1992,22 +1858,20 @@ export type guestSessionRatedTvEpisodesResponse200 = {
   status: 200;
 };
 
-export type guestSessionRatedTvEpisodesResponseSuccess =
-  guestSessionRatedTvEpisodesResponse200 & {
-    headers: Headers;
-  };
-export type guestSessionRatedTvEpisodesResponse =
-  guestSessionRatedTvEpisodesResponseSuccess;
+export type guestSessionRatedTvEpisodesResponseSuccess = guestSessionRatedTvEpisodesResponse200 & {
+  headers: Headers;
+};
+export type guestSessionRatedTvEpisodesResponse = guestSessionRatedTvEpisodesResponseSuccess;
 
 export const getGuestSessionRatedTvEpisodesUrl = (
   guestSessionId: string,
-  params?: GuestSessionRatedTvEpisodesParams
+  params?: GuestSessionRatedTvEpisodesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2021,14 +1885,14 @@ export const getGuestSessionRatedTvEpisodesUrl = (
 export const guestSessionRatedTvEpisodes = async (
   guestSessionId: string,
   params?: GuestSessionRatedTvEpisodesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<guestSessionRatedTvEpisodesResponse> => {
   return appFetch<guestSessionRatedTvEpisodesResponse>(
     getGuestSessionRatedTvEpisodesUrl(guestSessionId, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -2051,11 +1915,11 @@ export const getKeywordDetailsUrl = (keywordId: number) => {
 
 export const keywordDetails = async (
   keywordId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<keywordDetailsResponse> => {
   return appFetch<keywordDetailsResponse>(getKeywordDetailsUrl(keywordId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2072,15 +1936,12 @@ export type keywordMoviesResponseSuccess = keywordMoviesResponse200 & {
 };
 export type keywordMoviesResponse = keywordMoviesResponseSuccess;
 
-export const getKeywordMoviesUrl = (
-  keywordId: string,
-  params?: KeywordMoviesParams
-) => {
+export const getKeywordMoviesUrl = (keywordId: string, params?: KeywordMoviesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2094,15 +1955,12 @@ export const getKeywordMoviesUrl = (
 export const keywordMovies = async (
   keywordId: string,
   params?: KeywordMoviesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<keywordMoviesResponse> => {
-  return appFetch<keywordMoviesResponse>(
-    getKeywordMoviesUrl(keywordId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<keywordMoviesResponse>(getKeywordMoviesUrl(keywordId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -2119,15 +1977,12 @@ export type listAddMovieResponseSuccess = listAddMovieResponse200 & {
 };
 export type listAddMovieResponse = listAddMovieResponseSuccess;
 
-export const getListAddMovieUrl = (
-  listId: number,
-  params: ListAddMovieParams
-) => {
+export const getListAddMovieUrl = (listId: number, params: ListAddMovieParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2142,12 +1997,12 @@ export const listAddMovie = async (
   listId: number,
   listAddMovieBody: ListAddMovieBody,
   params: ListAddMovieParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<listAddMovieResponse> => {
   return appFetch<listAddMovieResponse>(getListAddMovieUrl(listId, params), {
     ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
     body: JSON.stringify(listAddMovieBody),
   });
 };
@@ -2161,21 +2016,17 @@ export type listCheckItemStatusResponse200 = {
   status: 200;
 };
 
-export type listCheckItemStatusResponseSuccess =
-  listCheckItemStatusResponse200 & {
-    headers: Headers;
-  };
+export type listCheckItemStatusResponseSuccess = listCheckItemStatusResponse200 & {
+  headers: Headers;
+};
 export type listCheckItemStatusResponse = listCheckItemStatusResponseSuccess;
 
-export const getListCheckItemStatusUrl = (
-  listId: number,
-  params?: ListCheckItemStatusParams
-) => {
+export const getListCheckItemStatusUrl = (listId: number, params?: ListCheckItemStatusParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2189,15 +2040,12 @@ export const getListCheckItemStatusUrl = (
 export const listCheckItemStatus = async (
   listId: number,
   params?: ListCheckItemStatusParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<listCheckItemStatusResponse> => {
-  return appFetch<listCheckItemStatusResponse>(
-    getListCheckItemStatusUrl(listId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<listCheckItemStatusResponse>(getListCheckItemStatusUrl(listId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -2219,7 +2067,7 @@ export const getListClearUrl = (listId: number, params: ListClearParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2233,11 +2081,11 @@ export const getListClearUrl = (listId: number, params: ListClearParams) => {
 export const listClear = async (
   listId: number,
   params: ListClearParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<listClearResponse> => {
   return appFetch<listClearResponse>(getListClearUrl(listId, params), {
     ...options,
-    method: 'POST',
+    method: "POST",
   });
 };
 
@@ -2259,7 +2107,7 @@ export const getListCreateUrl = (params: ListCreateParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2273,12 +2121,12 @@ export const getListCreateUrl = (params: ListCreateParams) => {
 export const listCreate = async (
   listCreateBody: ListCreateBody,
   params: ListCreateParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<listCreateResponse> => {
   return appFetch<listCreateResponse>(getListCreateUrl(params), {
     ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
     body: JSON.stringify(listCreateBody),
   });
 };
@@ -2302,7 +2150,7 @@ export const getListDeleteUrl = (listId: number, params: ListDeleteParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2316,11 +2164,11 @@ export const getListDeleteUrl = (listId: number, params: ListDeleteParams) => {
 export const listDelete = async (
   listId: number,
   params: ListDeleteParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<listDeleteResponse> => {
   return appFetch<listDeleteResponse>(getListDeleteUrl(listId, params), {
     ...options,
-    method: 'DELETE',
+    method: "DELETE",
   });
 };
 
@@ -2337,15 +2185,12 @@ export type listDetailsResponseSuccess = listDetailsResponse200 & {
 };
 export type listDetailsResponse = listDetailsResponseSuccess;
 
-export const getListDetailsUrl = (
-  listId: number,
-  params?: ListDetailsParams
-) => {
+export const getListDetailsUrl = (listId: number, params?: ListDetailsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2359,11 +2204,11 @@ export const getListDetailsUrl = (
 export const listDetails = async (
   listId: number,
   params?: ListDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<listDetailsResponse> => {
   return appFetch<listDetailsResponse>(getListDetailsUrl(listId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2381,15 +2226,12 @@ export type listRemoveMovieResponseSuccess = listRemoveMovieResponse200 & {
 };
 export type listRemoveMovieResponse = listRemoveMovieResponseSuccess;
 
-export const getListRemoveMovieUrl = (
-  listId: number,
-  params: ListRemoveMovieParams
-) => {
+export const getListRemoveMovieUrl = (listId: number, params: ListRemoveMovieParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2404,17 +2246,14 @@ export const listRemoveMovie = async (
   listId: number,
   listRemoveMovieBody: ListRemoveMovieBody,
   params: ListRemoveMovieParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<listRemoveMovieResponse> => {
-  return appFetch<listRemoveMovieResponse>(
-    getListRemoveMovieUrl(listId, params),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(listRemoveMovieBody),
-    }
-  );
+  return appFetch<listRemoveMovieResponse>(getListRemoveMovieUrl(listId, params), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(listRemoveMovieBody),
+  });
 };
 
 /**
@@ -2426,20 +2265,17 @@ export type movieNowPlayingListResponse200 = {
   status: 200;
 };
 
-export type movieNowPlayingListResponseSuccess =
-  movieNowPlayingListResponse200 & {
-    headers: Headers;
-  };
+export type movieNowPlayingListResponseSuccess = movieNowPlayingListResponse200 & {
+  headers: Headers;
+};
 export type movieNowPlayingListResponse = movieNowPlayingListResponseSuccess;
 
-export const getMovieNowPlayingListUrl = (
-  params?: MovieNowPlayingListParams
-) => {
+export const getMovieNowPlayingListUrl = (params?: MovieNowPlayingListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2452,15 +2288,12 @@ export const getMovieNowPlayingListUrl = (
 
 export const movieNowPlayingList = async (
   params?: MovieNowPlayingListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieNowPlayingListResponse> => {
-  return appFetch<movieNowPlayingListResponse>(
-    getMovieNowPlayingListUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<movieNowPlayingListResponse>(getMovieNowPlayingListUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -2482,7 +2315,7 @@ export const getMoviePopularListUrl = (params?: MoviePopularListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2495,11 +2328,11 @@ export const getMoviePopularListUrl = (params?: MoviePopularListParams) => {
 
 export const moviePopularList = async (
   params?: MoviePopularListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<moviePopularListResponse> => {
   return appFetch<moviePopularListResponse>(getMoviePopularListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2522,7 +2355,7 @@ export const getMovieTopRatedListUrl = (params?: MovieTopRatedListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2535,11 +2368,11 @@ export const getMovieTopRatedListUrl = (params?: MovieTopRatedListParams) => {
 
 export const movieTopRatedList = async (
   params?: MovieTopRatedListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieTopRatedListResponse> => {
   return appFetch<movieTopRatedListResponse>(getMovieTopRatedListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2562,7 +2395,7 @@ export const getMovieUpcomingListUrl = (params?: MovieUpcomingListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2575,11 +2408,11 @@ export const getMovieUpcomingListUrl = (params?: MovieUpcomingListParams) => {
 
 export const movieUpcomingList = async (
   params?: MovieUpcomingListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieUpcomingListResponse> => {
   return appFetch<movieUpcomingListResponse>(getMovieUpcomingListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2597,15 +2430,12 @@ export type movieDetailsResponseSuccess = movieDetailsResponse200 & {
 };
 export type movieDetailsResponse = movieDetailsResponseSuccess;
 
-export const getMovieDetailsUrl = (
-  movieId: number,
-  params?: MovieDetailsParams
-) => {
+export const getMovieDetailsUrl = (movieId: number, params?: MovieDetailsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2619,11 +2449,11 @@ export const getMovieDetailsUrl = (
 export const movieDetails = async (
   movieId: number,
   params?: MovieDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieDetailsResponse> => {
   return appFetch<movieDetailsResponse>(getMovieDetailsUrl(movieId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2636,21 +2466,17 @@ export type movieAccountStatesResponse200 = {
   status: 200;
 };
 
-export type movieAccountStatesResponseSuccess =
-  movieAccountStatesResponse200 & {
-    headers: Headers;
-  };
+export type movieAccountStatesResponseSuccess = movieAccountStatesResponse200 & {
+  headers: Headers;
+};
 export type movieAccountStatesResponse = movieAccountStatesResponseSuccess;
 
-export const getMovieAccountStatesUrl = (
-  movieId: number,
-  params?: MovieAccountStatesParams
-) => {
+export const getMovieAccountStatesUrl = (movieId: number, params?: MovieAccountStatesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2664,15 +2490,12 @@ export const getMovieAccountStatesUrl = (
 export const movieAccountStates = async (
   movieId: number,
   params?: MovieAccountStatesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieAccountStatesResponse> => {
-  return appFetch<movieAccountStatesResponse>(
-    getMovieAccountStatesUrl(movieId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<movieAccountStatesResponse>(getMovieAccountStatesUrl(movieId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -2684,22 +2507,20 @@ export type movieAlternativeTitlesResponse200 = {
   status: 200;
 };
 
-export type movieAlternativeTitlesResponseSuccess =
-  movieAlternativeTitlesResponse200 & {
-    headers: Headers;
-  };
-export type movieAlternativeTitlesResponse =
-  movieAlternativeTitlesResponseSuccess;
+export type movieAlternativeTitlesResponseSuccess = movieAlternativeTitlesResponse200 & {
+  headers: Headers;
+};
+export type movieAlternativeTitlesResponse = movieAlternativeTitlesResponseSuccess;
 
 export const getMovieAlternativeTitlesUrl = (
   movieId: number,
-  params?: MovieAlternativeTitlesParams
+  params?: MovieAlternativeTitlesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2713,15 +2534,12 @@ export const getMovieAlternativeTitlesUrl = (
 export const movieAlternativeTitles = async (
   movieId: number,
   params?: MovieAlternativeTitlesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieAlternativeTitlesResponse> => {
-  return appFetch<movieAlternativeTitlesResponse>(
-    getMovieAlternativeTitlesUrl(movieId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<movieAlternativeTitlesResponse>(getMovieAlternativeTitlesUrl(movieId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -2738,15 +2556,12 @@ export type movieChangesResponseSuccess = movieChangesResponse200 & {
 };
 export type movieChangesResponse = movieChangesResponseSuccess;
 
-export const getMovieChangesUrl = (
-  movieId: number,
-  params?: MovieChangesParams
-) => {
+export const getMovieChangesUrl = (movieId: number, params?: MovieChangesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2760,11 +2575,11 @@ export const getMovieChangesUrl = (
 export const movieChanges = async (
   movieId: number,
   params?: MovieChangesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieChangesResponse> => {
   return appFetch<movieChangesResponse>(getMovieChangesUrl(movieId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2781,15 +2596,12 @@ export type movieCreditsResponseSuccess = movieCreditsResponse200 & {
 };
 export type movieCreditsResponse = movieCreditsResponseSuccess;
 
-export const getMovieCreditsUrl = (
-  movieId: number,
-  params?: MovieCreditsParams
-) => {
+export const getMovieCreditsUrl = (movieId: number, params?: MovieCreditsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2803,11 +2615,11 @@ export const getMovieCreditsUrl = (
 export const movieCredits = async (
   movieId: number,
   params?: MovieCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieCreditsResponse> => {
   return appFetch<movieCreditsResponse>(getMovieCreditsUrl(movieId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2830,11 +2642,11 @@ export const getMovieExternalIdsUrl = (movieId: number) => {
 
 export const movieExternalIds = async (
   movieId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieExternalIdsResponse> => {
   return appFetch<movieExternalIdsResponse>(getMovieExternalIdsUrl(movieId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2852,15 +2664,12 @@ export type movieImagesResponseSuccess = movieImagesResponse200 & {
 };
 export type movieImagesResponse = movieImagesResponseSuccess;
 
-export const getMovieImagesUrl = (
-  movieId: number,
-  params?: MovieImagesParams
-) => {
+export const getMovieImagesUrl = (movieId: number, params?: MovieImagesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2874,11 +2683,11 @@ export const getMovieImagesUrl = (
 export const movieImages = async (
   movieId: number,
   params?: MovieImagesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieImagesResponse> => {
   return appFetch<movieImagesResponse>(getMovieImagesUrl(movieId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2901,11 +2710,11 @@ export const getMovieKeywordsUrl = (movieId: string) => {
 
 export const movieKeywords = async (
   movieId: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieKeywordsResponse> => {
   return appFetch<movieKeywordsResponse>(getMovieKeywordsUrl(movieId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2927,12 +2736,10 @@ export const getMovieLatestIdUrl = () => {
   return `https://api.themoviedb.org/3/movie/latest`;
 };
 
-export const movieLatestId = async (
-  options?: RequestInit
-): Promise<movieLatestIdResponse> => {
+export const movieLatestId = async (options?: RequestInit): Promise<movieLatestIdResponse> => {
   return appFetch<movieLatestIdResponse>(getMovieLatestIdUrl(), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2950,15 +2757,12 @@ export type movieListsResponseSuccess = movieListsResponse200 & {
 };
 export type movieListsResponse = movieListsResponseSuccess;
 
-export const getMovieListsUrl = (
-  movieId: number,
-  params?: MovieListsParams
-) => {
+export const getMovieListsUrl = (movieId: number, params?: MovieListsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -2972,11 +2776,11 @@ export const getMovieListsUrl = (
 export const movieLists = async (
   movieId: number,
   params?: MovieListsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieListsResponse> => {
   return appFetch<movieListsResponse>(getMovieListsUrl(movieId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -2988,21 +2792,20 @@ export type movieRecommendationsResponse200 = {
   status: 200;
 };
 
-export type movieRecommendationsResponseSuccess =
-  movieRecommendationsResponse200 & {
-    headers: Headers;
-  };
+export type movieRecommendationsResponseSuccess = movieRecommendationsResponse200 & {
+  headers: Headers;
+};
 export type movieRecommendationsResponse = movieRecommendationsResponseSuccess;
 
 export const getMovieRecommendationsUrl = (
   movieId: number,
-  params?: MovieRecommendationsParams
+  params?: MovieRecommendationsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3016,15 +2819,12 @@ export const getMovieRecommendationsUrl = (
 export const movieRecommendations = async (
   movieId: number,
   params?: MovieRecommendationsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieRecommendationsResponse> => {
-  return appFetch<movieRecommendationsResponse>(
-    getMovieRecommendationsUrl(movieId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<movieRecommendationsResponse>(getMovieRecommendationsUrl(movieId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3047,11 +2847,11 @@ export const getMovieReleaseDatesUrl = (movieId: number) => {
 
 export const movieReleaseDates = async (
   movieId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieReleaseDatesResponse> => {
   return appFetch<movieReleaseDatesResponse>(getMovieReleaseDatesUrl(movieId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3069,15 +2869,12 @@ export type movieReviewsResponseSuccess = movieReviewsResponse200 & {
 };
 export type movieReviewsResponse = movieReviewsResponseSuccess;
 
-export const getMovieReviewsUrl = (
-  movieId: number,
-  params?: MovieReviewsParams
-) => {
+export const getMovieReviewsUrl = (movieId: number, params?: MovieReviewsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3091,11 +2888,11 @@ export const getMovieReviewsUrl = (
 export const movieReviews = async (
   movieId: number,
   params?: MovieReviewsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieReviewsResponse> => {
   return appFetch<movieReviewsResponse>(getMovieReviewsUrl(movieId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3113,15 +2910,12 @@ export type movieSimilarResponseSuccess = movieSimilarResponse200 & {
 };
 export type movieSimilarResponse = movieSimilarResponseSuccess;
 
-export const getMovieSimilarUrl = (
-  movieId: number,
-  params?: MovieSimilarParams
-) => {
+export const getMovieSimilarUrl = (movieId: number, params?: MovieSimilarParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3135,11 +2929,11 @@ export const getMovieSimilarUrl = (
 export const movieSimilar = async (
   movieId: number,
   params?: MovieSimilarParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieSimilarResponse> => {
   return appFetch<movieSimilarResponse>(getMovieSimilarUrl(movieId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3163,11 +2957,11 @@ export const getMovieTranslationsUrl = (movieId: number) => {
 
 export const movieTranslations = async (
   movieId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieTranslationsResponse> => {
   return appFetch<movieTranslationsResponse>(getMovieTranslationsUrl(movieId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3184,15 +2978,12 @@ export type movieVideosResponseSuccess = movieVideosResponse200 & {
 };
 export type movieVideosResponse = movieVideosResponseSuccess;
 
-export const getMovieVideosUrl = (
-  movieId: number,
-  params?: MovieVideosParams
-) => {
+export const getMovieVideosUrl = (movieId: number, params?: MovieVideosParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3206,11 +2997,11 @@ export const getMovieVideosUrl = (
 export const movieVideos = async (
   movieId: number,
   params?: MovieVideosParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieVideosResponse> => {
   return appFetch<movieVideosResponse>(getMovieVideosUrl(movieId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3223,10 +3014,9 @@ export type movieWatchProvidersResponse200 = {
   status: 200;
 };
 
-export type movieWatchProvidersResponseSuccess =
-  movieWatchProvidersResponse200 & {
-    headers: Headers;
-  };
+export type movieWatchProvidersResponseSuccess = movieWatchProvidersResponse200 & {
+  headers: Headers;
+};
 export type movieWatchProvidersResponse = movieWatchProvidersResponseSuccess;
 
 export const getMovieWatchProvidersUrl = (movieId: number) => {
@@ -3235,15 +3025,12 @@ export const getMovieWatchProvidersUrl = (movieId: number) => {
 
 export const movieWatchProviders = async (
   movieId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieWatchProvidersResponse> => {
-  return appFetch<movieWatchProvidersResponse>(
-    getMovieWatchProvidersUrl(movieId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<movieWatchProvidersResponse>(getMovieWatchProvidersUrl(movieId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3260,15 +3047,12 @@ export type movieAddRatingResponseSuccess = movieAddRatingResponse200 & {
 };
 export type movieAddRatingResponse = movieAddRatingResponseSuccess;
 
-export const getMovieAddRatingUrl = (
-  movieId: number,
-  params?: MovieAddRatingParams
-) => {
+export const getMovieAddRatingUrl = (movieId: number, params?: MovieAddRatingParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3283,17 +3067,14 @@ export const movieAddRating = async (
   movieId: number,
   movieAddRatingBody: MovieAddRatingBody,
   params?: MovieAddRatingParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieAddRatingResponse> => {
-  return appFetch<movieAddRatingResponse>(
-    getMovieAddRatingUrl(movieId, params),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(movieAddRatingBody),
-    }
-  );
+  return appFetch<movieAddRatingResponse>(getMovieAddRatingUrl(movieId, params), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(movieAddRatingBody),
+  });
 };
 
 /**
@@ -3310,15 +3091,12 @@ export type movieDeleteRatingResponseSuccess = movieDeleteRatingResponse200 & {
 };
 export type movieDeleteRatingResponse = movieDeleteRatingResponseSuccess;
 
-export const getMovieDeleteRatingUrl = (
-  movieId: number,
-  params?: MovieDeleteRatingParams
-) => {
+export const getMovieDeleteRatingUrl = (movieId: number, params?: MovieDeleteRatingParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3332,15 +3110,12 @@ export const getMovieDeleteRatingUrl = (
 export const movieDeleteRating = async (
   movieId: number,
   params?: MovieDeleteRatingParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<movieDeleteRatingResponse> => {
-  return appFetch<movieDeleteRatingResponse>(
-    getMovieDeleteRatingUrl(movieId, params),
-    {
-      ...options,
-      method: 'DELETE',
-    }
-  );
+  return appFetch<movieDeleteRatingResponse>(getMovieDeleteRatingUrl(movieId, params), {
+    ...options,
+    method: "DELETE",
+  });
 };
 
 /**
@@ -3362,11 +3137,11 @@ export const getNetworkDetailsUrl = (networkId: number) => {
 
 export const networkDetails = async (
   networkId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<networkDetailsResponse> => {
   return appFetch<networkDetailsResponse>(getNetworkDetailsUrl(networkId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3390,11 +3165,11 @@ export const getDetailsCopyUrl = (networkId: number) => {
 
 export const detailsCopy = async (
   networkId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<detailsCopyResponse> => {
   return appFetch<detailsCopyResponse>(getDetailsCopyUrl(networkId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3407,10 +3182,9 @@ export type alternativeNamesCopyResponse200 = {
   status: 200;
 };
 
-export type alternativeNamesCopyResponseSuccess =
-  alternativeNamesCopyResponse200 & {
-    headers: Headers;
-  };
+export type alternativeNamesCopyResponseSuccess = alternativeNamesCopyResponse200 & {
+  headers: Headers;
+};
 export type alternativeNamesCopyResponse = alternativeNamesCopyResponseSuccess;
 
 export const getAlternativeNamesCopyUrl = (networkId: number) => {
@@ -3419,15 +3193,12 @@ export const getAlternativeNamesCopyUrl = (networkId: number) => {
 
 export const alternativeNamesCopy = async (
   networkId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<alternativeNamesCopyResponse> => {
-  return appFetch<alternativeNamesCopyResponse>(
-    getAlternativeNamesCopyUrl(networkId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<alternativeNamesCopyResponse>(getAlternativeNamesCopyUrl(networkId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3449,7 +3220,7 @@ export const getPersonPopularListUrl = (params?: PersonPopularListParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3462,11 +3233,11 @@ export const getPersonPopularListUrl = (params?: PersonPopularListParams) => {
 
 export const personPopularList = async (
   params?: PersonPopularListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personPopularListResponse> => {
   return appFetch<personPopularListResponse>(getPersonPopularListUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3484,15 +3255,12 @@ export type personDetailsResponseSuccess = personDetailsResponse200 & {
 };
 export type personDetailsResponse = personDetailsResponseSuccess;
 
-export const getPersonDetailsUrl = (
-  personId: number,
-  params?: PersonDetailsParams
-) => {
+export const getPersonDetailsUrl = (personId: number, params?: PersonDetailsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3506,15 +3274,12 @@ export const getPersonDetailsUrl = (
 export const personDetails = async (
   personId: number,
   params?: PersonDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personDetailsResponse> => {
-  return appFetch<personDetailsResponse>(
-    getPersonDetailsUrl(personId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<personDetailsResponse>(getPersonDetailsUrl(personId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3531,15 +3296,12 @@ export type personChangesResponseSuccess = personChangesResponse200 & {
 };
 export type personChangesResponse = personChangesResponseSuccess;
 
-export const getPersonChangesUrl = (
-  personId: number,
-  params?: PersonChangesParams
-) => {
+export const getPersonChangesUrl = (personId: number, params?: PersonChangesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3553,15 +3315,12 @@ export const getPersonChangesUrl = (
 export const personChanges = async (
   personId: number,
   params?: PersonChangesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personChangesResponse> => {
-  return appFetch<personChangesResponse>(
-    getPersonChangesUrl(personId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<personChangesResponse>(getPersonChangesUrl(personId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3573,22 +3332,20 @@ export type personCombinedCreditsResponse200 = {
   status: 200;
 };
 
-export type personCombinedCreditsResponseSuccess =
-  personCombinedCreditsResponse200 & {
-    headers: Headers;
-  };
-export type personCombinedCreditsResponse =
-  personCombinedCreditsResponseSuccess;
+export type personCombinedCreditsResponseSuccess = personCombinedCreditsResponse200 & {
+  headers: Headers;
+};
+export type personCombinedCreditsResponse = personCombinedCreditsResponseSuccess;
 
 export const getPersonCombinedCreditsUrl = (
   personId: string,
-  params?: PersonCombinedCreditsParams
+  params?: PersonCombinedCreditsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3602,15 +3359,12 @@ export const getPersonCombinedCreditsUrl = (
 export const personCombinedCredits = async (
   personId: string,
   params?: PersonCombinedCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personCombinedCreditsResponse> => {
-  return appFetch<personCombinedCreditsResponse>(
-    getPersonCombinedCreditsUrl(personId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<personCombinedCreditsResponse>(getPersonCombinedCreditsUrl(personId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3633,15 +3387,12 @@ export const getPersonExternalIdsUrl = (personId: number) => {
 
 export const personExternalIds = async (
   personId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personExternalIdsResponse> => {
-  return appFetch<personExternalIdsResponse>(
-    getPersonExternalIdsUrl(personId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<personExternalIdsResponse>(getPersonExternalIdsUrl(personId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3664,11 +3415,11 @@ export const getPersonImagesUrl = (personId: number) => {
 
 export const personImages = async (
   personId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personImagesResponse> => {
   return appFetch<personImagesResponse>(getPersonImagesUrl(personId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3690,12 +3441,10 @@ export const getPersonLatestIdUrl = () => {
   return `https://api.themoviedb.org/3/person/latest`;
 };
 
-export const personLatestId = async (
-  options?: RequestInit
-): Promise<personLatestIdResponse> => {
+export const personLatestId = async (options?: RequestInit): Promise<personLatestIdResponse> => {
   return appFetch<personLatestIdResponse>(getPersonLatestIdUrl(), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3708,21 +3457,17 @@ export type personMovieCreditsResponse200 = {
   status: 200;
 };
 
-export type personMovieCreditsResponseSuccess =
-  personMovieCreditsResponse200 & {
-    headers: Headers;
-  };
+export type personMovieCreditsResponseSuccess = personMovieCreditsResponse200 & {
+  headers: Headers;
+};
 export type personMovieCreditsResponse = personMovieCreditsResponseSuccess;
 
-export const getPersonMovieCreditsUrl = (
-  personId: number,
-  params?: PersonMovieCreditsParams
-) => {
+export const getPersonMovieCreditsUrl = (personId: number, params?: PersonMovieCreditsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3736,15 +3481,12 @@ export const getPersonMovieCreditsUrl = (
 export const personMovieCredits = async (
   personId: number,
   params?: PersonMovieCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personMovieCreditsResponse> => {
-  return appFetch<personMovieCreditsResponse>(
-    getPersonMovieCreditsUrl(personId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<personMovieCreditsResponse>(getPersonMovieCreditsUrl(personId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3761,15 +3503,12 @@ export type personTvCreditsResponseSuccess = personTvCreditsResponse200 & {
 };
 export type personTvCreditsResponse = personTvCreditsResponseSuccess;
 
-export const getPersonTvCreditsUrl = (
-  personId: number,
-  params?: PersonTvCreditsParams
-) => {
+export const getPersonTvCreditsUrl = (personId: number, params?: PersonTvCreditsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3783,15 +3522,12 @@ export const getPersonTvCreditsUrl = (
 export const personTvCredits = async (
   personId: number,
   params?: PersonTvCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personTvCreditsResponse> => {
-  return appFetch<personTvCreditsResponse>(
-    getPersonTvCreditsUrl(personId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<personTvCreditsResponse>(getPersonTvCreditsUrl(personId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3803,21 +3539,17 @@ export type personTaggedImagesResponse200 = {
   status: 200;
 };
 
-export type personTaggedImagesResponseSuccess =
-  personTaggedImagesResponse200 & {
-    headers: Headers;
-  };
+export type personTaggedImagesResponseSuccess = personTaggedImagesResponse200 & {
+  headers: Headers;
+};
 export type personTaggedImagesResponse = personTaggedImagesResponseSuccess;
 
-export const getPersonTaggedImagesUrl = (
-  personId: number,
-  params?: PersonTaggedImagesParams
-) => {
+export const getPersonTaggedImagesUrl = (personId: number, params?: PersonTaggedImagesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3831,15 +3563,12 @@ export const getPersonTaggedImagesUrl = (
 export const personTaggedImages = async (
   personId: number,
   params?: PersonTaggedImagesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<personTaggedImagesResponse> => {
-  return appFetch<personTaggedImagesResponse>(
-    getPersonTaggedImagesUrl(personId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<personTaggedImagesResponse>(getPersonTaggedImagesUrl(personId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -3862,11 +3591,11 @@ export const getTranslationsUrl = (personId: number) => {
 
 export const translations = async (
   personId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<translationsResponse> => {
   return appFetch<translationsResponse>(getTranslationsUrl(personId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3890,11 +3619,11 @@ export const getReviewDetailsUrl = (reviewId: string) => {
 
 export const reviewDetails = async (
   reviewId: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<reviewDetailsResponse> => {
   return appFetch<reviewDetailsResponse>(getReviewDetailsUrl(reviewId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3917,7 +3646,7 @@ export const getSearchCollectionUrl = (params: SearchCollectionParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3930,11 +3659,11 @@ export const getSearchCollectionUrl = (params: SearchCollectionParams) => {
 
 export const searchCollection = async (
   params: SearchCollectionParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<searchCollectionResponse> => {
   return appFetch<searchCollectionResponse>(getSearchCollectionUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3957,7 +3686,7 @@ export const getSearchCompanyUrl = (params: SearchCompanyParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -3970,11 +3699,11 @@ export const getSearchCompanyUrl = (params: SearchCompanyParams) => {
 
 export const searchCompany = async (
   params: SearchCompanyParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<searchCompanyResponse> => {
   return appFetch<searchCompanyResponse>(getSearchCompanyUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -3997,7 +3726,7 @@ export const getSearchKeywordUrl = (params: SearchKeywordParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4010,11 +3739,11 @@ export const getSearchKeywordUrl = (params: SearchKeywordParams) => {
 
 export const searchKeyword = async (
   params: SearchKeywordParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<searchKeywordResponse> => {
   return appFetch<searchKeywordResponse>(getSearchKeywordUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -4037,7 +3766,7 @@ export const getSearchMovieUrl = (params: SearchMovieParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4050,11 +3779,11 @@ export const getSearchMovieUrl = (params: SearchMovieParams) => {
 
 export const searchMovie = async (
   params: SearchMovieParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<searchMovieResponse> => {
   return appFetch<searchMovieResponse>(getSearchMovieUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -4077,7 +3806,7 @@ export const getSearchMultiUrl = (params: SearchMultiParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4090,11 +3819,11 @@ export const getSearchMultiUrl = (params: SearchMultiParams) => {
 
 export const searchMulti = async (
   params: SearchMultiParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<searchMultiResponse> => {
   return appFetch<searchMultiResponse>(getSearchMultiUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -4117,7 +3846,7 @@ export const getSearchPersonUrl = (params: SearchPersonParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4130,11 +3859,11 @@ export const getSearchPersonUrl = (params: SearchPersonParams) => {
 
 export const searchPerson = async (
   params: SearchPersonParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<searchPersonResponse> => {
   return appFetch<searchPersonResponse>(getSearchPersonUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -4157,7 +3886,7 @@ export const getSearchTvUrl = (params: SearchTvParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4170,11 +3899,11 @@ export const getSearchTvUrl = (params: SearchTvParams) => {
 
 export const searchTv = async (
   params: SearchTvParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<searchTvResponse> => {
   return appFetch<searchTvResponse>(getSearchTvUrl(params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -4194,13 +3923,13 @@ export type trendingAllResponse = trendingAllResponseSuccess;
 
 export const getTrendingAllUrl = (
   params?: TrendingAllParams,
-  timeWindow: 'day' | 'week' = 'day'
+  timeWindow: "day" | "week" = "day",
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4213,12 +3942,12 @@ export const getTrendingAllUrl = (
 
 export const trendingAll = async (
   params?: TrendingAllParams,
-  timeWindow: 'day' | 'week' = 'day',
-  options?: RequestInit
+  timeWindow: "day" | "week" = "day",
+  options?: RequestInit,
 ): Promise<trendingAllResponse> => {
   return appFetch<trendingAllResponse>(getTrendingAllUrl(params, timeWindow), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -4238,13 +3967,13 @@ export type trendingMoviesResponse = trendingMoviesResponseSuccess;
 
 export const getTrendingMoviesUrl = (
   params?: TrendingMoviesParams,
-  timeWindow: 'day' | 'week' = 'day'
+  timeWindow: "day" | "week" = "day",
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4257,16 +3986,13 @@ export const getTrendingMoviesUrl = (
 
 export const trendingMovies = async (
   params?: TrendingMoviesParams,
-  timeWindow: 'day' | 'week' = 'day',
-  options?: RequestInit
+  timeWindow: "day" | "week" = "day",
+  options?: RequestInit,
 ): Promise<trendingMoviesResponse> => {
-  return appFetch<trendingMoviesResponse>(
-    getTrendingMoviesUrl(params, timeWindow),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<trendingMoviesResponse>(getTrendingMoviesUrl(params, timeWindow), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4285,13 +4011,13 @@ export type trendingPeopleResponse = trendingPeopleResponseSuccess;
 
 export const getTrendingPeopleUrl = (
   params?: TrendingPeopleParams,
-  timeWindow: 'day' | 'week' = 'day'
+  timeWindow: "day" | "week" = "day",
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4304,16 +4030,13 @@ export const getTrendingPeopleUrl = (
 
 export const trendingPeople = async (
   params?: TrendingPeopleParams,
-  timeWindow: 'day' | 'week' = 'day',
-  options?: RequestInit
+  timeWindow: "day" | "week" = "day",
+  options?: RequestInit,
 ): Promise<trendingPeopleResponse> => {
-  return appFetch<trendingPeopleResponse>(
-    getTrendingPeopleUrl(params, timeWindow),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<trendingPeopleResponse>(getTrendingPeopleUrl(params, timeWindow), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4330,15 +4053,12 @@ export type trendingTvResponseSuccess = trendingTvResponse200 & {
 };
 export type trendingTvResponse = trendingTvResponseSuccess;
 
-export const getTrendingTvUrl = (
-  params?: TrendingTvParams,
-  timeWindow: 'day' | 'week' = 'day'
-) => {
+export const getTrendingTvUrl = (params?: TrendingTvParams, timeWindow: "day" | "week" = "day") => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4351,12 +4071,12 @@ export const getTrendingTvUrl = (
 
 export const trendingTv = async (
   params?: TrendingTvParams,
-  timeWindow: 'day' | 'week' = 'day',
-  options?: RequestInit
+  timeWindow: "day" | "week" = "day",
+  options?: RequestInit,
 ): Promise<trendingTvResponse> => {
   return appFetch<trendingTvResponse>(getTrendingTvUrl(params, timeWindow), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -4369,21 +4089,17 @@ export type tvSeriesAiringTodayListResponse200 = {
   status: 200;
 };
 
-export type tvSeriesAiringTodayListResponseSuccess =
-  tvSeriesAiringTodayListResponse200 & {
-    headers: Headers;
-  };
-export type tvSeriesAiringTodayListResponse =
-  tvSeriesAiringTodayListResponseSuccess;
+export type tvSeriesAiringTodayListResponseSuccess = tvSeriesAiringTodayListResponse200 & {
+  headers: Headers;
+};
+export type tvSeriesAiringTodayListResponse = tvSeriesAiringTodayListResponseSuccess;
 
-export const getTvSeriesAiringTodayListUrl = (
-  params?: TvSeriesAiringTodayListParams
-) => {
+export const getTvSeriesAiringTodayListUrl = (params?: TvSeriesAiringTodayListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4396,15 +4112,12 @@ export const getTvSeriesAiringTodayListUrl = (
 
 export const tvSeriesAiringTodayList = async (
   params?: TvSeriesAiringTodayListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesAiringTodayListResponse> => {
-  return appFetch<tvSeriesAiringTodayListResponse>(
-    getTvSeriesAiringTodayListUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesAiringTodayListResponse>(getTvSeriesAiringTodayListUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4416,20 +4129,17 @@ export type tvSeriesOnTheAirListResponse200 = {
   status: 200;
 };
 
-export type tvSeriesOnTheAirListResponseSuccess =
-  tvSeriesOnTheAirListResponse200 & {
-    headers: Headers;
-  };
+export type tvSeriesOnTheAirListResponseSuccess = tvSeriesOnTheAirListResponse200 & {
+  headers: Headers;
+};
 export type tvSeriesOnTheAirListResponse = tvSeriesOnTheAirListResponseSuccess;
 
-export const getTvSeriesOnTheAirListUrl = (
-  params?: TvSeriesOnTheAirListParams
-) => {
+export const getTvSeriesOnTheAirListUrl = (params?: TvSeriesOnTheAirListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4442,15 +4152,12 @@ export const getTvSeriesOnTheAirListUrl = (
 
 export const tvSeriesOnTheAirList = async (
   params?: TvSeriesOnTheAirListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesOnTheAirListResponse> => {
-  return appFetch<tvSeriesOnTheAirListResponse>(
-    getTvSeriesOnTheAirListUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesOnTheAirListResponse>(getTvSeriesOnTheAirListUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4462,20 +4169,17 @@ export type tvSeriesPopularListResponse200 = {
   status: 200;
 };
 
-export type tvSeriesPopularListResponseSuccess =
-  tvSeriesPopularListResponse200 & {
-    headers: Headers;
-  };
+export type tvSeriesPopularListResponseSuccess = tvSeriesPopularListResponse200 & {
+  headers: Headers;
+};
 export type tvSeriesPopularListResponse = tvSeriesPopularListResponseSuccess;
 
-export const getTvSeriesPopularListUrl = (
-  params?: TvSeriesPopularListParams
-) => {
+export const getTvSeriesPopularListUrl = (params?: TvSeriesPopularListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4488,15 +4192,12 @@ export const getTvSeriesPopularListUrl = (
 
 export const tvSeriesPopularList = async (
   params?: TvSeriesPopularListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesPopularListResponse> => {
-  return appFetch<tvSeriesPopularListResponse>(
-    getTvSeriesPopularListUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesPopularListResponse>(getTvSeriesPopularListUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4508,20 +4209,17 @@ export type tvSeriesTopRatedListResponse200 = {
   status: 200;
 };
 
-export type tvSeriesTopRatedListResponseSuccess =
-  tvSeriesTopRatedListResponse200 & {
-    headers: Headers;
-  };
+export type tvSeriesTopRatedListResponseSuccess = tvSeriesTopRatedListResponse200 & {
+  headers: Headers;
+};
 export type tvSeriesTopRatedListResponse = tvSeriesTopRatedListResponseSuccess;
 
-export const getTvSeriesTopRatedListUrl = (
-  params?: TvSeriesTopRatedListParams
-) => {
+export const getTvSeriesTopRatedListUrl = (params?: TvSeriesTopRatedListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4534,15 +4232,12 @@ export const getTvSeriesTopRatedListUrl = (
 
 export const tvSeriesTopRatedList = async (
   params?: TvSeriesTopRatedListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesTopRatedListResponse> => {
-  return appFetch<tvSeriesTopRatedListResponse>(
-    getTvSeriesTopRatedListUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesTopRatedListResponse>(getTvSeriesTopRatedListUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4559,15 +4254,12 @@ export type tvSeriesDetailsResponseSuccess = tvSeriesDetailsResponse200 & {
 };
 export type tvSeriesDetailsResponse = tvSeriesDetailsResponseSuccess;
 
-export const getTvSeriesDetailsUrl = (
-  seriesId: number,
-  params?: TvSeriesDetailsParams
-) => {
+export const getTvSeriesDetailsUrl = (seriesId: number, params?: TvSeriesDetailsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4581,15 +4273,12 @@ export const getTvSeriesDetailsUrl = (
 export const tvSeriesDetails = async (
   seriesId: number,
   params?: TvSeriesDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesDetailsResponse> => {
-  return appFetch<tvSeriesDetailsResponse>(
-    getTvSeriesDetailsUrl(seriesId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesDetailsResponse>(getTvSeriesDetailsUrl(seriesId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4601,22 +4290,20 @@ export type tvSeriesAccountStatesResponse200 = {
   status: 200;
 };
 
-export type tvSeriesAccountStatesResponseSuccess =
-  tvSeriesAccountStatesResponse200 & {
-    headers: Headers;
-  };
-export type tvSeriesAccountStatesResponse =
-  tvSeriesAccountStatesResponseSuccess;
+export type tvSeriesAccountStatesResponseSuccess = tvSeriesAccountStatesResponse200 & {
+  headers: Headers;
+};
+export type tvSeriesAccountStatesResponse = tvSeriesAccountStatesResponseSuccess;
 
 export const getTvSeriesAccountStatesUrl = (
   seriesId: number,
-  params?: TvSeriesAccountStatesParams
+  params?: TvSeriesAccountStatesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4630,15 +4317,12 @@ export const getTvSeriesAccountStatesUrl = (
 export const tvSeriesAccountStates = async (
   seriesId: number,
   params?: TvSeriesAccountStatesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesAccountStatesResponse> => {
-  return appFetch<tvSeriesAccountStatesResponse>(
-    getTvSeriesAccountStatesUrl(seriesId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesAccountStatesResponse>(getTvSeriesAccountStatesUrl(seriesId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4650,22 +4334,20 @@ export type tvSeriesAggregateCreditsResponse200 = {
   status: 200;
 };
 
-export type tvSeriesAggregateCreditsResponseSuccess =
-  tvSeriesAggregateCreditsResponse200 & {
-    headers: Headers;
-  };
-export type tvSeriesAggregateCreditsResponse =
-  tvSeriesAggregateCreditsResponseSuccess;
+export type tvSeriesAggregateCreditsResponseSuccess = tvSeriesAggregateCreditsResponse200 & {
+  headers: Headers;
+};
+export type tvSeriesAggregateCreditsResponse = tvSeriesAggregateCreditsResponseSuccess;
 
 export const getTvSeriesAggregateCreditsUrl = (
   seriesId: number,
-  params?: TvSeriesAggregateCreditsParams
+  params?: TvSeriesAggregateCreditsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4679,14 +4361,14 @@ export const getTvSeriesAggregateCreditsUrl = (
 export const tvSeriesAggregateCredits = async (
   seriesId: number,
   params?: TvSeriesAggregateCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesAggregateCreditsResponse> => {
   return appFetch<tvSeriesAggregateCreditsResponse>(
     getTvSeriesAggregateCreditsUrl(seriesId, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -4699,12 +4381,10 @@ export type tvSeriesAlternativeTitlesResponse200 = {
   status: 200;
 };
 
-export type tvSeriesAlternativeTitlesResponseSuccess =
-  tvSeriesAlternativeTitlesResponse200 & {
-    headers: Headers;
-  };
-export type tvSeriesAlternativeTitlesResponse =
-  tvSeriesAlternativeTitlesResponseSuccess;
+export type tvSeriesAlternativeTitlesResponseSuccess = tvSeriesAlternativeTitlesResponse200 & {
+  headers: Headers;
+};
+export type tvSeriesAlternativeTitlesResponse = tvSeriesAlternativeTitlesResponseSuccess;
 
 export const getTvSeriesAlternativeTitlesUrl = (seriesId: number) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/alternative_titles`;
@@ -4712,15 +4392,12 @@ export const getTvSeriesAlternativeTitlesUrl = (seriesId: number) => {
 
 export const tvSeriesAlternativeTitles = async (
   seriesId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesAlternativeTitlesResponse> => {
-  return appFetch<tvSeriesAlternativeTitlesResponse>(
-    getTvSeriesAlternativeTitlesUrl(seriesId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesAlternativeTitlesResponse>(getTvSeriesAlternativeTitlesUrl(seriesId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4737,15 +4414,12 @@ export type tvSeriesChangesResponseSuccess = tvSeriesChangesResponse200 & {
 };
 export type tvSeriesChangesResponse = tvSeriesChangesResponseSuccess;
 
-export const getTvSeriesChangesUrl = (
-  seriesId: number,
-  params?: TvSeriesChangesParams
-) => {
+export const getTvSeriesChangesUrl = (seriesId: number, params?: TvSeriesChangesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4759,15 +4433,12 @@ export const getTvSeriesChangesUrl = (
 export const tvSeriesChanges = async (
   seriesId: number,
   params?: TvSeriesChangesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesChangesResponse> => {
-  return appFetch<tvSeriesChangesResponse>(
-    getTvSeriesChangesUrl(seriesId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesChangesResponse>(getTvSeriesChangesUrl(seriesId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4779,12 +4450,10 @@ export type tvSeriesContentRatingsResponse200 = {
   status: 200;
 };
 
-export type tvSeriesContentRatingsResponseSuccess =
-  tvSeriesContentRatingsResponse200 & {
-    headers: Headers;
-  };
-export type tvSeriesContentRatingsResponse =
-  tvSeriesContentRatingsResponseSuccess;
+export type tvSeriesContentRatingsResponseSuccess = tvSeriesContentRatingsResponse200 & {
+  headers: Headers;
+};
+export type tvSeriesContentRatingsResponse = tvSeriesContentRatingsResponseSuccess;
 
 export const getTvSeriesContentRatingsUrl = (seriesId: number) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/content_ratings`;
@@ -4792,15 +4461,12 @@ export const getTvSeriesContentRatingsUrl = (seriesId: number) => {
 
 export const tvSeriesContentRatings = async (
   seriesId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesContentRatingsResponse> => {
-  return appFetch<tvSeriesContentRatingsResponse>(
-    getTvSeriesContentRatingsUrl(seriesId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesContentRatingsResponse>(getTvSeriesContentRatingsUrl(seriesId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4817,15 +4483,12 @@ export type tvSeriesCreditsResponseSuccess = tvSeriesCreditsResponse200 & {
 };
 export type tvSeriesCreditsResponse = tvSeriesCreditsResponseSuccess;
 
-export const getTvSeriesCreditsUrl = (
-  seriesId: number,
-  params?: TvSeriesCreditsParams
-) => {
+export const getTvSeriesCreditsUrl = (seriesId: number, params?: TvSeriesCreditsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4839,15 +4502,12 @@ export const getTvSeriesCreditsUrl = (
 export const tvSeriesCredits = async (
   seriesId: number,
   params?: TvSeriesCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesCreditsResponse> => {
-  return appFetch<tvSeriesCreditsResponse>(
-    getTvSeriesCreditsUrl(seriesId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesCreditsResponse>(getTvSeriesCreditsUrl(seriesId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4859,12 +4519,10 @@ export type tvSeriesEpisodeGroupsResponse200 = {
   status: 200;
 };
 
-export type tvSeriesEpisodeGroupsResponseSuccess =
-  tvSeriesEpisodeGroupsResponse200 & {
-    headers: Headers;
-  };
-export type tvSeriesEpisodeGroupsResponse =
-  tvSeriesEpisodeGroupsResponseSuccess;
+export type tvSeriesEpisodeGroupsResponseSuccess = tvSeriesEpisodeGroupsResponse200 & {
+  headers: Headers;
+};
+export type tvSeriesEpisodeGroupsResponse = tvSeriesEpisodeGroupsResponseSuccess;
 
 export const getTvSeriesEpisodeGroupsUrl = (seriesId: number) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/episode_groups`;
@@ -4872,15 +4530,12 @@ export const getTvSeriesEpisodeGroupsUrl = (seriesId: number) => {
 
 export const tvSeriesEpisodeGroups = async (
   seriesId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesEpisodeGroupsResponse> => {
-  return appFetch<tvSeriesEpisodeGroupsResponse>(
-    getTvSeriesEpisodeGroupsUrl(seriesId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesEpisodeGroupsResponse>(getTvSeriesEpisodeGroupsUrl(seriesId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4892,10 +4547,9 @@ export type tvSeriesExternalIdsResponse200 = {
   status: 200;
 };
 
-export type tvSeriesExternalIdsResponseSuccess =
-  tvSeriesExternalIdsResponse200 & {
-    headers: Headers;
-  };
+export type tvSeriesExternalIdsResponseSuccess = tvSeriesExternalIdsResponse200 & {
+  headers: Headers;
+};
 export type tvSeriesExternalIdsResponse = tvSeriesExternalIdsResponseSuccess;
 
 export const getTvSeriesExternalIdsUrl = (seriesId: number) => {
@@ -4904,15 +4558,12 @@ export const getTvSeriesExternalIdsUrl = (seriesId: number) => {
 
 export const tvSeriesExternalIds = async (
   seriesId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesExternalIdsResponse> => {
-  return appFetch<tvSeriesExternalIdsResponse>(
-    getTvSeriesExternalIdsUrl(seriesId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesExternalIdsResponse>(getTvSeriesExternalIdsUrl(seriesId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4929,15 +4580,12 @@ export type tvSeriesImagesResponseSuccess = tvSeriesImagesResponse200 & {
 };
 export type tvSeriesImagesResponse = tvSeriesImagesResponseSuccess;
 
-export const getTvSeriesImagesUrl = (
-  seriesId: number,
-  params?: TvSeriesImagesParams
-) => {
+export const getTvSeriesImagesUrl = (seriesId: number, params?: TvSeriesImagesParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -4951,15 +4599,12 @@ export const getTvSeriesImagesUrl = (
 export const tvSeriesImages = async (
   seriesId: number,
   params?: TvSeriesImagesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesImagesResponse> => {
-  return appFetch<tvSeriesImagesResponse>(
-    getTvSeriesImagesUrl(seriesId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesImagesResponse>(getTvSeriesImagesUrl(seriesId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -4982,11 +4627,11 @@ export const getTvSeriesKeywordsUrl = (seriesId: number) => {
 
 export const tvSeriesKeywords = async (
   seriesId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesKeywordsResponse> => {
   return appFetch<tvSeriesKeywordsResponse>(getTvSeriesKeywordsUrl(seriesId), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -5009,11 +4654,11 @@ export const getTvSeriesLatestIdUrl = () => {
 };
 
 export const tvSeriesLatestId = async (
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesLatestIdResponse> => {
   return appFetch<tvSeriesLatestIdResponse>(getTvSeriesLatestIdUrl(), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -5036,7 +4681,7 @@ export const getListsCopyUrl = (seriesId: number, params?: ListsCopyParams) => {
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5050,11 +4695,11 @@ export const getListsCopyUrl = (seriesId: number, params?: ListsCopyParams) => {
 export const listsCopy = async (
   seriesId: number,
   params?: ListsCopyParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<listsCopyResponse> => {
   return appFetch<listsCopyResponse>(getListsCopyUrl(seriesId, params), {
     ...options,
-    method: 'GET',
+    method: "GET",
   });
 };
 
@@ -5066,22 +4711,20 @@ export type tvSeriesRecommendationsResponse200 = {
   status: 200;
 };
 
-export type tvSeriesRecommendationsResponseSuccess =
-  tvSeriesRecommendationsResponse200 & {
-    headers: Headers;
-  };
-export type tvSeriesRecommendationsResponse =
-  tvSeriesRecommendationsResponseSuccess;
+export type tvSeriesRecommendationsResponseSuccess = tvSeriesRecommendationsResponse200 & {
+  headers: Headers;
+};
+export type tvSeriesRecommendationsResponse = tvSeriesRecommendationsResponseSuccess;
 
 export const getTvSeriesRecommendationsUrl = (
   seriesId: number,
-  params?: TvSeriesRecommendationsParams
+  params?: TvSeriesRecommendationsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5095,14 +4738,14 @@ export const getTvSeriesRecommendationsUrl = (
 export const tvSeriesRecommendations = async (
   seriesId: number,
   params?: TvSeriesRecommendationsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesRecommendationsResponse> => {
   return appFetch<tvSeriesRecommendationsResponse>(
     getTvSeriesRecommendationsUrl(seriesId, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -5120,15 +4763,12 @@ export type tvSeriesReviewsResponseSuccess = tvSeriesReviewsResponse200 & {
 };
 export type tvSeriesReviewsResponse = tvSeriesReviewsResponseSuccess;
 
-export const getTvSeriesReviewsUrl = (
-  seriesId: number,
-  params?: TvSeriesReviewsParams
-) => {
+export const getTvSeriesReviewsUrl = (seriesId: number, params?: TvSeriesReviewsParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5142,15 +4782,12 @@ export const getTvSeriesReviewsUrl = (
 export const tvSeriesReviews = async (
   seriesId: number,
   params?: TvSeriesReviewsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesReviewsResponse> => {
-  return appFetch<tvSeriesReviewsResponse>(
-    getTvSeriesReviewsUrl(seriesId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesReviewsResponse>(getTvSeriesReviewsUrl(seriesId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5166,8 +4803,7 @@ export type tvSeriesScreenedTheatricallyResponseSuccess =
   tvSeriesScreenedTheatricallyResponse200 & {
     headers: Headers;
   };
-export type tvSeriesScreenedTheatricallyResponse =
-  tvSeriesScreenedTheatricallyResponseSuccess;
+export type tvSeriesScreenedTheatricallyResponse = tvSeriesScreenedTheatricallyResponseSuccess;
 
 export const getTvSeriesScreenedTheatricallyUrl = (seriesId: number) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/screened_theatrically`;
@@ -5175,14 +4811,14 @@ export const getTvSeriesScreenedTheatricallyUrl = (seriesId: number) => {
 
 export const tvSeriesScreenedTheatrically = async (
   seriesId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesScreenedTheatricallyResponse> => {
   return appFetch<tvSeriesScreenedTheatricallyResponse>(
     getTvSeriesScreenedTheatricallyUrl(seriesId),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -5200,15 +4836,12 @@ export type tvSeriesSimilarResponseSuccess = tvSeriesSimilarResponse200 & {
 };
 export type tvSeriesSimilarResponse = tvSeriesSimilarResponseSuccess;
 
-export const getTvSeriesSimilarUrl = (
-  seriesId: string,
-  params?: TvSeriesSimilarParams
-) => {
+export const getTvSeriesSimilarUrl = (seriesId: string, params?: TvSeriesSimilarParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5222,15 +4855,12 @@ export const getTvSeriesSimilarUrl = (
 export const tvSeriesSimilar = async (
   seriesId: string,
   params?: TvSeriesSimilarParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesSimilarResponse> => {
-  return appFetch<tvSeriesSimilarResponse>(
-    getTvSeriesSimilarUrl(seriesId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesSimilarResponse>(getTvSeriesSimilarUrl(seriesId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5242,10 +4872,9 @@ export type tvSeriesTranslationsResponse200 = {
   status: 200;
 };
 
-export type tvSeriesTranslationsResponseSuccess =
-  tvSeriesTranslationsResponse200 & {
-    headers: Headers;
-  };
+export type tvSeriesTranslationsResponseSuccess = tvSeriesTranslationsResponse200 & {
+  headers: Headers;
+};
 export type tvSeriesTranslationsResponse = tvSeriesTranslationsResponseSuccess;
 
 export const getTvSeriesTranslationsUrl = (seriesId: number) => {
@@ -5254,15 +4883,12 @@ export const getTvSeriesTranslationsUrl = (seriesId: number) => {
 
 export const tvSeriesTranslations = async (
   seriesId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesTranslationsResponse> => {
-  return appFetch<tvSeriesTranslationsResponse>(
-    getTvSeriesTranslationsUrl(seriesId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesTranslationsResponse>(getTvSeriesTranslationsUrl(seriesId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5279,15 +4905,12 @@ export type tvSeriesVideosResponseSuccess = tvSeriesVideosResponse200 & {
 };
 export type tvSeriesVideosResponse = tvSeriesVideosResponseSuccess;
 
-export const getTvSeriesVideosUrl = (
-  seriesId: number,
-  params?: TvSeriesVideosParams
-) => {
+export const getTvSeriesVideosUrl = (seriesId: number, params?: TvSeriesVideosParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5301,15 +4924,12 @@ export const getTvSeriesVideosUrl = (
 export const tvSeriesVideos = async (
   seriesId: number,
   params?: TvSeriesVideosParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesVideosResponse> => {
-  return appFetch<tvSeriesVideosResponse>(
-    getTvSeriesVideosUrl(seriesId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesVideosResponse>(getTvSeriesVideosUrl(seriesId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5321,12 +4941,10 @@ export type tvSeriesWatchProvidersResponse200 = {
   status: 200;
 };
 
-export type tvSeriesWatchProvidersResponseSuccess =
-  tvSeriesWatchProvidersResponse200 & {
-    headers: Headers;
-  };
-export type tvSeriesWatchProvidersResponse =
-  tvSeriesWatchProvidersResponseSuccess;
+export type tvSeriesWatchProvidersResponseSuccess = tvSeriesWatchProvidersResponse200 & {
+  headers: Headers;
+};
+export type tvSeriesWatchProvidersResponse = tvSeriesWatchProvidersResponseSuccess;
 
 export const getTvSeriesWatchProvidersUrl = (seriesId: number) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/watch/providers`;
@@ -5334,15 +4952,12 @@ export const getTvSeriesWatchProvidersUrl = (seriesId: number) => {
 
 export const tvSeriesWatchProviders = async (
   seriesId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesWatchProvidersResponse> => {
-  return appFetch<tvSeriesWatchProvidersResponse>(
-    getTvSeriesWatchProvidersUrl(seriesId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeriesWatchProvidersResponse>(getTvSeriesWatchProvidersUrl(seriesId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5359,15 +4974,12 @@ export type tvSeriesAddRatingResponseSuccess = tvSeriesAddRatingResponse200 & {
 };
 export type tvSeriesAddRatingResponse = tvSeriesAddRatingResponseSuccess;
 
-export const getTvSeriesAddRatingUrl = (
-  seriesId: number,
-  params?: TvSeriesAddRatingParams
-) => {
+export const getTvSeriesAddRatingUrl = (seriesId: number, params?: TvSeriesAddRatingParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5382,17 +4994,14 @@ export const tvSeriesAddRating = async (
   seriesId: number,
   tvSeriesAddRatingBody: TvSeriesAddRatingBody,
   params?: TvSeriesAddRatingParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesAddRatingResponse> => {
-  return appFetch<tvSeriesAddRatingResponse>(
-    getTvSeriesAddRatingUrl(seriesId, params),
-    {
-      ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
-      body: JSON.stringify(tvSeriesAddRatingBody),
-    }
-  );
+  return appFetch<tvSeriesAddRatingResponse>(getTvSeriesAddRatingUrl(seriesId, params), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(tvSeriesAddRatingBody),
+  });
 };
 
 /**
@@ -5403,21 +5012,20 @@ export type tvSeriesDeleteRatingResponse200 = {
   status: 200;
 };
 
-export type tvSeriesDeleteRatingResponseSuccess =
-  tvSeriesDeleteRatingResponse200 & {
-    headers: Headers;
-  };
+export type tvSeriesDeleteRatingResponseSuccess = tvSeriesDeleteRatingResponse200 & {
+  headers: Headers;
+};
 export type tvSeriesDeleteRatingResponse = tvSeriesDeleteRatingResponseSuccess;
 
 export const getTvSeriesDeleteRatingUrl = (
   seriesId: number,
-  params?: TvSeriesDeleteRatingParams
+  params?: TvSeriesDeleteRatingParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5431,15 +5039,12 @@ export const getTvSeriesDeleteRatingUrl = (
 export const tvSeriesDeleteRating = async (
   seriesId: number,
   params?: TvSeriesDeleteRatingParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeriesDeleteRatingResponse> => {
-  return appFetch<tvSeriesDeleteRatingResponse>(
-    getTvSeriesDeleteRatingUrl(seriesId, params),
-    {
-      ...options,
-      method: 'DELETE',
-    }
-  );
+  return appFetch<tvSeriesDeleteRatingResponse>(getTvSeriesDeleteRatingUrl(seriesId, params), {
+    ...options,
+    method: "DELETE",
+  });
 };
 
 /**
@@ -5459,13 +5064,13 @@ export type tvSeasonDetailsResponse = tvSeasonDetailsResponseSuccess;
 export const getTvSeasonDetailsUrl = (
   seriesId: number,
   seasonNumber: number,
-  params?: TvSeasonDetailsParams
+  params?: TvSeasonDetailsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5480,15 +5085,12 @@ export const tvSeasonDetails = async (
   seriesId: number,
   seasonNumber: number,
   params?: TvSeasonDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonDetailsResponse> => {
-  return appFetch<tvSeasonDetailsResponse>(
-    getTvSeasonDetailsUrl(seriesId, seasonNumber, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeasonDetailsResponse>(getTvSeasonDetailsUrl(seriesId, seasonNumber, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5500,23 +5102,21 @@ export type tvSeasonAccountStatesResponse200 = {
   status: 200;
 };
 
-export type tvSeasonAccountStatesResponseSuccess =
-  tvSeasonAccountStatesResponse200 & {
-    headers: Headers;
-  };
-export type tvSeasonAccountStatesResponse =
-  tvSeasonAccountStatesResponseSuccess;
+export type tvSeasonAccountStatesResponseSuccess = tvSeasonAccountStatesResponse200 & {
+  headers: Headers;
+};
+export type tvSeasonAccountStatesResponse = tvSeasonAccountStatesResponseSuccess;
 
 export const getTvSeasonAccountStatesUrl = (
   seriesId: number,
   seasonNumber: number,
-  params?: TvSeasonAccountStatesParams
+  params?: TvSeasonAccountStatesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5531,14 +5131,14 @@ export const tvSeasonAccountStates = async (
   seriesId: number,
   seasonNumber: number,
   params?: TvSeasonAccountStatesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonAccountStatesResponse> => {
   return appFetch<tvSeasonAccountStatesResponse>(
     getTvSeasonAccountStatesUrl(seriesId, seasonNumber, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -5551,23 +5151,21 @@ export type tvSeasonAggregateCreditsResponse200 = {
   status: 200;
 };
 
-export type tvSeasonAggregateCreditsResponseSuccess =
-  tvSeasonAggregateCreditsResponse200 & {
-    headers: Headers;
-  };
-export type tvSeasonAggregateCreditsResponse =
-  tvSeasonAggregateCreditsResponseSuccess;
+export type tvSeasonAggregateCreditsResponseSuccess = tvSeasonAggregateCreditsResponse200 & {
+  headers: Headers;
+};
+export type tvSeasonAggregateCreditsResponse = tvSeasonAggregateCreditsResponseSuccess;
 
 export const getTvSeasonAggregateCreditsUrl = (
   seriesId: number,
   seasonNumber: number,
-  params?: TvSeasonAggregateCreditsParams
+  params?: TvSeasonAggregateCreditsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5582,14 +5180,14 @@ export const tvSeasonAggregateCredits = async (
   seriesId: number,
   seasonNumber: number,
   params?: TvSeasonAggregateCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonAggregateCreditsResponse> => {
   return appFetch<tvSeasonAggregateCreditsResponse>(
     getTvSeasonAggregateCreditsUrl(seriesId, seasonNumber, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -5602,21 +5200,17 @@ export type tvSeasonChangesByIdResponse200 = {
   status: 200;
 };
 
-export type tvSeasonChangesByIdResponseSuccess =
-  tvSeasonChangesByIdResponse200 & {
-    headers: Headers;
-  };
+export type tvSeasonChangesByIdResponseSuccess = tvSeasonChangesByIdResponse200 & {
+  headers: Headers;
+};
 export type tvSeasonChangesByIdResponse = tvSeasonChangesByIdResponseSuccess;
 
-export const getTvSeasonChangesByIdUrl = (
-  seasonId: number,
-  params?: TvSeasonChangesByIdParams
-) => {
+export const getTvSeasonChangesByIdUrl = (seasonId: number, params?: TvSeasonChangesByIdParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5630,15 +5224,12 @@ export const getTvSeasonChangesByIdUrl = (
 export const tvSeasonChangesById = async (
   seasonId: number,
   params?: TvSeasonChangesByIdParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonChangesByIdResponse> => {
-  return appFetch<tvSeasonChangesByIdResponse>(
-    getTvSeasonChangesByIdUrl(seasonId, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeasonChangesByIdResponse>(getTvSeasonChangesByIdUrl(seasonId, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5657,13 +5248,13 @@ export type tvSeasonCreditsResponse = tvSeasonCreditsResponseSuccess;
 export const getTvSeasonCreditsUrl = (
   seriesId: number,
   seasonNumber: number,
-  params?: TvSeasonCreditsParams
+  params?: TvSeasonCreditsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5678,15 +5269,12 @@ export const tvSeasonCredits = async (
   seriesId: number,
   seasonNumber: number,
   params?: TvSeasonCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonCreditsResponse> => {
-  return appFetch<tvSeasonCreditsResponse>(
-    getTvSeasonCreditsUrl(seriesId, seasonNumber, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeasonCreditsResponse>(getTvSeasonCreditsUrl(seriesId, seasonNumber, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5698,31 +5286,24 @@ export type tvSeasonExternalIdsResponse200 = {
   status: 200;
 };
 
-export type tvSeasonExternalIdsResponseSuccess =
-  tvSeasonExternalIdsResponse200 & {
-    headers: Headers;
-  };
+export type tvSeasonExternalIdsResponseSuccess = tvSeasonExternalIdsResponse200 & {
+  headers: Headers;
+};
 export type tvSeasonExternalIdsResponse = tvSeasonExternalIdsResponseSuccess;
 
-export const getTvSeasonExternalIdsUrl = (
-  seriesId: number,
-  seasonNumber: number
-) => {
+export const getTvSeasonExternalIdsUrl = (seriesId: number, seasonNumber: number) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/external_ids`;
 };
 
 export const tvSeasonExternalIds = async (
   seriesId: number,
   seasonNumber: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonExternalIdsResponse> => {
-  return appFetch<tvSeasonExternalIdsResponse>(
-    getTvSeasonExternalIdsUrl(seriesId, seasonNumber),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeasonExternalIdsResponse>(getTvSeasonExternalIdsUrl(seriesId, seasonNumber), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5742,13 +5323,13 @@ export type tvSeasonImagesResponse = tvSeasonImagesResponseSuccess;
 export const getTvSeasonImagesUrl = (
   seriesId: number,
   seasonNumber: number,
-  params?: TvSeasonImagesParams
+  params?: TvSeasonImagesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5763,15 +5344,12 @@ export const tvSeasonImages = async (
   seriesId: number,
   seasonNumber: number,
   params?: TvSeasonImagesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonImagesResponse> => {
-  return appFetch<tvSeasonImagesResponse>(
-    getTvSeasonImagesUrl(seriesId, seasonNumber, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeasonImagesResponse>(getTvSeasonImagesUrl(seriesId, seasonNumber, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5783,30 +5361,26 @@ export type tvSeasonTranslationsResponse200 = {
   status: 200;
 };
 
-export type tvSeasonTranslationsResponseSuccess =
-  tvSeasonTranslationsResponse200 & {
-    headers: Headers;
-  };
+export type tvSeasonTranslationsResponseSuccess = tvSeasonTranslationsResponse200 & {
+  headers: Headers;
+};
 export type tvSeasonTranslationsResponse = tvSeasonTranslationsResponseSuccess;
 
-export const getTvSeasonTranslationsUrl = (
-  seriesId: number,
-  seasonNumber: number
-) => {
+export const getTvSeasonTranslationsUrl = (seriesId: number, seasonNumber: number) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/translations`;
 };
 
 export const tvSeasonTranslations = async (
   seriesId: number,
   seasonNumber: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonTranslationsResponse> => {
   return appFetch<tvSeasonTranslationsResponse>(
     getTvSeasonTranslationsUrl(seriesId, seasonNumber),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -5827,13 +5401,13 @@ export type tvSeasonVideosResponse = tvSeasonVideosResponseSuccess;
 export const getTvSeasonVideosUrl = (
   seriesId: number,
   seasonNumber: number,
-  params?: TvSeasonVideosParams
+  params?: TvSeasonVideosParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5848,15 +5422,12 @@ export const tvSeasonVideos = async (
   seriesId: number,
   seasonNumber: number,
   params?: TvSeasonVideosParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonVideosResponse> => {
-  return appFetch<tvSeasonVideosResponse>(
-    getTvSeasonVideosUrl(seriesId, seasonNumber, params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvSeasonVideosResponse>(getTvSeasonVideosUrl(seriesId, seasonNumber, params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -5868,23 +5439,21 @@ export type tvSeasonWatchProvidersResponse200 = {
   status: 200;
 };
 
-export type tvSeasonWatchProvidersResponseSuccess =
-  tvSeasonWatchProvidersResponse200 & {
-    headers: Headers;
-  };
-export type tvSeasonWatchProvidersResponse =
-  tvSeasonWatchProvidersResponseSuccess;
+export type tvSeasonWatchProvidersResponseSuccess = tvSeasonWatchProvidersResponse200 & {
+  headers: Headers;
+};
+export type tvSeasonWatchProvidersResponse = tvSeasonWatchProvidersResponseSuccess;
 
 export const getTvSeasonWatchProvidersUrl = (
   seriesId: number,
   seasonNumber: number,
-  params?: TvSeasonWatchProvidersParams
+  params?: TvSeasonWatchProvidersParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5899,14 +5468,14 @@ export const tvSeasonWatchProviders = async (
   seriesId: number,
   seasonNumber: number,
   params?: TvSeasonWatchProvidersParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvSeasonWatchProvidersResponse> => {
   return appFetch<tvSeasonWatchProvidersResponse>(
     getTvSeasonWatchProvidersUrl(seriesId, seasonNumber, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -5928,13 +5497,13 @@ export const getTvEpisodeDetailsUrl = (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: number,
-  params?: TvEpisodeDetailsParams
+  params?: TvEpisodeDetailsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -5950,14 +5519,14 @@ export const tvEpisodeDetails = async (
   seasonNumber: number,
   episodeNumber: number,
   params?: TvEpisodeDetailsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeDetailsResponse> => {
   return appFetch<tvEpisodeDetailsResponse>(
     getTvEpisodeDetailsUrl(seriesId, seasonNumber, episodeNumber, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -5970,24 +5539,22 @@ export type tvEpisodeAccountStatesResponse200 = {
   status: 200;
 };
 
-export type tvEpisodeAccountStatesResponseSuccess =
-  tvEpisodeAccountStatesResponse200 & {
-    headers: Headers;
-  };
-export type tvEpisodeAccountStatesResponse =
-  tvEpisodeAccountStatesResponseSuccess;
+export type tvEpisodeAccountStatesResponseSuccess = tvEpisodeAccountStatesResponse200 & {
+  headers: Headers;
+};
+export type tvEpisodeAccountStatesResponse = tvEpisodeAccountStatesResponseSuccess;
 
 export const getTvEpisodeAccountStatesUrl = (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: number,
-  params?: TvEpisodeAccountStatesParams
+  params?: TvEpisodeAccountStatesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6003,14 +5570,14 @@ export const tvEpisodeAccountStates = async (
   seasonNumber: number,
   episodeNumber: number,
   params?: TvEpisodeAccountStatesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeAccountStatesResponse> => {
   return appFetch<tvEpisodeAccountStatesResponse>(
     getTvEpisodeAccountStatesUrl(seriesId, seasonNumber, episodeNumber, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -6023,10 +5590,9 @@ export type tvEpisodeChangesByIdResponse200 = {
   status: 200;
 };
 
-export type tvEpisodeChangesByIdResponseSuccess =
-  tvEpisodeChangesByIdResponse200 & {
-    headers: Headers;
-  };
+export type tvEpisodeChangesByIdResponseSuccess = tvEpisodeChangesByIdResponse200 & {
+  headers: Headers;
+};
 export type tvEpisodeChangesByIdResponse = tvEpisodeChangesByIdResponseSuccess;
 
 export const getTvEpisodeChangesByIdUrl = (episodeId: number) => {
@@ -6035,15 +5601,12 @@ export const getTvEpisodeChangesByIdUrl = (episodeId: number) => {
 
 export const tvEpisodeChangesById = async (
   episodeId: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeChangesByIdResponse> => {
-  return appFetch<tvEpisodeChangesByIdResponse>(
-    getTvEpisodeChangesByIdUrl(episodeId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvEpisodeChangesByIdResponse>(getTvEpisodeChangesByIdUrl(episodeId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -6063,13 +5626,13 @@ export const getTvEpisodeCreditsUrl = (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: number,
-  params?: TvEpisodeCreditsParams
+  params?: TvEpisodeCreditsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6085,14 +5648,14 @@ export const tvEpisodeCredits = async (
   seasonNumber: number,
   episodeNumber: number,
   params?: TvEpisodeCreditsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeCreditsResponse> => {
   return appFetch<tvEpisodeCreditsResponse>(
     getTvEpisodeCreditsUrl(seriesId, seasonNumber, episodeNumber, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -6105,16 +5668,15 @@ export type tvEpisodeExternalIdsResponse200 = {
   status: 200;
 };
 
-export type tvEpisodeExternalIdsResponseSuccess =
-  tvEpisodeExternalIdsResponse200 & {
-    headers: Headers;
-  };
+export type tvEpisodeExternalIdsResponseSuccess = tvEpisodeExternalIdsResponse200 & {
+  headers: Headers;
+};
 export type tvEpisodeExternalIdsResponse = tvEpisodeExternalIdsResponseSuccess;
 
 export const getTvEpisodeExternalIdsUrl = (
   seriesId: number,
   seasonNumber: number,
-  episodeNumber: string
+  episodeNumber: string,
 ) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/external_ids`;
 };
@@ -6123,14 +5685,14 @@ export const tvEpisodeExternalIds = async (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeExternalIdsResponse> => {
   return appFetch<tvEpisodeExternalIdsResponse>(
     getTvEpisodeExternalIdsUrl(seriesId, seasonNumber, episodeNumber),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -6152,13 +5714,13 @@ export const getTvEpisodeImagesUrl = (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: number,
-  params?: TvEpisodeImagesParams
+  params?: TvEpisodeImagesParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6174,14 +5736,14 @@ export const tvEpisodeImages = async (
   seasonNumber: number,
   episodeNumber: number,
   params?: TvEpisodeImagesParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeImagesResponse> => {
   return appFetch<tvEpisodeImagesResponse>(
     getTvEpisodeImagesUrl(seriesId, seasonNumber, episodeNumber, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -6194,17 +5756,15 @@ export type tvEpisodeTranslationsResponse200 = {
   status: 200;
 };
 
-export type tvEpisodeTranslationsResponseSuccess =
-  tvEpisodeTranslationsResponse200 & {
-    headers: Headers;
-  };
-export type tvEpisodeTranslationsResponse =
-  tvEpisodeTranslationsResponseSuccess;
+export type tvEpisodeTranslationsResponseSuccess = tvEpisodeTranslationsResponse200 & {
+  headers: Headers;
+};
+export type tvEpisodeTranslationsResponse = tvEpisodeTranslationsResponseSuccess;
 
 export const getTvEpisodeTranslationsUrl = (
   seriesId: number,
   seasonNumber: number,
-  episodeNumber: number
+  episodeNumber: number,
 ) => {
   return `https://api.themoviedb.org/3/tv/${seriesId}/season/${seasonNumber}/episode/${episodeNumber}/translations`;
 };
@@ -6213,14 +5773,14 @@ export const tvEpisodeTranslations = async (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: number,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeTranslationsResponse> => {
   return appFetch<tvEpisodeTranslationsResponse>(
     getTvEpisodeTranslationsUrl(seriesId, seasonNumber, episodeNumber),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -6242,13 +5802,13 @@ export const getTvEpisodeVideosUrl = (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: number,
-  params?: TvEpisodeVideosParams
+  params?: TvEpisodeVideosParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6264,14 +5824,14 @@ export const tvEpisodeVideos = async (
   seasonNumber: number,
   episodeNumber: number,
   params?: TvEpisodeVideosParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeVideosResponse> => {
   return appFetch<tvEpisodeVideosResponse>(
     getTvEpisodeVideosUrl(seriesId, seasonNumber, episodeNumber, params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -6284,23 +5844,22 @@ export type tvEpisodeAddRatingResponse200 = {
   status: 200;
 };
 
-export type tvEpisodeAddRatingResponseSuccess =
-  tvEpisodeAddRatingResponse200 & {
-    headers: Headers;
-  };
+export type tvEpisodeAddRatingResponseSuccess = tvEpisodeAddRatingResponse200 & {
+  headers: Headers;
+};
 export type tvEpisodeAddRatingResponse = tvEpisodeAddRatingResponseSuccess;
 
 export const getTvEpisodeAddRatingUrl = (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: number,
-  params?: TvEpisodeAddRatingParams
+  params?: TvEpisodeAddRatingParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6317,16 +5876,16 @@ export const tvEpisodeAddRating = async (
   episodeNumber: number,
   tvEpisodeAddRatingBody: TvEpisodeAddRatingBody,
   params?: TvEpisodeAddRatingParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeAddRatingResponse> => {
   return appFetch<tvEpisodeAddRatingResponse>(
     getTvEpisodeAddRatingUrl(seriesId, seasonNumber, episodeNumber, params),
     {
       ...options,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...options?.headers },
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...options?.headers },
       body: JSON.stringify(tvEpisodeAddRatingBody),
-    }
+    },
   );
 };
 
@@ -6339,24 +5898,22 @@ export type tvEpisodeDeleteRatingResponse200 = {
   status: 200;
 };
 
-export type tvEpisodeDeleteRatingResponseSuccess =
-  tvEpisodeDeleteRatingResponse200 & {
-    headers: Headers;
-  };
-export type tvEpisodeDeleteRatingResponse =
-  tvEpisodeDeleteRatingResponseSuccess;
+export type tvEpisodeDeleteRatingResponseSuccess = tvEpisodeDeleteRatingResponse200 & {
+  headers: Headers;
+};
+export type tvEpisodeDeleteRatingResponse = tvEpisodeDeleteRatingResponseSuccess;
 
 export const getTvEpisodeDeleteRatingUrl = (
   seriesId: number,
   seasonNumber: number,
   episodeNumber: number,
-  params?: TvEpisodeDeleteRatingParams
+  params?: TvEpisodeDeleteRatingParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6372,14 +5929,14 @@ export const tvEpisodeDeleteRating = async (
   seasonNumber: number,
   episodeNumber: number,
   params?: TvEpisodeDeleteRatingParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeDeleteRatingResponse> => {
   return appFetch<tvEpisodeDeleteRatingResponse>(
     getTvEpisodeDeleteRatingUrl(seriesId, seasonNumber, episodeNumber, params),
     {
       ...options,
-      method: 'DELETE',
-    }
+      method: "DELETE",
+    },
   );
 };
 
@@ -6392,12 +5949,10 @@ export type tvEpisodeGroupDetailsResponse200 = {
   status: 200;
 };
 
-export type tvEpisodeGroupDetailsResponseSuccess =
-  tvEpisodeGroupDetailsResponse200 & {
-    headers: Headers;
-  };
-export type tvEpisodeGroupDetailsResponse =
-  tvEpisodeGroupDetailsResponseSuccess;
+export type tvEpisodeGroupDetailsResponseSuccess = tvEpisodeGroupDetailsResponse200 & {
+  headers: Headers;
+};
+export type tvEpisodeGroupDetailsResponse = tvEpisodeGroupDetailsResponseSuccess;
 
 export const getTvEpisodeGroupDetailsUrl = (tvEpisodeGroupId: string) => {
   return `https://api.themoviedb.org/3/tv/episode_group/${tvEpisodeGroupId}`;
@@ -6405,15 +5960,12 @@ export const getTvEpisodeGroupDetailsUrl = (tvEpisodeGroupId: string) => {
 
 export const tvEpisodeGroupDetails = async (
   tvEpisodeGroupId: string,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<tvEpisodeGroupDetailsResponse> => {
-  return appFetch<tvEpisodeGroupDetailsResponse>(
-    getTvEpisodeGroupDetailsUrl(tvEpisodeGroupId),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<tvEpisodeGroupDetailsResponse>(getTvEpisodeGroupDetailsUrl(tvEpisodeGroupId), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -6429,17 +5981,16 @@ export type watchProvidersAvailableRegionsResponseSuccess =
   watchProvidersAvailableRegionsResponse200 & {
     headers: Headers;
   };
-export type watchProvidersAvailableRegionsResponse =
-  watchProvidersAvailableRegionsResponseSuccess;
+export type watchProvidersAvailableRegionsResponse = watchProvidersAvailableRegionsResponseSuccess;
 
 export const getWatchProvidersAvailableRegionsUrl = (
-  params?: WatchProvidersAvailableRegionsParams
+  params?: WatchProvidersAvailableRegionsParams,
 ) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6452,14 +6003,14 @@ export const getWatchProvidersAvailableRegionsUrl = (
 
 export const watchProvidersAvailableRegions = async (
   params?: WatchProvidersAvailableRegionsParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<watchProvidersAvailableRegionsResponse> => {
   return appFetch<watchProvidersAvailableRegionsResponse>(
     getWatchProvidersAvailableRegionsUrl(params),
     {
       ...options,
-      method: 'GET',
-    }
+      method: "GET",
+    },
   );
 };
 
@@ -6472,21 +6023,17 @@ export type watchProvidersMovieListResponse200 = {
   status: 200;
 };
 
-export type watchProvidersMovieListResponseSuccess =
-  watchProvidersMovieListResponse200 & {
-    headers: Headers;
-  };
-export type watchProvidersMovieListResponse =
-  watchProvidersMovieListResponseSuccess;
+export type watchProvidersMovieListResponseSuccess = watchProvidersMovieListResponse200 & {
+  headers: Headers;
+};
+export type watchProvidersMovieListResponse = watchProvidersMovieListResponseSuccess;
 
-export const getWatchProvidersMovieListUrl = (
-  params?: WatchProvidersMovieListParams
-) => {
+export const getWatchProvidersMovieListUrl = (params?: WatchProvidersMovieListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6499,15 +6046,12 @@ export const getWatchProvidersMovieListUrl = (
 
 export const watchProvidersMovieList = async (
   params?: WatchProvidersMovieListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<watchProvidersMovieListResponse> => {
-  return appFetch<watchProvidersMovieListResponse>(
-    getWatchProvidersMovieListUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<watchProvidersMovieListResponse>(getWatchProvidersMovieListUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };
 
 /**
@@ -6519,20 +6063,17 @@ export type watchProviderTvListResponse200 = {
   status: 200;
 };
 
-export type watchProviderTvListResponseSuccess =
-  watchProviderTvListResponse200 & {
-    headers: Headers;
-  };
+export type watchProviderTvListResponseSuccess = watchProviderTvListResponse200 & {
+  headers: Headers;
+};
 export type watchProviderTvListResponse = watchProviderTvListResponseSuccess;
 
-export const getWatchProviderTvListUrl = (
-  params?: WatchProviderTvListParams
-) => {
+export const getWatchProviderTvListUrl = (params?: WatchProviderTvListParams) => {
   const normalizedParams = new URLSearchParams();
 
   Object.entries(params || {}).forEach(([key, value]) => {
     if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : value.toString());
+      normalizedParams.append(key, value === null ? "null" : value.toString());
     }
   });
 
@@ -6545,13 +6086,10 @@ export const getWatchProviderTvListUrl = (
 
 export const watchProviderTvList = async (
   params?: WatchProviderTvListParams,
-  options?: RequestInit
+  options?: RequestInit,
 ): Promise<watchProviderTvListResponse> => {
-  return appFetch<watchProviderTvListResponse>(
-    getWatchProviderTvListUrl(params),
-    {
-      ...options,
-      method: 'GET',
-    }
-  );
+  return appFetch<watchProviderTvListResponse>(getWatchProviderTvListUrl(params), {
+    ...options,
+    method: "GET",
+  });
 };

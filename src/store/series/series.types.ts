@@ -1,4 +1,4 @@
-import type { DiscoverTv200ResultsItem } from '@/api/types';
+import type { DiscoverTv200ResultsItem } from "@/api/types";
 
 export type TvByGenre = DiscoverTv200ResultsItem;
 

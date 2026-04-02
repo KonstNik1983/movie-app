@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { SearchCompany200ResultsItem } from './searchCompany200ResultsItem';
+import type { SearchCompany200ResultsItem } from "./searchCompany200ResultsItem";
 
 export type SearchCompany200 = {
   page?: number;

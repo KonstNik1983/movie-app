@@ -1,14 +1,14 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import type { User } from '@/types/user';
-import { STORAGE_KEYS } from '@/constants/storage-keys';
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import type { User } from "@/types/user";
+import { STORAGE_KEYS } from "@/constants/storage-keys";
 
-import { useToast } from 'vue-toastification';
-import { nanoid } from 'nanoid';
+import { useToast } from "vue-toastification";
+import { nanoid } from "nanoid";
 
 const toast = useToast();
 
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore("auth", () => {
   const isAuth = ref(false);
   const userData = ref<User | null>(null);
   const isAuthInitialized = ref(false);
@@ -25,20 +25,17 @@ export const useAuthStore = defineStore('auth', () => {
   const saveCurrentUser = () => {
     const users = getUsers();
     const updatedUsers = users.map((user) =>
-      user.id === userData.value!.id ? userData.value! : user
+      user.id === userData.value!.id ? userData.value! : user,
     );
     saveUsers(updatedUsers);
-    localStorage.setItem(
-      STORAGE_KEYS.CURRENT_USER,
-      JSON.stringify(userData.value)
-    );
+    localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(userData.value));
   };
 
   const registerUser = (username: string, password: string) => {
     const users = getUsers();
 
     if (users.some((user) => user.username === username)) {
-      toast.error('Пользователь с таким логином уже существует');
+      toast.error("Пользователь с таким логином уже существует");
       return false;
     }
 
@@ -67,11 +64,11 @@ export const useAuthStore = defineStore('auth', () => {
     const user = users.find((user) => user.username === username);
 
     if (!user) {
-      toast.error('Пользователь не найден, зарегистрируйтесь');
+      toast.error("Пользователь не найден, зарегистрируйтесь");
       return false;
     }
     if (user.password !== password) {
-      toast.error('Неверный логин или пароль');
+      toast.error("Неверный логин или пароль");
       return false;
     }
 
@@ -107,16 +104,14 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthInitialized.value = true;
   };
 
-  const addToWatchList = (id: number, type: 'movie' | 'tv') => {
+  const addToWatchList = (id: number, type: "movie" | "tv") => {
     if (!userData.value) return;
 
-    const exists = userData.value.watchList.some(
-      (item) => item.id === id && item.type === type
-    );
+    const exists = userData.value.watchList.some((item) => item.id === id && item.type === type);
 
     if (exists) {
       userData.value.watchList = userData.value.watchList.filter(
-        (item) => !(item.id === id && item.type === type)
+        (item) => !(item.id === id && item.type === type),
       );
       toast.info('Удалено из "Хочу посмотреть"');
     } else {
@@ -127,16 +122,14 @@ export const useAuthStore = defineStore('auth', () => {
     saveCurrentUser();
   };
 
-  const addToFavoritesList = (id: number, type: 'movie' | 'tv') => {
+  const addToFavoritesList = (id: number, type: "movie" | "tv") => {
     if (!userData.value) return;
 
-    const exists = userData.value.favorites.some(
-      (item) => item.id === id && item.type === type
-    );
+    const exists = userData.value.favorites.some((item) => item.id === id && item.type === type);
 
     if (exists) {
       userData.value.favorites = userData.value.favorites.filter(
-        (item) => !(item.id === id && item.type === type)
+        (item) => !(item.id === id && item.type === type),
       );
       toast.info('Удалено из "Избранное"');
     } else {
@@ -147,11 +140,7 @@ export const useAuthStore = defineStore('auth', () => {
     saveCurrentUser();
   };
 
-  const updateProfile = (updates: {
-    firstName: string;
-    lastName: string;
-    email: string;
-  }) => {
+  const updateProfile = (updates: { firstName: string; lastName: string; email: string }) => {
     if (!userData.value) return;
 
     userData.value = {
@@ -159,27 +148,24 @@ export const useAuthStore = defineStore('auth', () => {
       ...updates,
     };
 
-    localStorage.setItem(
-      STORAGE_KEYS.CURRENT_USER,
-      JSON.stringify(userData.value)
-    );
+    localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(userData.value));
 
     const users = getUsers();
 
     const updatedUsers = users.map((user) =>
-      user.id === userData.value!.id ? userData.value! : user
+      user.id === userData.value!.id ? userData.value! : user,
     );
 
     saveUsers(updatedUsers);
 
-    toast.success('Данные профиля обновлены');
+    toast.success("Данные профиля обновлены");
   };
 
   const changePassword = (currentPassword: string, newPassword: string) => {
     if (!userData.value) return false;
 
     if (userData.value.password !== currentPassword) {
-      toast.error('Текущий пароль неверный');
+      toast.error("Текущий пароль неверный");
       return false;
     }
 
@@ -187,16 +173,13 @@ export const useAuthStore = defineStore('auth', () => {
 
     const users = getUsers();
     const updatedUsers = users.map((user) =>
-      user.id === userData.value!.id ? userData.value! : user
+      user.id === userData.value!.id ? userData.value! : user,
     );
     saveUsers(updatedUsers);
 
-    localStorage.setItem(
-      STORAGE_KEYS.CURRENT_USER,
-      JSON.stringify(userData.value)
-    );
+    localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(userData.value));
 
-    toast.success('Пароль успешно изменён');
+    toast.success("Пароль успешно изменён");
     return true;
   };
 

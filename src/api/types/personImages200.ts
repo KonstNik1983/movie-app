@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { PersonImages200ProfilesItem } from './personImages200ProfilesItem';
+import type { PersonImages200ProfilesItem } from "./personImages200ProfilesItem";
 
 export type PersonImages200 = {
   id?: number;

@@ -4,11 +4,11 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { AccountGetFavoritesSortBy } from './accountGetFavoritesSortBy';
+import type { AccountGetFavoritesSortBy } from "./accountGetFavoritesSortBy";
 
 export type AccountGetFavoritesParams = {
-language?: string;
-page?: number;
-session_id?: string;
-sort_by?: AccountGetFavoritesSortBy;
+  language?: string;
+  page?: number;
+  session_id?: string;
+  sort_by?: AccountGetFavoritesSortBy;
 };

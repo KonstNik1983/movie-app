@@ -1,12 +1,12 @@
-import { ref } from 'vue';
-import { defineStore } from 'pinia';
-import { useGenreStore } from '@/store/genre/genre.ts';
-import { useAuthStore } from '@/store/auth/auth';
+import { ref } from "vue";
+import { defineStore } from "pinia";
+import { useGenreStore } from "@/store/genre/genre.ts";
+import { useAuthStore } from "@/store/auth/auth";
 
-import { useToast } from 'vue-toastification';
+import { useToast } from "vue-toastification";
 const toast = useToast();
 
-export const useInitStore = defineStore('init', () => {
+export const useInitStore = defineStore("init", () => {
   const genreStore = useGenreStore();
 
   const isInitialized = ref(false);
@@ -24,7 +24,7 @@ export const useInitStore = defineStore('init', () => {
       await Promise.all([genreStore.loadGenres(), genreStore.loadTvGenres()]);
       isInitialized.value = true;
     } catch {
-      toast.error('App init error!');
+      toast.error("App init error!");
     } finally {
       isLoading.value = false;
     }

@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { MovieChanges200ChangesItemItemsItemValue } from './movieChanges200ChangesItemItemsItemValue';
+import type { MovieChanges200ChangesItemItemsItemValue } from "./movieChanges200ChangesItemItemsItemValue";
 
 export type MovieChanges200ChangesItemItemsItem = {
   id?: string;

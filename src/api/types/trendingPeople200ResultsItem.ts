@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TrendingPeople200ResultsItemKnownForItem } from './trendingPeople200ResultsItemKnownForItem';
+import type { TrendingPeople200ResultsItemKnownForItem } from "./trendingPeople200ResultsItemKnownForItem";
 
 export type TrendingPeople200ResultsItem = {
   adult?: boolean;

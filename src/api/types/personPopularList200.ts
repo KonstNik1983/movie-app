@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { PersonPopularList200ResultsItem } from './personPopularList200ResultsItem';
+import type { PersonPopularList200ResultsItem } from "./personPopularList200ResultsItem";
 
 export type PersonPopularList200 = {
   page?: number;

@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvSeasonAggregateCredits200CastItemRolesItem } from './tvSeasonAggregateCredits200CastItemRolesItem';
+import type { TvSeasonAggregateCredits200CastItemRolesItem } from "./tvSeasonAggregateCredits200CastItemRolesItem";
 
 export type TvSeasonAggregateCredits200CastItem = {
   adult?: boolean;

@@ -116,9 +116,11 @@
         .map((g) => g.name)
         .join(', ') ?? null
   );
+
   const creator = computed(
     () => tv.value?.created_by?.map((c) => c.name).join(', ') ?? null
   );
+
   const topCast = computed(
     () =>
       credits.value?.cast
@@ -126,6 +128,7 @@
         .map((c) => c.name)
         .join(', ') ?? null
   );
+
   const tvCountries = computed(
     () => tv.value?.origin_country?.slice(0, 1).join(', ') ?? null
   );

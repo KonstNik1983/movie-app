@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { MovieWatchProviders200Results } from './movieWatchProviders200Results';
+import type { MovieWatchProviders200Results } from "./movieWatchProviders200Results";
 
 export type MovieWatchProviders200 = {
   id?: number;

@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvSeriesTopRatedList200ResultsItem } from './tvSeriesTopRatedList200ResultsItem';
+import type { TvSeriesTopRatedList200ResultsItem } from "./tvSeriesTopRatedList200ResultsItem";
 
 export type TvSeriesTopRatedList200 = {
   page?: number;

@@ -1,6 +1,6 @@
 interface UserMedia {
   id: number;
-  type: 'movie' | 'tv';
+  type: "movie" | "tv";
 }
 
 export interface User {

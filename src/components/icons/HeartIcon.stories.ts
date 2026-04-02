@@ -1,8 +1,8 @@
-import HeartIcon from './HeartIcon.vue';
-import type { Meta, StoryObj } from '@storybook/vue3';
+import HeartIcon from "./HeartIcon.vue";
+import type { Meta, StoryObj } from "@storybook/vue3";
 
 const meta: Meta<typeof HeartIcon> = {
-  title: 'Components/HeartIcon',
+  title: "Components/HeartIcon",
   component: HeartIcon,
 };
 

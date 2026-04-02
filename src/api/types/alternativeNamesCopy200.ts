@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { AlternativeNamesCopy200LogosItem } from './alternativeNamesCopy200LogosItem';
+import type { AlternativeNamesCopy200LogosItem } from "./alternativeNamesCopy200LogosItem";
 
 export type AlternativeNamesCopy200 = {
   id?: number;

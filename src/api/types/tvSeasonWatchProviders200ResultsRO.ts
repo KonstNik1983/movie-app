@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvSeasonWatchProviders200ResultsROFlatrateItem } from './tvSeasonWatchProviders200ResultsROFlatrateItem';
+import type { TvSeasonWatchProviders200ResultsROFlatrateItem } from "./tvSeasonWatchProviders200ResultsROFlatrateItem";
 
 export type TvSeasonWatchProviders200ResultsRO = {
   link?: string;

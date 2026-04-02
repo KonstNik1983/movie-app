@@ -1,47 +1,47 @@
 export const ROUTES_OLD = {
-  home: '/',
-  movies: '/movies',
-  series: '/series',
-  collections: '/collections',
+  home: "/",
+  movies: "/movies",
+  series: "/series",
+  collections: "/collections",
 };
 
 export const ROUTES = {
   home: {
-    name: 'HomeView',
-    path: '',
+    name: "HomeView",
+    path: "",
   },
   movies: {
-    name: 'MoviesView',
-    path: 'movies',
+    name: "MoviesView",
+    path: "movies",
   },
   series: {
-    name: 'SeriesView',
-    path: 'series',
+    name: "SeriesView",
+    path: "series",
   },
   collections: {
-    name: 'CollectionsView',
-    path: 'collections',
+    name: "CollectionsView",
+    path: "collections",
   },
   collection: {
-    name: 'CollectionPage',
-    path: 'collections/:slug',
+    name: "CollectionPage",
+    path: "collections/:slug",
   },
   movie: {
-    name: 'MoviePage',
-    path: 'movies/:id',
+    name: "MoviePage",
+    path: "movies/:id",
   },
   tv: {
-    name: 'TvPage',
-    path: 'series/:id',
+    name: "TvPage",
+    path: "series/:id",
   },
   user: {
-    name: 'UserPage',
-    path: 'user',
+    name: "UserPage",
+    path: "user",
   },
 } as const;
 
-export const moviePage = (id?: number | string) => (id ? `/movies/${id}` : '#');
+export const moviePage = (id?: number | string) => (id ? `/movies/${id}` : "#");
 
-export const tvPage = (id?: number | string) => (id ? `/series/${id}` : '#');
+export const tvPage = (id?: number | string) => (id ? `/series/${id}` : "#");
 
 export const collectionPage = (slug: string) => `/collections/${slug}`;

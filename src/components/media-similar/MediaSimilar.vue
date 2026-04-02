@@ -1,8 +1,6 @@
 <template>
   <section class="media-similar">
-    <h2 v-if="title" class="media-similar__title">
-      Если вам понравился «{{ title }}»
-    </h2>
+    <h2 v-if="title" class="media-similar__title">Если вам понравился «{{ title }}»</h2>
 
     <h2 v-else class="media-similar__title">Похожие фильмы</h2>
 
@@ -13,11 +11,7 @@
         :to="item.link"
         class="media-similar__card"
       >
-        <img
-          class="media-similar__card-image"
-          :src="item.image"
-          :alt="item.title"
-        />
+        <img class="media-similar__card-image" :src="item.image" :alt="item.title" />
 
         <p class="media-similar__card-meta">
           ⭐ {{ item.vote_average.toFixed(1) }} • {{ item.genres }}
@@ -35,57 +29,57 @@
 </template>
 
 <script setup lang="ts">
-  import MovieCardSkeleton from '../skeletons/movie-card-skeleton/MovieCardSkeleton.vue';
+import MovieCardSkeleton from "../skeletons/movie-card-skeleton/MovieCardSkeleton.vue";
 
-  defineProps<{
-    title?: string;
-    movies: {
-      id: number;
-      title: string;
-      vote_average: number;
-      image: string;
-      genres: string;
-      link: string;
-    }[];
-  }>();
+defineProps<{
+  title?: string;
+  movies: {
+    id: number;
+    title: string;
+    vote_average: number;
+    image: string;
+    genres: string;
+    link: string;
+  }[];
+}>();
 </script>
 
 <style scoped>
-  .media-similar {
-    margin-bottom: 120px;
-  }
+.media-similar {
+  margin-bottom: 120px;
+}
 
-  .media-similar__title {
-    margin-bottom: 80px;
-  }
+.media-similar__title {
+  margin-bottom: 80px;
+}
 
-  .media-similar__list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
+.media-similar__list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
 
-  .media-similar__card {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
+.media-similar__card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
 
-  .media-similar__card-image {
-    width: 100%;
-    height: 180px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
+.media-similar__card-image {
+  width: 100%;
+  height: 180px;
+  border-radius: 8px;
+  object-fit: cover;
+}
 
-  .media-similar__card-title {
-    margin-top: 10px;
-    font-size: 16px;
-  }
+.media-similar__card-title {
+  margin-top: 10px;
+  font-size: 16px;
+}
 
-  .media-similar__card-meta {
-    font-size: 14px;
-    color: var(--color-text-secondary);
-    margin-top: 10px;
-  }
+.media-similar__card-meta {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-top: 10px;
+}
 </style>

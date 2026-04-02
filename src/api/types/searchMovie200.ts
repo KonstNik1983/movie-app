@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { SearchMovie200ResultsItem } from './searchMovie200ResultsItem';
+import type { SearchMovie200ResultsItem } from "./searchMovie200ResultsItem";
 
 export type SearchMovie200 = {
   page?: number;

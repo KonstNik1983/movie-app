@@ -13,21 +13,21 @@
 </template>
 
 <script setup lang="ts">
-  const props = withDefaults(
-    defineProps<{
-      size?: number;
-    }>(),
-    {
-      size: 30,
-    }
-  );
+const props = withDefaults(
+  defineProps<{
+    size?: number;
+  }>(),
+  {
+    size: 30,
+  },
+);
 </script>
 
 <style scoped>
-  .base-heart-icon {
-    fill: transparent;
-    stroke: currentColor;
-    stroke-width: 1.5;
-    transition: stroke 0.2s;
-  }
+.base-heart-icon {
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  transition: stroke 0.2s;
+}
 </style>

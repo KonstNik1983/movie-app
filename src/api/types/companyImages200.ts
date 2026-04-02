@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { CompanyImages200LogosItem } from './companyImages200LogosItem';
+import type { CompanyImages200LogosItem } from "./companyImages200LogosItem";
 
 export type CompanyImages200 = {
   id?: number;

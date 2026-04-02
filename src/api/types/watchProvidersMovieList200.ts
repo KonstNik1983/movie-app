@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { WatchProvidersMovieList200ResultsItem } from './watchProvidersMovieList200ResultsItem';
+import type { WatchProvidersMovieList200ResultsItem } from "./watchProvidersMovieList200ResultsItem";
 
 export type WatchProvidersMovieList200 = {
   results?: WatchProvidersMovieList200ResultsItem[];

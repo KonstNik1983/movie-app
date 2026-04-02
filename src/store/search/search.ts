@@ -1,27 +1,22 @@
-import { ref, computed } from 'vue';
-import { defineStore } from 'pinia';
-import debounce from 'lodash/debounce';
+import { ref, computed } from "vue";
+import { defineStore } from "pinia";
+import debounce from "lodash/debounce";
 
-import {
-  searchMulti,
-  searchPerson,
-  trendingAll,
-  trendingPeople,
-} from '@/api/tmdb';
+import { searchMulti, searchPerson, trendingAll, trendingPeople } from "@/api/tmdb";
 import type {
   SearchMulti200ResultsItem,
   TrendingAll200ResultsItem,
   TrendingPeople200ResultsItem,
   TrendingTv200ResultsItem,
-} from '@/api/types';
+} from "@/api/types";
 
-import { useToast } from 'vue-toastification';
-import { isRussian } from '@/utils/string-helpers';
+import { useToast } from "vue-toastification";
+import { isRussian } from "@/utils/string-helpers";
 
-export const useSearchStore = defineStore('search', () => {
+export const useSearchStore = defineStore("search", () => {
   const toast = useToast();
 
-  const query = ref('');
+  const query = ref("");
   const results = ref<SearchMulti200ResultsItem[]>([]);
   const personResults = ref<TrendingPeople200ResultsItem[]>([]);
   const isLoading = ref(false);
@@ -30,22 +25,18 @@ export const useSearchStore = defineStore('search', () => {
   const popularTv = ref<TrendingTv200ResultsItem[]>([]);
   const popularPeople = ref<TrendingPeople200ResultsItem[]>([]);
 
-  const movieResults = computed(() =>
-    results.value.filter((item) => item.media_type === 'movie')
-  );
+  const movieResults = computed(() => results.value.filter((item) => item.media_type === "movie"));
 
-  const tvResults = computed(() =>
-    results.value.filter((item) => item.media_type === 'tv')
-  );
+  const tvResults = computed(() => results.value.filter((item) => item.media_type === "tv"));
 
   const displayedMovies = computed(() =>
-    query.value.length >= 2 ? movieResults.value : popularMovies.value
+    query.value.length >= 2 ? movieResults.value : popularMovies.value,
   );
   const displayedTv = computed<TrendingTv200ResultsItem[]>(() =>
-    query.value.length >= 2 ? tvResults.value : popularTv.value
+    query.value.length >= 2 ? tvResults.value : popularTv.value,
   );
   const displayedPeople = computed<TrendingPeople200ResultsItem[]>(() =>
-    query.value.length >= 2 ? personResults.value : popularPeople.value
+    query.value.length >= 2 ? personResults.value : popularPeople.value,
   );
 
   const performSearch = debounce(async (searchQuery: string) => {
@@ -63,10 +54,10 @@ export const useSearchStore = defineStore('search', () => {
 
       const peopleResp = await searchPerson({ query: searchQuery });
       personResults.value = (peopleResp.data.results ?? []).filter((person) =>
-        person.name ? isRussian(person.name) : false
+        person.name ? isRussian(person.name) : false,
       );
     } catch {
-      toast.error('Ошибка поиска');
+      toast.error("Ошибка поиска");
     } finally {
       isLoading.value = false;
     }
@@ -79,18 +70,18 @@ export const useSearchStore = defineStore('search', () => {
 
   const loadPopular = async () => {
     try {
-      const response = await trendingAll({}, 'week');
+      const response = await trendingAll({}, "week");
       const items = response.data.results ?? [];
 
-      popularMovies.value = items.filter((i) => i.media_type === 'movie');
-      popularTv.value = items.filter((i) => i.media_type === 'tv');
+      popularMovies.value = items.filter((i) => i.media_type === "movie");
+      popularTv.value = items.filter((i) => i.media_type === "tv");
 
-      const peopleResponse = await trendingPeople({}, 'week');
+      const peopleResponse = await trendingPeople({}, "week");
       popularPeople.value = (peopleResponse.data.results ?? []).filter(
-        (person) => person.name && isRussian(person.name)
+        (person) => person.name && isRussian(person.name),
       );
     } catch {
-      toast.error('Ошибка загрузки популярных медиа');
+      toast.error("Ошибка загрузки популярных медиа");
     }
   };
 
@@ -99,7 +90,7 @@ export const useSearchStore = defineStore('search', () => {
   };
 
   const reset = () => {
-    query.value = '';
+    query.value = "";
     results.value = [];
     isLoading.value = false;
   };

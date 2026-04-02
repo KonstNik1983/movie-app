@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia';
-import { genreMovieList, genreTvList } from '@/api/tmdb';
-import type { GenreState } from './genre.types';
+import { defineStore } from "pinia";
+import { genreMovieList, genreTvList } from "@/api/tmdb";
+import type { GenreState } from "./genre.types";
 
-export const useGenreStore = defineStore('genreStore', {
+export const useGenreStore = defineStore("genreStore", {
   state: (): GenreState => ({
     allGenres: [],
     allTvGenres: [],
@@ -10,11 +10,9 @@ export const useGenreStore = defineStore('genreStore', {
   }),
 
   getters: {
-    getGenreById: (state) => (id: number) =>
-      state.allGenres.find((g) => g.id === id),
+    getGenreById: (state) => (id: number) => state.allGenres.find((g) => g.id === id),
 
-    getTvGenreById: (state) => (id: number) =>
-      state.allTvGenres.find((g) => g.id === id),
+    getTvGenreById: (state) => (id: number) => state.allTvGenres.find((g) => g.id === id),
   },
 
   actions: {
@@ -25,7 +23,7 @@ export const useGenreStore = defineStore('genreStore', {
         const { data } = await genreMovieList();
         this.allGenres = data.genres ?? [];
       } catch (error) {
-        console.error('Ошибка загрузки жанров фильмов:', error);
+        console.error("Ошибка загрузки жанров фильмов:", error);
       } finally {
         this.isLoading = false;
       }
@@ -38,7 +36,7 @@ export const useGenreStore = defineStore('genreStore', {
         const { data } = await genreTvList();
         this.allTvGenres = data.genres ?? [];
       } catch (error) {
-        console.error('Ошибка загрузки жанров сериалов:', error);
+        console.error("Ошибка загрузки жанров сериалов:", error);
       } finally {
         this.isLoading = false;
       }

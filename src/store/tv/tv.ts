@@ -1,6 +1,6 @@
-import { ref, computed } from 'vue';
-import { defineStore } from 'pinia';
-import { getSettledData } from '@/utils/promise';
+import { ref, computed } from "vue";
+import { defineStore } from "pinia";
+import { getSettledData } from "@/utils/promise";
 
 import type {
   TvSeriesDetails200,
@@ -9,7 +9,7 @@ import type {
   TvSeriesReviews200,
   TvSeriesSimilar200,
   TvSeriesContentRatings200,
-} from '@/api/types';
+} from "@/api/types";
 
 import {
   tvSeriesDetails,
@@ -17,14 +17,14 @@ import {
   tvSeriesCredits,
   tvSeriesReviews,
   tvSeriesContentRatings,
-} from '@/api/tmdb';
+} from "@/api/tmdb";
 
-import { tvSimilar } from '@/store/tv/tv.types.ts';
-import { parseReview } from '@/utils/parse-review';
-import { useToast } from 'vue-toastification';
+import { tvSimilar } from "@/store/tv/tv.types.ts";
+import { parseReview } from "@/utils/parse-review";
+import { useToast } from "vue-toastification";
 const toast = useToast();
 
-export const useTvPageStore = defineStore('tvPageStore', () => {
+export const useTvPageStore = defineStore("tvPageStore", () => {
   const tv = ref<TvSeriesDetails200 | null>(null);
   const seasonEpisodes = ref<Record<number, TvSeasonDetails200>>({});
   const credits = ref<TvSeriesCredits200 | null>(null);
@@ -37,8 +37,8 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
     () =>
       reviews.value?.results?.map((r) => ({
         ...r,
-        contentHtml: parseReview(r.content ?? ''),
-      })) ?? []
+        contentHtml: parseReview(r.content ?? ""),
+      })) ?? [],
   );
 
   const resetMedia = () => {
@@ -58,27 +58,20 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       const results = await Promise.allSettled([
         tvSeriesDetails(tvId),
         tvSeriesCredits(tvId),
-        tvSeriesReviews(tvId, { language: 'en-US' }),
+        tvSeriesReviews(tvId, { language: "en-US" }),
         tvSimilar(tvId),
         tvSeriesContentRatings(tvId),
       ]);
 
-      const [
-        detailsResult,
-        creditsResult,
-        reviewsResult,
-        similarResult,
-        ratingsResult,
-      ] = results;
+      const [detailsResult, creditsResult, reviewsResult, similarResult, ratingsResult] = results;
 
       tv.value = getSettledData<TvSeriesDetails200>(detailsResult);
       credits.value = getSettledData<TvSeriesCredits200>(creditsResult);
       reviews.value = getSettledData<TvSeriesReviews200>(reviewsResult);
       similar.value = getSettledData<TvSeriesSimilar200>(similarResult);
-      contentRatings.value =
-        getSettledData<TvSeriesContentRatings200>(ratingsResult);
+      contentRatings.value = getSettledData<TvSeriesContentRatings200>(ratingsResult);
     } catch {
-      toast.error('Ошибка загрузки данных сериала!');
+      toast.error("Ошибка загрузки данных сериала!");
     } finally {
       isLoading.value = false;
     }
@@ -91,7 +84,7 @@ export const useTvPageStore = defineStore('tvPageStore', () => {
       const response = await tvSeasonDetails(tvId, seasonNumber);
       seasonEpisodes.value[seasonNumber] = response.data;
     } catch {
-      toast.error('Ошибка загрузки данных сезона!');
+      toast.error("Ошибка загрузки данных сезона!");
     } finally {
       isLoading.value = false;
     }

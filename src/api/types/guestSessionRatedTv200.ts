@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { GuestSessionRatedTv200ResultsItem } from './guestSessionRatedTv200ResultsItem';
+import type { GuestSessionRatedTv200ResultsItem } from "./guestSessionRatedTv200ResultsItem";
 
 export type GuestSessionRatedTv200 = {
   page?: number;

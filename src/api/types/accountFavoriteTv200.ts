@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { AccountFavoriteTv200ResultsItem } from './accountFavoriteTv200ResultsItem';
+import type { AccountFavoriteTv200ResultsItem } from "./accountFavoriteTv200ResultsItem";
 
 export type AccountFavoriteTv200 = {
   page?: number;

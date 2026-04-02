@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { TvEpisodeAccountStates200Rated } from './tvEpisodeAccountStates200Rated';
+import type { TvEpisodeAccountStates200Rated } from "./tvEpisodeAccountStates200Rated";
 
 export type TvEpisodeAccountStates200 = {
   id?: number;

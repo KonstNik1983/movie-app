@@ -4,8 +4,8 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { MovieWatchProviders200ResultsKWBuyItem } from './movieWatchProviders200ResultsKWBuyItem';
-import type { MovieWatchProviders200ResultsKWFlatrateItem } from './movieWatchProviders200ResultsKWFlatrateItem';
+import type { MovieWatchProviders200ResultsKWBuyItem } from "./movieWatchProviders200ResultsKWBuyItem";
+import type { MovieWatchProviders200ResultsKWFlatrateItem } from "./movieWatchProviders200ResultsKWFlatrateItem";
 
 export type MovieWatchProviders200ResultsKW = {
   link?: string;

@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { ListDetails200ItemsItem } from './listDetails200ItemsItem';
+import type { ListDetails200ItemsItem } from "./listDetails200ItemsItem";
 
 export type ListDetails200 = {
   created_by?: string;

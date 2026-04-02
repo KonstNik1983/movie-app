@@ -1,20 +1,20 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import { useAuthStore } from '@/store/auth/auth';
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import HomeView from '@/pages/HomeView.vue';
-import MoviesView from '@/pages/MoviesView.vue';
-import MoviePage from '@/pages/MoviePage.vue';
-import SeriesView from '@/pages/SeriesView.vue';
-import TvPage from '@/pages/TvPage.vue';
-import CollectionsView from '@/pages/CollectionsView.vue';
-import CollectionPage from '@/pages/CollectionPage.vue';
-import UserPage from '@/pages/UserPage.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import { useAuthStore } from "@/store/auth/auth";
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import HomeView from "@/pages/HomeView.vue";
+import MoviesView from "@/pages/MoviesView.vue";
+import MoviePage from "@/pages/MoviePage.vue";
+import SeriesView from "@/pages/SeriesView.vue";
+import TvPage from "@/pages/TvPage.vue";
+import CollectionsView from "@/pages/CollectionsView.vue";
+import CollectionPage from "@/pages/CollectionPage.vue";
+import UserPage from "@/pages/UserPage.vue";
 
-import { ROUTES } from '@/router/paths';
+import { ROUTES } from "@/router/paths";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     component: DefaultLayout,
     children: [
       {

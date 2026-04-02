@@ -4,10 +4,10 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { MovieDetails200GenresItem } from './movieDetails200GenresItem';
-import type { MovieDetails200ProductionCompaniesItem } from './movieDetails200ProductionCompaniesItem';
-import type { MovieDetails200ProductionCountriesItem } from './movieDetails200ProductionCountriesItem';
-import type { MovieDetails200SpokenLanguagesItem } from './movieDetails200SpokenLanguagesItem';
+import type { MovieDetails200GenresItem } from "./movieDetails200GenresItem";
+import type { MovieDetails200ProductionCompaniesItem } from "./movieDetails200ProductionCompaniesItem";
+import type { MovieDetails200ProductionCountriesItem } from "./movieDetails200ProductionCountriesItem";
+import type { MovieDetails200SpokenLanguagesItem } from "./movieDetails200SpokenLanguagesItem";
 
 export type MovieDetails200 = {
   adult?: boolean;

@@ -4,7 +4,7 @@
  * tmdb-api
  * OpenAPI spec version: 3
  */
-import type { MovieSimilar200ResultsItem } from './movieSimilar200ResultsItem';
+import type { MovieSimilar200ResultsItem } from "./movieSimilar200ResultsItem";
 
 export type MovieSimilar200 = {
   page?: number;
