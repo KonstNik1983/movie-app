@@ -1,7 +1,7 @@
 pre-commit:
   parallel: true
   jobs:
-    - run: oxlint --fix "{staged_files}"
+    - run: npx oxlint --fix "{staged_files}"
       glob: '*.{ts,vue}'
 
     - run: prettier --write "{staged_files}"
