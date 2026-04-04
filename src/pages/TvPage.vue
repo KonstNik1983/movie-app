@@ -47,7 +47,7 @@
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useTvPageStore } from '@/store/tv/tv';
-  import { parseISO, format } from 'date-fns';
+  import dayjs from 'dayjs';
 
   import MediaHero from '@/components/media-hero/MediaHero.vue';
   import TvSeasonsSection from '@/components/tv-seasons-section/TvSeasonsSection.vue';
@@ -82,8 +82,8 @@
 
   const releaseYear = computed(() => {
     if (!tv.value?.first_air_date) return '';
-    const date = parseISO(tv.value.first_air_date);
-    return format(date, FULL_YEAR_FORMAT);
+    const date = dayjs(tv.value.first_air_date).format(FULL_YEAR_FORMAT);
+    return date;
   });
 
   const genres = computed(() => {

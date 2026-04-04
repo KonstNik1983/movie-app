@@ -1,10 +1,14 @@
-import { IMAGE_BASE_URL, IMAGE_SIZES, PLACEHOLDER_IMAGE } from "@/constants/constants";
+import {
+  IMAGE_BASE_URL,
+  IMAGE_SIZES,
+  PLACEHOLDER_IMAGE,
+} from '@/constants/constants';
 
-import { useGenreStore } from "@/store/genre/genre.ts";
+import { useGenreStore } from '@/store/genre/genre.ts';
 
 export function buildImage(
   path: string | null | undefined,
-  size: keyof typeof IMAGE_SIZES = "medium",
+  size: keyof typeof IMAGE_SIZES = 'medium'
 ): string {
   if (path) return `${IMAGE_BASE_URL}${IMAGE_SIZES[size]}${path}`;
 
@@ -12,16 +16,16 @@ export function buildImage(
 }
 
 export function getReleaseLabel(movie: { release_date?: string }): string {
-  if (!movie.release_date) return "";
+  if (!movie.release_date) return '';
   const today = new Date();
   const release = new Date(movie.release_date);
 
   return release <= today
-    ? "В прокате"
-    : release.toLocaleDateString("ru-RU", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
+    ? 'В прокате'
+    : release.toLocaleDateString('ru-RU', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
       });
 }
 
@@ -33,8 +37,11 @@ export function isInCinema(movie: { release_date?: string }): boolean {
   return release <= today;
 }
 
-export function buildMovieGenres(genreIds?: number[] | null, limit = 2): string {
-  if (!Array.isArray(genreIds) || genreIds.length === 0) return "";
+export function buildMovieGenres(
+  genreIds?: number[] | null,
+  limit = 2
+): string {
+  if (!Array.isArray(genreIds) || genreIds.length === 0) return '';
 
   const genreStore = useGenreStore();
 
@@ -42,11 +49,11 @@ export function buildMovieGenres(genreIds?: number[] | null, limit = 2): string 
     .map((id) => genreStore.getGenreById(id)?.name?.toLowerCase())
     .filter(Boolean)
     .slice(0, limit)
-    .join(", ");
+    .join(', ');
 }
 
 export function buildTvGenres(genreIds?: number[] | null, limit = 2): string {
-  if (!Array.isArray(genreIds) || genreIds.length === 0) return "";
+  if (!Array.isArray(genreIds) || genreIds.length === 0) return '';
 
   const genreStore = useGenreStore();
 
@@ -54,9 +61,5 @@ export function buildTvGenres(genreIds?: number[] | null, limit = 2): string {
     .map((id) => genreStore.getTvGenreById(id)?.name?.toLowerCase())
     .filter(Boolean)
     .slice(0, limit)
-    .join(", ");
-}
-
-export function shuffleArray<T>(arr: T[]): T[] {
-  return [...arr].sort(() => Math.random() - 0.5);
+    .join(', ');
 }

@@ -15,7 +15,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['**/*.spec.ts'],
     coverage: {
-      reporter: ['text', 'lcov'],
+      reporter: ['text', 'lcov', 'html'],
     },
   },
 });
