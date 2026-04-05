@@ -2,7 +2,12 @@
   <MediaHeroSkeleton v-if="isLoading" />
   <section v-else class="media-hero" :key="mediaId">
     <div class="media-hero__bg">
-      <img v-if="backdrop" :src="backdrop" :alt="title" class="media-hero__image" />
+      <img
+        v-if="backdrop"
+        :src="backdrop"
+        :alt="title"
+        class="media-hero__image"
+      />
 
       <div class="media-hero__overlay"></div>
       <div class="media-hero__gradient"></div>
@@ -51,6 +56,7 @@
     </div>
 
     <TrailerModal
+      v-if="isModalOpen"
       :isShow="isModalOpen"
       :mediaId="mediaId"
       :mediaType="mediaType"
@@ -60,159 +66,164 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useAuthStore } from "@/store/auth/auth";
-import BaseButton from "@/components/base-button/BaseButton.vue";
-import TrailerModal from "@/components/trailer-modal/TrailerModal.vue";
-import MediaHeroSkeleton from "../skeletons/media-hero-skeleton/MediaHeroSkeleton.vue";
+  import { ref, computed, defineAsyncComponent } from 'vue';
+  import { useAuthStore } from '@/store/auth/auth';
+  import BaseButton from '@/components/base-button/BaseButton.vue';
+  import MediaHeroSkeleton from '../skeletons/media-hero-skeleton/MediaHeroSkeleton.vue';
+  import ModalLoader from '@/components/loaders/modal-loader/ModalLoader.vue';
+  import HeartIcon from '@/components/icons/HeartIcon.vue';
+  import BookmarkIcon from '@/components/icons/BookmarkIcon.vue';
 
-import HeartIcon from "@/components/icons/HeartIcon.vue";
-import BookmarkIcon from "@/components/icons/BookmarkIcon.vue";
+  import { useToast } from 'vue-toastification';
 
-import { useToast } from "vue-toastification";
+  const TrailerModal = defineAsyncComponent({
+    loader: () => import('@/components/trailer-modal/TrailerModal.vue'),
+    loadingComponent: ModalLoader,
+    delay: 200,
+  });
 
-const toast = useToast();
+  const toast = useToast();
 
-const authStore = useAuthStore();
+  const authStore = useAuthStore();
 
-const props = defineProps<{
-  isLoading: boolean;
-  title: string;
-  backdrop?: string;
-  meta?: string;
-  badge?: string;
-  buttonText?: string;
-  mediaId: number;
-  mediaType: "movie" | "tv";
-}>();
+  const props = defineProps<{
+    isLoading: boolean;
+    title: string;
+    backdrop?: string;
+    meta?: string;
+    badge?: string;
+    buttonText?: string;
+    mediaId: number;
+    mediaType: 'movie' | 'tv';
+  }>();
 
-const isModalOpen = ref(false);
-const openModal = () => (isModalOpen.value = true);
-const closeModal = () => (isModalOpen.value = false);
+  const isModalOpen = ref(false);
+  const openModal = () => (isModalOpen.value = true);
+  const closeModal = () => (isModalOpen.value = false);
 
-const isFavorite = computed(() => {
-  if (!authStore.userData) return false;
+  const isFavorite = computed(() => {
+    if (!authStore.userData) return false;
 
-  return authStore.userData.favorites.some(
-    (item) => item.id === props.mediaId && item.type === props.mediaType,
-  );
-});
+    return authStore.userData.favorites.some(
+      (item) => item.id === props.mediaId && item.type === props.mediaType
+    );
+  });
 
-const toggleFavorite = () => {
-  if (!authStore.isAuth) toast.warning("Зарегистрируйтесь!");
-  authStore.addToFavoritesList(props.mediaId, props.mediaType);
-};
+  const toggleFavorite = () => {
+    if (!authStore.isAuth) toast.warning('Зарегистрируйтесь!');
+    authStore.addToFavoritesList(props.mediaId, props.mediaType);
+  };
 
-const inWatchList = computed(() => {
-  if (!authStore.userData) return false;
+  const inWatchList = computed(() => {
+    if (!authStore.userData) return false;
 
-  return authStore.userData.watchList.some(
-    (item) => item.id === props.mediaId && item.type === props.mediaType,
-  );
-});
+    return authStore.userData.watchList.some(
+      (item) => item.id === props.mediaId && item.type === props.mediaType
+    );
+  });
 
-const toggleWatchList = () => {
-  if (!authStore.isAuth) toast.warning("Зарегистрируйтесь!");
-  authStore.addToWatchList(props.mediaId, props.mediaType);
-};
+  const toggleWatchList = () => {
+    if (!authStore.isAuth) toast.warning('Зарегистрируйтесь!');
+    authStore.addToWatchList(props.mediaId, props.mediaType);
+  };
 </script>
 
 <style scoped>
-.media-hero {
-  position: relative;
-  width: 100%;
-  min-height: 600px;
-  color: var(--color-text-primary);
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-}
+  .media-hero {
+    position: relative;
+    width: 100%;
+    min-height: 600px;
+    color: var(--color-text-primary);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
 
-.media-hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: var(--z-hero-bg);
-}
+  .media-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-hero-bg);
+  }
 
-.media-hero__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+  .media-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 
-.media-hero__overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.1);
-  z-index: var(--z-hero-overlay);
-}
+  .media-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: var(--z-hero-overlay);
+  }
 
-.media-hero__gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 300px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-  z-index: var(--z-hero-gradient);
-}
+  .media-hero__gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    z-index: var(--z-hero-gradient);
+  }
 
-.media-hero__content {
-  position: relative;
-  z-index: var(--z-hero-content);
-  padding: 30px 40px;
-}
+  .media-hero__content {
+    position: relative;
+    z-index: var(--z-hero-content);
+    padding: 30px 40px;
+  }
 
-.media-hero__title {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 20px;
-}
+  .media-hero__title {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
 
-.media-hero__heading {
-  font-size: 38px;
-  font-weight: 700;
-  margin: 0;
-}
+  .media-hero__heading {
+    font-size: 38px;
+    font-weight: 700;
+    margin: 0;
+  }
 
-.media-hero__badge {
-  align-self: flex-start;
-  transform: translateY(-12px);
-  padding: 4px 10px;
-  font-size: 14px;
-  font-weight: 600;
-  border: 1px solid var(--color-text-primary);
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.6);
-}
+  .media-hero__badge {
+    align-self: flex-start;
+    transform: translateY(-12px);
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--color-text-primary);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.6);
+  }
 
-.media-hero__meta {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-}
+  .media-hero__meta {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
 
-.media-hero__actions {
-  margin-top: 20px;
-  display: flex;
-  align-items: stretch;
-  gap: 15px;
-}
+  .media-hero__actions {
+    margin-top: 20px;
+    display: flex;
+    align-items: stretch;
+    gap: 15px;
+  }
 
-.media-hero__btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  border: 1px solid var(--color-text-secondary);
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  padding: 12px;
-  color: var(--color-text-secondary);
-}
+  .media-hero__btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border: 1px solid var(--color-text-secondary);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    color: var(--color-text-secondary);
+  }
 
-.media-hero__btn.active {
-  color: var(--color-btn-primary);
-}
+  .media-hero__btn.active {
+    color: var(--color-btn-primary);
+  }
 </style>
