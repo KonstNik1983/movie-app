@@ -16,34 +16,41 @@
   />
 
   <section class="media-details">
-    <h2 class="media-details__title">О сериале</h2>
-    <div class="media-details__container">
-      <div>
-        <MediaReviews
-          :reviews="tvStore.formattedReviews"
-          :overview="tv?.overview"
+    <LazySection>
+      <h2 class="media-details__title">О сериале</h2>
+      <div class="media-details__container">
+        <div>
+          <MediaReviews
+            :reviews="tvStore.formattedReviews"
+            :overview="tv?.overview"
+            :isLoading="isLoading"
+          />
+        </div>
+
+        <MediaSidebar
+          :rating="formattedRating"
+          :genres="tvGenres"
+          :director="creator"
+          :cast="topCast"
+          :countries="tvCountries"
+          :duration="episodeDuration"
+          :languages="spokenLanguages"
           :isLoading="isLoading"
         />
       </div>
-
-      <MediaSidebar
-        :rating="formattedRating"
-        :genres="tvGenres"
-        :director="creator"
-        :cast="topCast"
-        :countries="tvCountries"
-        :duration="episodeDuration"
-        :languages="spokenLanguages"
-        :isLoading="isLoading"
-      />
-    </div>
+    </LazySection>
   </section>
-
-  <MediaSimilar :title="tv?.name" :movies="topSimilarTvFormatted" />
+  <LazySection>
+    <component
+      :is="AsyncMediaSimilar"
+      :title="tv?.name"
+      :movies="topSimilarTvFormatted"
+    />
+  </LazySection>
 </template>
 
 <script setup lang="ts">
-  import { computed, watch, onUnmounted } from 'vue';
+  import { computed, watch, onUnmounted, defineAsyncComponent } from 'vue';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import { useTvPageStore } from '@/store/tv/tv';
@@ -53,13 +60,21 @@
   import TvSeasonsSection from '@/components/tv-seasons-section/TvSeasonsSection.vue';
   import MediaReviews from '@/components/media-reviews/MediaReviews.vue';
   import MediaSidebar from '@/components/media-sidebar/MediaSidebar.vue';
-  import MediaSimilar from '@/components/media-similar/MediaSimilar.vue';
+  import LazySection from '@/components/lazy-section/LazySection.vue';
+  import MediaSimilarSkeleton from '@/components/skeletons/media-similar-skeleton/MediaSimilarSkeleton.vue';
 
   import { buildImage, buildMovieGenres } from '@/utils/movie.utils';
   import { tvPage } from '@/router/paths';
   import { FULL_YEAR_FORMAT } from '@/constants/date';
 
+  const AsyncMediaSimilar = defineAsyncComponent({
+    loader: () => import('@/components/media-similar/MediaSimilar.vue'),
+    loadingComponent: MediaSimilarSkeleton,
+    delay: 0,
+  });
+
   const route = useRoute();
+
   const tvStore = useTvPageStore();
   const { tv, credits, similar, seasonEpisodes, isLoading } =
     storeToRefs(tvStore);

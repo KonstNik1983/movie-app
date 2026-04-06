@@ -43,124 +43,138 @@
   </section>
 
   <section class="movies section-padding">
-    <MediaSection
-      title="Коталог фильмов и сериалов"
-      :sections="movieStore.formattedHomeMovieSections"
-      :isLoading="homeStore.isLoading"
-      :genresCount="3"
-    />
-    <MediaSection
-      title=""
-      :sections="tvStore.formattedHomeTvSections"
-      :isLoading="homeStore.isLoading"
-      :genresCount="3"
-    />
+    <LazySection>
+      <component
+        :is="AsyncMediaSection"
+        title="Коталог фильмов и сериалов"
+        :sections="movieStore.formattedHomeMovieSections"
+        :isLoading="homeStore.isLoading"
+        :genresCount="3"
+      />
+
+      <component
+        :is="AsyncMediaSection"
+        title=""
+        :sections="tvStore.formattedHomeTvSections"
+        :isLoading="homeStore.isLoading"
+        :genresCount="3"
+      />
+    </LazySection>
   </section>
+
   <section class="collections section-padding">
-    <h2 class="collections__title">Тематические подборки</h2>
+    <LazySection>
+      <h2 class="collections__title">Тематические подборки</h2>
 
-    <div class="collections__grid">
-      <router-link
-        v-for="item in collections"
-        :key="item.id"
-        :to="collectionPage(item.slug)"
-        class="collection-card"
-      >
-        <picture>
-          <source :srcset="item.backgroundImage.webp" type="image/webp" />
-          <img
-            class="collection-card__img"
-            :src="item.backgroundImage.jpg || placeholder"
-            :alt="item.title"
-          />
-        </picture>
+      <div class="collections__grid">
+        <router-link
+          v-for="item in collections"
+          :key="item.id"
+          :to="collectionPage(item.slug)"
+          class="collection-card"
+        >
+          <picture>
+            <source :srcset="item.backgroundImage.webp" type="image/webp" />
+            <img
+              class="collection-card__img"
+              :src="item.backgroundImage.jpg || placeholder"
+              :alt="item.title"
+            />
+          </picture>
 
-        <div class="collection-card__overlay">
-          <span class="collection-card__title">
-            {{ item.title }}
-          </span>
-        </div>
-      </router-link>
-    </div>
+          <div class="collection-card__overlay">
+            <span class="collection-card__title">
+              {{ item.title }}
+            </span>
+          </div>
+        </router-link>
+      </div>
+    </LazySection>
   </section>
 
   <section class="plans section-padding">
-    <h2 class="plans__title">Тарифные планы</h2>
+    <LazySection>
+      <h2 class="plans__title">Тарифные планы</h2>
 
-    <div class="plans__list">
-      <div v-for="plan in plans" :key="plan.id" class="plans__item">
-        <h3 class="plans__item-title">
-          {{ plan.name }}
-        </h3>
+      <div class="plans__list">
+        <div v-for="plan in plans" :key="plan.id" class="plans__item">
+          <h3 class="plans__item-title">
+            {{ plan.name }}
+          </h3>
 
-        <ul class="plans__item-features">
-          <li
-            v-for="feature in plan.features"
-            :key="feature.id"
-            class="plans__item-feature"
-          >
-            <img
-              :src="feature.isActive ? checkIcon : lockIcon"
-              alt=""
-              aria-hidden="true"
-              class="plans__item-feature-icon"
-            />
-
-            <span
-              class="plans__item-feature-text"
-              :class="{ active: feature.isActive }"
+          <ul class="plans__item-features">
+            <li
+              v-for="feature in plan.features"
+              :key="feature.id"
+              class="plans__item-feature"
             >
-              {{ feature.text }}
-            </span>
-          </li>
-        </ul>
+              <img
+                :src="feature.isActive ? checkIcon : lockIcon"
+                alt=""
+                aria-hidden="true"
+                class="plans__item-feature-icon"
+              />
 
-        <div class="plans__item-footer">
-          <BaseButton variant="primary">Оформить подписку</BaseButton>
+              <span
+                class="plans__item-feature-text"
+                :class="{ active: feature.isActive }"
+              >
+                {{ feature.text }}
+              </span>
+            </li>
+          </ul>
 
-          <span class="plans__item-price">{{ plan.price }}₽</span>
+          <div class="plans__item-footer">
+            <BaseButton variant="primary">Оформить подписку</BaseButton>
+
+            <span class="plans__item-price">{{ plan.price }}₽</span>
+          </div>
         </div>
       </div>
-    </div>
+    </LazySection>
   </section>
 
   <section class="discounts section-padding">
-    <h2 class="discounts__title">Скидки на кино</h2>
+    <LazySection>
+      <h2 class="discounts__title">Скидки на кино</h2>
 
-    <ul class="discounts__list">
-      <li v-for="item in discounts" :key="item.id" class="discounts__item">
-        <div class="discounts__icon">
-          <img
-            :src="item.icon"
-            alt=""
-            aria-hidden="true"
-            class="discounts__icon-img"
-          />
-        </div>
+      <ul class="discounts__list">
+        <li v-for="item in discounts" :key="item.id" class="discounts__item">
+          <div class="discounts__icon">
+            <img
+              :src="item.icon"
+              alt=""
+              aria-hidden="true"
+              class="discounts__icon-img"
+            />
+          </div>
 
-        <h3 class="discounts__item-title">
-          {{ item.title }}
-        </h3>
+          <h3 class="discounts__item-title">
+            {{ item.title }}
+          </h3>
 
-        <p class="discounts__item-text">
-          {{ item.text }}
-        </p>
+          <p class="discounts__item-text">
+            {{ item.text }}
+          </p>
 
-        <BaseButton :variant="item.buttonVariant">
-          {{ item.buttonText }}
-        </BaseButton>
-      </li>
-    </ul>
+          <BaseButton :variant="item.buttonVariant">
+            {{ item.buttonText }}
+          </BaseButton>
+        </li>
+      </ul>
+    </LazySection>
   </section>
 </template>
 
 <script setup lang="ts">
-  import { onMounted } from 'vue';
+  import { onMounted, defineAsyncComponent } from 'vue';
 
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
-  import MediaSection from '@/components/media-sections/MediaSections.vue';
+
   import SliderSkeleton from '@/components/skeletons/slider-skeleton/SliderSkeleton.vue';
+  import MediaSectionSkeleton from '@/components/skeletons/media-section-skeleton/MediaSectionSkeleton.vue';
+  import LazySection from '@/components/lazy-section/LazySection.vue';
 
   import { collectionPage } from '@/router/paths';
 
@@ -176,6 +190,12 @@
   import { useMoviesStore } from '@/store/movies/movies.ts';
   import { useTvStore } from '@/store/series/series';
   import { useHomePageStore } from '@/store/home-page/home-page';
+
+  const AsyncMediaSection = defineAsyncComponent({
+    loader: () => import('@/components/media-sections/MediaSections.vue'),
+    loadingComponent: MediaSectionSkeleton,
+    delay: 200,
+  });
 
   const movieStore = useMoviesStore();
   const tvStore = useTvStore();
