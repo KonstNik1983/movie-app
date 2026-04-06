@@ -4,5 +4,5 @@ pre-commit:
     - run: npx oxlint --fix "{staged_files}"
       glob: '*.{ts,vue}'
 
-    - run: prettier --write "{staged_files}"
+    - run: npx oxfmt "{staged_files}"
       glob: '*.{ts,vue,js,json,css,scss,md}'

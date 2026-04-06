@@ -1,23 +1,23 @@
 /// <reference types="vitest/config" />
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from 'path';
-import { analyzer } from 'vite-bundle-analyzer';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import path from "path";
+import { analyzer } from "vite-bundle-analyzer";
 
 export default defineConfig(({ command }) => ({
   plugins: [
     vue(),
-    command === 'build' &&
+    command === "build" &&
       analyzer({
-        analyzerMode: 'static',
-        fileName: 'bundle-report',
+        analyzerMode: "static",
+        fileName: "bundle-report",
         openAnalyzer: true,
-        reportTitle: 'Bundle Analysis',
+        reportTitle: "Bundle Analysis",
       }),
   ].filter(Boolean),
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      "@": path.resolve(__dirname, "src"),
     },
   },
 }));

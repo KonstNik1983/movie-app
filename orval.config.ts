@@ -1,26 +1,26 @@
-import { defineConfig } from 'orval';
+import { defineConfig } from "orval";
 
 export default defineConfig({
   tmdb: {
     input: {
-      target: 'https://developer.themoviedb.org/openapi/tmdb-api.json',
+      target: "https://developer.themoviedb.org/openapi/tmdb-api.json",
     },
     output: {
-      mode: 'single',
-      target: './src/api/tmdb.ts',
-      schemas: './src/api/types',
-      client: 'fetch',
-      baseUrl: 'https://api.themoviedb.org',
+      mode: "single",
+      target: "./src/api/tmdb.ts",
+      schemas: "./src/api/types",
+      client: "fetch",
+      baseUrl: "https://api.themoviedb.org",
       override: {
         mutator: {
-          path: './src/api/app-fetch.ts',
-          name: 'appFetch',
+          path: "./src/api/app-fetch.ts",
+          name: "appFetch",
         },
       },
-      tsconfig: './tsconfig.app.json',
+      tsconfig: "./tsconfig.app.json",
     },
     hooks: {
-      afterAllFilesWrite: 'eslint src/api --ext .ts --fix',
+      afterAllFilesWrite: "eslint src/api --ext .ts --fix",
     },
   },
 });
