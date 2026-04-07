@@ -1,12 +1,21 @@
 <template>
   <BaseModal :isShow="isShow" @close="closeModal">
     <form class="auth-modal-form" @submit.prevent="handleLogin">
-      <button type="button" class="auth-modal__close" @click="closeModal" aria-label="Закрыть">
+      <button
+        type="button"
+        class="auth-modal__close"
+        @click="closeModal"
+        aria-label="Закрыть"
+      >
         <CloseIcon />
       </button>
       <h2 class="auth-modal-title">Авторизация</h2>
 
-      <BaseInput v-model="username" :error="usernameField.errorMessage.value" placeholder="Логин" />
+      <BaseInput
+        v-model="username"
+        :error="usernameField.errorMessage.value"
+        placeholder="Логин"
+      />
 
       <BaseInput
         v-model="password"
@@ -27,117 +36,128 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import BaseModal from "@/components/base-modal/BaseModal.vue";
-import BaseButton from "@/components/base-button/BaseButton.vue";
-import BaseInput from "@/components/base-input/BaseInput.vue";
-import CloseIcon from "@/components/icons/CloseIcon.vue";
-import { useAuthStore } from "@/store/auth/auth.ts";
+  import { computed } from 'vue';
+  import BaseModal from '@/components/base-modal/BaseModal.vue';
+  import BaseButton from '@/components/base-button/BaseButton.vue';
+  import BaseInput from '@/components/base-input/BaseInput.vue';
+  import CloseIcon from '@/components/icons/CloseIcon.vue';
+  import { useAuthStore } from '@/store/auth/auth.ts';
 
-import { useForm, useField } from "vee-validate";
-import { toTypedSchema } from "@vee-validate/zod";
-import { z } from "zod";
+  import { useForm, useField } from 'vee-validate';
+  import { toTypedSchema } from '@vee-validate/zod';
+  import { z } from 'zod';
 
-const authStore = useAuthStore();
+  const authStore = useAuthStore();
 
-const props = defineProps<{
-  isShow: boolean;
-}>();
+  const props = defineProps<{
+    isShow: boolean;
+  }>();
 
-const emit = defineEmits(["close"]);
+  const emit = defineEmits(['close']);
 
-const closeModal = () => {
-  resetForm();
-  emit("close");
-};
-
-const schema = z.object({
-  username: z.string().min(3, "Минимум 3 символа"),
-  password: z.string().min(4, "Минимум 4 символа"),
-});
-
-const { handleSubmit, resetForm } = useForm({
-  validationSchema: toTypedSchema(schema),
-});
-
-const usernameField = useField<string>("username");
-const passwordField = useField<string>("password");
-
-const username = computed({
-  get: () => usernameField.value.value,
-  set: (value: string) => usernameField.setValue(value),
-});
-
-const password = computed({
-  get: () => passwordField.value.value,
-  set: (value: string) => passwordField.setValue(value),
-});
-
-const handleLogin = handleSubmit((values) => {
-  const success = authStore.loginUser(values.username, values.password);
-  if (success) {
-    closeModal();
+  const closeModal = () => {
     resetForm();
-  }
-  resetForm();
-});
+    emit('close');
+  };
 
-const handleRegister = handleSubmit((values) => {
-  const success = authStore.registerUser(values.username, values.password);
-  if (success) {
-    closeModal();
+  const schema = z.object({
+    username: z
+      .string({
+        required_error: 'Поле обязательно',
+      })
+      .min(1, 'Поле обязательно')
+      .min(3, 'Минимум 3 символа'),
+
+    password: z
+      .string({
+        required_error: 'Поле обязательно',
+      })
+      .min(1, 'Поле обязательно')
+      .min(4, 'Минимум 4 символа'),
+  });
+
+  const { handleSubmit, resetForm } = useForm({
+    validationSchema: toTypedSchema(schema),
+  });
+
+  const usernameField = useField<string>('username');
+  const passwordField = useField<string>('password');
+
+  const username = computed({
+    get: () => usernameField.value.value,
+    set: (value: string) => usernameField.setValue(value),
+  });
+
+  const password = computed({
+    get: () => passwordField.value.value,
+    set: (value: string) => passwordField.setValue(value),
+  });
+
+  const handleLogin = handleSubmit((values) => {
+    const success = authStore.loginUser(values.username, values.password);
+    if (success) {
+      closeModal();
+      resetForm();
+    }
     resetForm();
-  }
-  resetForm();
-});
+  });
+
+  const handleRegister = handleSubmit((values) => {
+    const success = authStore.registerUser(values.username, values.password);
+    if (success) {
+      closeModal();
+      resetForm();
+    }
+    resetForm();
+  });
 </script>
 
 <style scoped>
-.auth-modal-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #4a4a4a;
-  color: var(--color-text-primary);
-  padding: 30px 20px 20px;
-  border-radius: 12px;
-  width: 420px;
-  max-width: 90%;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  box-shadow: 0 12px 24px rgba(255, 255, 255, 0.12);
-}
+  .auth-modal-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #4a4a4a;
+    color: var(--color-text-primary);
+    padding: 30px 20px 20px;
+    border-radius: 12px;
+    width: 420px;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    box-shadow: 0 12px 24px rgba(255, 255, 255, 0.12);
+  }
 
-.auth-modal-title {
-  font-size: 20px;
-  text-align: center;
-  margin-bottom: 15px;
-  color: var(--color-text-primary);
-}
+  .auth-modal-title {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 15px;
+    color: var(--color-text-primary);
+  }
 
-.auth-modal__close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  font-size: 25px;
-  cursor: pointer;
-  line-height: 1;
-  color: var(--color-text-primary);
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
+  .auth-modal__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 25px;
+    cursor: pointer;
+    line-height: 1;
+    color: var(--color-text-primary);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
 
-.auth-modal__close:hover {
-  opacity: 1;
-}
+  .auth-modal__close:hover {
+    opacity: 1;
+  }
 
-.auth-modal-buttons {
-  display: flex;
-  gap: 20px;
-  margin-top: 5px;
-}
+  .auth-modal-buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+  }
 </style>
