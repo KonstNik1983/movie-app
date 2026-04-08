@@ -29,7 +29,12 @@
     <ul class="advantages__list">
       <li v-for="item in advantages" :key="item.id" class="advantages__item">
         <div class="advantages__icon">
-          <img :src="item.icon" alt="" aria-hidden="true" class="advantages__icon-img" />
+          <img
+            :src="item.icon"
+            alt=""
+            aria-hidden="true"
+            class="advantages__icon-img"
+          />
         </div>
         <h3 class="advantages__item-title">{{ item.title }}</h3>
         <p class="advantages__item-text">{{ item.text }}</p>
@@ -74,6 +79,7 @@
               class="collection-card__img"
               :src="item.backgroundImage.jpg || placeholder"
               :alt="item.title"
+              loading="lazy"
             />
           </picture>
 
@@ -98,7 +104,11 @@
           </h3>
 
           <ul class="plans__item-features">
-            <li v-for="feature in plan.features" :key="feature.id" class="plans__item-feature">
+            <li
+              v-for="feature in plan.features"
+              :key="feature.id"
+              class="plans__item-feature"
+            >
               <img
                 :src="feature.isActive ? checkIcon : lockIcon"
                 alt=""
@@ -106,7 +116,10 @@
                 class="plans__item-feature-icon"
               />
 
-              <span class="plans__item-feature-text" :class="{ active: feature.isActive }">
+              <span
+                class="plans__item-feature-text"
+                :class="{ active: feature.isActive }"
+              >
                 {{ feature.text }}
               </span>
             </li>
@@ -129,7 +142,12 @@
       <ul class="discounts__list">
         <li v-for="item in discounts" :key="item.id" class="discounts__item">
           <div class="discounts__icon">
-            <img :src="item.icon" alt="" aria-hidden="true" class="discounts__icon-img" />
+            <img
+              :src="item.icon"
+              alt=""
+              aria-hidden="true"
+              class="discounts__icon-img"
+            />
           </div>
 
           <h3 class="discounts__item-title">
@@ -150,309 +168,309 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, defineAsyncComponent } from "vue";
+  import { onMounted, defineAsyncComponent } from 'vue';
 
-import BaseButton from "@/components/base-button/BaseButton.vue";
-import HeroSlider from "@/components/slider/HeroSlider.vue";
+  import BaseButton from '@/components/base-button/BaseButton.vue';
+  import HeroSlider from '@/components/slider/HeroSlider.vue';
 
-import SliderSkeleton from "@/components/skeletons/slider-skeleton/SliderSkeleton.vue";
-import MediaSectionSkeleton from "@/components/skeletons/media-section-skeleton/MediaSectionSkeleton.vue";
-import LazySection from "@/components/lazy-section/LazySection.vue";
+  import SliderSkeleton from '@/components/skeletons/slider-skeleton/SliderSkeleton.vue';
+  import MediaSectionSkeleton from '@/components/skeletons/media-section-skeleton/MediaSectionSkeleton.vue';
+  import LazySection from '@/components/lazy-section/LazySection.vue';
 
-import { collectionPage } from "@/router/paths";
+  import { collectionPage } from '@/router/paths';
 
-import { ADVANTAGES } from "@/data/advantages.data";
-import { DISCOUNTS } from "@/data/discounts.data";
-import { PLANS } from "@/data/plans.data";
-import { COLLECTIONS } from "@/constants/collections.constants";
+  import { ADVANTAGES } from '@/data/advantages.data';
+  import { DISCOUNTS } from '@/data/discounts.data';
+  import { PLANS } from '@/data/plans.data';
+  import { COLLECTIONS } from '@/constants/collections.constants';
 
-import placeholder from "@/assets/placeholder-movie.jpg";
-import checkIcon from "@/assets/icons/check.svg";
-import lockIcon from "@/assets/icons/lock.svg";
+  import placeholder from '@/assets/placeholder-movie.jpg';
+  import checkIcon from '@/assets/icons/check.svg';
+  import lockIcon from '@/assets/icons/lock.svg';
 
-import { useMoviesStore } from "@/store/movies/movies.ts";
-import { useTvStore } from "@/store/series/series";
-import { useHomePageStore } from "@/store/home-page/home-page";
+  import { useMoviesStore } from '@/store/movies/movies.ts';
+  import { useTvStore } from '@/store/series/series';
+  import { useHomePageStore } from '@/store/home-page/home-page';
 
-const AsyncMediaSection = defineAsyncComponent({
-  loader: () => import("@/components/media-sections/MediaSections.vue"),
-  loadingComponent: MediaSectionSkeleton,
-  delay: 200,
-});
+  const AsyncMediaSection = defineAsyncComponent({
+    loader: () => import('@/components/media-sections/MediaSections.vue'),
+    loadingComponent: MediaSectionSkeleton,
+    delay: 200,
+  });
 
-const movieStore = useMoviesStore();
-const tvStore = useTvStore();
-const homeStore = useHomePageStore();
+  const movieStore = useMoviesStore();
+  const tvStore = useTvStore();
+  const homeStore = useHomePageStore();
 
-const collections = COLLECTIONS;
+  const collections = COLLECTIONS;
 
-const advantages = ADVANTAGES;
-const discounts = DISCOUNTS;
-const plans = PLANS;
+  const advantages = ADVANTAGES;
+  const discounts = DISCOUNTS;
+  const plans = PLANS;
 
-onMounted(() => {
-  homeStore.loadHomePage();
-});
+  onMounted(() => {
+    homeStore.loadHomePage();
+  });
 </script>
 
 <style scoped>
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  background-image: url("@/assets/bg.webp"), url("@/assets/bg.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
+  .hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-image: url('@/assets/bg.webp'), url('@/assets/bg.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
 
-.hero__left {
-  flex: 1;
-}
+  .hero__left {
+    flex: 1;
+  }
 
-.hero__title {
-  margin-bottom: 30px;
-}
+  .hero__title {
+    margin-bottom: 30px;
+  }
 
-.hero__text {
-  margin-bottom: 30px;
-  color: var(--color-text-secondary);
-}
+  .hero__text {
+    margin-bottom: 30px;
+    color: var(--color-text-secondary);
+  }
 
-.hero__right {
-  flex: 1;
-  min-width: 250px;
-  max-width: 600px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .hero__right {
+    flex: 1;
+    min-width: 250px;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.hero__img {
-  width: 100%;
-  height: auto;
-  max-height: 500px;
-  border-radius: 12px;
-  object-fit: cover;
-}
+  .hero__img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
 
-.advantages__title {
-  margin-bottom: 70px;
-}
+  .advantages__title {
+    margin-bottom: 70px;
+  }
 
-.advantages__list {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  list-style: none;
-}
+  .advantages__list {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    list-style: none;
+  }
 
-.advantages__item-title {
-  margin-bottom: 20px;
-}
+  .advantages__item-title {
+    margin-bottom: 20px;
+  }
 
-.advantages__item-text {
-  color: var(--color-text-secondary);
-}
+  .advantages__item-text {
+    color: var(--color-text-secondary);
+  }
 
-.advantages__icon {
-  width: 56px;
-  height: 56px;
-  margin-bottom: 25px;
-  border-radius: 50%;
-  background: var(--color-bg-primary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow:
-    0 0 20px rgba(255, 255, 255, 0.4),
-    0 0 20px rgba(255, 255, 255, 0.1);
-}
+  .advantages__icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 25px;
+    border-radius: 50%;
+    background: var(--color-bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.4),
+      0 0 20px rgba(255, 255, 255, 0.1);
+  }
 
-.advantages__icon-img {
-  width: 35px;
-  height: 35px;
-}
+  .advantages__icon-img {
+    width: 35px;
+    height: 35px;
+  }
 
-.discounts__title {
-  margin-bottom: 70px;
-}
+  .discounts__title {
+    margin-bottom: 70px;
+  }
 
-.discounts__list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  list-style: none;
-}
+  .discounts__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style: none;
+  }
 
-.discounts__item {
-  max-width: 400px;
-}
+  .discounts__item {
+    max-width: 400px;
+  }
 
-.discounts__item-title {
-  margin-bottom: 20px;
-}
+  .discounts__item-title {
+    margin-bottom: 20px;
+  }
 
-.discounts__item-text {
-  color: var(--color-text-secondary);
-  margin-bottom: 40px;
-}
+  .discounts__item-text {
+    color: var(--color-text-secondary);
+    margin-bottom: 40px;
+  }
 
-.discounts__icon {
-  width: 56px;
-  height: 56px;
-  margin-bottom: 25px;
-  border-radius: 50%;
-  background: var(--color-bg-primary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow:
-    0 0 20px rgba(255, 255, 255, 0.4),
-    0 0 20px rgba(255, 255, 255, 0.1);
-}
+  .discounts__icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 25px;
+    border-radius: 50%;
+    background: var(--color-bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.4),
+      0 0 20px rgba(255, 255, 255, 0.1);
+  }
 
-.discounts__icon-img {
-  width: 35px;
-  height: 35px;
-}
+  .discounts__icon-img {
+    width: 35px;
+    height: 35px;
+  }
 
-.plans__title {
-  margin-bottom: 70px;
-}
+  .plans__title {
+    margin-bottom: 70px;
+  }
 
-.plans__list {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+  .plans__list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 
-.plans__item {
-  max-width: 350px;
-  background-color: rgba(54, 4, 112, 0.4);
-  backdrop-filter: blur(10px);
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 12px;
-}
+  .plans__item {
+    max-width: 350px;
+    background-color: rgba(54, 4, 112, 0.4);
+    backdrop-filter: blur(10px);
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+  }
 
-.plans__item-title {
-  margin-bottom: 40px;
-}
+  .plans__item-title {
+    margin-bottom: 40px;
+  }
 
-.plans__item-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 40px;
-}
+  .plans__item-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
 
-.plans__item-feature-text {
-  color: var(--color-text-secondary);
-  font-size: 16px;
-}
+  .plans__item-feature-text {
+    color: var(--color-text-secondary);
+    font-size: 16px;
+  }
 
-.plans__item-feature-text.active {
-  color: var(--color-text-primary);
-}
+  .plans__item-feature-text.active {
+    color: var(--color-text-primary);
+  }
 
-.plans__item-feature-icon {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  display: inline-block;
-  margin-right: 10px;
-}
+  .plans__item-feature-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: inline-block;
+    margin-right: 10px;
+  }
 
-.plans__item-footer {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  padding: 30px 0 0 0;
-  border-top: 1px solid white;
-}
+  .plans__item-footer {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding: 30px 0 0 0;
+    border-top: 1px solid white;
+  }
 
-.movies__title {
-  margin-bottom: 70px;
-}
+  .movies__title {
+    margin-bottom: 70px;
+  }
 
-.movie__title {
-  font-size: 20px;
-  margin-bottom: 30px;
-}
+  .movie__title {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
 
-.movie-card {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
+  .movie-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
 
-.movies__cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
+  .movies__cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
 
-.movies__genre:not(:last-child) {
-  margin-bottom: 60px;
-}
+  .movies__genre:not(:last-child) {
+    margin-bottom: 60px;
+  }
 
-.movie-card-img {
-  width: 100%;
-  height: 180px;
-  border-radius: 8px;
-  object-fit: cover;
-}
+  .movie-card-img {
+    width: 100%;
+    height: 180px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
 
-.movie-card-title {
-  margin-top: 10px;
-  font-size: 16px;
-}
+  .movie-card-title {
+    margin-top: 10px;
+    font-size: 16px;
+  }
 
-.movie-card-text {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  margin-top: 10px;
-}
+  .movie-card-text {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-top: 10px;
+  }
 
-.collections__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
+  .collections__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
 
-.collections__title {
-  margin-bottom: 70px;
-}
+  .collections__title {
+    margin-bottom: 70px;
+  }
 
-.collection-card {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  border-radius: 10px;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
+  .collection-card {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
 
-.collection-card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  .collection-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.collection-card__overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: flex-end;
-  font-weight: bold;
-  padding: 20px;
-}
+  .collection-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: flex-end;
+    font-weight: bold;
+    padding: 20px;
+  }
 
-.collection-card__title {
-  white-space: pre-line;
-}
+  .collection-card__title {
+    white-space: pre-line;
+  }
 </style>
