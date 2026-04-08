@@ -41,7 +41,9 @@
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import BaseInput from '@/components/base-input/BaseInput.vue';
   import CloseIcon from '@/components/icons/CloseIcon.vue';
+  import { ERROR_REQUIRED } from '@/constants/error.constants.ts';
   import { useAuthStore } from '@/store/auth/auth.ts';
+  import { MIN_CHARS_MESSAGE } from '@/utils/string-helpers';
 
   import { useForm, useField } from 'vee-validate';
   import { toTypedSchema } from '@vee-validate/zod';
@@ -63,17 +65,17 @@
   const schema = z.object({
     username: z
       .string({
-        required_error: 'Поле обязательно',
+        required_error: ERROR_REQUIRED,
       })
-      .min(1, 'Поле обязательно')
-      .min(3, 'Минимум 3 символа'),
+      .min(1, ERROR_REQUIRED)
+      .min(3, MIN_CHARS_MESSAGE(3)),
 
     password: z
       .string({
-        required_error: 'Поле обязательно',
+        required_error: ERROR_REQUIRED,
       })
-      .min(1, 'Поле обязательно')
-      .min(4, 'Минимум 4 символа'),
+      .min(1, ERROR_REQUIRED)
+      .min(4, MIN_CHARS_MESSAGE(4)),
   });
 
   const { handleSubmit, resetForm } = useForm({

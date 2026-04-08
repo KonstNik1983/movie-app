@@ -135,6 +135,8 @@
   import BaseInput from '@/components/base-input/BaseInput.vue';
   import { ROUTES } from '@/router/paths';
   import { STORAGE_KEYS } from '@/constants/storage-keys';
+  import { ERROR_REQUIRED } from '@/constants/error.constants';
+  import { MIN_CHARS_MESSAGE } from '@/utils/string-helpers';
 
   import { useForm, useField } from 'vee-validate';
   import { toTypedSchema } from '@vee-validate/zod';
@@ -181,16 +183,16 @@
 
   const schemaProfile = z.object({
     firstName: z
-      .string({ required_error: 'Поле обязательно' })
-      .min(1, 'Поле обязательно')
-      .min(2, 'Минимум 2 символа'),
+      .string({ required_error: ERROR_REQUIRED })
+      .min(1, ERROR_REQUIRED)
+      .min(2, MIN_CHARS_MESSAGE(2)),
     lastName: z
-      .string({ required_error: 'Поле обязательно' })
-      .min(1, 'Поле обязательно')
-      .min(2, 'Минимум 2 символа'),
+      .string({ required_error: ERROR_REQUIRED })
+      .min(1, ERROR_REQUIRED)
+      .min(2, MIN_CHARS_MESSAGE(2)),
     email: z
-      .string({ required_error: 'Поле обязательно' })
-      .min(1, 'Поле обязательно')
+      .string({ required_error: ERROR_REQUIRED })
+      .min(1, ERROR_REQUIRED)
       .email('Неверный email'),
   });
 
@@ -229,17 +231,17 @@
   const schemaPassword = z
     .object({
       currentPassword: z
-        .string({ required_error: 'Поле обязательно' })
-        .min(1, 'Поле обязательно')
-        .min(4, 'Минимум 4 символа'),
+        .string({ required_error: ERROR_REQUIRED })
+        .min(1, ERROR_REQUIRED)
+        .min(4, MIN_CHARS_MESSAGE(4)),
       newPassword: z
-        .string({ required_error: 'Поле обязательно' })
-        .min(1, 'Поле обязательно')
-        .min(4, 'Минимум 4 символа'),
+        .string({ required_error: ERROR_REQUIRED })
+        .min(1, ERROR_REQUIRED)
+        .min(4, MIN_CHARS_MESSAGE(4)),
       confirmPassword: z
-        .string({ required_error: 'Поле обязательно' })
-        .min(1, 'Поле обязательно')
-        .min(4, 'Минимум 4 символа'),
+        .string({ required_error: ERROR_REQUIRED })
+        .min(1, ERROR_REQUIRED)
+        .min(4, MIN_CHARS_MESSAGE(4)),
     })
     .refine((data) => data.newPassword === data.confirmPassword, {
       message: 'Пароли не совпадают',

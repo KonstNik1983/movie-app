@@ -1,8 +1,14 @@
 <template>
-  <div v-if="isShow" class="base-modal">
-    <div class="base-modal__overlay" @click="closeModal"></div>
+  <div v-if="isShow" class="base-modal" data-testid="BaseModal_root">
+    <div
+      class="base-modal__overlay"
+      @click="closeModal"
+      data-testid="BaseModal_overlay"
+    ></div>
 
-    <slot />
+    <div class="base-modal__content" data-testid="BaseModal_content">
+      <slot />
+    </div>
   </div>
 </template>
 
