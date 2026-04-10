@@ -1,8 +1,8 @@
-export const formatDate = (dateString?: string) => {
-  if (!dateString) return "";
-  return new Date(dateString).toLocaleDateString("ru-RU", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+
+dayjs.locale('ru');
+
+export function formatDate(value?: string): string {
+  return dayjs(value).format('D MMMM YYYY');
+}

@@ -41,9 +41,8 @@
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import BaseInput from '@/components/base-input/BaseInput.vue';
   import CloseIcon from '@/components/icons/CloseIcon.vue';
-  import { ERROR_REQUIRED } from '@/constants/error.constants.ts';
   import { useAuthStore } from '@/store/auth/auth.ts';
-  import { MIN_CHARS_MESSAGE } from '@/utils/string-helpers';
+  import { MIN_CHARS_MESSAGE, ERROR_REQUIRED } from '@/utils/validate';
 
   import { useForm, useField } from 'vee-validate';
   import { toTypedSchema } from '@vee-validate/zod';

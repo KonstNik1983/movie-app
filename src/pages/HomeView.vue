@@ -18,7 +18,7 @@
       <BaseButton variant="primary">Смотреть сейчас</BaseButton>
     </div>
     <div class="hero__right">
-      <SliderSkeleton v-if="homeStore.isLoading" />
+      <SliderSkeleton v-if="sliderStore.isLoading" />
       <HeroSlider v-else />
     </div>
   </section>
@@ -43,20 +43,20 @@
   </section>
 
   <section class="movies section-padding">
-    <LazySection>
-      <component
-        :is="AsyncMediaSection"
-        title="Коталог фильмов и сериалов"
+    <LazySection :onVisible="movieStore.loadMovies">
+      <MediaSections
+        title="Каталог фильмов"
         :sections="movieStore.formattedHomeMovieSections"
-        :isLoading="homeStore.isLoading"
+        :isLoading="movieStore.isLoading"
         :genresCount="3"
       />
+    </LazySection>
 
-      <component
-        :is="AsyncMediaSection"
-        title=""
+    <LazySection :onVisible="tvStore.loadTv">
+      <MediaSections
+        title="Сериалы"
         :sections="tvStore.formattedHomeTvSections"
-        :isLoading="homeStore.isLoading"
+        :isLoading="tvStore.isLoading"
         :genresCount="3"
       />
     </LazySection>
@@ -168,13 +168,13 @@
 </template>
 
 <script setup lang="ts">
-  import { onMounted, defineAsyncComponent } from 'vue';
+  import { onMounted } from 'vue';
 
   import BaseButton from '@/components/base-button/BaseButton.vue';
   import HeroSlider from '@/components/slider/HeroSlider.vue';
 
   import SliderSkeleton from '@/components/skeletons/slider-skeleton/SliderSkeleton.vue';
-  import MediaSectionSkeleton from '@/components/skeletons/media-section-skeleton/MediaSectionSkeleton.vue';
+  import MediaSections from '@/components/media-sections/MediaSections.vue';
   import LazySection from '@/components/lazy-section/LazySection.vue';
 
   import { collectionPage } from '@/router/paths';
@@ -190,17 +190,11 @@
 
   import { useMoviesStore } from '@/store/movies/movies.ts';
   import { useTvStore } from '@/store/series/series';
-  import { useHomePageStore } from '@/store/home-page/home-page';
-
-  const AsyncMediaSection = defineAsyncComponent({
-    loader: () => import('@/components/media-sections/MediaSections.vue'),
-    loadingComponent: MediaSectionSkeleton,
-    delay: 200,
-  });
+  import { useSliderStore } from '@/store/slider/slider';
 
   const movieStore = useMoviesStore();
   const tvStore = useTvStore();
-  const homeStore = useHomePageStore();
+  const sliderStore = useSliderStore();
 
   const collections = COLLECTIONS;
 
@@ -209,7 +203,7 @@
   const plans = PLANS;
 
   onMounted(() => {
-    homeStore.loadHomePage();
+    sliderStore.loadSlider();
   });
 </script>
 

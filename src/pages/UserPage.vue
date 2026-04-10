@@ -135,8 +135,7 @@
   import BaseInput from '@/components/base-input/BaseInput.vue';
   import { ROUTES } from '@/router/paths';
   import { STORAGE_KEYS } from '@/constants/storage-keys';
-  import { ERROR_REQUIRED } from '@/constants/error.constants';
-  import { MIN_CHARS_MESSAGE } from '@/utils/string-helpers';
+  import { MIN_CHARS_MESSAGE, ERROR_REQUIRED } from '@/utils/validate';
 
   import { useForm, useField } from 'vee-validate';
   import { toTypedSchema } from '@vee-validate/zod';

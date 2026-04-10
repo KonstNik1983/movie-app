@@ -1,23 +1,26 @@
-import { ref, computed } from "vue";
-import { defineStore } from "pinia";
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
 
-import { buildImage } from "@/utils/movie.utils";
-import { movieNowPlayingList } from "@/api/tmdb";
-import type { MovieNowPlayingList200ResultsItem } from "@/api/types";
+import { buildImage } from '@/utils/movie.utils';
+import { movieNowPlayingList } from '@/api/tmdb';
+import type { MovieNowPlayingList200ResultsItem } from '@/api/types';
 
-import { useToast } from "vue-toastification";
+import { useToast } from 'vue-toastification';
 const toast = useToast();
 
-export const useSliderStore = defineStore("sliderStore", () => {
+export const useSliderStore = defineStore('sliderStore', () => {
   const slides = ref<MovieNowPlayingList200ResultsItem[]>([]);
   const isLoading = ref(false);
 
   const formattedSlides = computed(() => {
     return slides.value.map((movie) => ({
       id: movie.id,
-      title: movie.title ?? movie.original_title ?? "",
-      image: buildImage(movie.backdrop_path ?? movie.poster_path ?? "", "medium"),
-      release_date: movie.release_date ?? "",
+      title: movie.title ?? movie.original_title ?? '',
+      image: buildImage(
+        movie.backdrop_path ?? movie.poster_path ?? '',
+        'medium'
+      ),
+      release_date: movie.release_date ?? '',
     }));
   });
 
@@ -30,13 +33,14 @@ export const useSliderStore = defineStore("sliderStore", () => {
 
       slides.value = movies?.results ?? [];
     } catch {
-      toast.error("Ошибка загрузки слайдера!");
+      toast.error('Ошибка загрузки слайдера!');
     } finally {
       isLoading.value = false;
     }
   };
 
   return {
+    isLoading,
     slides,
     formattedSlides,
     loadSlider,

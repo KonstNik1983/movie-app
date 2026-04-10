@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+
 import {
   IMAGE_BASE_URL,
   IMAGE_SIZES,
@@ -5,6 +8,8 @@ import {
 } from '@/constants/img.constants';
 
 import { useGenreStore } from '@/store/genre/genre.ts';
+
+dayjs.locale('ru');
 
 export function buildImage(
   path: string | null | undefined,
@@ -17,16 +22,13 @@ export function buildImage(
 
 export function getReleaseLabel(movie: { release_date?: string }): string {
   if (!movie.release_date) return '';
-  const today = new Date();
-  const release = new Date(movie.release_date);
 
-  return release <= today
+  const today = dayjs();
+  const release = dayjs(movie.release_date);
+
+  return release.isBefore(today, 'day')
     ? 'В прокате'
-    : release.toLocaleDateString('ru-RU', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      });
+    : release.format('D MMMM YYYY');
 }
 
 export function isInCinema(movie: { release_date?: string }): boolean {
