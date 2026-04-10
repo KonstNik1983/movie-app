@@ -49,37 +49,45 @@
       </button>
     </div>
 
-    <SearchModal :isShow="isModalOpen" @close="closeModal" />
-    <AuthModal :isShow="isAuthModalOpen" @close="closeModal"></AuthModal>
+    <SearchModal v-if="isSearchModalOpen" :isShow="isSearchModalOpen" @close="closeModal" />
+
+    <AuthModal v-if="isAuthModalOpen" :isShow="isAuthModalOpen" @close="closeModal" />
   </header>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineAsyncComponent } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "@/store/auth/auth.ts";
 import { ROUTES } from "@/router/paths";
-import SearchModal from "@/components/search-modal/SearchModal.vue";
-import AuthModal from "@/components/auth-modal/AuthModal.vue";
+import ModalLoader from "@/components/loaders/modal-loader/ModalLoader.vue";
+
+const SearchModal = defineAsyncComponent({
+  loader: () => import("@/components/search-modal/SearchModal.vue"),
+  loadingComponent: ModalLoader,
+  delay: 200,
+});
+
+const AuthModal = defineAsyncComponent({
+  loader: () => import("@/components/auth-modal/AuthModal.vue"),
+  loadingComponent: ModalLoader,
+  delay: 200,
+});
 
 const authStore = useAuthStore();
 
 const router = useRouter();
 const route = useRoute();
 
-const isModalOpen = computed(() => route.query.modal === "search");
+const isSearchModalOpen = computed(() => route.query.modal === "search");
 const isAuthModalOpen = computed(() => route.query.modal === "auth");
 
 const openSearchModal = () => {
-  router.push({
-    query: { ...route.query, modal: "search" },
-  });
+  router.push({ query: { ...route.query, modal: "search" } });
 };
 
 const openAuthModal = () => {
-  router.push({
-    query: { ...route.query, modal: "auth" },
-  });
+  router.push({ query: { ...route.query, modal: "auth" } });
 };
 
 const closeModal = () => {

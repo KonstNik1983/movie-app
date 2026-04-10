@@ -51,6 +51,7 @@
     </div>
 
     <TrailerModal
+      v-if="isModalOpen"
       :isShow="isModalOpen"
       :mediaId="mediaId"
       :mediaType="mediaType"
@@ -60,16 +61,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, defineAsyncComponent } from "vue";
 import { useAuthStore } from "@/store/auth/auth";
 import BaseButton from "@/components/base-button/BaseButton.vue";
-import TrailerModal from "@/components/trailer-modal/TrailerModal.vue";
 import MediaHeroSkeleton from "../skeletons/media-hero-skeleton/MediaHeroSkeleton.vue";
-
+import ModalLoader from "@/components/loaders/modal-loader/ModalLoader.vue";
 import HeartIcon from "@/components/icons/HeartIcon.vue";
 import BookmarkIcon from "@/components/icons/BookmarkIcon.vue";
 
 import { useToast } from "vue-toastification";
+
+const TrailerModal = defineAsyncComponent({
+  loader: () => import("@/components/trailer-modal/TrailerModal.vue"),
+  loadingComponent: ModalLoader,
+  delay: 200,
+});
 
 const toast = useToast();
 

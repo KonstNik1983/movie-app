@@ -32,24 +32,33 @@
       />
     </div>
   </section>
-  <MediaSimilar :title="movie?.title" :movies="topSimilarMoviesFormatted" />
+  <LazySection>
+    <component :is="AsyncMediaSimilar" :title="movie?.title" :movies="topSimilarMoviesFormatted" />
+  </LazySection>
 </template>
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { computed, watch, onUnmounted } from "vue";
+import { computed, watch, onUnmounted, defineAsyncComponent } from "vue";
 import { useMoviePageStore } from "@/store/movie/movie";
 
 import { useRoute } from "vue-router";
-import { parseISO, format } from "date-fns";
+import dayjs from "dayjs";
 import MediaHero from "@/components/media-hero/MediaHero.vue";
 import MediaReviews from "@/components/media-reviews/MediaReviews.vue";
 import MediaSidebar from "@/components/media-sidebar/MediaSidebar.vue";
-import MediaSimilar from "@/components/media-similar/MediaSimilar.vue";
+import LazySection from "@/components/lazy-section/LazySection.vue";
+import MediaSimilarSkeleton from "@/components/skeletons/media-similar-skeleton/MediaSimilarSkeleton.vue";
 
 import { buildImage } from "@/utils/movie.utils";
 import { moviePage } from "@/router/paths";
 import { buildMovieGenres } from "@/utils/movie.utils";
 import { FULL_YEAR_FORMAT } from "@/constants/date";
+
+const AsyncMediaSimilar = defineAsyncComponent({
+  loader: () => import("@/components/media-similar/MediaSimilar.vue"),
+  loadingComponent: MediaSimilarSkeleton,
+  delay: 0,
+});
 
 const route = useRoute();
 
@@ -81,8 +90,8 @@ const topSimilarMoviesFormatted = computed(() => {
 
 const releaseYear = computed(() => {
   if (!movie.value?.release_date) return "";
-  const date = parseISO(movie.value.release_date);
-  return format(date, FULL_YEAR_FORMAT);
+  const date = dayjs(movie.value.release_date).format(FULL_YEAR_FORMAT);
+  return date;
 });
 
 const movieMeta = computed(() => {

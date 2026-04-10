@@ -1,7 +1,11 @@
-import comicsImg from "@/assets/collectionsImg/comics.jpg";
-import fantasyImg from "@/assets/collectionsImg/fantasy.jpg";
-import animeImg from "@/assets/collectionsImg/anime.jpg";
-import satiricalImg from "@/assets/collectionsImg/satirical-series.jpg";
+import comicsJpg from "@/assets/collectionsImg/comics.jpg";
+import comicsWebp from "@/assets/collectionsImg/comics.webp";
+import fantasyJpg from "@/assets/collectionsImg/fantasy.jpg";
+import fantasyWebp from "@/assets/collectionsImg/fantasy.webp";
+import animeJpg from "@/assets/collectionsImg/anime.jpg";
+import animeWebp from "@/assets/collectionsImg/anime.webp";
+import satiricalJpg from "@/assets/collectionsImg/satirical-series.jpg";
+import satiricalWebp from "@/assets/collectionsImg/satirical-series.webp";
 
 export interface CollectionConfig {
   id: number;
@@ -9,7 +13,10 @@ export interface CollectionConfig {
   slug: string;
   genreId: number;
   type: "movie" | "tv";
-  backgroundImage: string;
+  backgroundImage: {
+    webp: string;
+    jpg: string;
+  };
 }
 
 export const COLLECTIONS: CollectionConfig[] = [
@@ -19,7 +26,7 @@ export const COLLECTIONS: CollectionConfig[] = [
     slug: "comics",
     genreId: 878,
     type: "movie",
-    backgroundImage: comicsImg,
+    backgroundImage: { webp: comicsWebp, jpg: comicsJpg },
   },
   {
     id: 2,
@@ -27,7 +34,7 @@ export const COLLECTIONS: CollectionConfig[] = [
     slug: "fantasy",
     genreId: 14,
     type: "movie",
-    backgroundImage: fantasyImg,
+    backgroundImage: { webp: fantasyWebp, jpg: fantasyJpg },
   },
   {
     id: 3,
@@ -35,7 +42,7 @@ export const COLLECTIONS: CollectionConfig[] = [
     slug: "anime",
     genreId: 16,
     type: "movie",
-    backgroundImage: animeImg,
+    backgroundImage: { webp: animeWebp, jpg: animeJpg },
   },
   {
     id: 4,
@@ -43,6 +50,6 @@ export const COLLECTIONS: CollectionConfig[] = [
     slug: "satirical-series",
     genreId: 16,
     type: "tv",
-    backgroundImage: satiricalImg,
+    backgroundImage: { webp: satiricalWebp, jpg: satiricalJpg },
   },
 ];

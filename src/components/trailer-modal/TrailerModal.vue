@@ -46,6 +46,7 @@ watch(
     if (val) trailerStore.loadTrailer(props.mediaId, props.mediaType);
     else trailerStore.reset();
   },
+  { immediate: true },
 );
 </script>
 
