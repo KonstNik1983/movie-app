@@ -10,7 +10,11 @@
           </div>
 
           <div class="search-modal__search">
-            <img class="search-modal__search-img" src="@/assets/icons/search.svg" alt="Поиск" />
+            <img
+              class="search-modal__search-img"
+              src="@/assets/icons/search.svg"
+              alt="Поиск"
+            />
             <input
               ref="inputRef"
               v-model="searchQuery"
@@ -35,7 +39,7 @@
         <div class="search-modal__body">
           <div class="search-section__list">
             <h2 class="search-section__title">
-              {{ searchQuery.length >= 2 ? "Результаты поиска" : "Часто ищут" }}
+              {{ searchQuery.length >= 2 ? 'Результаты поиска' : 'Часто ищут' }}
             </h2>
 
             <div class="search-section__list-movie">
@@ -78,7 +82,9 @@
               <p v-else>Сериалы не найдены</p>
             </div>
 
-            <h3 class="search-section__list-people-title">АКТЕРЫ И РЕЖИССЕРЫ</h3>
+            <h3 class="search-section__list-people-title">
+              АКТЕРЫ И РЕЖИССЕРЫ
+            </h3>
             <div class="search-section__list-people">
               <template v-if="searchStore.displayedPeople.length">
                 <div
@@ -100,165 +106,166 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import BaseModal from "@/components/base-modal/BaseModal.vue";
-import BaseButton from "@/components/base-button/BaseButton.vue";
-import CloseIcon from "@/components/icons/CloseIcon.vue";
-import { ROUTES } from "@/router/paths";
-import { buildImage } from "@/utils/movie.utils";
-import { moviePage, tvPage } from "@/router/paths";
-import { useSearchStore } from "@/store/search/search";
+  import { ref, watch } from 'vue';
+  import BaseModal from '@/components/base-modal/BaseModal.vue';
+  import BaseButton from '@/components/base-button/BaseButton.vue';
+  import CloseIcon from '@/components/icons/CloseIcon.vue';
+  import { ROUTES } from '@/router/paths';
+  import { buildImage } from '@/utils/movie.utils';
+  import { moviePage, tvPage } from '@/router/paths';
+  import { useSearchStore } from '@/store/search/search';
 
-const props = defineProps<{ isShow: boolean }>();
-const emit = defineEmits(["close"]);
+  const props = defineProps<{ isShow: boolean }>();
+  const emit = defineEmits(['close']);
 
-const inputRef = ref<HTMLInputElement | null>(null);
-const searchQuery = ref("");
-const searchStore = useSearchStore();
+  const inputRef = ref<HTMLInputElement | null>(null);
+  const searchQuery = ref('');
+  const searchStore = useSearchStore();
 
-const closeModal = () => {
-  searchQuery.value = "";
-  searchStore.reset();
-  searchStore.cancelSearch();
-  emit("close");
-};
+  const closeModal = () => {
+    searchQuery.value = '';
+    searchStore.reset();
+    searchStore.cancelSearch();
+    emit('close');
+  };
 
-const resetQuery = () => (searchQuery.value = "");
+  const resetQuery = () => (searchQuery.value = '');
 
-const getRole = (person: { known_for_department?: string }) => {
-  const dep = person.known_for_department?.toLowerCase();
-  if (dep?.includes("acting")) return "Актёр";
-  if (dep?.includes("directing")) return "Режиссёр";
-  return "—";
-};
+  const getRole = (person: { known_for_department?: string }) => {
+    const dep = person.known_for_department?.toLowerCase();
+    if (dep?.includes('acting')) return 'Актёр';
+    if (dep?.includes('directing')) return 'Режиссёр';
+    return '—';
+  };
 
-watch(
-  () => props.isShow,
-  (val) => {
-    if (val) inputRef.value?.focus();
-    searchStore.loadPopular();
-  },
-);
+  watch(
+    () => props.isShow,
+    (val) => {
+      if (val) inputRef.value?.focus();
+      searchStore.loadPopular();
+    },
+    { immediate: true }
+  );
 
-watch(searchQuery, (newVal) => searchStore.searchMedia(newVal));
+  watch(searchQuery, (newVal) => searchStore.searchMedia(newVal));
 </script>
 
 <style scoped>
-.search-modal__container {
-  position: relative;
-  background: var(--color-bg-primary);
-  width: 100%;
-  max-height: 100vh;
-  padding: 40px 0;
-  overflow-y: auto;
-  backdrop-filter: blur(20px);
-}
+  .search-modal__container {
+    position: relative;
+    background: var(--color-bg-primary);
+    width: 100%;
+    max-height: 100vh;
+    padding: 40px 0;
+    overflow-y: auto;
+    backdrop-filter: blur(20px);
+  }
 
-.search-modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1250px;
-  margin: 0 auto;
-}
+  .search-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1250px;
+    margin: 0 auto;
+  }
 
-.search-modal__search {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+  .search-modal__search {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
 
-.search-modal__search-input {
-  background: transparent;
-  border: none;
-  outline: none;
-  width: 500px;
-  color: var(--color-text-primary);
-  font-size: 16px;
-  flex: 1;
-}
+  .search-modal__search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 500px;
+    color: var(--color-text-primary);
+    font-size: 16px;
+    flex: 1;
+  }
 
-.search-modal__search-img {
-  width: 25px;
-  height: 25px;
-}
+  .search-modal__search-img {
+    width: 25px;
+    height: 25px;
+  }
 
-.search-modal__search-clear-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-  color: var(--color-text-primary);
-}
+  .search-modal__search-clear-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    color: var(--color-text-primary);
+  }
 
-.search-modal__search-clear-btn:hover {
-  opacity: 1;
-}
+  .search-modal__search-clear-btn:hover {
+    opacity: 1;
+  }
 
-.search-modal__body {
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  max-width: 800px;
-  margin-top: 50px;
-}
+  .search-modal__body {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 800px;
+    margin-top: 50px;
+  }
 
-.search-card {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  flex-shrink: 0;
-  text-decoration: none;
-  color: inherit;
-}
+  .search-card {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: inherit;
+  }
 
-.search-section__title {
-  font-size: 26px;
-  margin-bottom: 50px;
-}
+  .search-section__title {
+    font-size: 26px;
+    margin-bottom: 50px;
+  }
 
-.search-card-img {
-  width: 100%;
-  border-radius: 8px;
-  object-fit: cover;
-}
+  .search-card-img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
 
-.search-card__title {
-  margin-top: 10px;
-  font-size: 14px;
-  color: var(--color-text-primary);
-}
-.search-section__list-movie,
-.search-section__list-tv {
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-}
+  .search-card__title {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--color-text-primary);
+  }
+  .search-section__list-movie,
+  .search-section__list-tv {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
 
-.search-section__list-people-title {
-  margin-top: 30px;
-  color: var(--color-text-secondary);
-  font-size: 16px;
-}
+  .search-section__list-people-title {
+    margin-top: 30px;
+    color: var(--color-text-secondary);
+    font-size: 16px;
+  }
 
-.search-section__list-people {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 20px;
-}
+  .search-section__list-people {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+  }
 
-.search-card__title {
-  font-size: 16px;
-  font-weight: bold;
-}
+  .search-card__title {
+    font-size: 16px;
+    font-weight: bold;
+  }
 
-.search-card__role {
-  color: var(--color-text-secondary);
-  margin-top: 5px;
-  font-size: 14px;
-}
+  .search-card__role {
+    color: var(--color-text-secondary);
+    margin-top: 5px;
+    font-size: 14px;
+  }
 </style>
