@@ -1,15 +1,17 @@
 <template>
-  <div v-if="isShow" class="base-modal" data-testid="BaseModal_root">
-    <div
-      class="base-modal__overlay"
-      @click="closeModal"
-      data-testid="BaseModal_overlay"
-    ></div>
+  <Teleport to="body">
+    <div v-if="isShow" class="base-modal" data-testid="BaseModal_root">
+      <div
+        class="base-modal__overlay"
+        @click="closeModal"
+        data-testid="BaseModal_overlay"
+      ></div>
 
-    <div class="base-modal__content" data-testid="BaseModal_content">
-      <slot />
+      <div class="base-modal__content" data-testid="BaseModal_content">
+        <slot />
+      </div>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
