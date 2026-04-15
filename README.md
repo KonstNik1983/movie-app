@@ -1,5 +1,84 @@
-# Vue 3 + TypeScript + Vite
+# 🎬 Movie Finder App (Vue 3 SPA)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Приложение для поиска, просмотра и сохранения фильмов с использованием The Movie Database (TMDB) API.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+🌐 Demo: https://movie-pet-app.netlify.app/
+
+---
+
+## 📌 Описание
+
+Movie Finder App — это SPA-приложение, которое позволяет искать фильмы, смотреть подробную информацию о них и добавлять понравившиеся фильмы в избранное.
+
+---
+
+## ⚙️ Функциональность
+
+### 🔎 Поиск фильмов
+- Поиск фильмов по названию через TMDB API
+- Динамическое обновление результатов
+
+### 🎬 Популярные фильмы
+- Отображение популярных фильмов при входе в приложение
+
+### 📄 Страница фильма
+- Подробная информация о фильме
+- Жанры, описание, рейтинг
+- Рекомендованные / похожие фильмы
+
+### ❤️ Избранное
+- Добавление / удаление фильмов из избранного
+- Сохранение в localStorage
+- Отдельная страница избранных фильмов
+- Индикация избранного (иконка ❤️)
+
+---
+
+## 🧠 Архитектура
+
+- Vue 3 (Composition API)
+- Vue Router (маршрутизация)
+- Pinia (глобальное состояние)
+-  Fetch API — работа с TMDB API
+- localStorage (персистентность избранного)
+
+---
+
+## 🌍 API
+
+В проекте используется The Movie Database (TMDB):
+
+https://developer.themoviedb.org/
+
+---
+
+## 💾 Хранение данных
+
+- Избранные фильмы сохраняются в `localStorage`
+- Состояние синхронизируется через Pinia store
+- Данные сохраняются между перезагрузками страницы
+
+---
+
+## 🧠 Особенности реализации
+
+- Компонентная архитектура Vue 3 (Composition API)
+- Разделение слоёв: UI / API / state management
+- Pinia как основное хранилище состояния
+- Кеширование запросов к TMDB API для оптимизации производительности
+- Debounce для оптимизации поиска и уменьшения количества запросов
+- Работа с localStorage для сохранения пользовательских данных
+- Покрытие логики тестами (unit tests)
+- Использование Storybook для изолированной разработки UI компонентов
+
+---
+
+## 🎯 Цель проекта
+
+Проект разработан как демонстрация навыков frontend-разработки на Vue 3:
+
+- Работа с компонентной архитектурой
+- Интеграция с внешним REST API (TMDB)
+- Управление состоянием через Pinia
+- Реализация клиентской маршрутизации (Vue Router)
+- Работа с локальным хранилищем (localStorage)
